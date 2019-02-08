@@ -28,6 +28,7 @@ class WidgetEntity {
     public int real_posy;
     public boolean engaged;
 }
+
 public class UIWidgets {
     private ArrayList<WidgetEntity> WidgetStack = new ArrayList();
     private Graphics2D g;
@@ -38,10 +39,18 @@ public class UIWidgets {
     {
 
     }
+
     int map(int x, int in_min, int in_max, int out_min, int out_max)
     {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
+
+    // Uses font metrics provided by the current font set to the
+    // local Graphics2D to find the width of a string in pixels.
+    private int calculateTextWidth(String text) {
+        return g.getFontMetrics().stringWidth(text);
+    }
+
     public void DrawDRO()
     {
         g.setFont(new Font("Arial", Font.BOLD, 45));
@@ -76,11 +85,12 @@ public class UIWidgets {
         }
         g.setFont(new Font("Arial", Font.PLAIN, button_font_size));
         int text_length = (text.length() - 3) * button_font_size;
-        int text_posx = posx + (width / 2) - (text_length/2);
+        int text_posx = (width / 2) - (calculateTextWidth(text) / 2) + posx;
         int text_posy = posy + (height / 2) + (button_font_size/2);
         g.drawString(text, text_posx, text_posy);
         g.drawRect(posx, posy, width, height);
     }
+
     public void DrawSlider(String text, boolean engaged, int width, int height, int real_posx, int real_posy, int position, int min, int max){
         g.setColor(Color.red);
         int button_font_size = 15;
@@ -110,6 +120,7 @@ public class UIWidgets {
         }
         g.drawRect( slider_leftmost + slider_offset, real_posy + 35, 15, 15); //Slider
     }
+    
     public void AddMomentaryButton(String text, String anchor, int width, int height, int posx, int posy, Runnable action){
         //System.out.println("Adding: " + text);
         WidgetEntity w = new WidgetEntity();
