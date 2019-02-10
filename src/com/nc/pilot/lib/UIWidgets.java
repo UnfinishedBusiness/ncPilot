@@ -130,7 +130,12 @@ public class UIWidgets {
         }
         g.drawRect( slider_leftmost + slider_offset, real_posy + 35, 15, 15); //Slider
     }
-    
+    public void AddDRO(){
+        //System.out.println("Adding: " + text);
+        WidgetEntity w = new WidgetEntity();
+        w.type = "DRO";
+        WidgetStack.add(w);
+    }
     public void AddMomentaryButton(String text, String anchor, int width, int height, int posx, int posy, Runnable action){
         //System.out.println("Adding: " + text);
         WidgetEntity w = new WidgetEntity();
@@ -245,9 +250,10 @@ public class UIWidgets {
                 }
                 DrawSlider(WidgetStack.get(x).text, WidgetStack.get(x).engaged, WidgetStack.get(x).width, WidgetStack.get(x).height, WidgetStack.get(x).real_posx, WidgetStack.get(x).real_posy, WidgetStack.get(x).position, WidgetStack.get(x).min, WidgetStack.get(x).max);
             }
+            if (WidgetStack.get(x).type.equals("DRO")){
+                DrawDRO();
+            }
         }
-        DrawDRO();
-
     }
     public void ClickPressStack(int mousex, int mousey){
         isMousePressed = true;

@@ -10,5 +10,6 @@
     <orderEntry type="library" name="gson-2.6.2" level="project" />
     <orderEntry type="library" name="RXTXcomm" level="project" />
     <orderEntry type="library" name="AbsoluteLayout" level="project" />
+    <orderEntry type="library" name="kabeja-0.4" level="project" />
   </component>
 </module>
