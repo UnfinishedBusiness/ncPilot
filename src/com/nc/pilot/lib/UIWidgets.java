@@ -70,6 +70,16 @@ public class UIWidgets {
         g.drawString(String.format("%.4f", GlobalData.dro[0]), Frame_Bounds.width - 220 - DRO_X_Offset, 70);
         g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 220 - DRO_X_Offset, 140);
         g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 220 - DRO_X_Offset, 210);
+
+        g.setFont(new Font("Arial", Font.BOLD, 10));
+        g.drawString("ABS:", Frame_Bounds.width - 300 - DRO_X_Offset, 70);
+        g.drawString("ABS:", Frame_Bounds.width - 300 - DRO_X_Offset, 140);
+        g.drawString("ABS:", Frame_Bounds.width - 300 - DRO_X_Offset, 210);
+
+        g.drawString(String.format("%.4f", GlobalData.dro[0]), Frame_Bounds.width - 270 - DRO_X_Offset, 70);
+        g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 270 - DRO_X_Offset, 140);
+        g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 270 - DRO_X_Offset, 210);
+
         g.drawRect(Frame_Bounds.width - 360, 10, 350, 240);
     }
     public void DrawButton(String text, boolean engaged, int width, int height, int posx, int posy) {
