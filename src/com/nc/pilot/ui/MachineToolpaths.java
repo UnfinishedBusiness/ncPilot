@@ -1,14 +1,15 @@
 package com.nc.pilot.ui;
 
 import com.nc.pilot.lib.*;
+import com.nc.pilot.lib.ToolPathViewer.ToolpathViewer;
+import com.nc.pilot.lib.ToolPathViewer.ViewerPart;
+import org.kabeja.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * This program demonstrates how to draw lines using Graphics2D object.
@@ -174,10 +175,8 @@ public class MachineToolpaths extends JFrame {
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
 
-                                    toolpath_viewer.setJobMaterial(20, 20);
                                     repaint();
                                 }
-
                                 break;
                         }
                         return false;
@@ -195,28 +194,10 @@ public class MachineToolpaths extends JFrame {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                    GcodeInterpreter g = new GcodeInterpreter(selectedFile.getAbsolutePath());
-                    ArrayList<GcodeInterpreter.GcodeMove> moves = g.GetMoves();
-                    toolpath_viewer.ClearStack();
-
-                    for (int x = 2; x < moves.size(); x ++)
-                    {
-                        if (moves.get(x).Gword == 1)
-                        {
-                            toolpath_viewer.addLine(new float[]{moves.get(x-1).Xword, moves.get(x-1).Yword}, new float[]{moves.get(x).Xword, moves.get(x).Yword});
-                        }
-                        if (moves.get(x).Gword == 2)
-                        {
-                            float[] center = new float[]{moves.get(x-1).Xword + moves.get(x).Iword, moves.get(x-1).Yword + moves.get(x).Jword};
-                            float radius = new Float(Math.hypot(moves.get(x).Xword-center[0], moves.get(x).Yword-center[1]));
-                            toolpath_viewer.addArc(new float[]{moves.get(x-1).Xword, moves.get(x-1).Yword}, new float[]{moves.get(x).Xword, moves.get(x).Yword}, center, radius, "CW");
-                        }
-                        if (moves.get(x).Gword == 3)
-                        {
-                            float[] center = new float[]{moves.get(x-1).Xword + moves.get(x).Iword, moves.get(x-1).Yword + moves.get(x).Jword};
-                            float radius = new Float(Math.hypot(moves.get(x).Xword-center[0], moves.get(x).Yword-center[1]));
-                            toolpath_viewer.addArc(new float[]{moves.get(x-1).Xword, moves.get(x-1).Yword}, new float[]{moves.get(x).Xword, moves.get(x).Yword}, center, radius, "CCW");
-                        }
+                    try {
+                        toolpath_viewer.OpenDXFasPart(selectedFile.getAbsolutePath(), "test_part");
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
                 }
             }

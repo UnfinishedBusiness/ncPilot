@@ -1,24 +1,28 @@
-package com.nc.pilot.lib;
+package com.nc.pilot.lib.ToolPathViewer;
 
+import com.nc.pilot.lib.GlobalData;
+import org.kabeja.dxf.*;
+import org.kabeja.dxf.helpers.*;
+import org.kabeja.parser.DXFParser;
+import org.kabeja.parser.ParseException;
+import org.kabeja.parser.Parser;
+import org.kabeja.parser.ParserBuilder;
+
+import javax.xml.ws.Endpoint;
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by admin on 2/1/19.
  */
+
 public class ToolpathViewer {
-    public class ViewerEntity{
-        public String type;
-        public float[] start;
-        public float[] end;
-        public float[] center;
-        public float radius;
-    }
+
     private float[] job_stock_size = new float[] {20, 20};
 
     private Graphics2D g2d;
-    private ArrayList<ViewerEntity> toolpathViewerStack = new ArrayList();
+    public ArrayList<ViewerPart> ViewerPartStack = new ArrayList();
 
 
     // constructor
@@ -87,32 +91,6 @@ public class ToolpathViewer {
     {
         job_stock_size[0] = width;
         job_stock_size[1] = height;
-    }
-    public void addArc(float[] start, float[] end, float[] center, float radius, String direction) {
-        ViewerEntity e = new ViewerEntity();
-        if (direction == "CW")
-        {
-            e.type = "cw_arc";
-            e.start = start;
-            e.end = end;
-            e.radius = radius;
-        }
-        if (direction == "CCW")
-        {
-            e.type = "ccw_arc";
-            e.start = start;
-            e.end = end;
-            e.radius = radius;
-        }
-        e.center = center;
-        toolpathViewerStack.add(e);
-    }
-    public void addLine(float[] start, float[] end) {
-        ViewerEntity e = new ViewerEntity();
-        e.type = "line";
-        e.start = start;
-        e.end = end;
-        toolpathViewerStack.add(e);
     }
     public void RenderLine(float[] start, float end[])
     {
@@ -184,6 +162,44 @@ public class ToolpathViewer {
             RenderLine(last_point, new_point);
         }
     }
+    public void AddPart(String part_name, float[] offset, ViewerPart part)
+    {
+        part.name = part_name;
+        part.offset = offset;
+        ViewerPartStack.add(part);
+    }
+    public void OpenDXFasPart(String filePath, String part_name) throws ParseException {
+        Parser parser = ParserBuilder.createDefaultParser();
+        parser.parse(filePath, DXFParser.DEFAULT_ENCODING);
+        DXFDocument doc = parser.getDocument();
+        java.util.List<DXFLine> lst = doc.getDXFLayer("0").getDXFEntities(DXFConstants.ENTITY_TYPE_LINE);
+        ViewerPart part = new ViewerPart();
+        if (lst != null)
+        {
+            for (int index = 0; index < lst.size(); index++) {
+                org.kabeja.dxf.helpers.Point start_point = lst.get(index).getStartPoint();
+                org.kabeja.dxf.helpers.Point end_point = lst.get(index).getEndPoint();
+                part.addLine(new float[]{(float)start_point.getX(),(float)start_point.getY()}, new float[]{(float)end_point.getX(), (float)end_point.getY()});
+            }
+        }
+        java.util.List<DXFArc> arc_lst = doc.getDXFLayer("0").getDXFEntities(DXFConstants.ENTITY_TYPE_ARC);
+        if (arc_lst != null)
+        {
+            for (int index = 0; index < arc_lst.size(); index++) {
+                org.kabeja.dxf.helpers.Point start_point = arc_lst.get(index).getStartPoint();
+                org.kabeja.dxf.helpers.Point end_point = arc_lst.get(index).getEndPoint();
+                org.kabeja.dxf.helpers.Point center_point = arc_lst.get(index).getCenterPoint();
+                float radius = (float)arc_lst.get(index).getRadius();
+                String direction = "CCW";
+                if (arc_lst.get(index).isCounterClockwise())
+                {
+                    direction = "CW";
+                }
+                part.addArc(new float[]{(float)start_point.getX(),(float)start_point.getY()}, new float[]{(float)end_point.getX(), (float)end_point.getY()}, new float[]{(float)center_point.getX(), (float)center_point.getY()}, radius, direction);
+            }
+        }
+        AddPart(part_name, new float[]{10, 0}, part);
+    }
     public void RenderStack(Graphics2D graphics)
     {
         //System.out.println("Begin render!");
@@ -198,28 +214,33 @@ public class ToolpathViewer {
         /* End stock boundry outline */
 
 
-        for(int i = 0; i< toolpathViewerStack.size(); i++)
+        for(int i = 0; i< ViewerPartStack.size(); i++)
         {
-            ViewerEntity entity = toolpathViewerStack.get(i);
-            if (entity.type == "line") //We are a line move
+            ViewerPart part = ViewerPartStack.get(i);
+            for(int x = 0; x < part.EntityStack.size(); x++)
             {
-                g2d.setColor(Color.white);
-                RenderLine(entity.start, entity.end);
-            }
-            if (entity.type == "cw_arc") //We are a clockwise arc
-            {
-                g2d.setColor(Color.white);
-                RenderArc(entity.start, entity.end, entity.center, entity.radius, "CW");
-            }
-            if (entity.type == "ccw_arc") //We are a counter-clockwise arc
-            {
-                g2d.setColor(Color.white);
-                RenderArc(entity.start, entity.end, entity.center, entity.radius, "CCW");
+                ViewerEntity entity = ViewerPartStack.get(i).EntityStack.get(x);
+                //System.out.println("Name> " + ViewerPartStack.get(i).name + " --> Type: " + entity.type);
+                if (entity.type == "line")
+                {
+                    g2d.setColor(Color.white);
+                    RenderLine(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]});
+                }
+                if (entity.type == "cw_arc")
+                {
+                    g2d.setColor(Color.white);
+                    RenderArc(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]}, new float[]{entity.center[0] + part.offset[0], entity.center[1] + part.offset[1]}, entity.radius, "CW");
+                }
+                if (entity.type == "ccw_arc")
+                {
+                    g2d.setColor(Color.white);
+                    RenderArc(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]}, new float[]{entity.center[0] + part.offset[0], entity.center[1] + part.offset[1]}, entity.radius, "CCW");
+                }
             }
         }
     }
     public void ClearStack()
     {
-        toolpathViewerStack.clear();
+        ViewerPartStack.clear();
     }
 }

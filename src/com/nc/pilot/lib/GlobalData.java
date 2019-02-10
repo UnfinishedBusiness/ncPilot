@@ -55,7 +55,7 @@ public class GlobalData {
 
     public static float ViewerZoom = 19f;
     public static float MinViewerZoom = 0.005f;
-    public static float MaxViewerZoom = 1000;
+    public static float MaxViewerZoom = 1000000000;
     public static float[] ViewerPan = {438, 900};
     public static int MousePositionX;
     public static int MousePositionY;
