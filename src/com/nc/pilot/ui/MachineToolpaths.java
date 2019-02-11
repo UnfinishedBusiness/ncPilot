@@ -49,7 +49,9 @@ public class MachineToolpaths extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 //System.out.println(e.getX() + "," + e.getY());
                 ui_widgets.ClickReleaseStack(e.getX(), e.getY());
-                toolpath_viewer.ClickReleaseStack(e.getX(), e.getY());
+                GlobalData.MousePositionX_MCS = (GlobalData.MousePositionX - GlobalData.ViewerPan[0]) / GlobalData.ViewerZoom;
+                GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
+                toolpath_viewer.ClickReleaseStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
                 repaint();
             }
         });
@@ -60,7 +62,9 @@ public class MachineToolpaths extends JFrame {
                 GlobalData.MousePositionX = e.getX();
                 GlobalData.MousePositionY = e.getY();
                 ui_widgets.MouseMotionStack(e.getX(), e.getY());
-                toolpath_viewer.MouseMotionStack(e.getX(), e.getY());
+                GlobalData.MousePositionX_MCS = (GlobalData.MousePositionX - GlobalData.ViewerPan[0]) / GlobalData.ViewerZoom;
+                GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
+                toolpath_viewer.MouseMotionStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
                 repaint();
             }
             public void mouseDragged(MouseEvent e) {
@@ -68,7 +72,9 @@ public class MachineToolpaths extends JFrame {
                 GlobalData.MousePositionX = e.getX();
                 GlobalData.MousePositionY = e.getY();
                 ui_widgets.MouseMotionStack(e.getX(), e.getY());
-                toolpath_viewer.MouseMotionStack(e.getX(), e.getY());
+                GlobalData.MousePositionX_MCS = (GlobalData.MousePositionX - GlobalData.ViewerPan[0]) / GlobalData.ViewerZoom;
+                GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
+                toolpath_viewer.MouseMotionStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
                 repaint();
             }
         });
@@ -109,6 +115,16 @@ public class MachineToolpaths extends JFrame {
                     public boolean dispatchKeyEvent(KeyEvent ke) {
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
+                                if (ke.getKeyCode() == 44) //< key
+                                {
+                                    toolpath_viewer.RotateEngagedPart(5);
+                                    repaint();
+                                }
+                                if (ke.getKeyCode() == 46) //> key
+                                {
+                                    toolpath_viewer.RotateEngagedPart(-5);
+                                    repaint();
+                                }
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
                                     if (GlobalData.UpArrowKeyState == false)
                                     {
@@ -196,7 +212,7 @@ public class MachineToolpaths extends JFrame {
             @Override
             public void run() {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                fileChooser.setCurrentDirectory(new File("."));
                 int result = fileChooser.showOpenDialog(getParent());
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();

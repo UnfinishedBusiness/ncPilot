@@ -15,6 +15,7 @@ public class ViewerPart{
     float maxX;
     float minY;
     float maxY;
+    float rotation_angle;
     String name;
     boolean engaged;
     public ViewerPart(){

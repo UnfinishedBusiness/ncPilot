@@ -2,13 +2,11 @@ package com.nc.pilot.lib.ToolPathViewer;
 
 import com.nc.pilot.lib.GlobalData;
 import org.kabeja.dxf.*;
-import org.kabeja.dxf.helpers.*;
 import org.kabeja.parser.DXFParser;
 import org.kabeja.parser.ParseException;
 import org.kabeja.parser.Parser;
 import org.kabeja.parser.ParserBuilder;
 
-import javax.xml.ws.Endpoint;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.*;
@@ -19,12 +17,12 @@ import java.util.*;
 
 public class ToolpathViewer {
 
-    private float[] job_stock_size = new float[] {20, 20};
+    private float[] job_stock_size = new float[] {48, 48};
 
     private Graphics2D g2d;
     public ArrayList<ViewerPart> ViewerPartStack = new ArrayList();
     private boolean isMousePressed = false;
-    private int[] mouseLastDragPosition;
+    private float[] mouseLastDragPosition;
 
     // constructor
     public ToolpathViewer() {
@@ -63,6 +61,9 @@ public class ToolpathViewer {
         {
             return false;
         }
+    }
+    public float[] getMidpoint(float[] start_point, float[] end_point) {
+        return new float[] {(end_point[0] + start_point[0])/2,(end_point[1] + start_point[1])/2};
     }
     public float[] rotatePoint(float[] pivot, float[] rotated_point, float angle)
     {
@@ -240,25 +241,37 @@ public class ToolpathViewer {
         for(int i = 0; i< ViewerPartStack.size(); i++)
         {
             ViewerPart part = ViewerPartStack.get(i);
+            if (part.engaged == true)
+            {
+                g2d.setColor(Color.green);
+            }
+            else
+            {
+                g2d.setColor(Color.white);
+            }
             for(int x = 0; x < part.EntityStack.size(); x++)
             {
                 ViewerEntity entity = ViewerPartStack.get(i).EntityStack.get(x);
-                //System.out.println("Name> " + ViewerPartStack.get(i).name + " --> Type: " + entity.type);
                 if (entity.type == "line")
                 {
-                    g2d.setColor(Color.white);
                     RenderLine(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]});
                 }
                 if (entity.type == "cw_arc")
                 {
-                    g2d.setColor(Color.white);
                     RenderArc(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]}, new float[]{entity.center[0] + part.offset[0], entity.center[1] + part.offset[1]}, entity.radius, "CW");
                 }
                 if (entity.type == "ccw_arc")
                 {
-                    g2d.setColor(Color.white);
                     RenderArc(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]}, new float[]{entity.center[0] + part.offset[0], entity.center[1] + part.offset[1]}, entity.radius, "CCW");
                 }
+            }
+            if (part.engaged == true)
+            {
+                g2d.setColor(Color.lightGray);
+                RenderLine(new float[]{part.minX + part.offset[0], part.minY + part.offset[1]}, new float[]{part.maxX + part.offset[0], part.minY + part.offset[1]});
+                RenderLine(new float[]{part.maxX + part.offset[0], part.minY + part.offset[1]}, new float[]{part.maxX + part.offset[0], part.maxY + part.offset[1]});
+                RenderLine(new float[]{part.maxX + part.offset[0], part.maxY + part.offset[1]}, new float[]{part.minX + part.offset[0], part.maxY + part.offset[1]});
+                RenderLine(new float[]{part.minX + part.offset[0], part.maxY + part.offset[1]}, new float[]{part.minX + part.offset[0], part.minY + part.offset[1]});
             }
         }
     }
@@ -272,22 +285,114 @@ public class ToolpathViewer {
         {
             if ((mousex > ViewerPartStack.get(x).offset[0] + ViewerPartStack.get(x).minX && mousex < ViewerPartStack.get(x).offset[0] + ViewerPartStack.get(x).maxX) && (mousey > ViewerPartStack.get(x).offset[1] + ViewerPartStack.get(x).minY && mousey < ViewerPartStack.get(x).offset[1] + ViewerPartStack.get(x).maxY))
             {
-                System.out.println("Clicked on: " + ViewerPartStack.get(x).name);
                 ViewerPartStack.get(x).engaged = true;
+                return; //Only click on first selection
             }
         }
     }
-    public void ClickReleaseStack(int mousex, int mousey){
-        isMousePressed = false;
+    public void ClickReleaseStack(float mousex, float mousey){
+        if (isMousePressed == true)
+        {
+            isMousePressed = false;
+            for (int x = 0; x < ViewerPartStack.size(); x++)
+            {
+                if ((mousex > ViewerPartStack.get(x).offset[0] + ViewerPartStack.get(x).minX && mousex < ViewerPartStack.get(x).offset[0] + ViewerPartStack.get(x).maxX) && (mousey > ViewerPartStack.get(x).offset[1] + ViewerPartStack.get(x).minY && mousey < ViewerPartStack.get(x).offset[1] + ViewerPartStack.get(x).maxY))
+                {
+                    ViewerPartStack.get(x).engaged = false;
+                    return;
+                }
+            }
+        }
     }
-    public void MouseMotionStack(int mousex, int mousey){
+    public void MouseMotionStack(float mousex, float mousey){
         if (isMousePressed == true)
         {
             for (int x = 0; x < ViewerPartStack.size(); x++)
             {
-
+                if (ViewerPartStack.get(x).engaged == true)
+                {
+                    float move_x = mousex - mouseLastDragPosition[0];
+                    float move_y = mousey - mouseLastDragPosition[1];
+                    ViewerPartStack.get(x).offset[0] += move_x;
+                    ViewerPartStack.get(x).offset[1] += move_y;
+                    break;
+                }
             }
         }
-        mouseLastDragPosition = new int[]{mousex, mousey};
+        mouseLastDragPosition = new float[]{mousex, mousey};
+    }
+    public void UpdateBoundsOfPart(float[] pivot_point, int index)
+    {
+        ViewerPart part = ViewerPartStack.get(index);
+        float minX = pivot_point[0];
+        float maxX = pivot_point[0];
+        float minY = pivot_point[1];
+        float maxY = pivot_point[1];
+        for (int i = 0; i < part.EntityStack.size(); i++)
+        {
+            ViewerEntity entity = part.EntityStack.get(i);
+            if (entity.type == "line")
+            {
+                if (entity.start[0] < minX) minX = entity.start[0];
+                if (entity.start[0] > maxX) maxX = entity.start[0];
+                if (entity.start[1] < minY) minY = entity.start[1];
+                if (entity.start[1] > maxY) maxY = entity.start[1];
+
+                if (entity.end[0] < minX) minX = entity.end[0];
+                if (entity.end[0] > maxX) maxX = entity.end[0];
+                if (entity.end[1] < minY) minY = entity.end[1];
+                if (entity.end[1] > maxY) maxY = entity.end[1];
+            }
+            if (entity.type == "cw_arc" || entity.type == "ccw_arc")
+            {
+                if (entity.start[0] < minX) minX = entity.start[0];
+                if (entity.start[0] > maxX) maxX = entity.start[0];
+                if (entity.start[1] < minY) minY = entity.start[1];
+                if (entity.start[1] > maxY) maxY = entity.start[1];
+
+                if (entity.end[0] < minX) minX = entity.end[0];
+                if (entity.end[0] > maxX) maxX = entity.end[0];
+                if (entity.end[1] < minY) minY = entity.end[1];
+                if (entity.end[1] > maxY) maxY = entity.end[1];
+
+                if (entity.center[0] < minX) minX = entity.center[0];
+                if (entity.center[0] > maxX) maxX = entity.center[0];
+                if (entity.center[1] < minY) minY = entity.center[1];
+                if (entity.center[1] > maxY) maxY = entity.center[1];
+            }
+        }
+        part.minX = minX;
+        part.maxX = maxX;
+        part.minY = minY;
+        part.maxY = maxY;
+    }
+    public void RotateEngagedPart(float inc_degrees)
+    {
+        for (int x = 0; x < ViewerPartStack.size(); x++)
+        {
+            if (ViewerPartStack.get(x).engaged == true)
+            {
+                ViewerPart part = ViewerPartStack.get(x);
+                part.rotation_angle += inc_degrees;
+                float[] pivot_point = getMidpoint(new float[] {part.minX, part.minY}, new float[] {part.maxX, part.maxY});
+                for (int i = 0; i < part.EntityStack.size(); i++)
+                {
+                    ViewerEntity entity = part.EntityStack.get(i);
+                    if (entity.type == "line")
+                    {
+                        rotatePoint(pivot_point, entity.start, inc_degrees);
+                        rotatePoint(pivot_point, entity.end, inc_degrees);
+                    }
+                    if (entity.type == "cw_arc" || entity.type == "ccw_arc")
+                    {
+                        rotatePoint(pivot_point, entity.start, inc_degrees);
+                        rotatePoint(pivot_point, entity.end, inc_degrees);
+                        rotatePoint(pivot_point, entity.center, inc_degrees);
+                    }
+                }
+                UpdateBoundsOfPart(pivot_point, x);
+                break;
+            }
+        }
     }
 }
