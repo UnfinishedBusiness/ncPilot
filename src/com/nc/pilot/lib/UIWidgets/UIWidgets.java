@@ -1,33 +1,13 @@
-package com.nc.pilot.lib;
+package com.nc.pilot.lib.UIWidgets;
+
+import com.nc.pilot.lib.GlobalData;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
 /**
- * Created by travis on 2/4/2019.
+ * Created by admin on 2/10/19.
  */
-class WidgetEntity {
-    public String type;
-    public String group;
-    public String anchor; //Right or Left
-    public String text;
-
-    public int width;
-    public int height;
-    public int posx;
-    public int posy;
-    public int min;
-    public int max;
-    public int position;
-
-    public Runnable action;
-
-    //Meta data
-    public int real_posx;
-    public int real_posy;
-    public boolean engaged;
-}
 
 public class UIWidgets {
     private ArrayList<WidgetEntity> WidgetStack = new ArrayList();

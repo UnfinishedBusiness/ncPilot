@@ -1,6 +1,7 @@
 package com.nc.pilot.ui;
 
 import com.nc.pilot.lib.*;
+import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
 import javax.swing.*;
 import java.awt.*;

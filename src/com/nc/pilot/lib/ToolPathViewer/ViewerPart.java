@@ -9,6 +9,7 @@ public class ViewerPart{
     public ArrayList<ViewerEntity> EntityStack = new ArrayList();
     float[] offset;
     float[] bounding_box;
+    float scale;
     String name;
     public ViewerPart(){
 

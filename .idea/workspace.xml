@@ -7,20 +7,48 @@
   </component>
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java" line="150" mnemonic="1" />
-    <bookmark url="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets.java" line="96" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolpathViewer$ViewerEntity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolpathViewer.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolpathViewer.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/UIWidgets.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/WidgetEntity.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/ViewerPart.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/ViewerPart.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$1.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$10.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$10.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$11.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$11.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$12.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$12.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$13.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$13.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$14.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$14.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$15.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$15.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$16.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$16.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$17.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$17.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$18.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$18.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$19.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$19.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$2.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$20.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$20.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$21.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$21.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$22.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$22.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$3.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$4.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$5.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$6.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$7.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$8.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$8.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$9.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$9.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$GcodeViewerPanel.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$GcodeViewerPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$1.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$2.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$3.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$3.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$4.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$4.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$5.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$5.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$6.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$6.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$ToolpathViewerPanel.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths$ToolpathViewerPanel.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineToolpaths.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -34,21 +62,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MachineToolpaths.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MachineToolpaths.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="201" column="17" lean-forward="true" selection-start-line="201" selection-start-column="17" selection-end-line="201" selection-end-column="17" />
+            <state relative-caret-position="118">
+              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ToolpathViewer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ToolpathViewer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="199" column="9" lean-forward="true" selection-start-line="199" selection-start-column="9" selection-end-line="199" selection-end-column="9" />
+            <state relative-caret-position="-1349">
+              <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#11152#11153#0" expanded="true" />
@@ -58,12 +86,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DXFArc.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/libraries/kabeja-0.4.jar!/org/kabeja/dxf/DXFArc.class">
+      <file leaf-file-name="MachineControl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="285">
+              <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+              <folding>
+                <marker date="1549843834000" expanded="false" signature="17163:17182" ph=" { " />
+                <marker date="1549843834000" expanded="false" signature="17220:17234" ph=" }" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -129,14 +160,17 @@
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/XmotionGen3.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerEntity.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolpathViewer.java" />
         <option value="$PROJECT_DIR$/libraries/kabeja-0.4.jar!/org/kabeja/dxf/DXFLine.class" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/WidgetEntity.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets_.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java" />
       </list>
     </option>
   </component>
@@ -247,58 +281,6 @@
               <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="UIWidgets.java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ToolPathViewer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -312,72 +294,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="libraries" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kabeja-0.4.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kabeja" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kabeja-0.4.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kabeja" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dxf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kabeja-0.4.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -663,7 +579,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="737" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -680,7 +595,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22734375" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22734375" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -731,17 +646,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="22" lean-forward="false" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/HMI.form" />
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -1058,28 +962,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1754">
-          <caret line="200" column="28" lean-forward="false" selection-start-line="200" selection-start-column="28" selection-end-line="200" selection-end-column="28" />
-          <folding>
-            <marker date="1549762375000" expanded="false" signature="17118:17137" ph=" { " />
-            <marker date="1549762375000" expanded="false" signature="17175:17189" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3367">
-          <caret line="249" column="17" lean-forward="true" selection-start-line="249" selection-start-column="17" selection-end-line="249" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1549762345000" expanded="true" signature="16213:16219" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1096,26 +978,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="201" column="17" lean-forward="true" selection-start-line="201" selection-start-column="17" selection-end-line="201" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="372">
           <caret line="60" column="37" lean-forward="true" selection-start-line="60" selection-start-column="37" selection-end-line="60" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="25" lean-forward="false" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -1128,15 +994,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/WidgetEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="325" column="1" lean-forward="false" selection-start-line="325" selection-start-column="1" selection-end-line="325" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets_.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="199" column="9" lean-forward="true" selection-start-line="199" selection-start-column="9" selection-end-line="199" selection-end-column="9" />
+        <state relative-caret-position="-1349">
+          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#11152#11153#0" expanded="true" />
             <element signature="e#11191#11192#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+          <folding>
+            <marker date="1549843834000" expanded="false" signature="17163:17182" ph=" { " />
+            <marker date="1549843834000" expanded="false" signature="17220:17234" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

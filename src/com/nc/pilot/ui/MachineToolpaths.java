@@ -3,6 +3,7 @@ package com.nc.pilot.ui;
 import com.nc.pilot.lib.*;
 import com.nc.pilot.lib.ToolPathViewer.ToolpathViewer;
 import com.nc.pilot.lib.ToolPathViewer.ViewerPart;
+import com.nc.pilot.lib.UIWidgets.UIWidgets;
 import org.kabeja.parser.ParseException;
 
 import javax.swing.*;
