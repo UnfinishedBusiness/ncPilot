@@ -8,9 +8,15 @@ import java.util.ArrayList;
 public class ViewerPart{
     public ArrayList<ViewerEntity> EntityStack = new ArrayList();
     float[] offset;
-    float[] bounding_box;
+    float bound_width;
+    float bound_height;
     float scale;
+    float minX;
+    float maxX;
+    float minY;
+    float maxY;
     String name;
+    boolean engaged;
     public ViewerPart(){
 
     }

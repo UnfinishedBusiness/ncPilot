@@ -41,11 +41,15 @@ public class MachineToolpaths extends JFrame {
             public void mousePressed(MouseEvent e) {
                 //System.out.println(e.getX() + "," + e.getY());
                 ui_widgets.ClickPressStack(e.getX(), e.getY());
+                GlobalData.MousePositionX_MCS = (GlobalData.MousePositionX - GlobalData.ViewerPan[0]) / GlobalData.ViewerZoom;
+                GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
+                toolpath_viewer.ClickPressStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
                 repaint();
             }
             public void mouseReleased(MouseEvent e) {
                 //System.out.println(e.getX() + "," + e.getY());
                 ui_widgets.ClickReleaseStack(e.getX(), e.getY());
+                toolpath_viewer.ClickReleaseStack(e.getX(), e.getY());
                 repaint();
             }
         });
@@ -56,6 +60,7 @@ public class MachineToolpaths extends JFrame {
                 GlobalData.MousePositionX = e.getX();
                 GlobalData.MousePositionY = e.getY();
                 ui_widgets.MouseMotionStack(e.getX(), e.getY());
+                toolpath_viewer.MouseMotionStack(e.getX(), e.getY());
                 repaint();
             }
             public void mouseDragged(MouseEvent e) {
@@ -63,6 +68,7 @@ public class MachineToolpaths extends JFrame {
                 GlobalData.MousePositionX = e.getX();
                 GlobalData.MousePositionY = e.getY();
                 ui_widgets.MouseMotionStack(e.getX(), e.getY());
+                toolpath_viewer.MouseMotionStack(e.getX(), e.getY());
                 repaint();
             }
         });

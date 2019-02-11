@@ -14,7 +14,7 @@ import java.awt.geom.Line2D;
 import java.util.*;
 
 /**
- * Created by admin on 2/1/19.
+ * Created by travis on 2/1/19.
  */
 
 public class ToolpathViewer {
@@ -23,7 +23,8 @@ public class ToolpathViewer {
 
     private Graphics2D g2d;
     public ArrayList<ViewerPart> ViewerPartStack = new ArrayList();
-
+    private boolean isMousePressed = false;
+    private int[] mouseLastDragPosition;
 
     // constructor
     public ToolpathViewer() {
@@ -162,10 +163,16 @@ public class ToolpathViewer {
             RenderLine(last_point, new_point);
         }
     }
-    public void AddPart(String part_name, float[] offset, ViewerPart part)
+    public void AddPart(String part_name, float[] offset, float bound_width, float bound_height, float minX, float maxX, float minY, float maxY, ViewerPart part)
     {
         part.name = part_name;
         part.offset = offset;
+        part.bound_width = bound_width;
+        part.bound_height = bound_height;
+        part.minX = minX;
+        part.maxX = maxX;
+        part.minY = minY;
+        part.maxY = maxY;
         ViewerPartStack.add(part);
     }
     public void OpenDXFasPart(String filePath, String part_name) throws ParseException {
@@ -173,6 +180,7 @@ public class ToolpathViewer {
         parser.parse(filePath, DXFParser.DEFAULT_ENCODING);
         DXFDocument doc = parser.getDocument();
         java.util.List<DXFLine> lst = doc.getDXFLayer("0").getDXFEntities(DXFConstants.ENTITY_TYPE_LINE);
+        float minX = 0, maxX = 0, minY = 0, maxY = 0;
         ViewerPart part = new ViewerPart();
         if (lst != null)
         {
@@ -180,6 +188,10 @@ public class ToolpathViewer {
                 org.kabeja.dxf.helpers.Point start_point = lst.get(index).getStartPoint();
                 org.kabeja.dxf.helpers.Point end_point = lst.get(index).getEndPoint();
                 part.addLine(new float[]{(float)start_point.getX(),(float)start_point.getY()}, new float[]{(float)end_point.getX(), (float)end_point.getY()});
+                if (lst.get(index).getBounds().getMinimumX() < minX) minX = (float)lst.get(index).getBounds().getMinimumX();
+                if (lst.get(index).getBounds().getMaximumX() > maxX) maxX = (float)lst.get(index).getBounds().getMaximumX();
+                if (lst.get(index).getBounds().getMinimumY() < minY) minY = (float)lst.get(index).getBounds().getMinimumY();
+                if (lst.get(index).getBounds().getMaximumY() > maxY) maxY = (float)lst.get(index).getBounds().getMaximumY();
             }
         }
         java.util.List<DXFArc> arc_lst = doc.getDXFLayer("0").getDXFEntities(DXFConstants.ENTITY_TYPE_ARC);
@@ -196,9 +208,20 @@ public class ToolpathViewer {
                     direction = "CW";
                 }
                 part.addArc(new float[]{(float)start_point.getX(),(float)start_point.getY()}, new float[]{(float)end_point.getX(), (float)end_point.getY()}, new float[]{(float)center_point.getX(), (float)center_point.getY()}, radius, direction);
+                if (arc_lst.get(index).getBounds().getMinimumX() < minX) minX = (float)arc_lst.get(index).getBounds().getMinimumX();
+                if (arc_lst.get(index).getBounds().getMaximumX() > maxX) maxX = (float)arc_lst.get(index).getBounds().getMaximumX();
+                if (arc_lst.get(index).getBounds().getMinimumY() < minY) minY = (float)arc_lst.get(index).getBounds().getMinimumY();
+                if (arc_lst.get(index).getBounds().getMaximumY() > maxY) maxY = (float)arc_lst.get(index).getBounds().getMaximumY();
             }
         }
-        AddPart(part_name, new float[]{10, 0}, part);
+        float bound_width = maxX - minX;
+        float bound_height = maxY - minY;
+        //part.addLine(new float[]{minX,minY}, new float[]{maxX, minY});
+        //part.addLine(new float[]{maxX,minY}, new float[]{maxX, maxY});
+        //part.addLine(new float[]{maxX,maxY}, new float[]{minX, maxY});
+        //part.addLine(new float[]{minX,maxY}, new float[]{minX, minY});
+        //System.out.println("Bound width: " + bound_width + " Bound height: " + bound_height);
+        AddPart(part_name, new float[]{0, 0}, bound_width, bound_height, minX, maxX, minY, maxY, part);
     }
     public void RenderStack(Graphics2D graphics)
     {
@@ -242,5 +265,29 @@ public class ToolpathViewer {
     public void ClearStack()
     {
         ViewerPartStack.clear();
+    }
+    public void ClickPressStack(float mousex, float mousey){
+        isMousePressed = true;
+        for (int x = 0; x < ViewerPartStack.size(); x++)
+        {
+            if ((mousex > ViewerPartStack.get(x).offset[0] + ViewerPartStack.get(x).minX && mousex < ViewerPartStack.get(x).offset[0] + ViewerPartStack.get(x).maxX) && (mousey > ViewerPartStack.get(x).offset[1] + ViewerPartStack.get(x).minY && mousey < ViewerPartStack.get(x).offset[1] + ViewerPartStack.get(x).maxY))
+            {
+                System.out.println("Clicked on: " + ViewerPartStack.get(x).name);
+                ViewerPartStack.get(x).engaged = true;
+            }
+        }
+    }
+    public void ClickReleaseStack(int mousex, int mousey){
+        isMousePressed = false;
+    }
+    public void MouseMotionStack(int mousex, int mousey){
+        if (isMousePressed == true)
+        {
+            for (int x = 0; x < ViewerPartStack.size(); x++)
+            {
+
+            }
+        }
+        mouseLastDragPosition = new int[]{mousex, mousey};
     }
 }
