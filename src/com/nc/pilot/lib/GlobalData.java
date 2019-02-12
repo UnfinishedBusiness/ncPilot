@@ -28,6 +28,7 @@ public class GlobalData {
     public static String CurrentUnits = "Inch";
     public static boolean IsHomed = false;
     public static boolean PlannerReady = false;
+    public static String JogMode = "Continuous";
     public static int FreeBuffers;
     //public static ArrayList<String> WriteBuffer = new ArrayList();
 

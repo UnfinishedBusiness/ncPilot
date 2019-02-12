@@ -310,27 +310,29 @@ public class MachineControl extends JFrame {
         ui_widgets.AddSelectButton("0.001\"", "jog", false,"bottom-right", 60, 60, 10, 290, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Clicked on 0.001\"!");
+                //System.out.println("Clicked on 0.001\"!");
+                GlobalData.JogMode = "0.001";
             }
         });
         ui_widgets.AddSelectButton("0.01\"","jog", false, "bottom-right", 60, 60, 80, 290, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Clicked on 0.01\"!");
-                MotionController.FeedHold();
+                //System.out.println("Clicked on 0.01\"!");
+                GlobalData.JogMode = "0.01";
             }
         });
         ui_widgets.AddSelectButton("0.1\"", "jog", false,"bottom-right", 60, 60, 150, 290, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Clicked on 0.1\"");
-                MotionController.CycleStart();
+                //System.out.println("Clicked on 0.1\"");
+                GlobalData.JogMode = "0.1";
             }
         });
         ui_widgets.AddSelectButton("Continuous","jog",true, "bottom-right", 140, 60, 220, 290, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Clicked on Continuous!");
+                //System.out.println("Clicked on Continuous!");
+                GlobalData.JogMode = "Continuous";
             }
         });
         //void AddSlider(String text, String anchor, int width, int height, int posx, int posy, int min, int max, Runnable action){
