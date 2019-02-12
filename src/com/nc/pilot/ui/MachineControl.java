@@ -35,12 +35,13 @@ public class MachineControl extends JFrame {
         serial.initialize();
         motion_controller = new MotionController(serial);
         serial.inherit_motion_controller(motion_controller);
-        //motion_controller.InitMotionController();
+        motion_controller.InitMotionController();
         ui_widgets = new UIWidgets();
         gcode_viewer = new GcodeViewer();
         Layout_UI();
         GcodeViewerPanel panel = new GcodeViewerPanel();
         add(panel);
+
         repaint_timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -261,35 +262,49 @@ public class MachineControl extends JFrame {
                 System.out.println("Torch On!");
             }
         });
-        ui_widgets.AddMomentaryButton("Go Home", "bottom-right", 170, 60, 10, 150, new Runnable() {
+        ui_widgets.AddMomentaryButton("Go Home", "bottom-right", 120, 60, 10, 150, new Runnable() {
             @Override
             public void run() {
                 System.out.println("Go Home!");
                 motion_controller.WriteBuffer("G90 G0 X10 Y10\n");
             }
         });
-        ui_widgets.AddMomentaryButton("Probe Z", "bottom-right", 170, 60, 190, 150, new Runnable() {
+        ui_widgets.AddMomentaryButton("Probe Z", "bottom-right", 120, 60, 140, 150, new Runnable() {
             @Override
             public void run() {
                 System.out.println("Probe Z!");
+            }
+        });
+        ui_widgets.AddMomentaryButton("Home", "bottom-right", 90, 60, 270, 150, new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Home!");
+                if (GlobalData.IsHomed == false)
+                {
+                    GlobalData.IsHomed = true;
+                    motion_controller.Home();
+                }
             }
         });
         ui_widgets.AddMomentaryButton("X=0", "bottom-right", 110, 60, 10, 220, new Runnable() {
             @Override
             public void run() {
                 System.out.println("X=0");
+                motion_controller.SetXzero();
             }
         });
         ui_widgets.AddMomentaryButton("Y=0", "bottom-right", 110, 60, 130, 220, new Runnable() {
             @Override
             public void run() {
                 System.out.println("Y=0");
+                motion_controller.SetYzero();
             }
         });
         ui_widgets.AddMomentaryButton("Z=0", "bottom-right", 110, 60, 250, 220, new Runnable() {
             @Override
             public void run() {
                 System.out.println("Z=0");
+                motion_controller.SetZzero();
             }
         });
         ui_widgets.AddSelectButton("0.001\"", "jog", false,"bottom-right", 60, 60, 10, 290, new Runnable() {

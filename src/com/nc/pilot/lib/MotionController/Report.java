@@ -5,4 +5,5 @@ package com.nc.pilot.lib.MotionController;
  */
 public class Report {
     public String qr;
+    public StatusReport sr;
 }

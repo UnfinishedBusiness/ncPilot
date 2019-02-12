@@ -21,10 +21,12 @@ public class GlobalData {
     public static float[] dro = {0, 0, 0};
     public static float[] last_dro = {0, 0, 0};
     public static float[] work_offset = {0, 0, 0};
+    public static float[] machine_cordinates = {0, 0, 0};
+    public static String MachineState = "";
     public static float CurrentVelocity;
-    public static String status;
+    public static float ProgrammedFeedrate;
+    public static String CurrentUnits = "Inch";
     public static boolean IsHomed = false;
-    public static boolean pendingReset = false;
     public static boolean PlannerReady = false;
     public static int FreeBuffers;
     //public static ArrayList<String> WriteBuffer = new ArrayList();

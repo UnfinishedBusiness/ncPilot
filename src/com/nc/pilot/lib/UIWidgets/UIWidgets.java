@@ -56,12 +56,21 @@ public class UIWidgets {
         g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 125);
         g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 195);
 
-        g.drawString(String.format("%.4f", GlobalData.dro[0]), Frame_Bounds.width - 300 - DRO_X_Offset, 70);
-        g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 300 - DRO_X_Offset, 140);
-        g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 300 - DRO_X_Offset, 210);
+        g.drawString(String.format("%.4f", GlobalData.machine_cordinates[0]), Frame_Bounds.width - 300 - DRO_X_Offset, 70);
+        g.drawString(String.format("%.4f", GlobalData.machine_cordinates[1]), Frame_Bounds.width - 300 - DRO_X_Offset, 140);
+        g.drawString(String.format("%.4f", GlobalData.machine_cordinates[2]), Frame_Bounds.width - 300 - DRO_X_Offset, 210);
 
-        g.drawString("VEL", Frame_Bounds.width - 375 - DRO_X_Offset, 240);
-        g.drawString(String.format("%.4f", GlobalData.CurrentVelocity), Frame_Bounds.width - 350 - DRO_X_Offset, 240);
+        g.drawString("FEED", Frame_Bounds.width - 375 - DRO_X_Offset, 240);
+        g.drawString(String.format("%.4f", GlobalData.ProgrammedFeedrate), Frame_Bounds.width - 330 - DRO_X_Offset, 240);
+
+        g.drawString("VEL", Frame_Bounds.width - 280 - DRO_X_Offset, 240);
+        g.drawString(String.format("%.4f", GlobalData.CurrentVelocity), Frame_Bounds.width - 250 - DRO_X_Offset, 240);
+
+        g.drawString("STATUS", Frame_Bounds.width - 200 - DRO_X_Offset, 240);
+        g.drawString(GlobalData.MachineState, Frame_Bounds.width - 150 - DRO_X_Offset, 240);
+
+        g.drawString("UNITS", Frame_Bounds.width - 110 - DRO_X_Offset, 240);
+        g.drawString(GlobalData.CurrentUnits, Frame_Bounds.width - 70 - DRO_X_Offset, 240);
 
         g.drawRect(Frame_Bounds.width - 360, 10, 350, 240);
     }

@@ -88,11 +88,14 @@ public class MotionController {
                 ParseQueReport(Integer.parseInt(report.qr));
             }
         }
-
         JSON_Data json = g.fromJson(inputLine, JSON_Data.class);
-        //System.out.println(json.posy);
+
         if (json != null)
         {
+            if (json.r != null)
+            {
+                json.sr = json.r.sr;
+            }
             if (json.sr != null)
             {
                 if (json.sr.posx != null)
@@ -107,9 +110,102 @@ public class MotionController {
                 {
                     GlobalData.dro[2] = Float.parseFloat(json.sr.posz);
                 }
+                if (json.sr.mpox != null)
+                {
+                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
+                    {
+                        GlobalData.machine_cordinates[0] = Float.parseFloat(json.sr.mpox) / 25.4f;
+                    }
+                    else
+                    {
+                        GlobalData.machine_cordinates[0] = Float.parseFloat(json.sr.mpox);
+                    }
+                }
+                if (json.sr.mpoy != null)
+                {
+                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
+                    {
+                        GlobalData.machine_cordinates[1] = Float.parseFloat(json.sr.mpoy) / 25.4f;
+                    }
+                    else
+                    {
+                        GlobalData.machine_cordinates[1] = Float.parseFloat(json.sr.mpoy);
+                    }
+                }
+                if (json.sr.mpoz != null)
+                {
+                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
+                    {
+                        GlobalData.machine_cordinates[1] = Float.parseFloat(json.sr.mpoz) / 25.4f;
+                    }
+                    else
+                    {
+                        GlobalData.machine_cordinates[1] = Float.parseFloat(json.sr.mpoz);
+                    }
+                }
+                if (json.sr.ofsx != null)
+                {
+                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
+                    {
+                        GlobalData.work_offset[0] = Float.parseFloat(json.sr.ofsx) / 25.4f;
+                    }
+                    else
+                    {
+                        GlobalData.work_offset[0] = Float.parseFloat(json.sr.ofsx);
+                    }
+                    System.out.println("Set X work offset to: " + GlobalData.work_offset[0]);
+                }
+                if (json.sr.ofsy != null)
+                {
+                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
+                    {
+                        GlobalData.work_offset[1] = Float.parseFloat(json.sr.ofsy) / 25.4f;
+                    }
+                    else
+                    {
+                        GlobalData.work_offset[1] = Float.parseFloat(json.sr.ofsy);
+                    }
+                    System.out.println("Set Y work offset to: " + GlobalData.work_offset[1]);
+                }
+                if (json.sr.ofsz != null)
+                {
+                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
+                    {
+                        GlobalData.work_offset[2] = Float.parseFloat(json.sr.ofsz) / 25.4f;
+                    }
+                    else
+                    {
+                        GlobalData.work_offset[2] = Float.parseFloat(json.sr.ofsz);
+                    }
+                    System.out.println("Set Z work offset to: " + GlobalData.work_offset[2]);
+                }
                 if (json.sr.vel != null)
                 {
                     GlobalData.CurrentVelocity = Float.parseFloat(json.sr.vel);
+                }
+                if (json.sr.feed != null)
+                {
+                    GlobalData.ProgrammedFeedrate = Float.parseFloat(json.sr.feed);
+                }
+                if (json.sr.stat != null)
+                {
+                    int stat = Integer.parseInt(json.sr.stat);
+                    //System.out.println("New Status: " + stat);
+                    if (stat == 0) GlobalData.MachineState = "Init";
+                    if (stat == 1) GlobalData.MachineState = "Ready";
+                    if (stat == 2) GlobalData.MachineState = "Alarm";
+                    if (stat == 3) GlobalData.MachineState = "Stop";
+                    if (stat == 4) GlobalData.MachineState = "End";
+                    if (stat == 5) GlobalData.MachineState = "Motion";
+                    if (stat == 6) GlobalData.MachineState = "Hold";
+                    if (stat == 7) GlobalData.MachineState = "Probe";
+                    if (stat == 8) GlobalData.MachineState = "Cycle";
+                    if (stat == 8) GlobalData.MachineState = "Homing";
+                }
+                if (json.sr.unit != null)
+                {
+                    if (Integer.parseInt(json.sr.unit) == 0) GlobalData.CurrentUnits = "Inch";
+                    if (Integer.parseInt(json.sr.unit) == 1) GlobalData.CurrentUnits = "Metric";
                 }
             }
             if (json.r != null)
@@ -176,6 +272,42 @@ public class MotionController {
     {
         FeedHold();
         Abort();
+    }
+    public static void SetXzero()
+    {
+        WriteBuffer("G92 X=0\n");
+        StatusReport();
+    }
+    public static void SetYzero()
+    {
+        WriteBuffer("G92 Y=0\n");
+        StatusReport();
+    }
+    public static void SetZzero()
+    {
+        WriteBuffer("G92 Z=0\n");
+        StatusReport();
+    }
+    public static void StatusReport()
+    {
+        WriteBuffer("{\"sr\":\"\"}\n");
+    }
+    public static void Home()
+    {
+        WriteBuffer("G28.3 X=0 Y=0 Z=0\"");
+        WriteWait();
+        WriteWait();
+        WriteWait();
+        WriteWait();
+        WriteWait();
+        StatusReport();
+    }
+    public static void InitMotionController()
+    {
+        WriteBuffer("$ej=1\n");
+        WriteBuffer("$ej=1\n");
+        WriteBuffer("{\"sr\":{\"line\":true, \"posx\":true, \"posy\":true, \"posz\":true, \"mpox\":true, \"mpoy\":true, \"mpoz\":true, \"ofsx\":true, \"ofsy\":true, \"ofsz\":true, \"feed\": true, \"vel\":true, \"unit\":true, \"stat\":true}}\n");
+        //WriteBuffer("G54\n");
     }
 
 }
