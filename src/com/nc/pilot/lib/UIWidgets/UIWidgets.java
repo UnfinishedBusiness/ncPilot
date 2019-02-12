@@ -60,6 +60,9 @@ public class UIWidgets {
         g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 300 - DRO_X_Offset, 140);
         g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 300 - DRO_X_Offset, 210);
 
+        g.drawString("VEL", Frame_Bounds.width - 375 - DRO_X_Offset, 240);
+        g.drawString(String.format("%.4f", GlobalData.CurrentVelocity), Frame_Bounds.width - 350 - DRO_X_Offset, 240);
+
         g.drawRect(Frame_Bounds.width - 360, 10, 350, 240);
     }
     public void DrawButton(String text, boolean engaged, int width, int height, int posx, int posy) {
@@ -81,11 +84,11 @@ public class UIWidgets {
         g.drawRect(posx, posy, width, height);
     }
 
-    public void DrawSlider(String text, boolean engaged, int width, int height, int real_posx, int real_posy, int position, int min, int max){
+    public void DrawSlider(String text, boolean engaged, int width, int height, int real_posx, int real_posy, int position, int min, int max, String unit_name){
         g.setColor(Color.red);
         int button_font_size = 15;
         g.setFont(new Font("Arial", Font.PLAIN, button_font_size));
-        //text = text + " - " + getSliderPosition(text);
+        text = text + " - " + getSliderPosition(text) + " " + unit_name;
         g.drawString(text, real_posx + 20, real_posy + 20);
         g.drawRect(real_posx, real_posy, width, height); //Border
 
@@ -115,6 +118,7 @@ public class UIWidgets {
         //System.out.println("Adding: " + text);
         WidgetEntity w = new WidgetEntity();
         w.type = "DRO";
+        w.text = "DRO";
         WidgetStack.add(w);
     }
     public void AddMomentaryButton(String text, String anchor, int width, int height, int posx, int posy, Runnable action){
@@ -147,7 +151,7 @@ public class UIWidgets {
         if (isDefault) w.engaged = true;
         WidgetStack.add(w);
     }
-    public void AddSlider(String text, String anchor, int width, int height, int posx, int posy, int min, int max, int defaultPosition, Runnable action){
+    public void AddSlider(String text, String anchor, int width, int height, int posx, int posy, int min, int max, int defaultPosition, String unit_name, Runnable action){
         //System.out.println("Adding: " + text);
         WidgetEntity w = new WidgetEntity();
         w.type = "slider";
@@ -163,7 +167,9 @@ public class UIWidgets {
         w.max = max;
         w.position = map(defaultPosition, min, max, 0, width);
         w.engaged = false;
+        w.unit_name = unit_name;
         WidgetStack.add(w);
+        action.run();
     }
     public int getSliderPosition(String text)
     {
@@ -229,7 +235,7 @@ public class UIWidgets {
                     WidgetStack.get(x).real_posx = WidgetStack.get(x).posx;
                     WidgetStack.get(x).real_posy = WidgetStack.get(x).posy;
                 }
-                DrawSlider(WidgetStack.get(x).text, WidgetStack.get(x).engaged, WidgetStack.get(x).width, WidgetStack.get(x).height, WidgetStack.get(x).real_posx, WidgetStack.get(x).real_posy, WidgetStack.get(x).position, WidgetStack.get(x).min, WidgetStack.get(x).max);
+                DrawSlider(WidgetStack.get(x).text, WidgetStack.get(x).engaged, WidgetStack.get(x).width, WidgetStack.get(x).height, WidgetStack.get(x).real_posx, WidgetStack.get(x).real_posy, WidgetStack.get(x).position, WidgetStack.get(x).min, WidgetStack.get(x).max, WidgetStack.get(x).unit_name);
             }
             if (WidgetStack.get(x).type.equals("DRO")){
                 DrawDRO();

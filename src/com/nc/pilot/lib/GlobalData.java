@@ -21,13 +21,12 @@ public class GlobalData {
     public static float[] dro = {0, 0, 0};
     public static float[] last_dro = {0, 0, 0};
     public static float[] work_offset = {0, 0, 0};
+    public static float CurrentVelocity;
     public static String status;
     public static boolean IsHomed = false;
-    public static boolean IsInMotion = false;
-    public static boolean IsXAxisInMotion = false;
-    public static boolean IsYAxisInMotion = false;
-    public static boolean IsZAxisInMotion = false;
     public static boolean pendingReset = false;
+    public static boolean PlannerReady = false;
+    public static int FreeBuffers;
     //public static ArrayList<String> WriteBuffer = new ArrayList();
 
     public static float X_Scale = 635f; //Steps/Inch

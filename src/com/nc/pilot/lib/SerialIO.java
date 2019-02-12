@@ -5,22 +5,19 @@
  */
 package com.nc.pilot.lib;
 
-import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import gnu.io.CommPortIdentifier; 
+
+import com.nc.pilot.lib.MotionController.MotionController;
+import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent; 
 import gnu.io.SerialPortEventListener; 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.nio.charset.Charset;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,10 +27,10 @@ public class SerialIO implements SerialPortEventListener {
 	SerialPort serialPort;
     long last_write;
     int write_wait = 50; //Don't write to port any faster that 100m/s between writes
-    private  MotionController motion_controller;
+    private MotionController motion_controller;
         /** The port we're normally going to use. */
 	private static final String PORT_NAMES[] = { 
-			"COM3",
+			"COM6",
                 "/dev/tty.usbmodem1411"
 	};
 	/**
@@ -117,7 +114,7 @@ public class SerialIO implements SerialPortEventListener {
         }
         public synchronized void write(String data)
         {
-            //System.out.println("Writing " + data);
+            System.out.println("Writing " + data);
              if (serialPort != null){
                      Writer w = null;
                  try {

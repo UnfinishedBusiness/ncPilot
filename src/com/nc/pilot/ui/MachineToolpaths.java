@@ -1,8 +1,8 @@
 package com.nc.pilot.ui;
 
 import com.nc.pilot.lib.*;
+import com.nc.pilot.lib.MotionController.MotionController;
 import com.nc.pilot.lib.ToolPathViewer.ToolpathViewer;
-import com.nc.pilot.lib.ToolPathViewer.ViewerPart;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 import org.kabeja.parser.ParseException;
 
@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * This program demonstrates how to draw lines using Graphics2D object.

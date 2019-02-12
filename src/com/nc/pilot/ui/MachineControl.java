@@ -1,6 +1,7 @@
 package com.nc.pilot.ui;
 
 import com.nc.pilot.lib.*;
+import com.nc.pilot.lib.MotionController.MotionController;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
 import javax.swing.*;
@@ -8,8 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.TimerTask;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This program demonstrates how to draw lines using Graphics2D object.
@@ -43,10 +44,9 @@ public class MachineControl extends JFrame {
         repaint_timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                serial.write(MotionController.SatusReport);
                 repaint();
             }
-        }, 0, 200);
+        }, 0, 50);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -54,6 +54,7 @@ public class MachineControl extends JFrame {
                 ui_widgets.ClickPressStack(e.getX(), e.getY());
                 repaint();
             }
+
             public void mouseReleased(MouseEvent e) {
                 //System.out.println(e.getX() + "," + e.getY());
                 ui_widgets.ClickReleaseStack(e.getX(), e.getY());
@@ -68,6 +69,7 @@ public class MachineControl extends JFrame {
                 GlobalData.MousePositionY = e.getY();
                 ui_widgets.MouseMotionStack(e.getX(), e.getY());
             }
+
             public void mouseDragged(MouseEvent e) {
                 //System.out.println(e.getX() + "," + e.getY());
                 GlobalData.MousePositionX = e.getX();
@@ -78,21 +80,18 @@ public class MachineControl extends JFrame {
         });
         panel.addMouseWheelListener(new MouseWheelListener() {
             @Override
-            public void mouseWheelMoved(MouseWheelEvent e)
-            {
+            public void mouseWheelMoved(MouseWheelEvent e) {
                 float old_zoom = GlobalData.ViewerZoom;
                 if (e.getWheelRotation() < 0) {
                     GlobalData.ViewerZoom *= 1.2;
                     //System.out.println("ViewerZoom: " + GlobalData.ViewerZoom);
-                    if (GlobalData.ViewerZoom > GlobalData.MaxViewerZoom)
-                    {
+                    if (GlobalData.ViewerZoom > GlobalData.MaxViewerZoom) {
                         GlobalData.ViewerZoom = GlobalData.MaxViewerZoom;
                     }
                 } else {
                     GlobalData.ViewerZoom *= 0.8;
                     //System.out.println("ViewerZoom: " + GlobalData.ViewerZoom);
-                    if (GlobalData.ViewerZoom < GlobalData.MinViewerZoom)
-                    {
+                    if (GlobalData.ViewerZoom < GlobalData.MinViewerZoom) {
                         GlobalData.ViewerZoom = GlobalData.MinViewerZoom;
                     }
                 }
@@ -114,43 +113,37 @@ public class MachineControl extends JFrame {
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
-                                    if (GlobalData.UpArrowKeyState == false)
-                                    {
+                                    if (GlobalData.UpArrowKeyState == false) {
                                         GlobalData.UpArrowKeyState = true;
                                         MotionController.JogY_Plus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
-                                    if (GlobalData.DownArrowKeyState == false)
-                                    {
+                                    if (GlobalData.DownArrowKeyState == false) {
                                         GlobalData.DownArrowKeyState = true;
                                         MotionController.JogY_Minus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
-                                    if (GlobalData.RightArrowKeyState == false)
-                                    {
+                                    if (GlobalData.RightArrowKeyState == false) {
                                         GlobalData.RightArrowKeyState = true;
                                         MotionController.JogX_Plus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
-                                    if (GlobalData.LeftArrowKeyState == false)
-                                    {
+                                    if (GlobalData.LeftArrowKeyState == false) {
                                         GlobalData.LeftArrowKeyState = true;
                                         MotionController.JogX_Minus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
-                                    if (GlobalData.RightArrowKeyState == false)
-                                    {
+                                    if (GlobalData.PageUpKeyState == false) {
                                         GlobalData.PageUpKeyState = true;
                                         MotionController.JogZ_Plus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
-                                    if (GlobalData.LeftArrowKeyState == false)
-                                    {
+                                    if (GlobalData.PageDownKeyState == false) {
                                         GlobalData.PageDownKeyState = true;
                                         MotionController.JogZ_Minus();
                                     }
@@ -239,7 +232,7 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 System.out.println("Clicked on Abort!");
-                MotionController.SoftReset();
+                MotionController.Abort();
             }
         });
         ui_widgets.AddMomentaryButton("Hold", "bottom-right", 80, 60, 190, 10, new Runnable() {
@@ -272,6 +265,7 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 System.out.println("Go Home!");
+                motion_controller.WriteBuffer("G90 G0 X10 Y10\n");
             }
         });
         ui_widgets.AddMomentaryButton("Probe Z", "bottom-right", 170, 60, 190, 150, new Runnable() {
@@ -331,10 +325,10 @@ public class MachineControl extends JFrame {
                 System.out.println("New position: " + ui_widgets.getSliderPosition("Jog Speed"));
             }
         });*/
-        ui_widgets.AddSlider("Jog Speed", "bottom-right", 350, 60, 10, 360, 0, (int)GlobalData.Max_linear_Vel , 300, new Runnable(){
+        ui_widgets.AddSlider("Jog Speed", "bottom-right", 350, 60, 10, 360, 0, (int)GlobalData.Max_linear_Vel, 300, "Inch/Min", new Runnable(){
             @Override
             public void run() {
-                //System.out.println("New position: " + ui_widgets.getSliderPosition("Jog Speed"));
+                System.out.println("New position: " + ui_widgets.getSliderPosition("Jog Speed"));
                 motion_controller.SetJogSpeed(ui_widgets.getSliderPosition("Jog Speed"));
             }
         });
