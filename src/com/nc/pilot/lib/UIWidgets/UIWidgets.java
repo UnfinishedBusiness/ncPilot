@@ -43,22 +43,22 @@ public class UIWidgets {
             g.setColor(Color.green);
         }
         int DRO_X_Offset = -30;
-        g.drawString("X:", Frame_Bounds.width - 350 - DRO_X_Offset, 70);
-        g.drawString("Y:", Frame_Bounds.width - 350 - DRO_X_Offset, 140);
-        g.drawString("Z:", Frame_Bounds.width - 350 - DRO_X_Offset, 210);
+        g.drawString("X", Frame_Bounds.width - 350 - DRO_X_Offset, 70);
+        g.drawString("Y", Frame_Bounds.width - 350 - DRO_X_Offset, 140);
+        g.drawString("Z", Frame_Bounds.width - 350 - DRO_X_Offset, 210);
 
         g.drawString(String.format("%.4f", GlobalData.dro[0]), Frame_Bounds.width - 220 - DRO_X_Offset, 70);
         g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 220 - DRO_X_Offset, 140);
         g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 220 - DRO_X_Offset, 210);
 
         g.setFont(new Font("Arial", Font.BOLD, 10));
-        g.drawString("ABS:", Frame_Bounds.width - 300 - DRO_X_Offset, 70);
-        g.drawString("ABS:", Frame_Bounds.width - 300 - DRO_X_Offset, 140);
-        g.drawString("ABS:", Frame_Bounds.width - 300 - DRO_X_Offset, 210);
+        g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 55);
+        g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 125);
+        g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 195);
 
-        g.drawString(String.format("%.4f", GlobalData.dro[0]), Frame_Bounds.width - 270 - DRO_X_Offset, 70);
-        g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 270 - DRO_X_Offset, 140);
-        g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 270 - DRO_X_Offset, 210);
+        g.drawString(String.format("%.4f", GlobalData.dro[0]), Frame_Bounds.width - 300 - DRO_X_Offset, 70);
+        g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 300 - DRO_X_Offset, 140);
+        g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 300 - DRO_X_Offset, 210);
 
         g.drawRect(Frame_Bounds.width - 360, 10, 350, 240);
     }
@@ -85,6 +85,7 @@ public class UIWidgets {
         g.setColor(Color.red);
         int button_font_size = 15;
         g.setFont(new Font("Arial", Font.PLAIN, button_font_size));
+        //text = text + " - " + getSliderPosition(text);
         g.drawString(text, real_posx + 20, real_posy + 20);
         g.drawRect(real_posx, real_posy, width, height); //Border
 

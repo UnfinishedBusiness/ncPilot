@@ -34,7 +34,7 @@ public class SerialIO implements SerialPortEventListener {
         /** The port we're normally going to use. */
 	private static final String PORT_NAMES[] = { 
 			"COM3",
-                "/dev/tty.usbmodem1421"
+                "/dev/tty.usbmodem1411"
 	};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 

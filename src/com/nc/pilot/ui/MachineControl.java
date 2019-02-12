@@ -334,7 +334,8 @@ public class MachineControl extends JFrame {
         ui_widgets.AddSlider("Jog Speed", "bottom-right", 350, 60, 10, 360, 0, (int)GlobalData.Max_linear_Vel , 300, new Runnable(){
             @Override
             public void run() {
-                System.out.println("New position: " + ui_widgets.getSliderPosition("Jog Speed"));
+                //System.out.println("New position: " + ui_widgets.getSliderPosition("Jog Speed"));
+                motion_controller.SetJogSpeed(ui_widgets.getSliderPosition("Jog Speed"));
             }
         });
     }

@@ -91,6 +91,8 @@ public class MotionController {
     public static String TorchOn = "M3\r\n";
     public static String TorchOff = "M5\r\n";
 
+    private static float jog_speed = 0;
+
     public static void WriteBuffer(String data){
         //GlobalData.WriteBuffer.add(data);
         serial.write(data);
@@ -200,6 +202,10 @@ public class MotionController {
             Thread.currentThread().interrupt();
         }
     }
+    public void SetJogSpeed(float jog)
+    {
+        jog_speed = jog;
+    }
     public static void CycleStart()
     {
         WriteBuffer("~\n");
@@ -224,29 +230,29 @@ public class MotionController {
     }
     public static void JogX_Plus()
     {
-        WriteBuffer("$J=G91 F10 G20 X20\n");
+        WriteBuffer("$J=G91 F" + jog_speed + " G20 X20\n");
     }
     public static void JogX_Minus()
     {
-        WriteBuffer("$J=G91 F10 G20 X-20\n");
+        WriteBuffer("$J=G91 F" + jog_speed + " G20 X-20\n");
     }
 
     public static void JogY_Plus()
     {
-        WriteBuffer("$J=G91 F10 G20 Y20\n");
+        WriteBuffer("$J=G91 F" + jog_speed + " G20 Y20\n");
     }
     public static void JogY_Minus()
     {
-        WriteBuffer("$J=G91 F10 G20 Y-20\n");
+        WriteBuffer("$J=G91 F" + jog_speed + " G20 Y-20\n");
     }
 
     public static void JogZ_Plus()
     {
-        WriteBuffer("$J=G91 F10 G20 Z20\n");
+        WriteBuffer("$J=G91 F" + jog_speed + " G20 Z20\n");
     }
     public static void JogZ_Minus()
     {
-        WriteBuffer("$J=G91 F10 G20 Z-20\n");
+        WriteBuffer("$J=G91 F" + jog_speed + " G20 Z-20\n");
     }
 
     public static void EndJog()
