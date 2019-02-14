@@ -90,7 +90,7 @@ public class UIWidgets {
             g.setColor(Color.red);
         }
         g.setFont(new Font("Arial", Font.PLAIN, button_font_size));
-        int text_length = (text.length() - 3) * button_font_size;
+        //int text_length = (text.length() - 3) * button_font_size;
         int text_posx = (width / 2) - (calculateTextWidth(text) / 2) + posx;
         int text_posy = posy + (height / 2) + (button_font_size/2);
         g.drawString(text, text_posx, text_posy);

@@ -1,6 +1,7 @@
 package com.nc.pilot.ui;
 
 import com.nc.pilot.lib.*;
+import com.nc.pilot.lib.MDIConsole.MDIConsole;
 import com.nc.pilot.lib.MotionController.MotionController;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
@@ -26,6 +27,7 @@ public class MachineControl extends JFrame {
     MotionController motion_controller;
     UIWidgets ui_widgets;
     GcodeViewer gcode_viewer;
+    MDIConsole mdi_console;
     public MachineControl() {
 
         super("Xmotion Gen3 - Machine Control");
@@ -40,6 +42,7 @@ public class MachineControl extends JFrame {
         motion_controller.InitMotionController();
         ui_widgets = new UIWidgets();
         gcode_viewer = new GcodeViewer();
+        mdi_console = new MDIConsole();
         Layout_UI();
         GcodeViewerPanel panel = new GcodeViewerPanel();
         add(panel);
@@ -211,12 +214,20 @@ public class MachineControl extends JFrame {
                                         motion_controller.CycleStart();
                                     }
                                 }
+                                if (ke.getKeyCode() == KeyEvent.VK_F1) {
+
+                                    if (GlobalData.AltKeyPressed == true)
+                                    {
+                                        mdi_console.show();
+                                    }
+                                }
                                 if (ke.getKeyCode() == KeyEvent.VK_ALT) {
 
                                     GlobalData.AltKeyPressed = false;
                                 }
                                 break;
                         }
+                        mdi_console.dispatchKeyEvent(ke);
                         return false;
                     }
                 });
@@ -394,6 +405,7 @@ public class MachineControl extends JFrame {
             /* End Wallpaper */
             gcode_viewer.RenderStack(g2d);
             ui_widgets.RenderStack(g2d, Frame_Bounds);
+            mdi_console.RenderStack(g2d, Frame_Bounds);
             //Display Mouse position in MCS and Screen Cord
             //g.setColor(Color.green);
             //g.setFont(new Font("Arial", Font.BOLD, 12));

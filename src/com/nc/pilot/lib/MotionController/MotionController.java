@@ -8,8 +8,6 @@ package com.nc.pilot.lib.MotionController;
 import com.google.gson.Gson;
 import com.nc.pilot.lib.GlobalData;
 import com.nc.pilot.lib.SerialIO;
-import com.nc.pilot.lib.ncConfig;
-import com.nc.pilot.ui.MachineControl;
 
 import java.io.IOException;
 
