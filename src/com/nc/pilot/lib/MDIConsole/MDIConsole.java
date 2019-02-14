@@ -1,4 +1,5 @@
 package com.nc.pilot.lib.MDIConsole;
+import com.nc.pilot.lib.GcodeViewer;
 import com.nc.pilot.lib.GlobalData;
 import com.nc.pilot.lib.MotionController.MotionController;
 
@@ -23,6 +24,21 @@ public class MDIConsole {
             public void run() {
                 System.out.println("Arguments: " + get_args("close"));
                 hide();
+            }
+        });
+        AddCommand("probez", new Runnable() {
+            @Override
+            public void run() {
+                MotionController.BlockNextStatusReports = 1;
+                MotionController.WriteBufferAndRunAfterStop("G92.2\nG38.2 Z-10 F1\n", new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("Z Probed!");
+                        MotionController.BlockNextStatusReports = 1;
+                        MotionController.WriteBuffer("G92.3\nG92 Z=0\n");
+                    }
+                });
+
             }
         });
     }
@@ -131,7 +147,7 @@ public class MDIConsole {
                     else
                     {
                         char c = ke.getKeyChar();
-                        if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '.' || c == '=')
+                        if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '.' || c == '=' || c == '-')
                         {
                             cmd_line = cmd_line + c;
                         }

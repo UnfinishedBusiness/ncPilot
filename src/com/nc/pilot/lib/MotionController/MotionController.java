@@ -57,6 +57,8 @@ public class MotionController {
     private static float lastExecutionLine = 0;
     private static UIWidgets ui_widgets;
     private static boolean WaitingForStopMotion = false;
+    private static Runnable RunAfterStop = null;
+    public static int BlockNextStatusReports = 0;
     public MotionController(SerialIO s)
     {
         serial = s;
@@ -105,13 +107,16 @@ public class MotionController {
             }
             if (json.sr != null)
             {
-                if (json.sr.posx != null)
+                if (BlockNextStatusReports == 0)
                 {
-                    GlobalData.dro[0] = Float.parseFloat(json.sr.posx);
-                }
-                if (json.sr.posy != null)
-                {
-                    GlobalData.dro[1] = Float.parseFloat(json.sr.posy);
+                    if (json.sr.posx != null)
+                    {
+                        GlobalData.dro[0] = Float.parseFloat(json.sr.posx);
+                    }
+                    if (json.sr.posy != null)
+                    {
+                        GlobalData.dro[1] = Float.parseFloat(json.sr.posy);
+                    }
                 }
                 if (json.sr.posz != null)
                 {
@@ -150,29 +155,32 @@ public class MotionController {
                         GlobalData.machine_cordinates[2] = Float.parseFloat(json.sr.mpoz);
                     }
                 }
-                if (json.sr.ofsx != null)
+                if (BlockNextStatusReports == 0)
                 {
-                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
+                    if (json.sr.ofsx != null)
                     {
-                        GlobalData.work_offset[0] = Float.parseFloat(json.sr.ofsx) / 25.4f;
+                        if (GlobalData.CurrentUnits.contentEquals("Inch"))
+                        {
+                            GlobalData.work_offset[0] = Float.parseFloat(json.sr.ofsx) / 25.4f;
+                        }
+                        else
+                        {
+                            GlobalData.work_offset[0] = Float.parseFloat(json.sr.ofsx);
+                        }
+                        //System.out.println("Set X work offset to: " + GlobalData.work_offset[0]);
                     }
-                    else
+                    if (json.sr.ofsy != null)
                     {
-                        GlobalData.work_offset[0] = Float.parseFloat(json.sr.ofsx);
+                        if (GlobalData.CurrentUnits.contentEquals("Inch"))
+                        {
+                            GlobalData.work_offset[1] = Float.parseFloat(json.sr.ofsy) / 25.4f;
+                        }
+                        else
+                        {
+                            GlobalData.work_offset[1] = Float.parseFloat(json.sr.ofsy);
+                        }
+                        //System.out.println("Set Y work offset to: " + GlobalData.work_offset[1]);
                     }
-                    //System.out.println("Set X work offset to: " + GlobalData.work_offset[0]);
-                }
-                if (json.sr.ofsy != null)
-                {
-                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
-                    {
-                        GlobalData.work_offset[1] = Float.parseFloat(json.sr.ofsy) / 25.4f;
-                    }
-                    else
-                    {
-                        GlobalData.work_offset[1] = Float.parseFloat(json.sr.ofsy);
-                    }
-                    //System.out.println("Set Y work offset to: " + GlobalData.work_offset[1]);
                 }
                 if (json.sr.ofsz != null)
                 {
@@ -226,7 +234,16 @@ public class MotionController {
                     if (stat == 0) GlobalData.MachineState = "Init";
                     if (stat == 1) GlobalData.MachineState = "Ready";
                     if (stat == 2) GlobalData.MachineState = "Alarm";
-                    if (stat == 3) GlobalData.MachineState = "Stop";
+                    if (stat == 3)
+                    {
+                        GlobalData.MachineState = "Stop";
+                        if (RunAfterStop != null)
+                        {
+                            Runnable once = RunAfterStop;
+                            RunAfterStop = null;
+                            once.run();
+                        }
+                    }
                     if (stat == 4) GlobalData.MachineState = "End";
                     if (stat == 5) GlobalData.MachineState = "Motion";
                     if (stat == 6) GlobalData.MachineState = "Hold";
@@ -249,9 +266,9 @@ public class MotionController {
             }
         }
     }
-    public static void WriteWait() {
+    public static void WriteWait(int ms) {
         try {
-            Thread.sleep(100);
+            Thread.sleep(ms);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
@@ -344,7 +361,15 @@ public class MotionController {
     }
     public static void StatusReport()
     {
-        WriteBuffer("{\"sr\":\"\"}\n");
+        if (BlockNextStatusReports == 0)
+        {
+            WriteBuffer("{\"sr\":\"\"}\n");
+        }
+        else
+        {
+            BlockNextStatusReports--;
+            if (BlockNextStatusReports < 0) BlockNextStatusReports = 0;
+        }
     }
     public static void Home()
     {
@@ -401,6 +426,11 @@ public class MotionController {
             }
         }
         return "";
+    }
+    public static void WriteBufferAndRunAfterStop(String mdi, Runnable run)
+    {
+        WriteBuffer(mdi);
+        RunAfterStop = run;
     }
     public static void LoadGcodeFile(String filename)
     {
