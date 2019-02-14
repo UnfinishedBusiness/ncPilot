@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class GlobalData {
 
     public static float[] dro = {0, 0, 0};
-    public static float[] last_dro = {0, 0, 0};
     public static float[] work_offset = {0, 0, 0};
     public static float[] machine_cordinates = {0, 0, 0};
     public static String MachineState = "";
@@ -30,6 +29,9 @@ public class GlobalData {
     public static boolean PlannerReady = false;
     public static String JogMode = "Continuous";
     public static int FreeBuffers;
+    public static String[] GcodeFileLines;
+    public static int GcodeFileExecutionLine = 0;
+    public static boolean RunCycle = false;
     //public static ArrayList<String> WriteBuffer = new ArrayList();
 
     public static float X_Scale = 635f; //Steps/Inch
@@ -44,7 +46,7 @@ public class GlobalData {
     public static float Max_linear_Vel = 600f;
     public static float X_Extents = 48.250f;
     public static float Y_Extents = 45.500f;
-    public static float Z_Extents = -4.000f;
+    public static float Z_Extents = 4.000f;
 
     //Used to ignore Pressed repeats!
     public static Boolean UpArrowKeyState = false;
@@ -53,6 +55,7 @@ public class GlobalData {
     public static Boolean RightArrowKeyState = false;
     public static Boolean PageUpKeyState = false;
     public static Boolean PageDownKeyState = false;
+    public static Boolean AltKeyPressed = false;
 
 
     public static float ViewerZoom = 19f;

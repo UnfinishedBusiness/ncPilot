@@ -33,6 +33,10 @@ public class UIWidgets {
 
     public void DrawDRO()
     {
+        Color c=new Color(0.1f, 0.1f, 0.1f, 1f);
+        g.setColor(c);
+        g.fillRect(Frame_Bounds.width - 370, 0, 400, Frame_Bounds.height);
+
         g.setFont(new Font("Arial", Font.BOLD, 45));
         if (GlobalData.IsHomed == false)
         {

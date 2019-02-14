@@ -11,6 +11,8 @@ import com.nc.pilot.lib.SerialIO;
 import com.nc.pilot.lib.ncConfig;
 import com.nc.pilot.ui.MachineControl;
 
+import java.io.IOException;
+
 /**
  *
  * @author travis
@@ -65,7 +67,7 @@ public class MotionController {
     }
     private static void ParseQueReport(Integer q)
     {
-        System.out.println("Buffer Available: " + q);
+        //System.out.println("Buffer Available: " + q);
         GlobalData.FreeBuffers = q;
         if (q > 10) //If qr is > 30
         {
@@ -136,11 +138,11 @@ public class MotionController {
                 {
                     if (GlobalData.CurrentUnits.contentEquals("Inch"))
                     {
-                        GlobalData.machine_cordinates[1] = Float.parseFloat(json.sr.mpoz) / 25.4f;
+                        GlobalData.machine_cordinates[2] = Float.parseFloat(json.sr.mpoz) / 25.4f;
                     }
                     else
                     {
-                        GlobalData.machine_cordinates[1] = Float.parseFloat(json.sr.mpoz);
+                        GlobalData.machine_cordinates[2] = Float.parseFloat(json.sr.mpoz);
                     }
                 }
                 if (json.sr.ofsx != null)
@@ -153,7 +155,7 @@ public class MotionController {
                     {
                         GlobalData.work_offset[0] = Float.parseFloat(json.sr.ofsx);
                     }
-                    System.out.println("Set X work offset to: " + GlobalData.work_offset[0]);
+                    //System.out.println("Set X work offset to: " + GlobalData.work_offset[0]);
                 }
                 if (json.sr.ofsy != null)
                 {
@@ -165,7 +167,7 @@ public class MotionController {
                     {
                         GlobalData.work_offset[1] = Float.parseFloat(json.sr.ofsy);
                     }
-                    System.out.println("Set Y work offset to: " + GlobalData.work_offset[1]);
+                    //System.out.println("Set Y work offset to: " + GlobalData.work_offset[1]);
                 }
                 if (json.sr.ofsz != null)
                 {
@@ -177,7 +179,7 @@ public class MotionController {
                     {
                         GlobalData.work_offset[2] = Float.parseFloat(json.sr.ofsz);
                     }
-                    System.out.println("Set Z work offset to: " + GlobalData.work_offset[2]);
+                    //System.out.println("Set Z work offset to: " + GlobalData.work_offset[2]);
                 }
                 if (json.sr.vel != null)
                 {
@@ -230,6 +232,7 @@ public class MotionController {
     }
     public static void CycleStart()
     {
+        GlobalData.RunCycle = true;
         WriteBuffer("~\n");
     }
     public static void FeedHold()
@@ -240,6 +243,7 @@ public class MotionController {
     public static void Abort()
     {
         WriteBuffer("%\n");
+        GlobalData.GcodeFileExecutionLine = 0;
     }
     public static void JogX_Plus()
     {
@@ -319,6 +323,27 @@ public class MotionController {
         ///WriteWait();
         //WriteWait();
         StatusReport();
+    }
+    public static void LoadGcodeFile(String filename)
+    {
+        try {
+            String buffer = GlobalData.readFile(filename);
+            String[] lines = buffer.split("\n");
+            GlobalData.GcodeFileLines = lines;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void Poll()
+    {
+        if (GlobalData.RunCycle == true && GlobalData.GcodeFileExecutionLine < GlobalData.GcodeFileLines.length)
+        {
+            if (GlobalData.FreeBuffers > 10)
+            {
+                WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileExecutionLine]);
+                GlobalData.GcodeFileExecutionLine++;
+            }
+        }
     }
     public static void InitMotionController()
     {

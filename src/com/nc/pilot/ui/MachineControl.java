@@ -21,6 +21,8 @@ public class MachineControl extends JFrame {
 
     private SerialIO serial;
     Timer repaint_timer = new Timer();
+    Timer status_report_timer = new Timer();
+    Timer motion_control_poll_timer = new Timer();
     MotionController motion_controller;
     UIWidgets ui_widgets;
     GcodeViewer gcode_viewer;
@@ -48,6 +50,18 @@ public class MachineControl extends JFrame {
                 repaint();
             }
         }, 0, 50);
+        status_report_timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                motion_controller.StatusReport();
+            }
+        }, 0, 2000);
+        status_report_timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                motion_controller.Poll();
+            }
+        }, 0, 250);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -149,6 +163,10 @@ public class MachineControl extends JFrame {
                                         MotionController.JogZ_Minus();
                                     }
                                 }
+                                if (ke.getKeyCode() == KeyEvent.VK_ALT) {
+
+                                    GlobalData.AltKeyPressed = true;
+                                }
                                 //repaint();
                                 break;
 
@@ -181,10 +199,22 @@ public class MachineControl extends JFrame {
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
 
                                     MotionController.FeedHold();
-                                    //Load up a bunch of lines onto viewer entity stack and repaint
-                                    repaint();
                                 }
+                                if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
 
+                                    MotionController.Abort();
+                                }
+                                if (ke.getKeyCode() == KeyEvent.VK_R) {
+
+                                    if (GlobalData.AltKeyPressed == true)
+                                    {
+                                        motion_controller.CycleStart();
+                                    }
+                                }
+                                if (ke.getKeyCode() == KeyEvent.VK_ALT) {
+
+                                    GlobalData.AltKeyPressed = false;
+                                }
                                 break;
                         }
                         return false;
@@ -204,6 +234,7 @@ public class MachineControl extends JFrame {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                     GcodeInterpreter g = new GcodeInterpreter(selectedFile.getAbsolutePath());
+                    motion_controller.LoadGcodeFile(selectedFile.getAbsolutePath());
                     ArrayList<GcodeInterpreter.GcodeMove> moves = g.GetMoves();
                     gcode_viewer.ClearStack();
 
@@ -286,7 +317,7 @@ public class MachineControl extends JFrame {
                 }
             }
         });
-        ui_widgets.AddMomentaryButton("X=0", "bottom-right", 110, 60, 10, 220, new Runnable() {
+        ui_widgets.AddMomentaryButton("X=0", "bottom-right", 110, 60, 250, 220, new Runnable() {
             @Override
             public void run() {
                 System.out.println("X=0");
@@ -300,7 +331,7 @@ public class MachineControl extends JFrame {
                 motion_controller.SetYzero();
             }
         });
-        ui_widgets.AddMomentaryButton("Z=0", "bottom-right", 110, 60, 250, 220, new Runnable() {
+        ui_widgets.AddMomentaryButton("Z=0", "bottom-right", 110, 60, 10, 220, new Runnable() {
             @Override
             public void run() {
                 System.out.println("Z=0");
