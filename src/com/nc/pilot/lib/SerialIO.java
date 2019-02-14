@@ -114,7 +114,7 @@ public class SerialIO implements SerialPortEventListener {
         }
         public synchronized void write(String data)
         {
-            System.out.println("Writing " + data);
+            //System.out.println("Writing " + data);
              if (serialPort != null){
                      Writer w = null;
                  try {

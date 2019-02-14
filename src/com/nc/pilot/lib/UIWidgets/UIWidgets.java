@@ -78,6 +78,15 @@ public class UIWidgets {
 
         g.drawRect(Frame_Bounds.width - 360, 10, 350, 240);
     }
+    public void engageButton(String text, boolean engaged)
+    {
+        for (int x = 0; x < WidgetStack.size(); x++)
+        {
+            if (WidgetStack.get(x).text.equals(text)){
+                WidgetStack.get(x).engaged = engaged;
+            }
+        }
+    }
     public void DrawButton(String text, boolean engaged, int width, int height, int posx, int posy) {
         //System.out.println("Drawing " + text);
         int button_font_size = 15;

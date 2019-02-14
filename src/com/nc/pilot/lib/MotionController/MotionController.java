@@ -8,6 +8,7 @@ package com.nc.pilot.lib.MotionController;
 import com.google.gson.Gson;
 import com.nc.pilot.lib.GlobalData;
 import com.nc.pilot.lib.SerialIO;
+import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
 import java.io.IOException;
 
@@ -53,12 +54,18 @@ public class MotionController {
 
     /* End Default Parameters */
     private static SerialIO serial;
+    private static float lastExecutionLine = 0;
+    private static UIWidgets ui_widgets;
+    private static boolean WaitingForStopMotion = false;
     public MotionController(SerialIO s)
     {
         serial = s;
     }
     private static float jog_speed = 0;
-
+    public static void inherit_ui_widgets(UIWidgets u)
+    {
+        ui_widgets = u;
+    }
     public static void WriteBuffer(String data){
         //GlobalData.WriteBuffer.add(data);
         serial.write(data);
@@ -77,7 +84,7 @@ public class MotionController {
         }
     }
     public static void ReadBuffer(String inputLine){
-        System.out.println("Read line: " + inputLine);
+        //System.out.println("Read line: " + inputLine);
         Gson g = new Gson();
         Gson qr = new Gson();
         Report report = qr.fromJson(inputLine, Report.class);
@@ -187,6 +194,31 @@ public class MotionController {
                 {
                     GlobalData.ProgrammedFeedrate = Float.parseFloat(json.sr.feed);
                 }
+                if (json.sr.line != null)
+                {
+                    lastExecutionLine = GlobalData.CurrentExecutionLine;
+                    GlobalData.CurrentExecutionLine = Integer.parseInt(json.sr.line);
+                    //System.out.println("Current Execution Line: " + GetGcodeLineAtN(GlobalData.CurrentExecutionLine));
+                    for (float x = lastExecutionLine; x < GlobalData.CurrentExecutionLine; x++)
+                    {
+                        String Line = GetGcodeLineAtN((int)x);
+                        float Mword = getGword(Line, 'M');
+                        if (Mword != -1f)
+                        {
+                            //System.out.println("Found M word: " + Mword);
+                            if (Mword == 3)
+                            {
+                                ui_widgets.engageButton("Torch On", true);
+                                ui_widgets.engageButton("Torch Off", false);
+                            }
+                            if (Mword == 5)
+                            {
+                                ui_widgets.engageButton("Torch On", false);
+                                ui_widgets.engageButton("Torch Off", true);
+                            }
+                        }
+                    }
+                }
                 if (json.sr.stat != null)
                 {
                     int stat = Integer.parseInt(json.sr.stat);
@@ -241,7 +273,8 @@ public class MotionController {
     public static void Abort()
     {
         WriteBuffer("%\n");
-        GlobalData.GcodeFileExecutionLine = 0;
+        GlobalData.GcodeFileSendLine = 0;
+        WaitingForStopMotion = false;
         GlobalData.RunCycle = false;
     }
     public static void JogX_Plus()
@@ -323,6 +356,52 @@ public class MotionController {
         //WriteWait();
         StatusReport();
     }
+    public static float getGword(String line, char Word)
+    {
+        boolean capture = false;
+        String word_builder = "";
+        for (int x = 0; x < line.length(); x++)
+        {
+            if (line.charAt(x) == '(')
+            {
+                //Found comment
+                break;
+            }
+            if (capture == true)
+            {
+                if (Character.isDigit(line.charAt(x)) || line.charAt(x) == '.' || line.charAt(x) == '-')
+                {
+                    word_builder = word_builder + line.charAt(x);
+                }
+                if ((Character.isAlphabetic(line.charAt(x)) && line.charAt(x) != ' ') || x == line.length() - 1)
+                {
+                    if (word_builder != "")
+                    {
+                        float word = new Float(word_builder);
+                        return word;
+                    }
+                    capture = false;
+                    word_builder = "";
+                }
+            }
+            if (line.charAt(x) == Word)
+            {
+                capture = true;
+            }
+        }
+        return -1f;
+    }
+    public static String GetGcodeLineAtN(int n)
+    {
+        for (int x = 0; x < GlobalData.GcodeFileLines.length; x++)
+        {
+            if (getGword(GlobalData.GcodeFileLines[x], 'N') == n)
+            {
+                return GlobalData.GcodeFileLines[x];
+            }
+        }
+        return "";
+    }
     public static void LoadGcodeFile(String filename)
     {
         try {
@@ -335,18 +414,31 @@ public class MotionController {
     }
     public static void Poll()
     {
-        if (GlobalData.RunCycle == true && GlobalData.GcodeFileExecutionLine < GlobalData.GcodeFileLines.length)
+        if (GlobalData.RunCycle == true && WaitingForStopMotion == false)
+        {
+            ui_widgets.engageButton("Start", true);
+        }
+        if (GlobalData.MachineState.contentEquals("Stop") && WaitingForStopMotion == true)
+        {
+            ui_widgets.engageButton("Start", false);
+            Abort();
+            WaitingForStopMotion = false;
+        }
+        if (GlobalData.RunCycle == true && GlobalData.GcodeFileSendLine < GlobalData.GcodeFileLines.length)
         {
             if (GlobalData.FreeBuffers > 5)
             {
-                if (GlobalData.GcodeFileLines[GlobalData.GcodeFileExecutionLine].toLowerCase().contains("m30"))
+                if (GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine].toLowerCase().contains("m30"))
                 {
-                    GlobalData.GcodeFileLines[GlobalData.GcodeFileExecutionLine] = "M5\nM9\nG80\nG90\nG94\n";
+                    GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] = "M5\nM9\nG80\nG90\nG94\n";
+                    WaitingForStopMotion = true;
                 }
-                WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileExecutionLine]);
-                GlobalData.GcodeFileExecutionLine++;
+                WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine]);
+                GlobalData.GcodeFileSendLine++;
             }
+
         }
+
     }
     public static void InitMotionController()
     {

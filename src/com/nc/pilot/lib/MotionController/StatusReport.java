@@ -20,4 +20,5 @@ public class StatusReport{
     public String feed;
     public String unit;
     public String stat;
+    public String line;
 }

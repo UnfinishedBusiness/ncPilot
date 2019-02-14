@@ -43,6 +43,7 @@ public class MachineControl extends JFrame {
         ui_widgets = new UIWidgets();
         gcode_viewer = new GcodeViewer();
         mdi_console = new MDIConsole();
+        motion_controller.inherit_ui_widgets(ui_widgets);
         Layout_UI();
         GcodeViewerPanel panel = new GcodeViewerPanel();
         add(panel);

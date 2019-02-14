@@ -28,9 +28,10 @@ public class GlobalData {
     public static boolean IsHomed = false;
     public static boolean PlannerReady = false;
     public static String JogMode = "Continuous";
+    public static int CurrentExecutionLine = 0;
     public static int FreeBuffers;
     public static String[] GcodeFileLines;
-    public static int GcodeFileExecutionLine = 0;
+    public static int GcodeFileSendLine = 0;
     public static boolean RunCycle = false;
     //public static ArrayList<String> WriteBuffer = new ArrayList();
 
