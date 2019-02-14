@@ -10,13 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GlobalData.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GlobalData.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MotionController/MotionController.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MotionController/MotionController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -94,11 +88,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UIWidgets.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UIWidgets.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
+            <state relative-caret-position="-714">
               <caret line="35" column="48" lean-forward="true" selection-start-line="35" selection-start-column="48" selection-end-line="35" selection-end-column="48" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GcodeViewer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="636">
+              <caret line="231" column="37" lean-forward="false" selection-start-line="231" selection-start-column="37" selection-end-line="231" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -201,11 +207,11 @@
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/JSON_Data.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/StatusReport.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/Report.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java" />
       </list>
     </option>
   </component>
@@ -980,16 +986,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1489">
-          <caret line="211" column="0" lean-forward="false" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeInterpreter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1041,8 +1037,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state relative-caret-position="-714">
           <caret line="35" column="48" lean-forward="true" selection-start-line="35" selection-start-column="48" selection-end-line="35" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="636">
+          <caret line="231" column="37" lean-forward="false" selection-start-line="231" selection-start-column="37" selection-end-line="231" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

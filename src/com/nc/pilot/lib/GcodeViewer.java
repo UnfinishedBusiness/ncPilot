@@ -201,14 +201,6 @@ public class GcodeViewer {
         g2d.setColor(Color.white);
         /* End machine boundry outline */
 
-        /* Begin machine tool pointer */
-        g2d.setColor(Color.blue);
-        float cross_hair_width = 15 / GlobalData.ViewerZoom;
-        g2d.draw(new Line2D.Float(((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((GlobalData.dro[0] + GlobalData.work_offset[0] + cross_hair_width) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
-        g2d.draw(new Line2D.Float(((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1] + cross_hair_width) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
-        g2d.draw(new Line2D.Float(((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((GlobalData.dro[0] + GlobalData.work_offset[0] - cross_hair_width) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
-        g2d.draw(new Line2D.Float(((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1] - cross_hair_width) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
-        /* End machine too pointer */
 
         for(int i = 0; i< gcodeViewerStack.size(); i++)
         {
@@ -229,6 +221,15 @@ public class GcodeViewer {
                 RenderArc(entity.start, entity.end, entity.center, entity.radius, "CCW");
             }
         }
+
+        /* Begin machine tool pointer */
+        g2d.setColor(Color.blue);
+        float cross_hair_width = 15 / GlobalData.ViewerZoom;
+        g2d.draw(new Line2D.Float(((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((GlobalData.dro[0] + GlobalData.work_offset[0] + cross_hair_width) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
+        g2d.draw(new Line2D.Float(((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1] + cross_hair_width) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
+        g2d.draw(new Line2D.Float(((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((GlobalData.dro[0] + GlobalData.work_offset[0] - cross_hair_width) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
+        g2d.draw(new Line2D.Float(((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((GlobalData.dro[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((GlobalData.dro[1] + GlobalData.work_offset[1] - cross_hair_width) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
+        /* End machine too pointer */
     }
     public void ClearStack()
     {
