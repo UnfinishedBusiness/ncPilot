@@ -64,7 +64,7 @@ public class MachineControl extends JFrame {
             public void run() {
                 motion_controller.Poll();
             }
-        }, 0, 250);
+        }, 0, 100);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -204,7 +204,7 @@ public class MachineControl extends JFrame {
                                     MotionController.FeedHold();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
-
+                                    MotionController.FeedHold();
                                     MotionController.Abort();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_R) {
@@ -275,6 +275,7 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 System.out.println("Clicked on Abort!");
+                MotionController.FeedHold();
                 MotionController.Abort();
             }
         });

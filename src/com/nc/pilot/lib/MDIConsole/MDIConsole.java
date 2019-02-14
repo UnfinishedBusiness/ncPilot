@@ -131,7 +131,7 @@ public class MDIConsole {
                     else
                     {
                         char c = ke.getKeyChar();
-                        if (Character.isAlphabetic(c) || Character.isDigit(c))
+                        if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '.' || c == '=')
                         {
                             cmd_line = cmd_line + c;
                         }

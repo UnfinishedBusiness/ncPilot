@@ -242,6 +242,7 @@ public class MotionController {
     {
         WriteBuffer("%\n");
         GlobalData.GcodeFileExecutionLine = 0;
+        GlobalData.RunCycle = false;
     }
     public static void JogX_Plus()
     {
@@ -336,8 +337,12 @@ public class MotionController {
     {
         if (GlobalData.RunCycle == true && GlobalData.GcodeFileExecutionLine < GlobalData.GcodeFileLines.length)
         {
-            if (GlobalData.FreeBuffers > 10)
+            if (GlobalData.FreeBuffers > 5)
             {
+                if (GlobalData.GcodeFileLines[GlobalData.GcodeFileExecutionLine].toLowerCase().contains("m30"))
+                {
+                    GlobalData.GcodeFileLines[GlobalData.GcodeFileExecutionLine] = "M5\nM9\nG80\nG90\nG94\n";
+                }
                 WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileExecutionLine]);
                 GlobalData.GcodeFileExecutionLine++;
             }
