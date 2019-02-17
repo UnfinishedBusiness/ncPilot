@@ -44,6 +44,7 @@ public class MachineControl extends JFrame {
         gcode_viewer = new GcodeViewer();
         mdi_console = new MDIConsole();
         motion_controller.inherit_ui_widgets(ui_widgets);
+        motion_controller.inherit_mdi_console(mdi_console);
         Layout_UI();
         GcodeViewerPanel panel = new GcodeViewerPanel();
         add(panel);
@@ -57,6 +58,7 @@ public class MachineControl extends JFrame {
         status_report_timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                if (mdi_console.isVisible == false)
                 motion_controller.StatusReport();
             }
         }, 0, 2000);

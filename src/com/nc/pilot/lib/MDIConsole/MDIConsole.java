@@ -14,9 +14,10 @@ import java.util.ArrayList;
 public class MDIConsole {
     private Graphics2D g;
     private Rectangle Frame_Bounds;
-    private boolean isVisible = false;
+    public boolean isVisible = false;
     private String cmd_line = "";
     private ArrayList<MDICommand> CommandStack = new ArrayList();
+    private ArrayList<String> RecievedLines = new ArrayList();
     public MDIConsole()
     {
         AddCommand("close", new Runnable() {
@@ -48,6 +49,28 @@ public class MDIConsole {
         return g.getFontMetrics().stringWidth(text);
     }
 
+    public void RecieveBufferLine(String line)
+    {
+        System.out.println("Read Buffer: " + line);
+        if (RecievedLines.size() < 50)
+        {
+            RecievedLines.add(line);
+        }
+        else
+        {
+            ArrayList<String> tmp = new ArrayList();
+            for (int x = 1; x < RecievedLines.size(); x++)
+            {
+                tmp.add(RecievedLines.get(x));
+            }
+            tmp.add(line);
+            RecievedLines.clear();
+            for (int x = 0; x < tmp.size(); x++)
+            {
+                RecievedLines.add(tmp.get(x));
+            }
+        }
+    }
     private void AddCommand(String cmd, Runnable action)
     {
         MDICommand c = new MDICommand();
@@ -59,11 +82,19 @@ public class MDIConsole {
     {
         Color c=new Color(0.1f, 0.1f, 0.1f, 1f);
         g.setColor(c);
-        g.fillRect(100, 100, 600, 400);
+        g.fillRect(50, 50, Frame_Bounds.width - 200, Frame_Bounds.height - 100);
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.setColor(Color.white);
-        g.drawString(">", 120, 140);
-        g.drawString(cmd_line, 160, 140);
+        g.drawString(">", 70, 90);
+        g.drawString(cmd_line, 120, 90);
+
+        g.setFont(new Font("Arial", Font.BOLD, 15));
+        int y_offset = 140;
+        for (int x = 0; x < RecievedLines.size(); x++)
+        {
+            g.drawString(RecievedLines.get(x), 160, y_offset);
+            y_offset += 15;
+        }
     }
     public void RenderStack(Graphics2D graphics, Rectangle f){
         g = graphics;
@@ -119,7 +150,7 @@ public class MDIConsole {
         }
         if (found_in_stack == false) //We are a MDI command, send to Motion Controller
         {
-            MotionController.WriteBuffer(cmd_line);
+            MotionController.WriteBuffer(cmd_line + "\n");
         }
     }
     public void dispatchKeyEvent(KeyEvent ke)
@@ -147,7 +178,7 @@ public class MDIConsole {
                     else
                     {
                         char c = ke.getKeyChar();
-                        if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '.' || c == '=' || c == '-')
+                        if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '.' || c == '=' || c == '-' || c == '$')
                         {
                             cmd_line = cmd_line + c;
                         }

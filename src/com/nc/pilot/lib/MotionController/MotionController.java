@@ -7,6 +7,7 @@ package com.nc.pilot.lib.MotionController;
 
 import com.google.gson.Gson;
 import com.nc.pilot.lib.GlobalData;
+import com.nc.pilot.lib.MDIConsole.MDIConsole;
 import com.nc.pilot.lib.SerialIO;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
@@ -56,6 +57,7 @@ public class MotionController {
     private static SerialIO serial;
     private static float lastExecutionLine = 0;
     private static UIWidgets ui_widgets;
+    private static MDIConsole mdi_console;
     private static boolean WaitingForStopMotion = false;
     private static Runnable RunAfterStop = null;
     public static int BlockNextStatusReports = 0;
@@ -67,6 +69,10 @@ public class MotionController {
     public static void inherit_ui_widgets(UIWidgets u)
     {
         ui_widgets = u;
+    }
+    public static void inherit_mdi_console(MDIConsole m)
+    {
+        mdi_console = m;
     }
     public static void WriteBuffer(String data){
         //GlobalData.WriteBuffer.add(data);
@@ -87,6 +93,7 @@ public class MotionController {
     }
     public static void ReadBuffer(String inputLine){
         //System.out.println("Read line: " + inputLine);
+        mdi_console.RecieveBufferLine(inputLine);
         Gson g = new Gson();
         Gson qr = new Gson();
         Report report = qr.fromJson(inputLine, Report.class);
