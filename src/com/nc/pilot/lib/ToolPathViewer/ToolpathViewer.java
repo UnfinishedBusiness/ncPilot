@@ -281,6 +281,21 @@ public class ToolpathViewer {
                 {
                     g2d.setColor(Color.blue);
                     PathObject path = part.paths.get(x);
+                    if (path.isClosed == true)
+                    {
+                        if (path.isOutsideContour == true)
+                        {
+                            g2d.setColor(Color.cyan);
+                        }
+                        else
+                        {
+                            g2d.setColor(Color.blue);
+                        }
+                    }
+                    else
+                    {
+                        g2d.setColor(Color.orange);
+                    }
                     for(int z = 1; z < path.points.size(); z++)
                     {
                         float[] last_point = path.points.get(z-1);

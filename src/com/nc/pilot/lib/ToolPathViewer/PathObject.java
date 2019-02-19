@@ -7,5 +7,7 @@ import java.util.ArrayList;
  */
 public class PathObject {
     public ArrayList<float[]> points = new ArrayList();
-    boolean isOpen;
+    boolean isClosed;
+    boolean isOutsideContour;
+    float chainLength;
 }

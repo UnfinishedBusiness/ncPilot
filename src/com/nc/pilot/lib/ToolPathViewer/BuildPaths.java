@@ -48,6 +48,10 @@ public class BuildPaths {
     public float[] getMidpoint(float[] start_point, float[] end_point) {
         return new float[] {(end_point[0] + start_point[0])/2,(end_point[1] + start_point[1])/2};
     }
+    public float getLineLength(float[] start_point, float[] end_point)
+    {
+        return new Float(Math.hypot(start_point[0]-end_point[0], start_point[1]-end_point[1]));
+    }
     public float[] rotatePoint(float[] pivot, float[] rotated_point, float angle)
     {
         float s = (float)Math.sin(angle*Math.PI/180);
@@ -241,6 +245,19 @@ public class BuildPaths {
                         break; //End of path, determine if we are open or closed and push to PathStack
                     }
                 }
+                if (current_path.points.size() > 0)
+                {
+                    if (inTolerance(e.start[0], current_path.points.get(current_path.points.size()-1)[0], point_tolorance) && inTolerance(e.start[1], current_path.points.get(current_path.points.size()-1)[1], point_tolorance))
+                    {
+                        current_path.isClosed = true;
+                        //System.out.println("Path is closed!");
+                    }
+                    else
+                    {
+                        current_path.isClosed = false;
+                        //System.out.println("Path is open!");
+                    }
+                }
                 PathStack.add(current_path);
             }
             else
@@ -248,6 +265,23 @@ public class BuildPaths {
                 break; //All paths have been found!
             }
         }
-
+        //Calculate chain lengths of each path
+        float bigest_chain_length = 0;
+        int bigest_index = 0;
+        for (int x = 0; x < PathStack.size(); x++)
+        {
+            PathObject path = PathStack.get(x);
+            for (int y = 1; y < path.points.size(); y++)
+            {
+                path.chainLength += getLineLength(path.points.get(y-1), path.points.get(y));
+            }
+            if (path.chainLength > bigest_chain_length)
+            {
+                bigest_chain_length = path.chainLength;
+                bigest_index = x;
+            }
+            //System.out.println("Chain length: " + path.chainLength);
+        }
+        PathStack.get(bigest_index).isOutsideContour = true;
     }
 }
