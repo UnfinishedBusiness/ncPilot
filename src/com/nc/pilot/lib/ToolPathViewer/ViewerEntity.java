@@ -1,7 +1,7 @@
 package com.nc.pilot.lib.ToolPathViewer;
 
 /**
- * Created by admin on 2/9/19.
+ * Created by Travis on 2/9/19.
  */
 public class ViewerEntity{
     public String type;
