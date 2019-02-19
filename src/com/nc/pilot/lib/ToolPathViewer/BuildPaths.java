@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by travis on 2/18/19.
  */
 public class BuildPaths {
-    float point_tolorance = 0.001f;
+    float point_tolorance = 0.00025f;
     private ArrayList<ViewerEntity> EntityStack = new ArrayList();
     private ArrayList<PathObject> PathStack = new ArrayList();
     private ArrayList<Integer> UsedIndexes = new ArrayList();
@@ -125,8 +125,9 @@ public class BuildPaths {
                     points.add(new_point);
                 }
             }
-            float [] new_point = getPolarLineEndpoint(center, radius, end_angle);
-            points.add(new_point);
+            //float [] new_point = getPolarLineEndpoint(center, radius, end_angle);
+            //points.add(new_point);
+            points.add(end);
         }
         return points;
     }
