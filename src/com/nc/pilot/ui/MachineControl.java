@@ -66,7 +66,7 @@ public class MachineControl extends JFrame {
         status_report_timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                //motion_controller.Poll();
+                motion_controller.Poll();
             }
         }, 0, 100);
         panel.addMouseListener(new MouseAdapter() {

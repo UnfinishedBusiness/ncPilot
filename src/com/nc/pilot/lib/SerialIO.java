@@ -121,7 +121,7 @@ public class SerialIO implements SerialPortEventListener {
                  try {
                      w = new OutputStreamWriter(output, "Cp1252");
                          try {
-                             long current_write = System.currentTimeMillis();
+                             /*long current_write = System.currentTimeMillis();
                              if (current_write > last_write + write_wait)
                              {
                                  //System.out.println("Write Succesions are more that 100ms in between!");
@@ -134,7 +134,7 @@ public class SerialIO implements SerialPortEventListener {
                                  } catch (InterruptedException ex) {
                                      Thread.currentThread().interrupt();
                                  }
-                             }
+                             }*/
                              w.write(data);
                              last_write = System.currentTimeMillis();
 

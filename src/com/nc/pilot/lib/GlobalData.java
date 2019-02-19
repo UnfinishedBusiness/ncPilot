@@ -26,15 +26,12 @@ public class GlobalData {
     public static float ProgrammedFeedrate;
     public static String CurrentUnits = "Inch";
     public static boolean IsHomed = false;
-    public static boolean PlannerReady = false;
     public static String JogMode = "Continuous";
-    public static int CurrentExecutionLine = 0;
-    public static int FreeBuffers;
+
+    public static int CurrentExecutionLine = 0; //Line that is currently executing
+    public static int LinesToSend = 0;
     public static String[] GcodeFileLines;
-    public static int GcodeFileSendLine = 0;
-    public static boolean RunCycle = false;
-    public static boolean SendGcodeFlag = false; //Send two lines of gcode whenever this is true
-    //public static ArrayList<String> WriteBuffer = new ArrayList();
+    public static int GcodeFileCurrentLine = 0; //Current Position in GcodeFileLines
 
     public static float X_Scale = 635f; //Steps/Inch
     public static float Y_Scale = 635f; //Steps/Inch

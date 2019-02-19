@@ -82,15 +82,15 @@ public class MotionController {
     private static void ParseQueReport(Integer q)
     {
         //System.out.println("Buffer Available: " + q);
-        GlobalData.FreeBuffers = q;
+        //GlobalData.FreeBuffers = q;
 
         if (q > 10) //If qr is > 30
         {
-            GlobalData.PlannerReady = true;
+            //GlobalData.PlannerReady = true;
         }
         else
         {
-            GlobalData.PlannerReady = false;
+            //GlobalData.PlannerReady = false;
         }
     }
     public static void ReadBuffer(String inputLine){
@@ -103,7 +103,7 @@ public class MotionController {
         {
             if (report.qr != null)
             {
-                ParseQueReport(Integer.parseInt(report.qr));
+                //ParseQueReport(Integer.parseInt(report.qr));
             }
         }
         JSON_Data json = g.fromJson(inputLine, JSON_Data.class);
@@ -111,6 +111,7 @@ public class MotionController {
         {
             if (json.r != null)
             {
+                GlobalData.LinesToSend += 1;
                 json.sr = json.r.sr;
             }
             if (json.sr != null)
@@ -287,12 +288,7 @@ public class MotionController {
     }
     public static void CycleStart()
     {
-        if (GlobalData.RunCycle == false)
-        {
-            GlobalData.RunCycle = true;
-            Poll();
-        }
-        GlobalData.SendGcodeFlag = true;
+        GlobalData.LinesToSend = 4;
         WriteBuffer("~\n");
     }
     public static void FeedHold()
@@ -303,9 +299,8 @@ public class MotionController {
     public static void Abort()
     {
         WriteBuffer("%\n");
-        GlobalData.GcodeFileSendLine = 0;
-        WaitingForStopMotion = false;
-        GlobalData.RunCycle = false;
+        GlobalData.GcodeFileCurrentLine = 0;
+        GlobalData.LinesToSend = 0;
     }
     public static void JogX_Plus()
     {
@@ -500,27 +495,17 @@ public class MotionController {
     }
     public static void Poll()
     {
-        if (GlobalData.RunCycle == true && GlobalData.GcodeFileSendLine < GlobalData.GcodeFileLines.length)
+        while (GlobalData.LinesToSend > 0) //We have lines to send to the controller
         {
-            if (GlobalData.GcodeFileSendLine < 3)
+            if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length)
             {
-                   GlobalData.SendGcodeFlag = false;
-                   WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] + "\n");
-                   GlobalData.GcodeFileSendLine++;
-                   if (GlobalData.GcodeFileSendLine >= GlobalData.GcodeFileLines.length) return;
-                   WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] + "\n");
-                   GlobalData.GcodeFileSendLine++;
+                WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+                GlobalData.GcodeFileCurrentLine++;
             }
-            GlobalData.SendGcodeFlag = false;
-            if (GlobalData.GcodeFileSendLine >= GlobalData.GcodeFileLines.length) return;
-            WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] + "\n");
-            GlobalData.GcodeFileSendLine++;
-            if (GlobalData.GcodeFileSendLine >= GlobalData.GcodeFileLines.length) return;
-            WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] + "\n");
-            GlobalData.GcodeFileSendLine++;
+            GlobalData.LinesToSend--;
         }
     }
-    public static void Poll_Free_Buffer_Method()
+    /*public static void Poll_Free_Buffer_Method()
     {
         if (GlobalData.RunCycle == true && WaitingForStopMotion == false)
         {
@@ -573,7 +558,7 @@ public class MotionController {
 
         }
 
-    }
+    }*/
     public static void InitMotionController()
     {
         WriteBuffer("$ej=1\n");
