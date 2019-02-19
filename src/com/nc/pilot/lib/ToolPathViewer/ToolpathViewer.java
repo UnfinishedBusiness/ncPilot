@@ -224,6 +224,16 @@ public class ToolpathViewer {
         //System.out.println("Bound width: " + bound_width + " Bound height: " + bound_height);
         AddPart(part_name, new float[]{0, 0}, bound_width, bound_height, minX, maxX, minY, maxY, part);
     }
+    public void getPaths()
+    {
+        for(int i = 0; i< ViewerPartStack.size(); i++)
+        {
+            ViewerPart part = ViewerPartStack.get(i);
+            BuildPaths path = new BuildPaths(part.EntityStack);
+            part.paths = path.getPaths();
+        }
+
+    }
     public void RenderStack(Graphics2D graphics)
     {
         //System.out.println("Begin render!");
@@ -263,6 +273,20 @@ public class ToolpathViewer {
                 if (entity.type == "ccw_arc")
                 {
                     RenderArc(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]}, new float[]{entity.center[0] + part.offset[0], entity.center[1] + part.offset[1]}, entity.radius, "CCW");
+                }
+            }
+            if (part.paths != null)
+            {
+                for(int x = 0; x < part.paths.size(); x++)
+                {
+                    g2d.setColor(Color.blue);
+                    PathObject path = part.paths.get(x);
+                    for(int z = 1; z < path.points.size(); z++)
+                    {
+                        float[] last_point = path.points.get(z-1);
+                        float[] current_point = path.points.get(z);
+                        RenderLine(new float[]{last_point[0] + part.offset[0], last_point[1] + part.offset[1]}, new float[]{current_point[0] + part.offset[0], current_point[1] + part.offset[1]});
+                    }
                 }
             }
             if (part.engaged == true)

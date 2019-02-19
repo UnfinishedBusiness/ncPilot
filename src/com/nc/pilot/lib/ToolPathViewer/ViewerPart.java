@@ -18,6 +18,7 @@ public class ViewerPart{
     float rotation_angle;
     String name;
     boolean engaged;
+    ArrayList<PathObject>  paths;
     public ViewerPart(){
 
     }

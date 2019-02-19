@@ -196,7 +196,7 @@ public class MachineToolpaths extends JFrame {
                                     MotionController.EndJog();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-
+                                    toolpath_viewer.getPaths();
                                     repaint();
                                 }
                                 break;
