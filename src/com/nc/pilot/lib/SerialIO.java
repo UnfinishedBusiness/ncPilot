@@ -32,6 +32,7 @@ public class SerialIO implements SerialPortEventListener {
 	private static final String PORT_NAMES[] = { 
 			"COM6",
                 "/dev/tty.usbmodem1411",
+                "/dev/ttyUSB1",
                 "/dev/ttyUSB0"
 	};
 	/**
@@ -104,7 +105,6 @@ public class SerialIO implements SerialPortEventListener {
 	}
         public synchronized void writeByte(byte b)
         {
-            //System.out.println("Writing " + data);
              if (serialPort != null){
                  try {
                      output.write(b);
@@ -115,7 +115,7 @@ public class SerialIO implements SerialPortEventListener {
         }
         public synchronized void write(String data)
         {
-            //System.out.println("Writing " + data);
+            System.out.println("Writing " + data);
              if (serialPort != null){
                      Writer w = null;
                  try {

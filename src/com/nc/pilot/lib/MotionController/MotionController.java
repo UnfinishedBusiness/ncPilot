@@ -12,6 +12,7 @@ import com.nc.pilot.lib.SerialIO;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -82,6 +83,7 @@ public class MotionController {
     {
         //System.out.println("Buffer Available: " + q);
         GlobalData.FreeBuffers = q;
+
         if (q > 10) //If qr is > 30
         {
             GlobalData.PlannerReady = true;
@@ -92,7 +94,7 @@ public class MotionController {
         }
     }
     public static void ReadBuffer(String inputLine){
-        //System.out.println("Read line: " + inputLine);
+        System.out.println("Read line: " + inputLine);
         mdi_console.RecieveBufferLine(inputLine);
         Gson g = new Gson();
         Gson qr = new Gson();
@@ -105,7 +107,6 @@ public class MotionController {
             }
         }
         JSON_Data json = g.fromJson(inputLine, JSON_Data.class);
-
         if (json != null)
         {
             if (json.r != null)
@@ -286,7 +287,12 @@ public class MotionController {
     }
     public static void CycleStart()
     {
-        GlobalData.RunCycle = true;
+        if (GlobalData.RunCycle == false)
+        {
+            GlobalData.RunCycle = true;
+            Poll();
+        }
+        GlobalData.SendGcodeFlag = true;
         WriteBuffer("~\n");
     }
     public static void FeedHold()
@@ -444,12 +450,77 @@ public class MotionController {
         try {
             String buffer = GlobalData.readFile(filename);
             String[] lines = buffer.split("\n");
-            GlobalData.GcodeFileLines = lines;
+
+            ArrayList<String> gcode = new ArrayList();
+            for (int x = 0; x < lines.length; x++)
+            {
+                if (lines[x].toLowerCase().contains("m30"))
+                {
+                    gcode.add("M5");
+                    gcode.add("M9");
+                    gcode.add("G80");
+                    gcode.add("G90");
+                    gcode.add("G94");
+                }
+                else if (lines[x].toLowerCase().contains("o<touchoff>"))
+                {
+                    String touchoff = lines[x].toLowerCase().substring(lines[x].toLowerCase().indexOf("o<touchoff> ") + 12);
+                    System.out.println("Touchoff String: " + touchoff);
+                    String[] touchoff_split = touchoff.split("\\s+");
+                    if (touchoff_split.length > 2)
+                    {
+                        String pierce_height = touchoff_split[1].substring(1, (touchoff_split[1].length() - 1));
+                        String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
+                        String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
+                        System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
+                        gcode.add("M9");
+                        gcode.add("G38.2 Z-10 F50");
+                        gcode.add("G92 Z=-0.375");
+                        gcode.add("G90 G0 Z" + pierce_height);
+                        gcode.add("M3S2000");
+                        gcode.add("G4 P" + pierce_delay);
+                        gcode.add("G1 Z" + cut_height);
+                        gcode.add("M8");
+                    }
+                }
+                else
+                {
+                    gcode.add(lines[x]);
+                }
+            }
+            GlobalData.GcodeFileLines = new String[gcode.size()];
+            for (int x = 0; x < gcode.size(); x++)
+            {
+                GlobalData.GcodeFileLines[x] = gcode.get(x);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public static void Poll()
+    {
+        if (GlobalData.RunCycle == true && GlobalData.GcodeFileSendLine < GlobalData.GcodeFileLines.length)
+        {
+            if (GlobalData.GcodeFileSendLine < 3)
+            {
+                   GlobalData.SendGcodeFlag = false;
+                   WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] + "\n");
+                   GlobalData.GcodeFileSendLine++;
+                   if (GlobalData.GcodeFileSendLine >= GlobalData.GcodeFileLines.length) return;
+                   WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] + "\n");
+                   GlobalData.GcodeFileSendLine++;
+            }
+            GlobalData.SendGcodeFlag = false;
+            if (GlobalData.GcodeFileSendLine >= GlobalData.GcodeFileLines.length) return;
+            WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] + "\n");
+            GlobalData.GcodeFileSendLine++;
+            if (GlobalData.GcodeFileSendLine >= GlobalData.GcodeFileLines.length) return;
+            WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] + "\n");
+            GlobalData.GcodeFileSendLine++;
+        }
+    }
+    public static void Poll_Free_Buffer_Method()
     {
         if (GlobalData.RunCycle == true && WaitingForStopMotion == false)
         {
@@ -470,8 +541,34 @@ public class MotionController {
                     GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] = "M5\nM9\nG80\nG90\nG94\n";
                     WaitingForStopMotion = true;
                 }
-                WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine]);
-                GlobalData.GcodeFileSendLine++;
+                else if (GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine].toLowerCase().contains("o<touchoff>"))
+                {
+                    String touchoff = GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine].toLowerCase().substring(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine].toLowerCase().indexOf("o<touchoff> ") + 12);
+                    //System.out.println("Touchoff String: " + touchoff);
+                    String[] touchoff_split = touchoff.split("\\s+");
+                    if (touchoff_split.length > 2)
+                    {
+                        String pierce_height = touchoff_split[1].substring(1, (touchoff_split[1].length() - 1));
+                        String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
+                        String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
+                        //System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
+                        WriteBuffer("M9\n");
+                        WriteBuffer("G38.2 Z-10 F50\n");
+                        WriteBuffer("G92 Z=-0.375\n");
+                        WriteBuffer("G90 G0 Z" + pierce_height + "\n");
+                        WriteBuffer("M3S2000\n");
+                        WriteBuffer("G4 P" + pierce_delay + "\n");
+                        WriteBuffer("G1 Z" + cut_height + "\n");
+                        WriteBuffer("M8\n");
+                        GlobalData.GcodeFileSendLine++;
+                    }
+
+                }
+                else
+                {
+                    WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine]);
+                    GlobalData.GcodeFileSendLine++;
+                }
             }
 
         }

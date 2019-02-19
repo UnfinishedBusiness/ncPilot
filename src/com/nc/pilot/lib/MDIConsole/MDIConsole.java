@@ -31,12 +31,13 @@ public class MDIConsole {
             @Override
             public void run() {
                 MotionController.BlockNextStatusReports = 1;
-                MotionController.WriteBufferAndRunAfterStop("G92.2\nG38.2 Z-10 F1\n", new Runnable() {
+                MotionController.WriteBufferAndRunAfterStop("G92.2\nG38.2 Z-10 F40\n", new Runnable() {
                     @Override
                     public void run() {
                         System.out.println("Z Probed!");
                         MotionController.BlockNextStatusReports = 1;
                         MotionController.WriteBuffer("G92.3\nG92 Z=0\n");
+                        MotionController.WriteBuffer("G90\nG0 Z0.375\n");
                     }
                 });
 
@@ -51,7 +52,7 @@ public class MDIConsole {
 
     public void RecieveBufferLine(String line)
     {
-        System.out.println("Read Buffer: " + line);
+        //System.out.println("Read Buffer: " + line);
         if (RecievedLines.size() < 50)
         {
             RecievedLines.add(line);

@@ -33,6 +33,7 @@ public class GlobalData {
     public static String[] GcodeFileLines;
     public static int GcodeFileSendLine = 0;
     public static boolean RunCycle = false;
+    public static boolean SendGcodeFlag = false; //Send two lines of gcode whenever this is true
     //public static ArrayList<String> WriteBuffer = new ArrayList();
 
     public static float X_Scale = 635f; //Steps/Inch
