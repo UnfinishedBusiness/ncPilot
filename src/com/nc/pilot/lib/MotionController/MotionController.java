@@ -94,7 +94,7 @@ public class MotionController {
         }
     }
     public static void ReadBuffer(String inputLine){
-        System.out.println("Read line: " + inputLine);
+        //System.out.println("Read line: " + inputLine);
         mdi_console.RecieveBufferLine(inputLine);
         Gson g = new Gson();
         Gson qr = new Gson();
@@ -111,7 +111,7 @@ public class MotionController {
         {
             if (json.r != null)
             {
-                GlobalData.LinesToSend += 1;
+                GlobalData.LinesToSend = 1;
                 json.sr = json.r.sr;
             }
             if (json.sr != null)
@@ -289,6 +289,7 @@ public class MotionController {
     public static void CycleStart()
     {
         GlobalData.LinesToSend = 4;
+        LoadGcodeFile();
         WriteBuffer("~\n");
     }
     public static void FeedHold()
@@ -301,6 +302,7 @@ public class MotionController {
         WriteBuffer("%\n");
         GlobalData.GcodeFileCurrentLine = 0;
         GlobalData.LinesToSend = 0;
+        GlobalData.GcodeFileLines = null;
     }
     public static void JogX_Plus()
     {
@@ -440,10 +442,10 @@ public class MotionController {
         WriteBuffer(mdi);
         RunAfterStop = run;
     }
-    public static void LoadGcodeFile(String filename)
+    public static void LoadGcodeFile()
     {
         try {
-            String buffer = GlobalData.readFile(filename);
+            String buffer = GlobalData.readFile(GlobalData.GcodeFile);
             String[] lines = buffer.split("\n");
 
             ArrayList<String> gcode = new ArrayList();
@@ -460,22 +462,19 @@ public class MotionController {
                 else if (lines[x].toLowerCase().contains("o<touchoff>"))
                 {
                     String touchoff = lines[x].toLowerCase().substring(lines[x].toLowerCase().indexOf("o<touchoff> ") + 12);
-                    System.out.println("Touchoff String: " + touchoff);
+                    //System.out.println("Touchoff String: " + touchoff);
                     String[] touchoff_split = touchoff.split("\\s+");
                     if (touchoff_split.length > 2)
                     {
                         String pierce_height = touchoff_split[1].substring(1, (touchoff_split[1].length() - 1));
                         String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
                         String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
-                        System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
-                        gcode.add("M9");
-                        gcode.add("G38.2 Z-10 F50");
-                        gcode.add("G92 Z=-0.375");
-                        gcode.add("G90 G0 Z" + pierce_height);
-                        gcode.add("M3S2000");
-                        gcode.add("G4 P" + pierce_delay);
-                        gcode.add("G1 Z" + cut_height);
-                        gcode.add("M8");
+                        //System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
+                        gcode.add("M9 G28.2 Z0");
+                        gcode.add("G92 Z=0");
+                        gcode.add("G1 Z" + pierce_height + " F50");
+                        gcode.add("M3S2000 G4 P" + pierce_delay);
+                        gcode.add("G1 Z" + cut_height + " M8");
                     }
                 }
                 else
@@ -497,10 +496,14 @@ public class MotionController {
     {
         while (GlobalData.LinesToSend > 0) //We have lines to send to the controller
         {
-            if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length)
+            if (GlobalData.GcodeFileLines != null)
             {
-                WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
-                GlobalData.GcodeFileCurrentLine++;
+                if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length)
+                {
+                    System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
+                    WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+                    GlobalData.GcodeFileCurrentLine++;
+                }
             }
             GlobalData.LinesToSend--;
         }

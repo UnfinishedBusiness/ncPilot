@@ -63,7 +63,7 @@ public class MachineControl extends JFrame {
                 }
             }
         }, 0, 2000);
-        status_report_timer.schedule(new TimerTask() {
+        motion_control_poll_timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 motion_controller.Poll();
@@ -207,6 +207,32 @@ public class MachineControl extends JFrame {
 
                                     MotionController.FeedHold();
                                 }
+                                if (ke.getKeyCode() == KeyEvent.VK_TAB)
+                                {
+                                    GcodeInterpreter g = new GcodeInterpreter("/home/cnc/Desktop/Post/0.ngc");
+                                    GlobalData.GcodeFile = "/home/cnc/Desktop/Post/0.ngc";
+                                    ArrayList<GcodeInterpreter.GcodeMove> moves = g.GetMoves();
+                                    gcode_viewer.ClearStack();
+                                    for (int x = 2; x < moves.size(); x ++)
+                                    {
+                                        if (moves.get(x).Gword == 1)
+                                        {
+                                            gcode_viewer.addLine(new float[]{moves.get(x-1).Xword, moves.get(x-1).Yword}, new float[]{moves.get(x).Xword, moves.get(x).Yword});
+                                        }
+                                        if (moves.get(x).Gword == 2)
+                                        {
+                                            float[] center = new float[]{moves.get(x-1).Xword + moves.get(x).Iword, moves.get(x-1).Yword + moves.get(x).Jword};
+                                            float radius = new Float(Math.hypot(moves.get(x).Xword-center[0], moves.get(x).Yword-center[1]));
+                                            gcode_viewer.addArc(new float[]{moves.get(x-1).Xword, moves.get(x-1).Yword}, new float[]{moves.get(x).Xword, moves.get(x).Yword}, center, radius, "CW");
+                                        }
+                                        if (moves.get(x).Gword == 3)
+                                        {
+                                            float[] center = new float[]{moves.get(x-1).Xword + moves.get(x).Iword, moves.get(x-1).Yword + moves.get(x).Jword};
+                                            float radius = new Float(Math.hypot(moves.get(x).Xword-center[0], moves.get(x).Yword-center[1]));
+                                            gcode_viewer.addArc(new float[]{moves.get(x-1).Xword, moves.get(x-1).Yword}, new float[]{moves.get(x).Xword, moves.get(x).Yword}, center, radius, "CCW");
+                                        }
+                                    }
+                                }
                                 if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
                                     MotionController.FeedHold();
                                     MotionController.Abort();
@@ -249,7 +275,7 @@ public class MachineControl extends JFrame {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                     GcodeInterpreter g = new GcodeInterpreter(selectedFile.getAbsolutePath());
-                    motion_controller.LoadGcodeFile(selectedFile.getAbsolutePath());
+                    GlobalData.GcodeFile = selectedFile.getAbsolutePath();
                     ArrayList<GcodeInterpreter.GcodeMove> moves = g.GetMoves();
                     gcode_viewer.ClearStack();
 
@@ -313,7 +339,7 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 System.out.println("Go Home!");
-                motion_controller.WriteBuffer("G90 G0 X10 Y10\n");
+                motion_controller.WriteBuffer("G90 G53 G0 X0 Y0\n");
             }
         });
         ui_widgets.AddMomentaryButton("Probe Z", "bottom-right", 120, 60, 140, 150, new Runnable() {
