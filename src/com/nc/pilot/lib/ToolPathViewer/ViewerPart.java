@@ -19,6 +19,7 @@ public class ViewerPart{
     String name;
     boolean engaged;
     ArrayList<PathObject>  paths;
+    ArrayList<PathObject>  tool_paths;
     public ViewerPart(){
 
     }

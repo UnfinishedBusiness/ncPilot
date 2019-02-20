@@ -1,6 +1,9 @@
 package com.nc.pilot.lib.ToolPathViewer;
 
 import com.nc.pilot.lib.GlobalData;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import org.kabeja.dxf.*;
 import org.kabeja.parser.DXFParser;
 import org.kabeja.parser.ParseException;
@@ -231,6 +234,27 @@ public class ToolpathViewer {
             ViewerPart part = ViewerPartStack.get(i);
             BuildPaths path = new BuildPaths(part.EntityStack);
             part.paths = path.getPaths();
+            part.tool_paths = new ArrayList();
+            PathObject tp = new PathObject();
+            for (int z = 0; z < part.paths.size(); z++)
+            {
+                ArrayList<float[]> points = part.paths.get(z).points;
+                Coordinate[] coordinates = new Coordinate[points.size()];
+                for (int x = 0; x < points.size(); x++)
+                {
+                    coordinates[x] = new Coordinate(points.get(x)[0], points.get(x)[1]);
+                }
+                Geometry g = new GeometryFactory().createLineString(coordinates);
+                Geometry buffer = g.buffer(-0.048);
+                Coordinate[] buffered_path = buffer.getCoordinates();
+                ArrayList<float[]> buffered_points = new ArrayList();
+                for (int x = 0; x < buffered_path.length; x++)
+                {
+                    buffered_points.add(new float[]{new Float(buffered_path[x].x), new Float(buffered_path[x].y)});
+                }
+                tp.points = buffered_points;
+            }
+            part.tool_paths.add(tp);
         }
 
     }
@@ -296,6 +320,20 @@ public class ToolpathViewer {
                     {
                         g2d.setColor(Color.orange);
                     }
+                    for(int z = 1; z < path.points.size(); z++)
+                    {
+                        float[] last_point = path.points.get(z-1);
+                        float[] current_point = path.points.get(z);
+                        RenderLine(new float[]{last_point[0] + part.offset[0], last_point[1] + part.offset[1]}, new float[]{current_point[0] + part.offset[0], current_point[1] + part.offset[1]});
+                    }
+                }
+            }
+            if (part.tool_paths != null)
+            {
+                for(int x = 0; x < part.tool_paths.size(); x++)
+                {
+                    g2d.setColor(Color.green);
+                    PathObject path = part.tool_paths.get(x);
                     for(int z = 1; z < path.points.size(); z++)
                     {
                         float[] last_point = path.points.get(z-1);

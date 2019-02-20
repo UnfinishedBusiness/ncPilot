@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="RXTXcomm">
+  <library name="jtsio-1.14">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/libraries/RXTXcomm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libraries/jtsio-1.14.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -11,5 +11,7 @@
     <orderEntry type="library" name="RXTXcomm" level="project" />
     <orderEntry type="library" name="AbsoluteLayout" level="project" />
     <orderEntry type="library" name="kabeja-0.4" level="project" />
+    <orderEntry type="library" name="jts-1.14" level="project" />
+    <orderEntry type="library" name="jtsio-1.14" level="project" />
   </component>
 </module>
