@@ -474,8 +474,13 @@ public class MotionController {
                         gcode.add("G92 Z=0");
                         gcode.add("G1 Z" + pierce_height + " F50");
                         gcode.add("M3S2000 G4 P" + pierce_delay);
-                        gcode.add("G1 Z" + cut_height + " M8");
+                        gcode.add("G1 Z" + cut_height);
+                        gcode.add("M8");
                     }
+                }
+                else if (getGword(lines[x].toLowerCase(), 'g') == 2f) //Clock-wise arc - Convert to line segments
+                {
+
                 }
                 else
                 {

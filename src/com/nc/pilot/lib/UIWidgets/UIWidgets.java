@@ -37,7 +37,7 @@ public class UIWidgets {
         g.setColor(c);
         g.fillRect(Frame_Bounds.width - 370, 0, 400, Frame_Bounds.height);
 
-        g.setFont(new Font("Arial", Font.BOLD, 45));
+        g.setFont(new Font("Arial", Font.BOLD, 40));
         if (GlobalData.IsHomed == false)
         {
             g.setColor(Color.red);
@@ -51,9 +51,9 @@ public class UIWidgets {
         g.drawString("Y", Frame_Bounds.width - 350 - DRO_X_Offset, 140);
         g.drawString("Z", Frame_Bounds.width - 350 - DRO_X_Offset, 210);
 
-        g.drawString(String.format("%.4f", GlobalData.dro[0]), Frame_Bounds.width - 220 - DRO_X_Offset, 70);
-        g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 220 - DRO_X_Offset, 140);
-        g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 220 - DRO_X_Offset, 210);
+        g.drawString(String.format("%.4f", GlobalData.dro[0]), Frame_Bounds.width - 250 - DRO_X_Offset, 70);
+        g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 250 - DRO_X_Offset, 140);
+        g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 250 - DRO_X_Offset, 210);
 
         g.setFont(new Font("Arial", Font.BOLD, 10));
         g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 55);
