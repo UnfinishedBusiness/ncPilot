@@ -742,22 +742,28 @@ public class MotionController {
                 }
                 else if (Gword == 2) //Clockwise arc - Convert to line segments
                 {
-                    float[] center = new float[]{lastXword + Iword, lastYword + Jword};
-                    float radius = new Float(Math.hypot(Xword-center[0], Yword-center[1]));
-                    ArrayList<float[]> arc_points = getPointsOfArc(new float[]{lastXword, lastYword}, new float[]{Xword, Yword}, center, radius, "CW");
-                    for (int y = 0; y < arc_points.size(); y+= 20)
+                    if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
                     {
-                        gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1]);
+                        float[] center = new float[]{lastXword + Iword, lastYword + Jword};
+                        float radius = new Float(Math.hypot(Xword-center[0], Yword-center[1]));
+                        ArrayList<float[]> arc_points = getPointsOfArc(new float[]{lastXword, lastYword}, new float[]{Xword, Yword}, center, radius, "CW");
+                        for (int y = 0; y < arc_points.size(); y+= 5)
+                        {
+                            gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1]);
+                        }
                     }
                 }
-                else if (Gword == 3 && lastXword != Xword && lastYword != Yword) //Counter-Clockwise arc - Convert to line segments
+                else if (Gword == 3) //Counter-Clockwise arc - Convert to line segments
                 {
-                    float[] center = new float[]{lastXword + Iword, lastYword + Jword};
-                    float radius = new Float(Math.hypot(Xword-center[0], Yword-center[1]));
-                    ArrayList<float[]> arc_points = getPointsOfArc(new float[]{lastXword, lastYword}, new float[]{Xword, Yword}, center, radius, "CCW");
-                    for (int y = 0; y < arc_points.size(); y+= 20)
+                    if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
                     {
-                        gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1]);
+                        float[] center = new float[]{lastXword + Iword, lastYword + Jword};
+                        float radius = new Float(Math.hypot(Xword-center[0], Yword-center[1]));
+                        ArrayList<float[]> arc_points = getPointsOfArc(new float[]{lastXword, lastYword}, new float[]{Xword, Yword}, center, radius, "CCW");
+                        for (int y = 0; y < arc_points.size(); y+= 5)
+                        {
+                            gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1]);
+                        }
                     }
                 }
                 else
@@ -776,7 +782,7 @@ public class MotionController {
             for (int x = 0; x < gcode.size(); x++)
             {
                 GlobalData.GcodeFileLines[x] = gcode.get(x);
-                System.out.println(gcode.get(x));
+                //System.out.println(gcode.get(x));
             }
 
 
