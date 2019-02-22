@@ -3,6 +3,7 @@ package com.nc.pilot.ui;
 import com.nc.pilot.lib.*;
 import com.nc.pilot.lib.MDIConsole.MDIConsole;
 import com.nc.pilot.lib.MotionController.MotionController;
+import com.nc.pilot.lib.MotionController.MotionEngine;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
 import javax.swing.*;
@@ -28,6 +29,7 @@ public class MachineControl extends JFrame {
     UIWidgets ui_widgets;
     GcodeViewer gcode_viewer;
     MDIConsole mdi_console;
+    MotionEngine motion_engine;
     public MachineControl() {
 
         super("Xmotion Gen3 - Machine Control");
@@ -45,6 +47,7 @@ public class MachineControl extends JFrame {
         mdi_console = new MDIConsole();
         motion_controller.inherit_ui_widgets(ui_widgets);
         motion_controller.inherit_mdi_console(mdi_console);
+        motion_engine = new MotionEngine();
         Layout_UI();
         GcodeViewerPanel panel = new GcodeViewerPanel();
         add(panel);
@@ -239,10 +242,11 @@ public class MachineControl extends JFrame {
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_R) {
 
-                                    if (GlobalData.AltKeyPressed == true)
+                                    /*if (GlobalData.AltKeyPressed == true)
                                     {
                                         motion_controller.CycleStart();
-                                    }
+                                    }*/
+                                    motion_engine.test();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_F1) {
 
@@ -277,6 +281,7 @@ public class MachineControl extends JFrame {
                     GcodeInterpreter g = new GcodeInterpreter(selectedFile.getAbsolutePath());
                     GlobalData.GcodeFile = selectedFile.getAbsolutePath();
                     ArrayList<GcodeInterpreter.GcodeMove> moves = g.GetMoves();
+                    motion_engine.setMoves(moves);
                     gcode_viewer.ClearStack();
 
                     for (int x = 2; x < moves.size(); x ++)

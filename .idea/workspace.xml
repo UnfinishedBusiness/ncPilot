@@ -10,10 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MotionController/MotionController.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MotionController/MotionController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/SerialIO.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/SerialIO.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,65 +25,37 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MotionController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MotionController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="784" column="51" lean-forward="true" selection-start-line="784" selection-start-column="51" selection-end-line="784" selection-end-column="51" />
+            <state relative-caret-position="-5729">
+              <caret line="183" column="55" lean-forward="false" selection-start-line="183" selection-start-column="55" selection-end-line="183" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1922#1923#0" expanded="true" />
-                <element signature="e#1948#1949#0" expanded="true" />
-                <element signature="e#2049#2050#0" expanded="true" />
-                <element signature="e#2079#2080#0" expanded="true" />
-                <element signature="e#2142#2143#0" expanded="true" />
-                <element signature="e#2173#2174#0" expanded="true" />
-                <element signature="e#15219#15220#0" expanded="true" />
-                <element signature="e#15250#15251#0" expanded="true" />
+                <element signature="e#942#943#0" expanded="true" />
+                <element signature="e#968#969#0" expanded="true" />
+                <element signature="e#1069#1070#0" expanded="true" />
+                <element signature="e#1099#1100#0" expanded="true" />
+                <element signature="e#1162#1163#0" expanded="true" />
+                <element signature="e#1193#1194#0" expanded="true" />
+                <element signature="e#14239#14240#0" expanded="true" />
+                <element signature="e#14270#14271#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GcodeInterpreter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeInterpreter.java">
+      <file leaf-file-name="MotionEngine.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="111" column="29" lean-forward="true" selection-start-line="111" selection-start-column="29" selection-end-line="111" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MDIConsole.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="54" column="51" lean-forward="false" selection-start-line="54" selection-start-column="51" selection-end-line="54" selection-end-column="51" />
+            <state relative-caret-position="428">
+              <caret line="45" column="40" lean-forward="true" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1692#1693#0" expanded="true" />
-                <element signature="e#1751#1752#0" expanded="true" />
-                <marker date="1550614062824" expanded="false" signature="3348:3363" ph=" { " />
-                <marker date="1550614062824" expanded="false" signature="3380:3386" ph=" }" />
-                <marker date="1550614062824" expanded="false" signature="3409:3424" ph=" { " />
-                <marker date="1550614062824" expanded="false" signature="3442:3448" ph=" }" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SerialIO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="117" column="52" lean-forward="false" selection-start-line="117" selection-start-column="52" selection-end-line="117" selection-end-column="52" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2891#2892#0" expanded="true" />
-                <element signature="e#2928#2929#0" expanded="true" />
-                <marker date="1550678862017" expanded="true" signature="5683:5759" ph="/**...*/" />
-                <marker date="1550678862017" expanded="true" signature="5829:6262" ph="{...}" />
+                <element signature="e#364#365#0" expanded="true" />
+                <element signature="e#419#420#0" expanded="true" />
+                <element signature="e#783#784#0" expanded="true" />
+                <element signature="e#808#809#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,73 +64,25 @@
       <file leaf-file-name="MachineControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-102">
-              <caret line="57" column="54" lean-forward="false" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
+            <state relative-caret-position="340">
+              <caret line="247" column="39" lean-forward="false" selection-start-line="247" selection-start-column="39" selection-end-line="247" selection-end-column="39" />
               <folding>
-                <element signature="e#1667#1789#0" expanded="true" />
-                <element signature="e#1788#1789#0" expanded="true" />
-                <element signature="e#2058#2059#0" expanded="true" />
-                <marker date="1550678862035" expanded="true" signature="17214:17234" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="17214:17244" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="17214:20748" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="17346:17473" ph="{...}" />
-                <marker date="1550678862035" expanded="false" signature="17399:17418" ph=" { " />
-                <marker date="1550678862035" expanded="false" signature="17449:17463" ph=" }" />
-                <marker date="1550678862035" expanded="true" signature="17571:17873" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="17625:17863" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="17971:18139" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="18025:18129" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="18237:18405" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="18291:18395" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="18502:18670" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="18556:18660" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="18780:18966" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="18834:18956" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="19075:19259" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="19129:19249" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="19368:19549" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="19422:19539" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="19662:19856" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="19716:19846" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="20473:20740" ph="{...}" />
-                <marker date="1550678862035" expanded="true" signature="20527:20730" ph="{...}" />
-                <marker date="1550678862035" expanded="false" signature="22102:22121" ph=" { " />
-                <marker date="1550678862035" expanded="false" signature="22159:22173" ph=" }" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GcodeViewer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="220" column="89" lean-forward="false" selection-start-line="220" selection-start-column="89" selection-end-line="220" selection-end-column="89" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UIWidgets.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1360">
-              <caret line="85" column="53" lean-forward="false" selection-start-line="85" selection-start-column="53" selection-end-line="85" selection-end-column="53" />
-              <folding>
-                <element signature="e#787#788#0" expanded="false" />
-                <element signature="e#846#847#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GlobalData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="34" column="42" lean-forward="false" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="42" />
-              <folding>
-                <marker date="1550678862005" expanded="true" signature="2646:2749" ph="{...}" />
+                <element signature="e#1798#1920#0" expanded="true" />
+                <element signature="e#1868#1869#0" expanded="false" />
+                <element signature="e#1909#1910#0" expanded="false" />
+                <element signature="e#1919#1920#0" expanded="true" />
+                <element signature="e#1967#2190#0" expanded="true" />
+                <element signature="e#2189#2190#0" expanded="true" />
+                <element signature="e#2245#2382#0" expanded="true" />
+                <element signature="e#2381#2382#0" expanded="true" />
+                <element signature="e#16874#16875#0" expanded="true" />
+                <element signature="e#16938#16939#0" expanded="true" />
+                <element signature="e#17117#17118#0" expanded="true" />
+                <element signature="e#17180#17181#0" expanded="true" />
+                <marker date="1550852806048" expanded="false" signature="17643:17662" ph=" { " />
+                <marker date="1550852806048" expanded="false" signature="17693:17707" ph=" }" />
+                <marker date="1550852806048" expanded="false" signature="22346:22365" ph=" { " />
+                <marker date="1550852806048" expanded="false" signature="22403:22417" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -243,12 +166,13 @@
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/LinemodeProtocal.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeInterpreter.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionEngine.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
       </list>
     </option>
   </component>
@@ -401,28 +325,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="artifacts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ncPilot_jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -490,6 +392,34 @@
       <predefined_log_file id="idea.log" enabled="true" />
       <method />
     </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="ENABLE_ADVANCED_PROFILING" value="true" />
+        <option name="GAPID_ENABLED" value="false" />
+        <option name="GAPID_DISABLE_PCS" value="false" />
+        <option name="SUPPORT_LIB_ENABLED" value="true" />
+        <option name="INSTRUMENTATION_ENABLED" value="true" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -539,6 +469,22 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -558,6 +504,40 @@
       </option>
       <envs />
       <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Java Scratch" factoryName="Java Scratch">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SCRATCH_FILE_ID" value="0" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="ncPilot" />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
@@ -723,21 +703,20 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/HMI.java" />
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="38" column="45" lean-forward="false" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1922#1923#0" expanded="true" />
-            <element signature="e#1948#1949#0" expanded="true" />
-            <element signature="e#2049#2050#0" expanded="true" />
-            <element signature="e#2079#2080#0" expanded="true" />
-            <element signature="e#2142#2143#0" expanded="true" />
-            <element signature="e#2173#2174#0" expanded="true" />
-            <element signature="e#15219#15220#0" expanded="true" />
-            <element signature="e#15250#15251#0" expanded="true" />
+            <element signature="e#942#943#0" expanded="true" />
+            <element signature="e#968#969#0" expanded="true" />
+            <element signature="e#1069#1070#0" expanded="true" />
+            <element signature="e#1099#1100#0" expanded="true" />
+            <element signature="e#1162#1163#0" expanded="true" />
+            <element signature="e#1193#1194#0" expanded="true" />
+            <element signature="e#14239#14240#0" expanded="true" />
+            <element signature="e#14270#14271#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -751,14 +730,14 @@
           <caret line="54" column="23" lean-forward="false" selection-start-line="54" selection-start-column="23" selection-end-line="54" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1922#1923#0" expanded="true" />
-            <element signature="e#1948#1949#0" expanded="true" />
-            <element signature="e#2049#2050#0" expanded="true" />
-            <element signature="e#2079#2080#0" expanded="true" />
-            <element signature="e#2142#2143#0" expanded="true" />
-            <element signature="e#2173#2174#0" expanded="true" />
-            <element signature="e#15219#15220#0" expanded="true" />
-            <element signature="e#15250#15251#0" expanded="true" />
+            <element signature="e#942#943#0" expanded="true" />
+            <element signature="e#968#969#0" expanded="true" />
+            <element signature="e#1069#1070#0" expanded="true" />
+            <element signature="e#1099#1100#0" expanded="true" />
+            <element signature="e#1162#1163#0" expanded="true" />
+            <element signature="e#1193#1194#0" expanded="true" />
+            <element signature="e#14239#14240#0" expanded="true" />
+            <element signature="e#14270#14271#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1007,72 +986,73 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeViewer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="220" column="89" lean-forward="false" selection-start-line="220" selection-start-column="89" selection-end-line="220" selection-end-column="89" />
+        <state relative-caret-position="289">
+          <caret line="22" column="71" lean-forward="true" selection-start-line="22" selection-start-column="71" selection-end-line="22" selection-end-column="71" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102">
-          <caret line="57" column="54" lean-forward="false" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
-          <folding>
-            <element signature="e#1667#1789#0" expanded="true" />
-            <element signature="e#1788#1789#0" expanded="true" />
-            <element signature="e#2058#2059#0" expanded="true" />
-            <marker date="1550678862035" expanded="true" signature="17214:17234" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="17214:17244" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="17214:20748" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="17346:17473" ph="{...}" />
-            <marker date="1550678862035" expanded="false" signature="17399:17418" ph=" { " />
-            <marker date="1550678862035" expanded="false" signature="17449:17463" ph=" }" />
-            <marker date="1550678862035" expanded="true" signature="17571:17873" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="17625:17863" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="17971:18139" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="18025:18129" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="18237:18405" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="18291:18395" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="18502:18670" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="18556:18660" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="18780:18966" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="18834:18956" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="19075:19259" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="19129:19249" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="19368:19549" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="19422:19539" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="19662:19856" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="19716:19846" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="20473:20740" ph="{...}" />
-            <marker date="1550678862035" expanded="true" signature="20527:20730" ph="{...}" />
-            <marker date="1550678862035" expanded="false" signature="22102:22121" ph=" { " />
-            <marker date="1550678862035" expanded="false" signature="22159:22173" ph=" }" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GcodeInterpreter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="111" column="29" lean-forward="true" selection-start-line="111" selection-start-column="29" selection-end-line="111" selection-end-column="29" />
+        <state relative-caret-position="-221">
+          <caret line="21" column="24" lean-forward="true" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="784" column="51" lean-forward="true" selection-start-line="784" selection-start-column="51" selection-end-line="784" selection-end-column="51" />
+        <state relative-caret-position="-5729">
+          <caret line="183" column="55" lean-forward="false" selection-start-line="183" selection-start-column="55" selection-end-line="183" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1922#1923#0" expanded="true" />
-            <element signature="e#1948#1949#0" expanded="true" />
-            <element signature="e#2049#2050#0" expanded="true" />
-            <element signature="e#2079#2080#0" expanded="true" />
-            <element signature="e#2142#2143#0" expanded="true" />
-            <element signature="e#2173#2174#0" expanded="true" />
-            <element signature="e#15219#15220#0" expanded="true" />
-            <element signature="e#15250#15251#0" expanded="true" />
+            <element signature="e#942#943#0" expanded="true" />
+            <element signature="e#968#969#0" expanded="true" />
+            <element signature="e#1069#1070#0" expanded="true" />
+            <element signature="e#1099#1100#0" expanded="true" />
+            <element signature="e#1162#1163#0" expanded="true" />
+            <element signature="e#1193#1194#0" expanded="true" />
+            <element signature="e#14239#14240#0" expanded="true" />
+            <element signature="e#14270#14271#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="247" column="39" lean-forward="false" selection-start-line="247" selection-start-column="39" selection-end-line="247" selection-end-column="39" />
+          <folding>
+            <element signature="e#1798#1920#0" expanded="true" />
+            <element signature="e#1868#1869#0" expanded="false" />
+            <element signature="e#1909#1910#0" expanded="false" />
+            <element signature="e#1919#1920#0" expanded="true" />
+            <element signature="e#1967#2190#0" expanded="true" />
+            <element signature="e#2189#2190#0" expanded="true" />
+            <element signature="e#2245#2382#0" expanded="true" />
+            <element signature="e#2381#2382#0" expanded="true" />
+            <element signature="e#16874#16875#0" expanded="true" />
+            <element signature="e#16938#16939#0" expanded="true" />
+            <element signature="e#17117#17118#0" expanded="true" />
+            <element signature="e#17180#17181#0" expanded="true" />
+            <marker date="1550852806048" expanded="false" signature="17643:17662" ph=" { " />
+            <marker date="1550852806048" expanded="false" signature="17693:17707" ph=" }" />
+            <marker date="1550852806048" expanded="false" signature="22346:22365" ph=" { " />
+            <marker date="1550852806048" expanded="false" signature="22403:22417" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="45" column="40" lean-forward="true" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#364#365#0" expanded="true" />
+            <element signature="e#419#420#0" expanded="true" />
+            <element signature="e#783#784#0" expanded="true" />
+            <element signature="e#808#809#0" expanded="true" />
           </folding>
         </state>
       </provider>
