@@ -254,10 +254,6 @@ public class MotionEngine {
     }
     private void pushMoveToStack(StepGenStruct s)
     {
-        StepGenStruct a = adjustStepsForAcuracyDeviation(s);
-        String send_buf = ">" + getStepCountWithDirection(0, a) + ":" + a.x_delay + "|" +  getStepCountWithDirection(1, a) + ":" + a.y_delay + "|" + getStepCountWithDirection(2, a) + ":" + a.z_delay + "\n";
-        System.out.print(send_buf);
-        MotionController.WriteBuffer(send_buf);
         move_buffer.add(s);
     }
     private void pushLinearMove(float[] start_point, float[] end_point, float feedrate)
@@ -286,9 +282,12 @@ public class MotionEngine {
         gen.z_delay = feedrates[2];
         gen.target_velocity = feedrate;
         pushMoveToStack(gen);
+
+
     }
     public void runMoves()
     {
+
         move_dro_position = new float[] {GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
         for (int x = 0; x < moves.size(); x ++)
         {
@@ -323,6 +322,17 @@ public class MotionEngine {
             move_dro_position[0] = moves.get(x).Xword;
             move_dro_position[1] = moves.get(x).Yword;
             move_dro_position[2] = moves.get(x).Zword;
+
+            if (x == 0) //If we are the first move, push it to the StepGet Motion Stack as well
+            {
+                if (move_buffer.size() > 0)
+                {
+                    StepGenStruct a = adjustStepsForAcuracyDeviation(move_buffer.get(0));
+                    String send_buf = ">" + getStepCountWithDirection(0, a) + ":" + a.x_delay + "|" +  getStepCountWithDirection(1, a) + ":" + a.y_delay + "|" + getStepCountWithDirection(2, a) + ":" + a.z_delay + "\n";
+                    System.out.print(send_buf);
+                    MotionController.WriteBuffer(send_buf);
+                }
+            }
         }
     }
     public void next_move()
@@ -385,8 +395,16 @@ public class MotionEngine {
             {
                 System.out.println("Next move");
                 next_move();
-                motion_dro_before_move = new float[] {GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
-                GlobalData.ProgrammedFeedrate = move_buffer.get(0).target_velocity;
+                if (move_buffer.size() > 0)
+                {
+                    motion_dro_before_move = new float[]{GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
+                    GlobalData.ProgrammedFeedrate = move_buffer.get(0).target_velocity;
+
+                    StepGenStruct a = adjustStepsForAcuracyDeviation(move_buffer.get(0));
+                    String send_buf = ">" + getStepCountWithDirection(0, a) + ":" + a.x_delay + "|" +  getStepCountWithDirection(1, a) + ":" + a.y_delay + "|" + getStepCountWithDirection(2, a) + ":" + a.z_delay + "\n";
+                    System.out.print(send_buf);
+                    MotionController.WriteBuffer(send_buf);
+                }
             }
             else
             {
