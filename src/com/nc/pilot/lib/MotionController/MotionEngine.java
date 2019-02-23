@@ -23,7 +23,7 @@ public class MotionEngine {
     private static long z_timer;
 
     private long[] step_scale;
-    private float max_linear_velocity = 600;
+    private float max_linear_velocity = 800;
 
     public MotionEngine(){
         move_buffer = new ArrayList();
@@ -41,47 +41,20 @@ public class MotionEngine {
     {
         return System.nanoTime() / 500;
     }
-
-    private long[] getIndividualAxisFeedrates(float f, float x_dist, float y_dist, float z_dist)
+    public float distanceBetween3DPoints(float[] p1, float[] p2)
+    {
+        return (float) Math.sqrt(Math.pow(p1[0] - p2[0], 2) + Math.pow(p1[1] - p2[1], 2) + Math.pow(p1[2] - p2[2], 2));
+    }
+    private long[] getIndividualAxisFeedrates(float f, float x_dist, float y_dist, float z_dist, float cartesion_dist)
     {
         long x_feed = 0;
         long y_feed = 0;
         long z_feed = 0;
-        if (Math.abs(x_dist) > 0 && Math.abs(y_dist) > 0 && Math.abs(z_dist) > 0)
-        {
-            x_feed = (long)((one_minute / f) / ((float)step_scale[0]) * Math.abs(x_dist));
-            y_feed = (long)((one_minute / f) / ((float)step_scale[1]) * Math.abs(y_dist));
-            z_feed = (long)((one_minute / f) / ((float)step_scale[2]) * Math.abs(z_dist));
-            return new long[] {x_feed, y_feed, z_feed};
-        }
-        if (Math.abs(x_dist) > 0 && Math.abs(y_dist) > 0)
-        {
-            x_feed = (long)((one_minute / f) / ((float)step_scale[0]) * Math.abs(x_dist));
-            y_feed = (long)((one_minute / f) / ((float)step_scale[1]) * Math.abs(y_dist));
-            z_feed = 0;
-            return new long[] {x_feed, y_feed, z_feed};
-        }
-        if (Math.abs(x_dist) > 0)
-        {
-            x_feed = (long)((one_minute / f) / ((float)step_scale[0]));
-            y_feed = 0;
-            z_feed = 0;
-            return new long[] {x_feed, y_feed, z_feed};
-        }
-        if (Math.abs(y_dist) > 0)
-        {
-            x_feed = 0;
-            y_feed = (long)((one_minute / f) / ((float)step_scale[1]));
-            z_feed = 0;
-            return new long[] {x_feed, y_feed, z_feed};
-        }
-        if (Math.abs(z_dist) > 0)
-        {
-            x_feed = 0;
-            y_feed = 0;
-            z_feed = (long)((one_minute / f) / ((float)step_scale[2]));
-            return new long[] {x_feed, y_feed, z_feed};
-        }
+        //System.out.println("Cartesion Distance: " + cartesion_dist);
+        long move_will_take = (long) ((cartesion_dist / f) * one_minute); //Move will take 'x' nanoseconds to finish at specified feedrate
+        x_feed = (long)(move_will_take / ((float)step_scale[0] * Math.abs(x_dist)));
+        y_feed = (long)(move_will_take / ((float)step_scale[1] * Math.abs(y_dist)));
+        z_feed = (long)(move_will_take / ((float)step_scale[2] * Math.abs(z_dist)));
         return new long[] {x_feed, y_feed, z_feed};
     }
 
@@ -180,7 +153,7 @@ public class MotionEngine {
                 float z_dist = (moves.get(x).Zword - move_dro_position[2]);
                 //System.out.println("x_dist: " + x_dist);
                 //System.out.println("y_dist: " + y_dist);
-                long[] feedrates = getIndividualAxisFeedrates(max_linear_velocity, x_dist, y_dist, z_dist);
+                long[] feedrates = getIndividualAxisFeedrates(max_linear_velocity, x_dist, y_dist, z_dist, distanceBetween3DPoints(move_dro_position, new float[] { moves.get(x).Xword,moves.get(x).Yword, moves.get(x).Zword} ));
                 StepGenStruct gen = new StepGenStruct();
                 gen.x_step_count = (long)(Math.abs(x_dist) * (float)step_scale[0]);
                 gen.x_total_step_count = gen.x_step_count;
@@ -207,7 +180,7 @@ public class MotionEngine {
                 float z_dist = (moves.get(x).Zword - move_dro_position[2]);
                 //System.out.println("x_dist: " + x_dist);
                 //System.out.println("y_dist: " + y_dist);
-                long[] feedrates = getIndividualAxisFeedrates(moves.get(x).Fword, x_dist, y_dist, z_dist);
+                long[] feedrates = getIndividualAxisFeedrates(moves.get(x).Fword, x_dist, y_dist, z_dist, distanceBetween3DPoints(move_dro_position, new float[] { moves.get(x).Xword,moves.get(x).Yword, moves.get(x).Zword} ));
                 StepGenStruct gen = new StepGenStruct();
                 gen.x_step_count = (long)(Math.abs(x_dist) * (float)step_scale[0]);
                 gen.x_total_step_count = gen.x_step_count;
