@@ -25,6 +25,7 @@ public class MachineControl extends JFrame {
     Timer repaint_timer = new Timer();
     Timer status_report_timer = new Timer();
     Timer motion_control_poll_timer = new Timer();
+    Timer motion_engine_timer = new Timer();
     MotionController motion_controller;
     UIWidgets ui_widgets;
     GcodeViewer gcode_viewer;
@@ -70,6 +71,12 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 motion_controller.Poll();
+            }
+        }, 0, 100);
+        motion_engine_timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                motion_engine.Poll();
             }
         }, 0, 100);
         panel.addMouseListener(new MouseAdapter() {
@@ -246,7 +253,7 @@ public class MachineControl extends JFrame {
                                     {
                                         motion_controller.CycleStart();
                                     }*/
-                                    motion_engine.test();
+                                    motion_engine.runMoves();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_F1) {
 
