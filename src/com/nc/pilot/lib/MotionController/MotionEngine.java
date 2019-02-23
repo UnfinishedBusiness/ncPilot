@@ -10,9 +10,10 @@ import java.util.ArrayList;
  */
 public class MotionEngine {
 
-    private float[] dro_before_move_started = new float[] {0, 0, 0};
     private ArrayList<GcodeInterpreter.GcodeMove> moves;
     private ArrayList<StepGenStruct> move_buffer;
+    private float[] move_dro_position;
+    private float[] motion_dro_before_move;
 
     private static int step_len = 10; //this has to match what the step gen is set too!
     private static int motion_buffer_size = 40; //This has to match what is in the step gen controller!
@@ -158,31 +159,42 @@ public class MotionEngine {
     }
     public void runMoves()
     {
-        for (int x = 1; x < moves.size(); x ++)
+        move_dro_position = new float[] {GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
+        for (int x = 0; x < moves.size(); x ++)
         {
-            /*if (moves.get(x).Gword == 0)
+            if (moves.get(x).Gword == 0)
             {
-                float x_dist = (moves.get(x).Xword - moves.get(x-1).Xword);
-                float y_dist = (moves.get(x).Yword - moves.get(x-1).Yword);
-                float z_dist = (moves.get(x).Zword - moves.get(x-1).Zword);
+                float x_dist = (moves.get(x).Xword - move_dro_position[0]);
+                float y_dist = (moves.get(x).Yword - move_dro_position[1]);
+                float z_dist = (moves.get(x).Zword - move_dro_position[2]);
+                //System.out.println("x_dist: " + x_dist);
+                //System.out.println("y_dist: " + y_dist);
                 long[] feedrates = getIndividualAxisFeedrates(max_linear_velocity, x_dist, y_dist, z_dist);
-
                 StepGenStruct gen = new StepGenStruct();
-                gen.x_step_count = (long)(x_dist * step_scale[0]);
-                gen.y_step_count = (long)(y_dist * step_scale[1]);
-                gen.z_step_count = (long)(z_dist * step_scale[2]);
+                gen.x_step_count = (long)(Math.abs(x_dist) * (float)step_scale[0]);
+                gen.x_total_step_count = gen.x_step_count;
+                gen.x_dir = true;
+                if (x_dist < 0) gen.x_dir = false;
+                gen.y_step_count = (long)(Math.abs(y_dist) * (float)step_scale[1]);
+                gen.y_total_step_count = gen.y_step_count;
+                gen.y_dir = true;
+                if (y_dist < 0) gen.y_dir = false;
+                gen.z_step_count = (long)(Math.abs(z_dist) * (float)step_scale[2]);
+                gen.z_total_step_count = gen.z_step_count;
+                gen.z_dir = true;
+                if (z_dist < 0) gen.z_dir = false;
                 gen.x_delay = feedrates[0];
                 gen.y_delay = feedrates[1];
                 gen.z_delay = feedrates[2];
                 pushMoveToStack(gen);
-            }*/
+            }
             if (moves.get(x).Gword == 1)
             {
-                float x_dist = (moves.get(x).Xword - moves.get(x-1).Xword);
-                float y_dist = (moves.get(x).Yword - moves.get(x-1).Yword);
-                float z_dist = (moves.get(x).Zword - moves.get(x-1).Zword);
-                System.out.println("x_dist: " + x_dist);
-                System.out.println("y_dist: " + y_dist);
+                float x_dist = (moves.get(x).Xword - move_dro_position[0]);
+                float y_dist = (moves.get(x).Yword - move_dro_position[1]);
+                float z_dist = (moves.get(x).Zword - move_dro_position[2]);
+                //System.out.println("x_dist: " + x_dist);
+                //System.out.println("y_dist: " + y_dist);
                 long[] feedrates = getIndividualAxisFeedrates(moves.get(x).Fword, x_dist, y_dist, z_dist);
                 StepGenStruct gen = new StepGenStruct();
                 gen.x_step_count = (long)(Math.abs(x_dist) * (float)step_scale[0]);
@@ -210,6 +222,9 @@ public class MotionEngine {
             {
 
             }
+            move_dro_position[0] = moves.get(x).Xword;
+            move_dro_position[1] = moves.get(x).Yword;
+            move_dro_position[2] = moves.get(x).Zword;
         }
     }
     public void next_move()
@@ -224,6 +239,43 @@ public class MotionEngine {
         }
         move_buffer = tmp_buffer;
     }
+    private int getDirectionFactor(int axis, StepGenStruct s)
+    {
+        if (axis == 0)
+        {
+            if (s.x_dir == true)
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        if (axis == 1)
+        {
+            if (s.y_dir == true)
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        if (axis == 2)
+        {
+            if (s.z_dir == true)
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        return 1;
+    }
     public void Poll()
     {
 
@@ -235,7 +287,7 @@ public class MotionEngine {
             {
                 System.out.println("Next move");
                 next_move();
-                dro_before_move_started = new float[] {GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
+                motion_dro_before_move = new float[] {GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
             }
             else
             {
@@ -248,30 +300,13 @@ public class MotionEngine {
                         move_buffer.get(0).x_step_count -= number_of_steps;
                         if (move_buffer.get(0).x_step_count < 0)
                         {
+                            GlobalData.dro[0] = motion_dro_before_move[0] + ((1.0f / (float)step_scale[0]) * (float)Math.abs(move_buffer.get(0).x_total_step_count) * (getDirectionFactor(0, move_buffer.get(0))));
                             move_buffer.get(0).x_step_count = 0;
-                            System.out.println("Total X steps were: " + move_buffer.get(0).x_total_step_count);
-                            if (move_buffer.get(0).x_dir == true)
-                            {
-                                GlobalData.dro[0] = dro_before_move_started[0] + (1.0f / (float)step_scale[0]) * (float)move_buffer.get(0).x_total_step_count;
-                            }
-                            else
-                            {
-                                GlobalData.dro[0] = dro_before_move_started[0] - (1.0f / (float)step_scale[0]) * (float)move_buffer.get(0).x_total_step_count;
-                            }
-
                         }
                         else
                         {
                             //System.out.println("X_STEP_COUNT: " + move_buffer.get(0).x_step_count + " Elapsed time: " + elapsed_time + " Incrementing steps: " + number_of_steps + " DRO_X_Increment: " + (1.0f / (float)step_scale[0]) * (float)number_of_steps);
-                            if (move_buffer.get(0).x_dir == true)
-                            {
-                                GlobalData.dro[0] += (1.0f / (float)step_scale[0]) * (float)number_of_steps; //Increment dro!
-                            }
-                            else
-                            {
-                                GlobalData.dro[0] -= (1.0f / (float)step_scale[0]) * (float)number_of_steps; //Increment dro!
-                            }
-
+                            GlobalData.dro[0] += (1.0f / (float)step_scale[0]) * (float)number_of_steps * getDirectionFactor(0, move_buffer.get(0)); //Increment dro!
                             x_timer = micros() + ((move_buffer.get(0).x_delay + step_len) * number_of_steps);
                         }
 
@@ -290,28 +325,13 @@ public class MotionEngine {
                         move_buffer.get(0).y_step_count -= number_of_steps;
                         if (move_buffer.get(0).y_step_count < 0)
                         {
+                            GlobalData.dro[1] = motion_dro_before_move[1] + ((1.0f / (float)step_scale[1]) * (float)Math.abs(move_buffer.get(0).y_total_step_count) * (getDirectionFactor(1, move_buffer.get(0))));
                             move_buffer.get(0).y_step_count = 0;
-                            if (move_buffer.get(0).y_dir == true)
-                            {
-                                GlobalData.dro[1] = dro_before_move_started[1] + (1.0f / (float)step_scale[1]) * (float)move_buffer.get(0).y_total_step_count;
-                            }
-                            else
-                            {
-                                GlobalData.dro[1] = dro_before_move_started[1] - (1.0f / (float)step_scale[1]) * (float)move_buffer.get(0).y_total_step_count;
-                            }
-
                         }
                         else
                         {
                             //System.out.println("Y_STEP_COUNT: " + move_buffer.get(0).y_step_count + " Elapsed time: " + elapsed_time + " Incrementing steps: " + number_of_steps + " DRO_Y_Increment: " + (1.0f / (float)step_scale[1]) * (float)number_of_steps);
-                            if (move_buffer.get(0).y_dir == true)
-                            {
-                                GlobalData.dro[1] += (1.0f / (float)step_scale[1]) * (float)number_of_steps; //Increment dro!
-                            }
-                            else
-                            {
-                                GlobalData.dro[1] -= (1.0f / (float)step_scale[1]) * (float)number_of_steps; //Increment dro!
-                            }
+                            GlobalData.dro[1] += (1.0f / (float)step_scale[1]) * (float)number_of_steps * getDirectionFactor(1, move_buffer.get(0)); //Increment dro!
                             y_timer = micros() + ((move_buffer.get(0).y_delay + (step_len)) * number_of_steps);
                         }
 
@@ -330,28 +350,13 @@ public class MotionEngine {
                         move_buffer.get(0).z_step_count -= number_of_steps;
                         if (move_buffer.get(0).z_step_count < 0)
                         {
+                            GlobalData.dro[2] = motion_dro_before_move[2] + ((1.0f / (float)step_scale[2]) * (float)Math.abs(move_buffer.get(0).z_total_step_count) * (getDirectionFactor(2, move_buffer.get(0))));
                             move_buffer.get(0).z_step_count = 0;
-                            if (move_buffer.get(0).z_dir == true)
-                            {
-                                GlobalData.dro[2] = dro_before_move_started[2] + (1.0f / (float) step_scale[2]) * (float) move_buffer.get(0).z_total_step_count;
-                            }
-                            else
-                            {
-                                GlobalData.dro[2] = dro_before_move_started[2] - (1.0f / (float) step_scale[2]) * (float) move_buffer.get(0).z_total_step_count;
-                            }
                         }
                         else
                         {
                             //System.out.println("Z_STEP_COUNT: " + move_buffer.get(0).z_step_count + " Elapsed time: " + elapsed_time + " Incrementing steps: " + number_of_steps + " DRO_Y_Increment: " + (1.0f / (float)step_scale[2]) * (float)number_of_steps);
-                            if (move_buffer.get(0).z_dir == true)
-                            {
-                                GlobalData.dro[2] += (1.0f / (float)step_scale[2]) * (float)number_of_steps; //Increment dro!
-                            }
-                            else
-                            {
-                                GlobalData.dro[2] -= (1.0f / (float)step_scale[2]) * (float)number_of_steps; //Increment dro!
-                            }
-
+                            GlobalData.dro[2] += (1.0f / (float)step_scale[2]) * (float)number_of_steps * getDirectionFactor(2, move_buffer.get(0)); //Increment dro!
                             z_timer = micros() + ((move_buffer.get(0).z_delay + (step_len)) * number_of_steps);
                         }
                     }
@@ -364,7 +369,7 @@ public class MotionEngine {
         }
         else
         {
-            if (x_timer == 0)
+            /*if (x_timer == 0)
             {
                 x_timer = micros();
             }
@@ -375,7 +380,8 @@ public class MotionEngine {
             if (z_timer == 0)
             {
                 z_timer = micros();
-            }
+            }*/
+            motion_dro_before_move = new float[] {GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
         }
     }
 }

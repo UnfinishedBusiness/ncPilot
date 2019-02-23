@@ -23,8 +23,6 @@ public class MachineControl extends JFrame {
 
     private SerialIO serial;
     Timer repaint_timer = new Timer();
-    Timer status_report_timer = new Timer();
-    Timer motion_control_poll_timer = new Timer();
     Timer motion_engine_timer = new Timer();
     MotionController motion_controller;
     UIWidgets ui_widgets;
@@ -59,26 +57,12 @@ public class MachineControl extends JFrame {
                 repaint();
             }
         }, 0, 50);
-        status_report_timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (mdi_console.isVisible == false) {
-                    //motion_controller.StatusReport();
-                }
-            }
-        }, 0, 2000);
-        motion_control_poll_timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                motion_controller.Poll();
-            }
-        }, 0, 100);
         motion_engine_timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 motion_engine.Poll();
             }
-        }, 0, 100);
+        }, 0, 5);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -280,7 +264,7 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                fileChooser.setCurrentDirectory(new File("."));
                 int result = fileChooser.showOpenDialog(getParent());
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
