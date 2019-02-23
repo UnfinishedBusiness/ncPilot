@@ -129,7 +129,7 @@ public class GcodeInterpreter {
         //Moves.add(m);
         if (Moves.size() > 0)
         {
-            if (Moves.get(Moves.size() - 1).Xword != Xword || Moves.get(Moves.size() - 1).Yword != Yword || Moves.get(Moves.size() - 1).Iword != Iword || Moves.get(Moves.size() - 1).Jword != Jword)
+            if (Moves.get(Moves.size() - 1).Xword != Xword || Moves.get(Moves.size() - 1).Yword != Yword || Moves.get(Moves.size() - 1).Zword != Zword || Moves.get(Moves.size() - 1).Iword != Iword || Moves.get(Moves.size() - 1).Jword != Jword)
             {
                 if (Gword == 2 || Gword == 3)
                 {

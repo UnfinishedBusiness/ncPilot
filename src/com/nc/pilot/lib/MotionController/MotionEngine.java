@@ -23,7 +23,7 @@ public class MotionEngine {
     private static long z_timer;
 
     private long[] step_scale;
-    private float max_linear_velocity = 200;
+    private float max_linear_velocity = 600;
 
     public MotionEngine(){
         move_buffer = new ArrayList();
@@ -44,32 +44,43 @@ public class MotionEngine {
 
     private long[] getIndividualAxisFeedrates(float f, float x_dist, float y_dist, float z_dist)
     {
-        long x_feed;
-        long y_feed;
-        long z_feed;
+        long x_feed = 0;
+        long y_feed = 0;
+        long z_feed = 0;
+        if (Math.abs(x_dist) > 0 && Math.abs(y_dist) > 0 && Math.abs(z_dist) > 0)
+        {
+            x_feed = (long)((one_minute / f) / ((float)step_scale[0]) * Math.abs(x_dist));
+            y_feed = (long)((one_minute / f) / ((float)step_scale[1]) * Math.abs(y_dist));
+            z_feed = (long)((one_minute / f) / ((float)step_scale[2]) * Math.abs(z_dist));
+            return new long[] {x_feed, y_feed, z_feed};
+        }
+        if (Math.abs(x_dist) > 0 && Math.abs(y_dist) > 0)
+        {
+            x_feed = (long)((one_minute / f) / ((float)step_scale[0]) * Math.abs(x_dist));
+            y_feed = (long)((one_minute / f) / ((float)step_scale[1]) * Math.abs(y_dist));
+            z_feed = 0;
+            return new long[] {x_feed, y_feed, z_feed};
+        }
         if (Math.abs(x_dist) > 0)
         {
-            x_feed = (long)(one_minute / (Math.abs(x_dist) * step_scale[0]) / f);
-        }
-        else
-        {
-            x_feed = 0;
+            x_feed = (long)((one_minute / f) / ((float)step_scale[0]));
+            y_feed = 0;
+            z_feed = 0;
+            return new long[] {x_feed, y_feed, z_feed};
         }
         if (Math.abs(y_dist) > 0)
         {
-            y_feed = (long)(one_minute / (Math.abs(y_dist) * step_scale[1]) / f);
-        }
-        else
-        {
-            y_feed = 0;
+            x_feed = 0;
+            y_feed = (long)((one_minute / f) / ((float)step_scale[1]));
+            z_feed = 0;
+            return new long[] {x_feed, y_feed, z_feed};
         }
         if (Math.abs(z_dist) > 0)
         {
-            z_feed = (long)(one_minute / (Math.abs(z_dist) * step_scale[2]) / f);
-        }
-        else
-        {
-            z_feed = 0;
+            x_feed = 0;
+            y_feed = 0;
+            z_feed = (long)((one_minute / f) / ((float)step_scale[2]));
+            return new long[] {x_feed, y_feed, z_feed};
         }
         return new long[] {x_feed, y_feed, z_feed};
     }
@@ -186,9 +197,10 @@ public class MotionEngine {
                 gen.x_delay = feedrates[0];
                 gen.y_delay = feedrates[1];
                 gen.z_delay = feedrates[2];
+                gen.target_velocity = max_linear_velocity;
                 pushMoveToStack(gen);
             }
-            if (moves.get(x).Gword == 1)
+            if (moves.get(x).Gword == 1 || moves.get(x).Gword == 2 || moves.get(x).Gword == 3)
             {
                 float x_dist = (moves.get(x).Xword - move_dro_position[0]);
                 float y_dist = (moves.get(x).Yword - move_dro_position[1]);
@@ -212,6 +224,7 @@ public class MotionEngine {
                 gen.x_delay = feedrates[0];
                 gen.y_delay = feedrates[1];
                 gen.z_delay = feedrates[2];
+                gen.target_velocity = moves.get(x).Fword;
                 pushMoveToStack(gen);
             }
             if (moves.get(x).Gword == 2)
@@ -288,15 +301,17 @@ public class MotionEngine {
                 System.out.println("Next move");
                 next_move();
                 motion_dro_before_move = new float[] {GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
+                //GlobalData.ProgrammedFeedrate = move_buffer.get(0).target_velocity;
             }
             else
             {
                 if (move_buffer.get(0).x_step_count > 0 && x_timer < micros()) //We know that are timer event has expired and surpassed many events, so we need to figure out how many events and subtract that from step_count
                 {
                     long elapsed_time = micros() - x_timer;
-                    if (elapsed_time < (1000 * 1000))
+                    if (elapsed_time < (100 * 1000))
                     {
                         long number_of_steps = elapsed_time / move_buffer.get(0).x_delay;
+                        if (number_of_steps == 0) number_of_steps++;
                         move_buffer.get(0).x_step_count -= number_of_steps;
                         if (move_buffer.get(0).x_step_count < 0)
                         {
@@ -319,9 +334,10 @@ public class MotionEngine {
                 if (move_buffer.get(0).y_step_count > 0 && y_timer < micros()) //We know that are timer event has expired and surpassed many events, so we need to figure out how many events and subtract that from step_count
                 {
                     long elapsed_time = micros() - y_timer;
-                    if (elapsed_time < (1000 * 1000))
+                    if (elapsed_time < (100 * 1000))
                     {
                         long number_of_steps = elapsed_time / move_buffer.get(0).y_delay;
+                        if (number_of_steps == 0) number_of_steps++;
                         move_buffer.get(0).y_step_count -= number_of_steps;
                         if (move_buffer.get(0).y_step_count < 0)
                         {
@@ -344,9 +360,11 @@ public class MotionEngine {
                 if (move_buffer.get(0).z_step_count > 0 && z_timer < micros()) //We know that are timer event has expired and surpassed many events, so we need to figure out how many events and subtract that from step_count
                 {
                     long elapsed_time = micros() - z_timer;
-                    if (elapsed_time < (1000 * 1000))
+                    if (elapsed_time < (100 * 1000))
                     {
                         long number_of_steps = elapsed_time / move_buffer.get(0).z_delay;
+                        if (number_of_steps == 0) number_of_steps++;
+                        //System.out.println("Z_DELAY: " + move_buffer.get(0).z_delay);
                         move_buffer.get(0).z_step_count -= number_of_steps;
                         if (move_buffer.get(0).z_step_count < 0)
                         {
@@ -355,7 +373,7 @@ public class MotionEngine {
                         }
                         else
                         {
-                            //System.out.println("Z_STEP_COUNT: " + move_buffer.get(0).z_step_count + " Elapsed time: " + elapsed_time + " Incrementing steps: " + number_of_steps + " DRO_Y_Increment: " + (1.0f / (float)step_scale[2]) * (float)number_of_steps);
+                            //System.out.println("Z_STEP_COUNT: " + move_buffer.get(0).z_step_count + " Elapsed time: " + elapsed_time + " Incrementing steps: " + number_of_steps + " DRO_Z_Increment: " + (1.0f / (float)step_scale[2]) * (float)number_of_steps);
                             GlobalData.dro[2] += (1.0f / (float)step_scale[2]) * (float)number_of_steps * getDirectionFactor(2, move_buffer.get(0)); //Increment dro!
                             z_timer = micros() + ((move_buffer.get(0).z_delay + (step_len)) * number_of_steps);
                         }
@@ -369,7 +387,7 @@ public class MotionEngine {
         }
         else
         {
-            /*if (x_timer == 0)
+            if (x_timer == 0)
             {
                 x_timer = micros();
             }
@@ -380,7 +398,7 @@ public class MotionEngine {
             if (z_timer == 0)
             {
                 z_timer = micros();
-            }*/
+            }
             motion_dro_before_move = new float[] {GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
         }
     }

@@ -16,4 +16,7 @@ public class StepGenStruct {
     boolean x_dir;
     boolean y_dir;
     boolean z_dir;
+
+    float target_velocity;
+    float current_velocity;
 }
