@@ -12,15 +12,21 @@ public class MotionEngine {
 
     private ArrayList<GcodeInterpreter.GcodeMove> moves;
     private ArrayList<StepGenStruct> move_buffer;
+    private int current_move;
     private float[] move_dro_position;
     private float[] motion_dro_before_move;
 
     private static int step_len = 10; //this has to match what the step gen is set too!
-    private static int motion_buffer_size = 40; //This has to match what is in the step gen controller!
+
+    private static int motion_buffer_size = 60; //This has to match what is in the step gen controller!
+    private static int motion_buffer_moves_ahead = 0; //We have to make sure we don't exceed $motion_buffer_size ahead
+    private static int motion_instruction_max_step_count = 30000;
+
     private static long one_minute = 60000000; //60,000,000
     private static long x_timer;
     private static long y_timer;
     private static long z_timer;
+    private static long motion_buffer_write_timer;
 
     private long[] step_scale;
     private float max_linear_velocity = 800;
@@ -36,6 +42,8 @@ public class MotionEngine {
         GlobalData.dro[0] = 0;
         GlobalData.dro[1] = 0;
         GlobalData.dro[2] = 0;
+
+        current_move = 0;
     }
     private long micros()
     {
@@ -337,6 +345,8 @@ public class MotionEngine {
     }
     public void next_move()
     {
+        /*motion_buffer_moves_ahead--;
+        if (motion_buffer_moves_ahead < 0) motion_buffer_moves_ahead = 0;
         ArrayList<StepGenStruct> tmp_buffer = new ArrayList();
         if (move_buffer.size() > 0)
         {
@@ -345,7 +355,9 @@ public class MotionEngine {
                 tmp_buffer.add(move_buffer.get(x));
             }
         }
-        move_buffer = tmp_buffer;
+        move_buffer = tmp_buffer;*/
+        motion_buffer_moves_ahead--;
+        current_move++;
     }
     private int getDirectionFactor(int axis, StepGenStruct s)
     {
@@ -384,48 +396,61 @@ public class MotionEngine {
         }
         return 1;
     }
+    public void FillMotionBufferOnStepgen()
+    {
+        //Keep sending move to stepgen until we fill up the buffer
+        if (motion_buffer_write_timer < micros())
+        {
+            System.out.println("Motion Buffer is " + motion_buffer_moves_ahead + " moves ahead of current move!");
+            motion_buffer_write_timer = micros() + (1000 * 1000);
+            if (motion_buffer_moves_ahead < motion_buffer_size && (motion_buffer_moves_ahead + current_move + 1) < move_buffer.size()) //There are moves left to push onto stepgen stack
+            {
+                motion_buffer_moves_ahead++;
+                StepGenStruct a = adjustStepsForAcuracyDeviation(move_buffer.get(current_move + motion_buffer_moves_ahead));
+                String send_buf = ">" + getStepCountWithDirection(0, a) + ":" + a.x_delay + "|" +  getStepCountWithDirection(1, a) + ":" + a.y_delay + "|" + getStepCountWithDirection(2, a) + ":" + a.z_delay + "\n";
+                System.out.print(send_buf);
+                MotionController.WriteBuffer(send_buf);
+            }
+        }
+    }
     public void Poll()
     {
 
         /* we need to mimick the stepgen stack in order to simulate DRO output in real time, this way we won't tax the embedded controller */
-        if (move_buffer.size() > 0) //There are moves on the stack!
+        if (current_move < move_buffer.size()) //There are moves on the stack!
         {
             //System.out.println("Moves on stack!");
-            if (move_buffer.get(0).x_step_count == 0 && move_buffer.get(0).y_step_count == 0 && move_buffer.get(0).z_step_count == 0) //no more moves left, move on to next move
+            if (move_buffer.get(current_move).x_step_count == 0 && move_buffer.get(current_move).y_step_count == 0 && move_buffer.get(current_move).z_step_count == 0) //no more moves left, move on to next move
             {
                 System.out.println("Next move");
                 next_move();
-                if (move_buffer.size() > 0)
+                if (current_move < move_buffer.size())
                 {
                     motion_dro_before_move = new float[]{GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
-                    GlobalData.ProgrammedFeedrate = move_buffer.get(0).target_velocity;
-
-                    StepGenStruct a = adjustStepsForAcuracyDeviation(move_buffer.get(0));
-                    String send_buf = ">" + getStepCountWithDirection(0, a) + ":" + a.x_delay + "|" +  getStepCountWithDirection(1, a) + ":" + a.y_delay + "|" + getStepCountWithDirection(2, a) + ":" + a.z_delay + "\n";
-                    System.out.print(send_buf);
-                    MotionController.WriteBuffer(send_buf);
+                    GlobalData.ProgrammedFeedrate = move_buffer.get(current_move).target_velocity;
                 }
             }
             else
             {
-                if (move_buffer.get(0).x_step_count > 0 && x_timer < micros()) //We know that are timer event has expired and surpassed many events, so we need to figure out how many events and subtract that from step_count
+                FillMotionBufferOnStepgen();
+                if (move_buffer.get(current_move).x_step_count > 0 && x_timer < micros()) //We know that are timer event has expired and surpassed many events, so we need to figure out how many events and subtract that from step_count
                 {
                     long elapsed_time = micros() - x_timer;
                     if (elapsed_time < (100 * 1000))
                     {
-                        long number_of_steps = elapsed_time / move_buffer.get(0).x_delay;
+                        long number_of_steps = elapsed_time / move_buffer.get(current_move).x_delay;
                         if (number_of_steps == 0) number_of_steps++;
-                        move_buffer.get(0).x_step_count -= number_of_steps;
-                        if (move_buffer.get(0).x_step_count < 0)
+                        move_buffer.get(current_move).x_step_count -= number_of_steps;
+                        if (move_buffer.get(current_move).x_step_count < 0)
                         {
-                            GlobalData.dro[0] = motion_dro_before_move[0] + ((1.0f / (float)step_scale[0]) * (float)Math.abs(move_buffer.get(0).x_total_step_count) * (getDirectionFactor(0, move_buffer.get(0))));
-                            move_buffer.get(0).x_step_count = 0;
+                            GlobalData.dro[0] = motion_dro_before_move[0] + ((1.0f / (float)step_scale[0]) * (float)Math.abs(move_buffer.get(current_move).x_total_step_count) * (getDirectionFactor(0, move_buffer.get(current_move))));
+                            move_buffer.get(current_move).x_step_count = 0;
                         }
                         else
                         {
                             //System.out.println("X_STEP_COUNT: " + move_buffer.get(0).x_step_count + " Elapsed time: " + elapsed_time + " Incrementing steps: " + number_of_steps + " DRO_X_Increment: " + (1.0f / (float)step_scale[0]) * (float)number_of_steps);
-                            GlobalData.dro[0] += (1.0f / (float)step_scale[0]) * (float)number_of_steps * getDirectionFactor(0, move_buffer.get(0)); //Increment dro!
-                            x_timer = micros() + ((move_buffer.get(0).x_delay + step_len) * number_of_steps);
+                            GlobalData.dro[0] += (1.0f / (float)step_scale[0]) * (float)number_of_steps * getDirectionFactor(0, move_buffer.get(current_move)); //Increment dro!
+                            x_timer = micros() + ((move_buffer.get(current_move).x_delay + step_len) * number_of_steps);
                         }
 
                     }
@@ -434,24 +459,24 @@ public class MotionEngine {
                         x_timer = micros();
                     }
                 }
-                if (move_buffer.get(0).y_step_count > 0 && y_timer < micros()) //We know that are timer event has expired and surpassed many events, so we need to figure out how many events and subtract that from step_count
+                if (move_buffer.get(current_move).y_step_count > 0 && y_timer < micros()) //We know that are timer event has expired and surpassed many events, so we need to figure out how many events and subtract that from step_count
                 {
                     long elapsed_time = micros() - y_timer;
                     if (elapsed_time < (100 * 1000))
                     {
-                        long number_of_steps = elapsed_time / move_buffer.get(0).y_delay;
+                        long number_of_steps = elapsed_time / move_buffer.get(current_move).y_delay;
                         if (number_of_steps == 0) number_of_steps++;
-                        move_buffer.get(0).y_step_count -= number_of_steps;
-                        if (move_buffer.get(0).y_step_count < 0)
+                        move_buffer.get(current_move).y_step_count -= number_of_steps;
+                        if (move_buffer.get(current_move).y_step_count < 0)
                         {
-                            GlobalData.dro[1] = motion_dro_before_move[1] + ((1.0f / (float)step_scale[1]) * (float)Math.abs(move_buffer.get(0).y_total_step_count) * (getDirectionFactor(1, move_buffer.get(0))));
-                            move_buffer.get(0).y_step_count = 0;
+                            GlobalData.dro[1] = motion_dro_before_move[1] + ((1.0f / (float)step_scale[1]) * (float)Math.abs(move_buffer.get(current_move).y_total_step_count) * (getDirectionFactor(1, move_buffer.get(current_move))));
+                            move_buffer.get(current_move).y_step_count = 0;
                         }
                         else
                         {
                             //System.out.println("Y_STEP_COUNT: " + move_buffer.get(0).y_step_count + " Elapsed time: " + elapsed_time + " Incrementing steps: " + number_of_steps + " DRO_Y_Increment: " + (1.0f / (float)step_scale[1]) * (float)number_of_steps);
-                            GlobalData.dro[1] += (1.0f / (float)step_scale[1]) * (float)number_of_steps * getDirectionFactor(1, move_buffer.get(0)); //Increment dro!
-                            y_timer = micros() + ((move_buffer.get(0).y_delay + (step_len)) * number_of_steps);
+                            GlobalData.dro[1] += (1.0f / (float)step_scale[1]) * (float)number_of_steps * getDirectionFactor(1, move_buffer.get(current_move)); //Increment dro!
+                            y_timer = micros() + ((move_buffer.get(current_move).y_delay + (step_len)) * number_of_steps);
                         }
 
                     }
@@ -460,25 +485,25 @@ public class MotionEngine {
                         y_timer = micros();
                     }
                 }
-                if (move_buffer.get(0).z_step_count > 0 && z_timer < micros()) //We know that are timer event has expired and surpassed many events, so we need to figure out how many events and subtract that from step_count
+                if (move_buffer.get(current_move).z_step_count > 0 && z_timer < micros()) //We know that are timer event has expired and surpassed many events, so we need to figure out how many events and subtract that from step_count
                 {
                     long elapsed_time = micros() - z_timer;
                     if (elapsed_time < (100 * 1000))
                     {
-                        long number_of_steps = elapsed_time / move_buffer.get(0).z_delay;
+                        long number_of_steps = elapsed_time / move_buffer.get(current_move).z_delay;
                         if (number_of_steps == 0) number_of_steps++;
                         //System.out.println("Z_DELAY: " + move_buffer.get(0).z_delay);
-                        move_buffer.get(0).z_step_count -= number_of_steps;
-                        if (move_buffer.get(0).z_step_count < 0)
+                        move_buffer.get(current_move).z_step_count -= number_of_steps;
+                        if (move_buffer.get(current_move).z_step_count < 0)
                         {
-                            GlobalData.dro[2] = motion_dro_before_move[2] + ((1.0f / (float)step_scale[2]) * (float)Math.abs(move_buffer.get(0).z_total_step_count) * (getDirectionFactor(2, move_buffer.get(0))));
-                            move_buffer.get(0).z_step_count = 0;
+                            GlobalData.dro[2] = motion_dro_before_move[2] + ((1.0f / (float)step_scale[2]) * (float)Math.abs(move_buffer.get(current_move).z_total_step_count) * (getDirectionFactor(2, move_buffer.get(current_move))));
+                            move_buffer.get(current_move).z_step_count = 0;
                         }
                         else
                         {
                             //System.out.println("Z_STEP_COUNT: " + move_buffer.get(0).z_step_count + " Elapsed time: " + elapsed_time + " Incrementing steps: " + number_of_steps + " DRO_Z_Increment: " + (1.0f / (float)step_scale[2]) * (float)number_of_steps);
-                            GlobalData.dro[2] += (1.0f / (float)step_scale[2]) * (float)number_of_steps * getDirectionFactor(2, move_buffer.get(0)); //Increment dro!
-                            z_timer = micros() + ((move_buffer.get(0).z_delay + (step_len)) * number_of_steps);
+                            GlobalData.dro[2] += (1.0f / (float)step_scale[2]) * (float)number_of_steps * getDirectionFactor(2, move_buffer.get(current_move)); //Increment dro!
+                            z_timer = micros() + ((move_buffer.get(current_move).z_delay + (step_len)) * number_of_steps);
                         }
                     }
                     else
