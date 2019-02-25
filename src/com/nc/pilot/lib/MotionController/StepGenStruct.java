@@ -19,4 +19,8 @@ public class StepGenStruct {
 
     float target_velocity;
     float current_velocity;
+    float vector_angle;
+
+    float[] start_point;
+    float[] end_point;
 }

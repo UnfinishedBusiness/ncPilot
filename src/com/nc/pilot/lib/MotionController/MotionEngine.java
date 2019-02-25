@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class MotionEngine {
 
     private ArrayList<GcodeInterpreter.GcodeMove> moves;
+    private ArrayList<StepGenStruct> move_buffer_without_planning;
     private ArrayList<StepGenStruct> move_buffer;
     private int current_move;
     private float[] move_dro_position;
@@ -18,7 +19,7 @@ public class MotionEngine {
 
     private static int step_len = 10; //this has to match what the step gen is set too!
 
-    private static int motion_buffer_size = 60; //This has to match what is in the step gen controller!
+    private static int motion_buffer_size = 10; //This has to match what is in the step gen controller!
     private static int motion_buffer_moves_ahead = 0; //We have to make sure we don't exceed $motion_buffer_size ahead
     private static int motion_instruction_max_step_count = 30000;
 
@@ -29,11 +30,14 @@ public class MotionEngine {
     private static long motion_buffer_write_timer;
 
     private long[] step_scale;
+    private long[] axis_acceleration; //Inch/Sec^2
     private float max_linear_velocity = 800;
 
     public MotionEngine(){
         move_buffer = new ArrayList();
+        move_buffer_without_planning = new ArrayList();
         step_scale = new long[] {650, 650, 650};
+        axis_acceleration = new long[] {10, 10, 10};
 
         x_timer = micros();
         y_timer = micros();
@@ -184,7 +188,10 @@ public class MotionEngine {
         if (z_feed > 9000000000000000000l) z_feed = 0;
         return new long[] {x_feed, y_feed, z_feed};
     }
-
+    float map(float x, float in_min, float in_max, float out_min, float out_max)
+    {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
     public void setMoves(ArrayList<GcodeInterpreter.GcodeMove> m)
     {
         moves = m;
@@ -262,7 +269,7 @@ public class MotionEngine {
     }
     private void pushMoveToStack(StepGenStruct s)
     {
-        move_buffer.add(s);
+        move_buffer_without_planning.add(s);
     }
     private void pushLinearMove(float[] start_point, float[] end_point, float feedrate)
     {
@@ -289,15 +296,77 @@ public class MotionEngine {
         gen.y_delay = feedrates[1];
         gen.z_delay = feedrates[2];
         gen.target_velocity = feedrate;
+        gen.current_velocity = 0; //planMotionBuffer will increment these values
+        gen.vector_angle = getAngle(start_point, end_point);
+        gen.start_point = start_point;
+        gen.end_point = end_point;
         pushMoveToStack(gen);
+    }
+    private void planMotionBuffer()
+    {
+        // This method need to iterate the motion_buffer_without_acceleration and add in acceleration and decelleration planning
+        float current_velocity = 0;
+        for (int x = 0; x < move_buffer_without_planning.size(); x++)
+        {
+            float major_moves_polar_angle = getAngle(move_buffer_without_planning.get(x).start_point, move_buffer_without_planning.get(x).end_point);
+            float major_move_distance = distanceBetween3DPoints(move_buffer_without_planning.get(x).start_point, move_buffer_without_planning.get(x).end_point);
+            //long move_will_take = (long) (((major_move_distance / move_buffer_without_planning.get(x).target_velocity) * one_minute) / 1000); //The move will take returned value in milliseoncds
+            long acceleration_per_ms = axis_acceleration[0] / 1000;
+            if (move_buffer_without_planning.size() > x+1) //There is another move
+            {
+                float vector_angle_change = Math.abs(getAngle(move_buffer_without_planning.get(x).start_point, move_buffer_without_planning.get(x).end_point) - getAngle(move_buffer_without_planning.get(x).start_point, move_buffer_without_planning.get(x).end_point));
+                float percentage_of_vector_change = map(vector_angle_change, 0f, 360f, 1f, 0.1f);
+                //figure out how many steps we need to go on each axis before incrementing the feedrate towards our target velocity which changes based on our current velocity
+                // Steps per ms
+                int increment_acceleration_period = 30; //ms
+                current_velocity += acceleration_per_ms;
+                while(move_buffer_without_planning.get(x).x_step_count <= 0 && move_buffer_without_planning.get(x).y_step_count <= 0 && move_buffer_without_planning.get(x).z_step_count <= 0)
+                {
+                    long move_will_take_in_ms = (long) (((major_move_distance / current_velocity) * one_minute) / 1000);
+                    long x_steps_per_period = (move_will_take_in_ms / move_buffer_without_planning.get(x).x_step_count) * increment_acceleration_period;
+                    long y_steps_per_period = (move_will_take_in_ms / move_buffer_without_planning.get(x).y_step_count) * increment_acceleration_period;
+                    long z_steps_per_period = (move_will_take_in_ms / move_buffer_without_planning.get(x).z_step_count) * increment_acceleration_period;
 
-
+                    float x_dist = x_steps_per_period * (float)step_scale[0];
+                    float y_dist = y_steps_per_period * (float)step_scale[1];
+                    float z_dist = z_steps_per_period * (float)step_scale[2];
+                    long[] feedrates = getIndividualAxisFeedrates(current_velocity, x_dist, y_dist, z_dist, (float)Math.sqrt(Math.pow(x_dist, 2) + Math.pow(y_dist, 2) + Math.pow(z_dist, 2)));
+                    StepGenStruct gen = new StepGenStruct();
+                    gen.x_step_count = x_steps_per_period;
+                    gen.x_total_step_count = gen.x_step_count;
+                    gen.x_dir = true;
+                    if (x_dist < 0) gen.x_dir = false;
+                    gen.y_step_count = y_steps_per_period;
+                    gen.y_total_step_count = gen.y_step_count;
+                    gen.y_dir = true;
+                    if (y_dist < 0) gen.y_dir = false;
+                    gen.z_step_count = z_steps_per_period;
+                    gen.z_total_step_count = gen.z_step_count;
+                    gen.z_dir = true;
+                    if (z_dist < 0) gen.z_dir = false;
+                    gen.x_delay = feedrates[0];
+                    gen.y_delay = feedrates[1];
+                    gen.z_delay = feedrates[2];
+                    gen.target_velocity = move_buffer_without_planning.get(x).target_velocity;
+                    gen.current_velocity = current_velocity; //planMotionBuffer will increment these values
+                    gen.vector_angle = major_moves_polar_angle;
+                    //gen.start_point = start_point;
+                    //gen.end_point = end_point;
+                    move_buffer.add(gen);
+                    System.out.println("Added move with current_velocity: " + current_velocity + " target_velocity: " + move_buffer_without_planning.get(x).target_velocity);
+                }
+            }
+            else
+            {
+                //plan a complete stop
+            }
+        }
     }
     public void runMoves()
     {
 
         move_dro_position = new float[] {GlobalData.dro[0], GlobalData.dro[1], GlobalData.dro[2]};
-        for (int x = 0; x < moves.size(); x ++)
+        for (int x = 0; x < moves.size(); x++)
         {
             if (moves.get(x).Gword == 0)
             {
@@ -311,7 +380,7 @@ public class MotionEngine {
             {
                 float[] center = new float[]{move_dro_position[0] + moves.get(x).Iword, move_dro_position[1] + moves.get(x).Jword};
                 float radius = new Float(Math.hypot(moves.get(x).Xword-center[0], moves.get(x).Yword-center[1]));
-                ArrayList<float[]> points = getPointsOfArc(move_dro_position, new float[] {moves.get(x).Xword, moves.get(x).Yword }, center, radius, "CW", 5);
+                ArrayList<float[]> points = getPointsOfArc(move_dro_position, new float[] {moves.get(x).Xword, moves.get(x).Yword }, center, radius, "CW", 10);
                 for (int y = 1; y < points.size(); y++)
                 {
                     pushLinearMove(new float[] {points.get(y-1)[0], points.get(y-1)[1], 0 }, new float[] {points.get(y)[0], points.get(y)[1], 0 }, moves.get(x).Fword);
@@ -321,7 +390,7 @@ public class MotionEngine {
             {
                 float[] center = new float[]{move_dro_position[0] + moves.get(x).Iword, move_dro_position[1] + moves.get(x).Jword};
                 float radius = new Float(Math.hypot(moves.get(x).Xword-center[0], moves.get(x).Yword-center[1]));
-                ArrayList<float[]> points = getPointsOfArc(move_dro_position, new float[] {moves.get(x).Xword, moves.get(x).Yword }, center, radius, "CCW", 5);
+                ArrayList<float[]> points = getPointsOfArc(move_dro_position, new float[] {moves.get(x).Xword, moves.get(x).Yword }, center, radius, "CCW", 10);
                 for (int y = 1; y < points.size(); y++)
                 {
                     pushLinearMove(new float[] {points.get(y-1)[0], points.get(y-1)[1], 0 }, new float[] {points.get(y)[0], points.get(y)[1], 0 }, moves.get(x).Fword);
@@ -331,7 +400,10 @@ public class MotionEngine {
             move_dro_position[1] = moves.get(x).Yword;
             move_dro_position[2] = moves.get(x).Zword;
 
-            if (x == 0) //If we are the first move, push it to the StepGet Motion Stack as well
+            planMotionBuffer();
+
+
+            /*if (x == 0) //If we are the first move, push it to the StepGet Motion Stack as well
             {
                 if (move_buffer.size() > 0)
                 {
@@ -340,7 +412,7 @@ public class MotionEngine {
                     System.out.print(send_buf);
                     MotionController.WriteBuffer(send_buf);
                 }
-            }
+            }*/
         }
     }
     public void next_move()
@@ -401,8 +473,8 @@ public class MotionEngine {
         //Keep sending move to stepgen until we fill up the buffer
         if (motion_buffer_write_timer < micros())
         {
-            System.out.println("Motion Buffer is " + motion_buffer_moves_ahead + " moves ahead of current move!");
-            motion_buffer_write_timer = micros() + (1000 * 1000);
+            //System.out.println("Motion Buffer is " + motion_buffer_moves_ahead + " moves ahead of current move!");
+            motion_buffer_write_timer = micros() + (50 * 1000);
             if (motion_buffer_moves_ahead < motion_buffer_size && (motion_buffer_moves_ahead + current_move + 1) < move_buffer.size()) //There are moves left to push onto stepgen stack
             {
                 motion_buffer_moves_ahead++;
