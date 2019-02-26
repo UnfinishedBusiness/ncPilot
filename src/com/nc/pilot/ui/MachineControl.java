@@ -203,9 +203,10 @@ public class MachineControl extends JFrame {
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_TAB)
                                 {
-                                    GcodeInterpreter g = new GcodeInterpreter("/home/cnc/Desktop/Post/0.ngc");
-                                    GlobalData.GcodeFile = "/home/cnc/Desktop/Post/0.ngc";
+                                    GcodeInterpreter g = new GcodeInterpreter("/users/admin/Documents/Projects/ncPilot/test/gcode/0.ngc");
+                                    GlobalData.GcodeFile = "/users/admin/Documents/Projects/ncPilot/test/gcode/0.ngc";
                                     ArrayList<GcodeInterpreter.GcodeMove> moves = g.GetMoves();
+                                    motion_engine.setMoves(moves);
                                     gcode_viewer.ClearStack();
                                     for (int x = 2; x < moves.size(); x ++)
                                     {
@@ -233,11 +234,11 @@ public class MachineControl extends JFrame {
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_R) {
 
-                                    /*if (GlobalData.AltKeyPressed == true)
+                                    if (GlobalData.AltKeyPressed == true)
                                     {
                                         motion_controller.CycleStart();
-                                    }*/
-                                    motion_engine.runMoves();
+                                        motion_engine.runMoves();
+                                    }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_F1) {
 
