@@ -196,6 +196,21 @@ public class MotionEngine {
     {
         moves = m;
     }
+    private float TimeNeededToAccelerateToTargetVelocity(float target_velocity, float acceleration)
+    {
+        //Target Velocity is in inches/min & acceleration is inch/sec^2, returns time in milliseconds without floating point precision
+        return ((target_velocity / 60) / acceleration) * 1000;
+    }
+    private float DistanceTraveledWhileAccelerating(float time, float acceleration)
+    {
+        //Time is in milliseconds. So in 'ms'x while accelerating at 'x' inches/sec^2 we have traveled 'ret' inches
+        return (0.5f * acceleration * (float)Math.pow(time / 1000, 2));
+    }
+    private float VelocityAtCurrentIteration(float distance, float time)
+    {
+        //Time is in milliseconds. Distance is in inches. So while traveling at 'x' distance over a period of 'time' ms our velocity is returned in inches/min
+        return (distance / (time / (60 * 1000)));
+    }
     private StepGenStruct adjustStepsForAcuracyDeviation(StepGenStruct s)
     {
         //Figure out which axis is traveling the most
@@ -343,25 +358,28 @@ public class MotionEngine {
                 float major_moves_polar_angle = getAngle(move_buffer_without_planning.get(x).start_point, move_buffer_without_planning.get(x).end_point);
                 System.out.println("Polar Angle: " + major_moves_polar_angle);
                 float major_move_distance = distanceBetween3DPoints(move_buffer_without_planning.get(x).start_point, move_buffer_without_planning.get(x).end_point);
-                float velocity_update_distance = 0.1f; //Update velocity every x distance of travel
+                float time_needed_to_accelerate_to_target = TimeNeededToAccelerateToTargetVelocity(move_buffer_without_planning.get(x).target_velocity - current_velocity, axis_acceleration[0]);
+                System.out.println("time_needed_to_accelerate_to_target -> " + time_needed_to_accelerate_to_target);
+                System.out.println("target_velocity -> " + move_buffer_without_planning.get(x).target_velocity);
+                int acceleration_iteration_steps = 10; //We will iterate velocity change this many times. Higher number is more resolution
                 if (move_buffer_without_planning.size() > x+1) //There is another move
                 {
-                    float current_length = 0;
+                    float last_distance = 0;
                     float[] last_endpoint = move_buffer_without_planning.get(x).start_point;
-                    while(current_length < major_move_distance && current_velocity < move_buffer_without_planning.get(x).target_velocity)
+                    for (float i = time_needed_to_accelerate_to_target / acceleration_iteration_steps; i < time_needed_to_accelerate_to_target; i += time_needed_to_accelerate_to_target / acceleration_iteration_steps)
                     {
-                        float velocity_change_over_velocity_update_distance = (axis_acceleration[0] * current_velocity) * velocity_update_distance;
-                        current_velocity += velocity_change_over_velocity_update_distance;
-                        current_length += velocity_update_distance;
+                        float distance = DistanceTraveledWhileAccelerating(i, axis_acceleration[0]);
+                        System.out.println("DistanceTraveledWhileAccelerating: " + distance);
+                        current_velocity = VelocityAtCurrentIteration(distance, i);
                         System.out.println("Current Velocity: " + current_velocity + " Target Velocity: " + move_buffer_without_planning.get(x).target_velocity);
-                        float[] end_point = getPolarLineEndpoint(last_endpoint, current_length, major_moves_polar_angle);
+                        float[] end_point = getPolarLineEndpoint(last_endpoint, distance - last_distance, major_moves_polar_angle);
                         pushLinearMove(new float[] {last_endpoint[0], last_endpoint[1], 0}, new float[] {end_point[0], end_point[1], 0}, current_velocity);
                         last_endpoint = end_point;
+                        last_distance = distance;
                     }
-                    if (current_length < major_move_distance) //We accelerated to target velocity before major move ended so finish move at target velocity
+                    if (last_distance < major_move_distance) //We accelerated to target velocity before major move ended so finish move at target velocity
                     {
-                        current_length = major_move_distance;
-                        float[] end_point = getPolarLineEndpoint(last_endpoint, current_length, major_moves_polar_angle);
+                        float[] end_point = getPolarLineEndpoint(last_endpoint, major_move_distance - last_distance, major_moves_polar_angle);
                         pushLinearMove(new float[] {last_endpoint[0], last_endpoint[1], 0}, new float[] {end_point[0], end_point[1], 0}, current_velocity);
                     }
 
