@@ -9,9 +9,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java" line="148" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionEngine.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionEngine.java" />
-    </list>
+    <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,7 +37,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionEngine.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="208">
-              <caret line="378" column="97" lean-forward="true" selection-start-line="378" selection-start-column="97" selection-end-line="378" selection-end-column="97" />
+              <caret line="378" column="97" lean-forward="false" selection-start-line="378" selection-start-column="97" selection-end-line="378" selection-end-column="97" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2915">
-              <caret line="209" column="62" lean-forward="true" selection-start-line="209" selection-start-column="62" selection-end-line="209" selection-end-column="62" />
+              <caret line="209" column="62" lean-forward="false" selection-start-line="209" selection-start-column="62" selection-end-line="209" selection-end-column="62" />
               <folding>
                 <element signature="e#1747#1869#0" expanded="true" />
                 <element signature="e#1868#1869#0" expanded="true" />
@@ -703,7 +701,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="737" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="737" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1031,7 +1029,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2915">
-          <caret line="209" column="62" lean-forward="true" selection-start-line="209" selection-start-column="62" selection-end-line="209" selection-end-column="62" />
+          <caret line="209" column="62" lean-forward="false" selection-start-line="209" selection-start-column="62" selection-end-line="209" selection-end-column="62" />
           <folding>
             <element signature="e#1747#1869#0" expanded="true" />
             <element signature="e#1868#1869#0" expanded="true" />
@@ -1080,7 +1078,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionEngine.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
-          <caret line="378" column="97" lean-forward="true" selection-start-line="378" selection-start-column="97" selection-end-line="378" selection-end-column="97" />
+          <caret line="378" column="97" lean-forward="false" selection-start-line="378" selection-start-column="97" selection-end-line="378" selection-end-column="97" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
