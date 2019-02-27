@@ -85,7 +85,7 @@ float CalculateVelocity(float initial_vel, float time_in_move)
   //Serial.println(time_in_move);
   //Time is in milliseconds. So while traveling at 'x' distance over a period of 'time' ms our velocity is returned in inches/min
   //vel = init_vel + (acceleration * time)
-  return initial_vel + (interpolation_accel * 100) * (time_in_move / 6000);
+  return initial_vel + (interpolation_accel) * (time_in_move / 6000);
 }
 struct feedrate_t
 {
@@ -210,8 +210,8 @@ void parseBuffer()
         }
       }
       m.x_dist = atof(num_buf);
-      Serial.print("XDIST: ");
-      Serial.println(m.x_dist);
+      //Serial.print("XDIST: ");
+      //Serial.println(m.x_dist);
       for (int x = 0; x < num_pos; x++) num_buf[x] = '\0';
 
       /* Parse YDIST */
@@ -228,8 +228,8 @@ void parseBuffer()
         }
       }
       m.y_dist = atof(num_buf);
-      Serial.print("YDIST: ");
-      Serial.println(m.y_dist);
+      //Serial.print("YDIST: ");
+      //Serial.println(m.y_dist);
       for (int x = 0; x < num_pos; x++) num_buf[x] = '\0';
 
       /* Parse ZDIST */
@@ -246,8 +246,8 @@ void parseBuffer()
         }
       }
       m.z_dist = atof(num_buf);
-      Serial.print("ZDIST: ");
-      Serial.println(m.z_dist);
+      //Serial.print("ZDIST: ");
+      //Serial.println(m.z_dist);
       for (int x = 0; x < num_pos; x++) num_buf[x] = '\0';
 
       /* Parse TARGET_VEL */
@@ -264,8 +264,8 @@ void parseBuffer()
         }
       }
       m.target_vel = atof(num_buf);
-      Serial.print("TARGET_VEL: ");
-      Serial.println(m.target_vel);
+      //Serial.print("TARGET_VEL: ");
+      //Serial.println(m.target_vel);
       for (int x = 0; x < num_pos; x++) num_buf[x] = '\0';
 
 
@@ -278,30 +278,30 @@ void parseBuffer()
       m.z_dir = true;
       if (m.x_dist < 0)
       {
-        Serial.println("X is CCW");
+        //Serial.println("X is CCW");
         m.x_dir = false;
       }
       else
       {
-        Serial.println("X is CW");
+        //Serial.println("X is CW");
       }
       if (m.y_dist < 0)
       {
-        Serial.println("Y is CCW");
+        //Serial.println("Y is CCW");
         m.y_dir = false;
       }
       else
       {
-        Serial.println("Y is CW");
+        //Serial.println("Y is CW");
       }
       if (m.z_dist < 0)
       {
-        Serial.println("Z is CCW");
+        //Serial.println("Z is CCW");
         m.z_dir = false;
       }
       else
       {
-        Serial.println("Z is CW");
+        //Serial.println("Z is CW");
       }
       m.move_began_at = millis();
       m.reached_max_accel_at = 0;
@@ -317,13 +317,15 @@ void parseBuffer()
       }
       else
       {
-          if (move_buffer[move_bottom_pos].target_vel < m.target_vel)
+          if (move_buffer[move_bottom_pos].target_vel > m.target_vel)
           {
             m.vel_dir = true;
+            //Serial.println("Setting target velocity direction to +!");
           }
           else
           {
             m.vel_dir = false;
+            //Serial.println("Setting target velocity direction to -!");
           }
       }
       m.reached_target_vel = false;
@@ -409,8 +411,8 @@ void loop()
           else
           {
             //Decrement velocity until we reach target velocity
-            calculated_velocity = CalculateVelocity(current_velocity, (millis() - move_buffer[0].move_began_at) * -1);
-            current_velocity += (calculated_velocity - current_velocity);
+            calculated_velocity = CalculateVelocity(current_velocity, millis() - move_buffer[0].move_began_at);
+            current_velocity -= (calculated_velocity - current_velocity);
             if (current_velocity < move_buffer[0].target_vel)
             {
               current_velocity = move_buffer[0].target_vel;
