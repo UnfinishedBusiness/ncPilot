@@ -37,7 +37,6 @@ public class MachineControl extends JFrame {
         serial.initialize();
         motion_controller = new MotionController(serial);
         serial.inherit_motion_controller(motion_controller);
-        motion_controller.InitMotionController();
         ui_widgets = new UIWidgets();
         gcode_viewer = new GcodeViewer();
         mdi_console = new MDIConsole();
@@ -50,6 +49,7 @@ public class MachineControl extends JFrame {
         repaint_timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                motion_controller.Poll();
                 repaint();
             }
         }, 0, 50);

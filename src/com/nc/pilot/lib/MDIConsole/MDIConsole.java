@@ -54,7 +54,7 @@ public class MDIConsole {
 
     public void RecieveBufferLine(String line)
     {
-        //System.out.println("Read Buffer: " + line);
+        System.out.println("Read Buffer: " + line);
         if (RecievedLines.size() < 30)
         {
             RecievedLines.add(line);
@@ -181,7 +181,7 @@ public class MDIConsole {
                     else
                     {
                         char c = ke.getKeyChar();
-                        if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '.' || c == '=' || c == '-' || c == '$')
+                        if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '.' || c == '=' || c == '-' || c == '$' || c == '?' || c == '~' || c == '!')
                         {
                             cmd_line = cmd_line + c;
                         }

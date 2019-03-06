@@ -148,7 +148,7 @@ void report_feedback_message(uint8_t message_code)
 // Welcome message
 void report_init_message()
 {
-  printPgmString(PSTR("\r\Xmotion StepGen " GRBL_VERSION "\r\n"));
+  printPgmString(PSTR("\rXmotion StepGen " GRBL_VERSION "\r\n"));
 }
 
 // Grbl help message
@@ -448,7 +448,7 @@ void report_realtime_status()
 
   // Report machine position
   if (bit_istrue(settings.status_report_mask,BITFLAG_RT_STATUS_MACHINE_POSITION)) {
-    printPgmString(PSTR(",MPos:"));
+    printPgmString(PSTR("|MPos:"));
     for (idx=0; idx< N_AXIS; idx++) {
       printFloat_CoordValue(print_position[idx]);
       if (idx < (N_AXIS-1)) { printPgmString(PSTR(",")); }
@@ -456,8 +456,8 @@ void report_realtime_status()
   }
 
   // Report work position
-  /*if (bit_istrue(settings.status_report_mask,BITFLAG_RT_STATUS_WORK_POSITION)) {
-    printPgmString(PSTR(",WPos:"));
+  if (bit_istrue(settings.status_report_mask,BITFLAG_RT_STATUS_WORK_POSITION)) {
+    printPgmString(PSTR("|WPos:"));
     for (idx=0; idx< N_AXIS; idx++) {
       // Apply work coordinate offsets and tool length offset to current position.
       print_position[idx] -= gc_state.coord_system[idx]+gc_state.coord_offset[idx];
@@ -465,23 +465,23 @@ void report_realtime_status()
       printFloat_CoordValue(print_position[idx]);
       if (idx < (N_AXIS-1)) { printPgmString(PSTR(",")); }
     }
-  }*/
+  }
 
   // Returns the number of active blocks are in the planner buffer.
   if (bit_istrue(settings.status_report_mask,BITFLAG_RT_STATUS_PLANNER_BUFFER)) {
-    printPgmString(PSTR(",Buf:"));
+    printPgmString(PSTR("|Buf:"));
     print_uint8_base10(plan_get_block_buffer_count());
   }
 
   // Report serial read buffer status
   if (bit_istrue(settings.status_report_mask,BITFLAG_RT_STATUS_SERIAL_RX)) {
-    printPgmString(PSTR(",RX:"));
+    printPgmString(PSTR("|RX:"));
     print_uint8_base10(serial_get_rx_buffer_count());
   }
 
   #ifdef USE_LINE_NUMBERS
     // Report current line number
-    printPgmString(PSTR(",Ln:"));
+    printPgmString(PSTR("|Ln:"));
     int32_t ln=0;
     plan_block_t * pb = plan_get_current_block();
     if(pb != NULL) {
@@ -492,24 +492,33 @@ void report_realtime_status()
 
   #ifdef REPORT_REALTIME_RATE
     // Report realtime rate
-    printPgmString(PSTR(",F:"));
+    printPgmString(PSTR("|F:"));
     printFloat_RateValue(st_get_realtime_rate());
   #endif
 
   if (bit_istrue(settings.status_report_mask,BITFLAG_RT_STATUS_LIMIT_PINS)) {
-    printPgmString(PSTR(",Lim:"));
+    printPgmString(PSTR("|Lim:"));
     print_unsigned_int8(limits_get_state(),2,N_AXIS);
   }
 
   #ifdef REPORT_CONTROL_PIN_STATE
-    printPgmString(PSTR(",Ctl:"));
+    printPgmString(PSTR("|Ctl:"));
     print_uint8_base2(CONTROL_PIN & CONTROL_MASK);
   #endif
 
   //;
 
-  printPgmString(PSTR(",Slots:"));
-  print_uint8_base10(plan_get_available_slots());
+  printPgmString(PSTR("|SendBlock:"));
+ // Returns the availability status of the block ring buffer. True, if full.
+  uint8_t send_block = plan_check_full_buffer();
+  if (send_block == false) //There is room in buffer
+  {
+    printPgmString(PSTR("true"));
+  }
+  else
+  {
+    printPgmString(PSTR("false"));
+  }
 
   printPgmString(PSTR(">\r\n"));
 }

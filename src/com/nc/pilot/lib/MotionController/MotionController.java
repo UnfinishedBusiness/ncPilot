@@ -181,11 +181,17 @@ public class MotionController {
         serial.write(data);
     }
     public static void ReadBuffer(String inputLine){
-        String report = inputLine;
-        if (report == "") return;
-        System.out.println("Read line: " + report);
         mdi_console.RecieveBufferLine(inputLine);
-        if (report.contains("Slots:") && report.contains("MPos:") && report.contains("F:") && report.contains("Ln:"))
+        if (inputLine.contains("ok"))
+        {
+            System.out.println("Setting SendLine Flag!");
+            GlobalData.SendLine = true;
+        }
+        String report = inputLine.substring(1, inputLine.length()-1);
+        if (report == "") return;
+        //System.out.println("Read line: " + report);
+
+        /*if (report.contains("Slots:") && report.contains("MPos:") && report.contains("F:") && report.contains("Ln:"))
         {
             GlobalData.MachineState = report.substring(1, report.indexOf(',',0));
 
@@ -200,6 +206,21 @@ public class MotionController {
             GlobalData.SlotsAvailable = new Integer(report.substring(report.indexOf("Slots:") + 6, report.indexOf(">")));
 
             Poll();
+        }*/
+        if (inputLine.charAt(0) == '<') //We are a report
+        {
+            String[] pairs = report.split("\\|");
+            GlobalData.MachineState = pairs[0];
+            String[] abs_pos = pairs[1].substring(5).split(",");
+            GlobalData.machine_cordinates[0] = new Float(abs_pos[0]);
+            GlobalData.machine_cordinates[1] = new Float(abs_pos[1]);
+            GlobalData.machine_cordinates[2] = new Float(abs_pos[2]);
+            String[] pos = pairs[2].substring(5).split(",");
+            GlobalData.dro[0] = new Float(pos[0]);
+            GlobalData.dro[1] = new Float(pos[1]);
+            GlobalData.dro[2] = new Float(pos[2]);
+
+            GlobalData.CurrentVelocity = new Float(pairs[4].substring(2));
         }
     }
     public void SetJogSpeed(float jog)
@@ -208,10 +229,10 @@ public class MotionController {
     }
     public static void CycleStart()
     {
-        LoadGcodeFile();
         WriteBuffer("~");
-        for (int x = 0; x < 10; x++)
+        if (GlobalData.GcodeFileLines == null)
         {
+            LoadGcodeFile();
             if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
                 System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
                 WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
@@ -474,6 +495,62 @@ public class MotionController {
     }
     public static void LoadGcodeFile()
     {
+        String buffer = null;
+        try {
+            buffer = GlobalData.readFile(GlobalData.GcodeFile);
+            String[] lines = buffer.split("\n");
+            ArrayList<String> gcode = new ArrayList();
+            for (int x = 0; x < lines.length; x++)
+            {
+                if (lines[x].toLowerCase().contains("o<touchoff>"))
+                {
+                    String touchoff = lines[x].toLowerCase().substring(lines[x].toLowerCase().indexOf("o<touchoff> ") + 12);
+                    //System.out.println("Touchoff String: " + touchoff);
+                    String[] touchoff_split = touchoff.split("\\s+");
+                    if (touchoff_split.length > 2)
+                    {
+                        String pierce_height = touchoff_split[1].substring(1, (touchoff_split[1].length() - 1));
+                        String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
+                        String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
+                        System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
+                        gcode.add("M9 G38.3 Z-10 F10");
+                        gcode.add("G91 G0 Z0.1875");
+                        gcode.add("G90 G10 L20 P1 Z0");
+                        gcode.add("G1 Z" + pierce_height + " F30");
+                        gcode.add("M3S5000 G4 P" + pierce_delay);
+                        gcode.add("M8 G1 Z" + cut_height);
+                    }
+                }
+                else
+                {
+                    gcode.add(lines[x]);
+                }
+
+            }
+            GlobalData.GcodeFileLines = new String[gcode.size()];
+            for (int x = 0; x < gcode.size(); x++)
+            {
+                GlobalData.GcodeFileLines[x] = gcode.get(x);
+                //System.out.println(gcode.get(x));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public static void LoadGcodeFile_NoInlineMods()
+    {
+        String buffer = null;
+        try {
+            buffer = GlobalData.readFile(GlobalData.GcodeFile);
+            GlobalData.GcodeFileLines = buffer.split("\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public static void LoadGcodeFile_Bad()
+    {
         try {
             String buffer = GlobalData.readFile(GlobalData.GcodeFile);
             String[] lines = buffer.split("\n");
@@ -544,6 +621,10 @@ public class MotionController {
                 }*/
                 else if (Gword == 0 || Gword == 1 || Gword == 2 || Gword == 3)
                 {
+
+                }
+                else
+                {
                     gcode.add(lines[x]);
                 }
                 updateLastGcodeRegisters(lines[x].toLowerCase(), 'g');
@@ -568,91 +649,18 @@ public class MotionController {
     }
     public static void Poll()
     {
-        System.out.println("Slots Available: " + GlobalData.SlotsAvailable);
-        if (GlobalData.SlotsAvailable > 12) //We have lines to send to the controller
+        if (GlobalData.SendLine == true)
         {
+            System.out.println("{Poll} Sending Line!");
             if (GlobalData.GcodeFileLines != null)
             {
-                int lines_to_send;
-                if (GlobalData.MachineState.contentEquals("Idle"))
-                {
-                    lines_to_send = 3;
-                }
-                else
-                {
-                    lines_to_send = 1;
-                }
-                for (int x = 0; x < lines_to_send; x++)
-                {
-                    if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
-                        System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
-                        WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
-                        GlobalData.GcodeFileCurrentLine++;
-                    }
+                if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
+                    mdi_console.RecieveBufferLine("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
+                    WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+                    GlobalData.GcodeFileCurrentLine++;
                 }
             }
+            GlobalData.SendLine = false;
         }
     }
-    /*public static void Poll_Free_Buffer_Method()
-    {
-        if (GlobalData.RunCycle == true && WaitingForStopMotion == false)
-        {
-            ui_widgets.engageButton("Start", true);
-        }
-        if (GlobalData.MachineState.contentEquals("Stop") && WaitingForStopMotion == true)
-        {
-            ui_widgets.engageButton("Start", false);
-            Abort();
-            WaitingForStopMotion = false;
-        }
-        if (GlobalData.RunCycle == true && GlobalData.GcodeFileSendLine < GlobalData.GcodeFileLines.length)
-        {
-            if (GlobalData.FreeBuffers > 5)
-            {
-                if (GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine].toLowerCase().contains("m30"))
-                {
-                    GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine] = "M5\nM9\nG80\nG90\nG94\n";
-                    WaitingForStopMotion = true;
-                }
-                else if (GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine].toLowerCase().contains("o<touchoff>"))
-                {
-                    String touchoff = GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine].toLowerCase().substring(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine].toLowerCase().indexOf("o<touchoff> ") + 12);
-                    //System.out.println("Touchoff String: " + touchoff);
-                    String[] touchoff_split = touchoff.split("\\s+");
-                    if (touchoff_split.length > 2)
-                    {
-                        String pierce_height = touchoff_split[1].substring(1, (touchoff_split[1].length() - 1));
-                        String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
-                        String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
-                        //System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
-                        WriteBuffer("M9\n");
-                        WriteBuffer("G38.2 Z-10 F50\n");
-                        WriteBuffer("G92 Z=-0.375\n");
-                        WriteBuffer("G90 G0 Z" + pierce_height + "\n");
-                        WriteBuffer("M3S2000\n");
-                        WriteBuffer("G4 P" + pierce_delay + "\n");
-                        WriteBuffer("G1 Z" + cut_height + "\n");
-                        WriteBuffer("M8\n");
-                        GlobalData.GcodeFileSendLine++;
-                    }
-
-                }
-                else
-                {
-                    WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileSendLine]);
-                    GlobalData.GcodeFileSendLine++;
-                }
-            }
-
-        }
-
-    }*/
-    public static void InitMotionController()
-    {
-        WriteBuffer("$ej=1\n");
-        WriteBuffer("$ej=1\n");
-        WriteBuffer("{\"sr\":{\"line\":true, \"posx\":true, \"posy\":true, \"posz\":true, \"mpox\":true, \"mpoy\":true, \"mpoz\":true, \"ofsx\":true, \"ofsy\":true, \"ofsz\":true, \"feed\": true, \"vel\":true, \"unit\":true, \"stat\":true}}\n");
-        //WriteBuffer("G54\n");
-    }
-
 }

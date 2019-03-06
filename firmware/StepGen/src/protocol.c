@@ -185,13 +185,13 @@ void protocol_main_loop()
 // NOTE: The sys_rt_exec_state variable flags are set by any process, step or serial interrupts, pinouts,
 // limit switches, or the main program.
 int report_timer = 0;
-bool idle_once = false;
+uint8_t idle_after = 0;
 void protocol_execute_realtime()
 {
-  if ((sys.state == STATE_IDLE || sys.state == STATE_HOLD) && idle_once == false)
+  if ((sys.state == STATE_IDLE || sys.state == STATE_HOLD) && idle_after < 10)
   {
     report_realtime_status();
-    idle_once = true;
+    idle_after++;
   }
   if (sys.state == STATE_CYCLE)
   {
@@ -200,7 +200,7 @@ void protocol_execute_realtime()
       //printPgmString(PSTR("Machine is moving!\r\n"));
       report_realtime_status();
       report_timer = 0;
-      idle_once = false;
+      idle_after = 0;
     }
     else
     {
