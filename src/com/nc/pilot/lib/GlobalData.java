@@ -29,7 +29,7 @@ public class GlobalData {
     public static String JogMode = "Continuous";
 
     public static int CurrentExecutionLine = 0; //Line that is currently executing
-    public static int LinesToSend = 0;
+    public static int SlotsAvailable = 0;
     public static String GcodeFile = null;
     public static String[] GcodeFileLines;
     public static int GcodeFileCurrentLine = 0; //Current Position in GcodeFileLines

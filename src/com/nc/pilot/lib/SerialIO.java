@@ -31,7 +31,7 @@ public class SerialIO implements SerialPortEventListener {
         /** The port we're normally going to use. */
 	private static final String PORT_NAMES[] = { 
 			"COM8",
-                "/dev/tty.usbmodem1411",
+                "/dev/tty.usbmodem1421",
                 "/dev/ttyUSB1",
                 "/dev/ttyUSB0"
 	};

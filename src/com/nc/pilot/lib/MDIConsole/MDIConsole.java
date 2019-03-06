@@ -19,11 +19,6 @@ public class MDIConsole {
     private ArrayList<MDICommand> CommandStack = new ArrayList();
     private ArrayList<String> RecievedLines = new ArrayList();
 
-    private float TimeNeededToAccelerateToTargetVelocity(float target_velocity, float acceleration)
-    {
-        //Target Velocity is in inches/min & acceleration is inch/sec^2, returns time in milliseconds without floating point precision
-        return ((target_velocity / 60) / acceleration) * 1000;
-    }
 
     public MDIConsole()
     {
@@ -50,14 +45,6 @@ public class MDIConsole {
 
             }
         });
-        AddCommand("test", new Runnable() {
-            @Override
-            public void run() {
-
-                System.out.println(TimeNeededToAccelerateToTargetVelocity(60, 10));
-
-            }
-        });
     }
     // Uses font metrics provided by the current font set to the
     // local Graphics2D to find the width of a string in pixels.
@@ -68,7 +55,7 @@ public class MDIConsole {
     public void RecieveBufferLine(String line)
     {
         //System.out.println("Read Buffer: " + line);
-        if (RecievedLines.size() < 50)
+        if (RecievedLines.size() < 30)
         {
             RecievedLines.add(line);
         }

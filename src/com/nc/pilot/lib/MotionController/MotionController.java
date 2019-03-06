@@ -6,6 +6,7 @@
 package com.nc.pilot.lib.MotionController;
 
 import com.google.gson.Gson;
+import com.nc.pilot.lib.GcodeInterpreter;
 import com.nc.pilot.lib.GlobalData;
 import com.nc.pilot.lib.MDIConsole.MDIConsole;
 import com.nc.pilot.lib.SerialIO;
@@ -179,207 +180,26 @@ public class MotionController {
         //GlobalData.WriteBuffer.add(data);
         serial.write(data);
     }
-    private static void ParseQueReport(Integer q)
-    {
-        //System.out.println("Buffer Available: " + q);
-        //GlobalData.FreeBuffers = q;
-
-        if (q > 10) //If qr is > 30
-        {
-            //GlobalData.PlannerReady = true;
-        }
-        else
-        {
-            //GlobalData.PlannerReady = false;
-        }
-    }
     public static void ReadBuffer(String inputLine){
-        //System.out.println("Read line: " + inputLine);
+        String report = inputLine;
+        if (report == "") return;
+        System.out.println("Read line: " + report);
         mdi_console.RecieveBufferLine(inputLine);
-        Gson g = new Gson();
-        Gson qr = new Gson();
-        Report report = qr.fromJson(inputLine, Report.class);
-        if (report != null)
+        if (report.contains("Slots:") && report.contains("MPos:") && report.contains("F:") && report.contains("Ln:"))
         {
-            if (report.qr != null)
-            {
-                //ParseQueReport(Integer.parseInt(report.qr));
-            }
-        }
-        JSON_Data json = g.fromJson(inputLine, JSON_Data.class);
-        if (json != null)
-        {
-            if (json.r != null)
-            {
-                GlobalData.LinesToSend = 1;
-                json.sr = json.r.sr;
-            }
-            if (json.sr != null)
-            {
-                if (BlockNextStatusReports == 0)
-                {
-                    if (json.sr.posx != null)
-                    {
-                        GlobalData.dro[0] = Float.parseFloat(json.sr.posx);
-                    }
-                    if (json.sr.posy != null)
-                    {
-                        GlobalData.dro[1] = Float.parseFloat(json.sr.posy);
-                    }
-                }
-                if (json.sr.posz != null)
-                {
-                    GlobalData.dro[2] = Float.parseFloat(json.sr.posz);
-                }
-                if (json.sr.mpox != null)
-                {
-                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
-                    {
-                        GlobalData.machine_cordinates[0] = Float.parseFloat(json.sr.mpox) / 25.4f;
-                    }
-                    else
-                    {
-                        GlobalData.machine_cordinates[0] = Float.parseFloat(json.sr.mpox);
-                    }
-                }
-                if (json.sr.mpoy != null)
-                {
-                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
-                    {
-                        GlobalData.machine_cordinates[1] = Float.parseFloat(json.sr.mpoy) / 25.4f;
-                    }
-                    else
-                    {
-                        GlobalData.machine_cordinates[1] = Float.parseFloat(json.sr.mpoy);
-                    }
-                }
-                if (json.sr.mpoz != null)
-                {
-                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
-                    {
-                        GlobalData.machine_cordinates[2] = Float.parseFloat(json.sr.mpoz) / 25.4f;
-                    }
-                    else
-                    {
-                        GlobalData.machine_cordinates[2] = Float.parseFloat(json.sr.mpoz);
-                    }
-                }
-                if (BlockNextStatusReports == 0)
-                {
-                    if (json.sr.ofsx != null)
-                    {
-                        if (GlobalData.CurrentUnits.contentEquals("Inch"))
-                        {
-                            GlobalData.work_offset[0] = Float.parseFloat(json.sr.ofsx) / 25.4f;
-                        }
-                        else
-                        {
-                            GlobalData.work_offset[0] = Float.parseFloat(json.sr.ofsx);
-                        }
-                        //System.out.println("Set X work offset to: " + GlobalData.work_offset[0]);
-                    }
-                    if (json.sr.ofsy != null)
-                    {
-                        if (GlobalData.CurrentUnits.contentEquals("Inch"))
-                        {
-                            GlobalData.work_offset[1] = Float.parseFloat(json.sr.ofsy) / 25.4f;
-                        }
-                        else
-                        {
-                            GlobalData.work_offset[1] = Float.parseFloat(json.sr.ofsy);
-                        }
-                        //System.out.println("Set Y work offset to: " + GlobalData.work_offset[1]);
-                    }
-                }
-                if (json.sr.ofsz != null)
-                {
-                    if (GlobalData.CurrentUnits.contentEquals("Inch"))
-                    {
-                        GlobalData.work_offset[2] = Float.parseFloat(json.sr.ofsz) / 25.4f;
-                    }
-                    else
-                    {
-                        GlobalData.work_offset[2] = Float.parseFloat(json.sr.ofsz);
-                    }
-                    //System.out.println("Set Z work offset to: " + GlobalData.work_offset[2]);
-                }
-                if (json.sr.vel != null)
-                {
-                    GlobalData.CurrentVelocity = Float.parseFloat(json.sr.vel);
-                }
-                if (json.sr.feed != null)
-                {
-                    GlobalData.ProgrammedFeedrate = Float.parseFloat(json.sr.feed);
-                }
-                if (json.sr.line != null)
-                {
-                    lastExecutionLine = GlobalData.CurrentExecutionLine;
-                    GlobalData.CurrentExecutionLine = Integer.parseInt(json.sr.line);
-                    //System.out.println("Current Execution Line: " + GetGcodeLineAtN(GlobalData.CurrentExecutionLine));
-                    for (float x = lastExecutionLine; x < GlobalData.CurrentExecutionLine; x++)
-                    {
-                        String Line = GetGcodeLineAtN((int)x);
-                        float Mword = getGword(Line, 'M');
-                        if (Mword != -1f)
-                        {
-                            //System.out.println("Found M word: " + Mword);
-                            if (Mword == 3)
-                            {
-                                ui_widgets.engageButton("Torch On", true);
-                                ui_widgets.engageButton("Torch Off", false);
-                            }
-                            if (Mword == 5)
-                            {
-                                ui_widgets.engageButton("Torch On", false);
-                                ui_widgets.engageButton("Torch Off", true);
-                            }
-                        }
-                    }
-                }
-                if (json.sr.stat != null)
-                {
-                    int stat = Integer.parseInt(json.sr.stat);
-                    //System.out.println("New Status: " + stat);
-                    if (stat == 0) GlobalData.MachineState = "Init";
-                    if (stat == 1) GlobalData.MachineState = "Ready";
-                    if (stat == 2) GlobalData.MachineState = "Alarm";
-                    if (stat == 3)
-                    {
-                        GlobalData.MachineState = "Stop";
-                        if (RunAfterStop != null)
-                        {
-                            Runnable once = RunAfterStop;
-                            RunAfterStop = null;
-                            once.run();
-                        }
-                    }
-                    if (stat == 4) GlobalData.MachineState = "End";
-                    if (stat == 5) GlobalData.MachineState = "Motion";
-                    if (stat == 6) GlobalData.MachineState = "Hold";
-                    if (stat == 7) GlobalData.MachineState = "Probe";
-                    if (stat == 8) GlobalData.MachineState = "Cycle";
-                    if (stat == 8) GlobalData.MachineState = "Homing";
-                }
-                if (json.sr.unit != null)
-                {
-                    if (Integer.parseInt(json.sr.unit) == 0) GlobalData.CurrentUnits = "Inch";
-                    if (Integer.parseInt(json.sr.unit) == 1) GlobalData.CurrentUnits = "Metric";
-                }
-            }
-            if (json.r != null)
-            {
-                if (json.r.qr != null)
-                {
-                    ParseQueReport(Integer.parseInt(json.r.qr));
-                }
-            }
-        }
-    }
-    public static void WriteWait(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
+            GlobalData.MachineState = report.substring(1, report.indexOf(',',0));
+
+
+            //System.out.println("pos: " + report.substring(report.indexOf("MPos:") + 5, report.indexOf(",Ln:")));
+            String[] pos = report.substring(report.indexOf("MPos:") + 5, report.indexOf(",Ln:")).split(",");
+            GlobalData.dro[0] = new Float(pos[0]);
+            GlobalData.dro[1] = new Float(pos[1]);
+            GlobalData.dro[2] = new Float(pos[2]);
+
+            GlobalData.CurrentVelocity = new Float(report.substring(report.indexOf("F:") + 2, report.indexOf(",", report.indexOf("F:") + 2 )));
+            GlobalData.SlotsAvailable = new Integer(report.substring(report.indexOf("Slots:") + 6, report.indexOf(">")));
+
+            Poll();
         }
     }
     public void SetJogSpeed(float jog)
@@ -388,9 +208,16 @@ public class MotionController {
     }
     public static void CycleStart()
     {
-        GlobalData.LinesToSend = 4;
         LoadGcodeFile();
-        WriteBuffer("~\n");
+        WriteBuffer("~");
+        for (int x = 0; x < 10; x++)
+        {
+            if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
+                System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
+                WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+                GlobalData.GcodeFileCurrentLine++;
+            }
+        }
     }
     public static void FeedHold()
     {
@@ -401,52 +228,51 @@ public class MotionController {
     {
         WriteBuffer("%\n");
         GlobalData.GcodeFileCurrentLine = 0;
-        GlobalData.LinesToSend = 0;
         GlobalData.GcodeFileLines = null;
     }
     public static void JogX_Plus()
     {
-        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("G91 G20 G1 X" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.1"))  WriteBuffer("G91 G20 G1 X" + 0.1 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.01"))  WriteBuffer("G91 G20 G1 X" + 0.01 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.001"))  WriteBuffer("G91 G20 G1 X" + 0.001 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("G91 G20 G1 X" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.1"))  WriteBuffer("G91 G20 G1 X" + 0.1 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.01"))  WriteBuffer("G91 G20 G1 X" + 0.01 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.001"))  WriteBuffer("G91 G20 G1 X" + 0.001 + " F" + jog_speed + "\n");
     }
     public static void JogX_Minus()
     {
-        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 X-" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 X-" + 0.1 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 X-" + 0.01 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 X-" + 0.001 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 X-" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 X-" + 0.1 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 X-" + 0.01 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 X-" + 0.001 + " F" + jog_speed + "\n");
     }
 
     public static void JogY_Plus()
     {
-        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Y" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y" + 0.1 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Y" + 0.01 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y" + 0.001 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Y" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y" + 0.1 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Y" + 0.01 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y" + 0.001 + " F" + jog_speed + "\n");
     }
     public static void JogY_Minus()
     {
-        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Y-" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y-" + 0.1 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Y-" + 0.01 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y-" + 0.001 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Y-" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y-" + 0.1 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Y-" + 0.01 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y-" + 0.001 + " F" + jog_speed + "\n");
     }
 
     public static void JogZ_Plus()
     {
-        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Z" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z" + 0.1 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z" + 0.01 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z" + 0.001 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Z" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z" + 0.1 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z" + 0.01 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z" + 0.001 + " F" + jog_speed + "\n");
     }
     public static void JogZ_Minus()
     {
-        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Z-" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z-" + 0.1 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z-" + 0.01 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z-" + 0.001 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Z-" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z-" + 0.1 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z-" + 0.01 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z-" + 0.001 + " F" + jog_speed + "\n");
     }
 
     public static void EndJog()
@@ -456,40 +282,22 @@ public class MotionController {
     }
     public static void SetXzero()
     {
-        WriteBuffer("G92 X=0\n");
-        StatusReport();
+        //WriteBuffer("G92 X=0\n");
+        //StatusReport();
     }
     public static void SetYzero()
     {
-        WriteBuffer("G92 Y=0\n");
-        StatusReport();
+        //WriteBuffer("G92 Y=0\n");
+        //StatusReport();
     }
     public static void SetZzero()
     {
-        WriteBuffer("G92 Z=0\n");
-        StatusReport();
-    }
-    public static void StatusReport()
-    {
-        if (BlockNextStatusReports == 0)
-        {
-            WriteBuffer("{\"sr\":\"\"}\n");
-        }
-        else
-        {
-            BlockNextStatusReports--;
-            if (BlockNextStatusReports < 0) BlockNextStatusReports = 0;
-        }
+        //WriteBuffer("G92 Z=0\n");
+        //StatusReport();
     }
     public static void Home()
     {
-        WriteBuffer("G28.3 X=0 Y=0 Z=0\n");
-        //WriteWait();
-        //WriteWait();
-        //WriteWait();
-        ///WriteWait();
-        //WriteWait();
-        StatusReport();
+
     }
     public static float getGword(String line, char Word)
     {
@@ -699,15 +507,15 @@ public class MotionController {
                         String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
                         String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
                         //System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
-                        gcode.add("M9 G28.2 Z0");
-                        gcode.add("G92 Z=0");
-                        gcode.add("G1 Z" + pierce_height + " F50");
-                        gcode.add("M3S2000 G4 P" + pierce_delay);
-                        gcode.add("G1 Z" + cut_height);
-                        gcode.add("M8");
+                        //gcode.add("M9 G28.2 Z0");
+                        //gcode.add("G92 Z=0");
+                        //gcode.add("G1 Z" + pierce_height + " F50");
+                        //gcode.add("M3S2000 G4 P" + pierce_delay);
+                        //gcode.add("G1 Z" + cut_height);
+                        //gcode.add("M8");
                     }
                 }
-                else if (Gword == 2) //Clockwise arc - Convert to line segments
+                /*else if (Gword == 2) //Clockwise arc - Convert to line segments
                 {
                     if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
                     {
@@ -718,9 +526,10 @@ public class MotionController {
                         {
                             gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1]);
                         }
+                        gcode.add("G1 X" + Xword + " Y" + Yword);
                     }
-                }
-                else if (Gword == 3) //Counter-Clockwise arc - Convert to line segments
+                }*/
+                /*else if (Gword == 3) //Counter-Clockwise arc - Convert to line segments
                 {
                     if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
                     {
@@ -732,8 +541,8 @@ public class MotionController {
                             gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1]);
                         }
                     }
-                }
-                else
+                }*/
+                else if (Gword == 0 || Gword == 1 || Gword == 2 || Gword == 3)
                 {
                     gcode.add(lines[x]);
                 }
@@ -749,7 +558,7 @@ public class MotionController {
             for (int x = 0; x < gcode.size(); x++)
             {
                 GlobalData.GcodeFileLines[x] = gcode.get(x);
-                //System.out.println(gcode.get(x));
+                System.out.println(gcode.get(x));
             }
 
 
@@ -759,18 +568,29 @@ public class MotionController {
     }
     public static void Poll()
     {
-        while (GlobalData.LinesToSend > 0) //We have lines to send to the controller
+        System.out.println("Slots Available: " + GlobalData.SlotsAvailable);
+        if (GlobalData.SlotsAvailable > 12) //We have lines to send to the controller
         {
             if (GlobalData.GcodeFileLines != null)
             {
-                if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length)
+                int lines_to_send;
+                if (GlobalData.MachineState.contentEquals("Idle"))
                 {
-                    System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
-                    WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
-                    GlobalData.GcodeFileCurrentLine++;
+                    lines_to_send = 3;
+                }
+                else
+                {
+                    lines_to_send = 1;
+                }
+                for (int x = 0; x < lines_to_send; x++)
+                {
+                    if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
+                        System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
+                        WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+                        GlobalData.GcodeFileCurrentLine++;
+                    }
                 }
             }
-            GlobalData.LinesToSend--;
         }
     }
     /*public static void Poll_Free_Buffer_Method()
