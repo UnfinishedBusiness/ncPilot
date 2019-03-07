@@ -185,7 +185,7 @@ public class MotionController {
         if (inputLine.contains("ok"))
         {
             System.out.println("Setting SendLine Flag!");
-            GlobalData.SendLine = true;
+            GlobalData.SendLines++;
         }
         String report = inputLine.substring(1, inputLine.length()-1);
         if (report == "") return;
@@ -210,17 +210,35 @@ public class MotionController {
         if (inputLine.charAt(0) == '<') //We are a report
         {
             String[] pairs = report.split("\\|");
-            GlobalData.MachineState = pairs[0];
-            String[] abs_pos = pairs[1].substring(5).split(",");
-            GlobalData.machine_cordinates[0] = new Float(abs_pos[0]);
-            GlobalData.machine_cordinates[1] = new Float(abs_pos[1]);
-            GlobalData.machine_cordinates[2] = new Float(abs_pos[2]);
-            String[] pos = pairs[2].substring(5).split(",");
-            GlobalData.dro[0] = new Float(pos[0]);
-            GlobalData.dro[1] = new Float(pos[1]);
-            GlobalData.dro[2] = new Float(pos[2]);
+            if (pairs.length > 0)
+            {
+                GlobalData.MachineState = pairs[0];
+                for (int x = 1; x < pairs.length; x++)
+                {
+                    if (pairs[x].contains("MPos"))
+                    {
+                        String[] abs_pos = pairs[x].substring(5).split(",");
+                        GlobalData.machine_cordinates[0] = new Float(abs_pos[0]);
+                        GlobalData.machine_cordinates[1] = new Float(abs_pos[1]);
+                        GlobalData.machine_cordinates[2] = new Float(abs_pos[2]);
 
-            GlobalData.CurrentVelocity = new Float(pairs[4].substring(2));
+                        GlobalData.dro[0] = GlobalData.machine_cordinates[0] - GlobalData.work_offset[0];
+                        GlobalData.dro[1] = GlobalData.machine_cordinates[1] - GlobalData.work_offset[1];
+                        GlobalData.dro[2] = GlobalData.machine_cordinates[2] - GlobalData.work_offset[2];
+                    }
+                    else if (pairs[x].contains("WCO"))
+                    {
+                        String[] wo_pos = pairs[x].substring(5).split(",");
+                        GlobalData.work_offset[0] = new Float(wo_pos[0]);
+                        GlobalData.work_offset[1] = new Float(wo_pos[1]);
+                        GlobalData.work_offset[2] = new Float(wo_pos[2]);
+                    }
+                    else if (pairs[x].contains("FS"))
+                    {
+                        GlobalData.CurrentVelocity = new Float(pairs[x].substring(3).split(",")[0]);
+                    }
+                }
+            }
         }
     }
     public void SetJogSpeed(float jog)
@@ -513,13 +531,23 @@ public class MotionController {
                         String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
                         String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
                         System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
-                        gcode.add("M9 G38.3 Z-10 F10");
-                        gcode.add("G91 G0 Z0.1875");
-                        gcode.add("G90 G10 L20 P1 Z0");
-                        gcode.add("G1 Z" + pierce_height + " F30");
-                        gcode.add("M3S5000 G4 P" + pierce_delay);
-                        gcode.add("M8 G1 Z" + cut_height);
+                        //gcode.add("F10");
+                        //gcode.add("M9"); //Turn of ATHC
+                        //gcode.add("G38.3 Z-10"); //Probe Until Touch
+                        //gcode.add("G91"); //Switch to incremental
+                        //gcode.add("G0 Z0.1875"); //Takeup slack in floating head
+                        //gcode.add("G90"); //Switch to absolute
+                        //gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
+                        //gcode.add("G1 Z" + pierce_height); //Raise to pierce height
+                        //gcode.add("M3S5000"); //Turn on plasma
+                        //gcode.add("G4 P" + pierce_delay); //Pierce Delay
+                        //gcode.add("G1 Z" + cut_height); //Traverse to Cut Height
+                        //gcode.add("M8"); //Turn on ATHC
                     }
+                }
+                else if (lines[x].toLowerCase().contains("G64")) //We don't support G64 any more
+                {
+
                 }
                 else
                 {
@@ -531,7 +559,7 @@ public class MotionController {
             for (int x = 0; x < gcode.size(); x++)
             {
                 GlobalData.GcodeFileLines[x] = gcode.get(x);
-                //System.out.println(gcode.get(x));
+                System.out.println(gcode.get(x));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -649,7 +677,7 @@ public class MotionController {
     }
     public static void Poll()
     {
-        if (GlobalData.SendLine == true)
+        if (GlobalData.SendLines > 0)
         {
             System.out.println("{Poll} Sending Line!");
             if (GlobalData.GcodeFileLines != null)
@@ -660,7 +688,7 @@ public class MotionController {
                     GlobalData.GcodeFileCurrentLine++;
                 }
             }
-            GlobalData.SendLine = false;
+            GlobalData.SendLines--;
         }
     }
 }
