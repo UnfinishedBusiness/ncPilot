@@ -185,7 +185,7 @@ public class MotionController {
         if (inputLine.contains("ok"))
         {
             System.out.println("Setting SendLine Flag!");
-            GlobalData.SendLines++;
+            GlobalData.SendLines = true;
         }
         String report = inputLine.substring(1, inputLine.length()-1);
         if (report == "") return;
@@ -677,18 +677,23 @@ public class MotionController {
     }
     public static void Poll()
     {
-        if (GlobalData.SendLines > 0)
+        if (GlobalData.SendLines == true)
         {
-            System.out.println("{Poll} Sending Line!");
             if (GlobalData.GcodeFileLines != null)
             {
+                System.out.println("{Poll} Sending Line! " + GlobalData.SendLines);
                 if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
-                    mdi_console.RecieveBufferLine("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
+                    System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
                     WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
                     GlobalData.GcodeFileCurrentLine++;
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            GlobalData.SendLines--;
+            GlobalData.SendLines = false;
         }
     }
 }
