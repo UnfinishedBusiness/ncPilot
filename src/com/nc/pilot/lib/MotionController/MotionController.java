@@ -187,12 +187,14 @@ public class MotionController {
         {
             System.out.println("Setting SendLine Flag!");
             GlobalData.SendLines++;
+            Poll();
         }
         else if (inputLine.contains("error"))
         {
             //Figure out what error it is and notify. Serious errors need to hold machine
             System.out.println("Setting SendLine Flag!");
             GlobalData.SendLines++;
+            Poll();
         }
         String report = inputLine.substring(1, inputLine.length()-1);
         if (report == "") return;

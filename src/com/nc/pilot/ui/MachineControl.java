@@ -22,7 +22,7 @@ public class MachineControl extends JFrame {
 
     private SerialIO serial;
     Timer repaint_timer = new Timer();
-    Timer poll_timer = new Timer();
+    //Timer poll_timer = new Timer();
     MotionController motion_controller;
     UIWidgets ui_widgets;
     GcodeViewer gcode_viewer;
@@ -53,12 +53,12 @@ public class MachineControl extends JFrame {
                 repaint();
             }
         }, 0, 50);
-        poll_timer.schedule(new TimerTask() {
+        /*poll_timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 motion_controller.Poll();
             }
-        }, 100, 100);
+        }, 100, 100);*/
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
