@@ -45,6 +45,16 @@ public class SerialIO {
             return -1;
         }
     }
+    public int writeByte(byte b)
+    {
+        try {
+            serialPort.writeByte(b);
+            return 0;
+        } catch (SerialPortException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 	public String[] get_available_ports()
     {
         String[] portNames = SerialPortList.getPortNames();
@@ -82,22 +92,25 @@ public class SerialIO {
                 try {
                     String receivedData = serialPort.readString(event.getEventValue());
                     //System.out.println("Received response: " + receivedData);
-                    for (int x = 0; x < receivedData.length(); x++)
+                    if (receivedData != null)
                     {
-                        if (receivedData.charAt(x) == '\n')
+                        for (int x = 0; x < receivedData.length(); x++)
                         {
-                            if (rx_line_buffer != null)
+                            if (receivedData.charAt(x) == '\n')
                             {
-                                motion_controller.ReadBuffer(rx_line_buffer);
-                                //System.out.println("Read Line: " + rx_line_buffer);
-                                rx_line_buffer = "";
+                                if (rx_line_buffer != null)
+                                {
+                                    motion_controller.ReadBuffer(rx_line_buffer);
+                                    //System.out.println("Read Line: " + rx_line_buffer);
+                                    rx_line_buffer = "";
+                                }
                             }
-                        }
-                        else
-                        {
-                            if (receivedData.charAt(x) != '\r')
+                            else
                             {
-                                rx_line_buffer += receivedData.charAt(x);
+                                if (receivedData.charAt(x) != '\r')
+                                {
+                                    rx_line_buffer += receivedData.charAt(x);
+                                }
                             }
                         }
                     }

@@ -130,12 +130,25 @@ public class MotionController {
         //System.out.println("start_angle: " + start_angle + " end_angle: " + end_angle);
         if (start_angle == end_angle) //We are a circle
         {
-            for (float x = 0; x < 360; x += angle_inc)
+            if (direction == "CCW")
             {
-                start_angle += angle_inc;
-                float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
-                points.add(new_point);
+                for (float x = 0; x < 360; x += angle_inc)
+                {
+                    start_angle += angle_inc;
+                    float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
+                    points.add(new_point);
+                }
             }
+            else
+            {
+                for (float x = 360; x > 0; x -= angle_inc)
+                {
+                    start_angle -= angle_inc;
+                    float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
+                    points.add(new_point);
+                }
+            }
+
         }
         else
         {
@@ -185,14 +198,22 @@ public class MotionController {
         System.out.println(inputLine);
         if (inputLine.contains("ok"))
         {
-            System.out.println("Setting SendLine Flag!");
+            //System.out.println("Setting SendLine Flag!");
             GlobalData.SendLines++;
             Poll();
         }
         else if (inputLine.contains("error"))
         {
             //Figure out what error it is and notify. Serious errors need to hold machine
-            System.out.println("Setting SendLine Flag!");
+            //System.out.println("Setting SendLine Flag!");
+            GlobalData.SendLines++;
+            Poll();
+        }
+        else if (inputLine.contains("PRB")) //Probing cycle finished
+        {
+            System.out.println("Probing cycle touched! Continuing stream!");
+            //ResetOnIdle();
+            GlobalData.ProbingCycleActive = false;
             GlobalData.SendLines++;
             Poll();
         }
@@ -204,6 +225,10 @@ public class MotionController {
             if (pairs.length > 0)
             {
                 GlobalData.MachineState = pairs[0];
+                if (GlobalData.MachineState.contentEquals("Idle") && GlobalData.ResetOnIdle == true)
+                {
+                    ResetNow();
+                }
                 for (int x = 1; x < pairs.length; x++)
                 {
                     if (pairs[x].contains("MPos"))
@@ -252,13 +277,24 @@ public class MotionController {
     public static void FeedHold()
     {
         WriteBuffer("!\n");
-        //serial.write("!\n");
     }
     public static void Abort()
     {
-        WriteBuffer("%\n");
+        GlobalData.ResetOnIdle = true;
+        FeedHold();
         GlobalData.GcodeFileCurrentLine = 0;
         GlobalData.GcodeFileLines = null;
+    }
+    public static void ResetOnIdle()
+    {
+        GlobalData.ResetOnIdle = true;
+        FeedHold();
+    }
+    public static void ResetNow()
+    {
+        System.out.println("ResetNow!");
+        GlobalData.ResetOnIdle = false;
+        serial.writeByte((byte) 0x18);
     }
     public static void JogX_Plus()
     {
@@ -502,7 +538,7 @@ public class MotionController {
             }
         }
     }
-    public static void LoadGcodeFile()
+    public static void LoadGcodeFile_()
     {
         String buffer = null;
         try {
@@ -522,18 +558,18 @@ public class MotionController {
                         String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
                         String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
                         System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
-                        //gcode.add("F10");
-                        //gcode.add("M9"); //Turn of ATHC
-                        //gcode.add("G38.3 Z-10"); //Probe Until Touch
-                        //gcode.add("G91"); //Switch to incremental
-                        //gcode.add("G0 Z0.1875"); //Takeup slack in floating head
-                        //gcode.add("G90"); //Switch to absolute
-                        //gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
-                        //gcode.add("G1 Z" + pierce_height); //Raise to pierce height
-                        //gcode.add("M3S5000"); //Turn on plasma
-                        //gcode.add("G4 P" + pierce_delay); //Pierce Delay
-                        //gcode.add("G1 Z" + cut_height); //Traverse to Cut Height
-                        //gcode.add("M8"); //Turn on ATHC
+                        gcode.add("F30");
+                        gcode.add("M9"); //Turn of ATHC
+                        gcode.add("G38.3 Z-10"); //Probe Until Touch
+                        gcode.add("G91 G0 Z0.1875"); //Takeup slack in floating head
+                        gcode.add("G90"); //Switch to absolute
+                        gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
+                        gcode.add("G1 Z" + pierce_height); //Raise to pierce height
+                        gcode.add("M3 S5000"); //Turn on plasma
+                        gcode.add("G4 P" + pierce_delay); //Pierce Delay
+                        gcode.add("G1 Z" + cut_height); //Traverse to Cut Height
+                        gcode.add("G90"); //Switch to absolute
+                        gcode.add("M8"); //Turn on ATHC
                     }
                 }
                 else if (lines[x].toLowerCase().contains("G64")) //We don't support G64 any more
@@ -568,7 +604,7 @@ public class MotionController {
         }
 
     }
-    public static void LoadGcodeFile_Bad()
+    public static void LoadGcodeFile()
     {
         try {
             String buffer = GlobalData.readFile(GlobalData.GcodeFile);
@@ -586,11 +622,11 @@ public class MotionController {
                 updateGcodeRegisters(lines[x].toLowerCase(), 'f');
                 if (lines[x].toLowerCase().contains("m30"))
                 {
-                    gcode.add("M5");
-                    gcode.add("M9");
-                    gcode.add("G80");
-                    gcode.add("G90");
-                    gcode.add("G94");
+                    //gcode.add("M5");
+                    //gcode.add("M9");
+                    //gcode.add("G80");
+                    //gcode.add("G90");
+                    //gcode.add("G94");
                 }
                 else if (lines[x].toLowerCase().contains("o<touchoff>"))
                 {
@@ -602,13 +638,18 @@ public class MotionController {
                         String pierce_height = touchoff_split[1].substring(1, (touchoff_split[1].length() - 1));
                         String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
                         String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
-                        //System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
-                        //gcode.add("M9 G28.2 Z0");
-                        //gcode.add("G92 Z=0");
-                        //gcode.add("G1 Z" + pierce_height + " F50");
-                        //gcode.add("M3S2000 G4 P" + pierce_delay);
-                        //gcode.add("G1 Z" + cut_height);
-                        //gcode.add("M8");
+                        gcode.add("F30");
+                        gcode.add("M9"); //Turn of ATHC
+                        gcode.add("G38.3 Z-10"); //Probe Until Touch
+                        gcode.add("G91 G0 Z0.1875"); //Takeup slack in floating head
+                        gcode.add("G90"); //Switch to absolute
+                        gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
+                        gcode.add("G1 Z" + pierce_height); //Raise to pierce height
+                        gcode.add("M3 S5000"); //Turn on plasma
+                        gcode.add("G4 P" + pierce_delay); //Pierce Delay
+                        gcode.add("G1 Z" + cut_height); //Traverse to Cut Height
+                        gcode.add("G90"); //Switch to absolute
+                        gcode.add("M8"); //Turn on ATHC
                     }
                 }
                 /*else if (Gword == 2) //Clockwise arc - Convert to line segments
@@ -618,30 +659,31 @@ public class MotionController {
                         float[] center = new float[]{lastXword + Iword, lastYword + Jword};
                         float radius = new Float(Math.hypot(Xword-center[0], Yword-center[1]));
                         ArrayList<float[]> arc_points = getPointsOfArc(new float[]{lastXword, lastYword}, new float[]{Xword, Yword}, center, radius, "CW");
-                        for (int y = 0; y < arc_points.size(); y+= 5)
+                        for (int y = 0; y < arc_points.size(); y+= 30)
                         {
-                            gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1]);
+                            gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1] + " F" + Fword);
                         }
-                        gcode.add("G1 X" + Xword + " Y" + Yword);
+                        gcode.add("G1 X" + Xword + " Y" + Yword + " F" + Fword);
                     }
-                }*/
-                /*else if (Gword == 3) //Counter-Clockwise arc - Convert to line segments
+                }
+                else if (Gword == 3) //Counter-Clockwise arc - Convert to line segments
                 {
                     if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
                     {
                         float[] center = new float[]{lastXword + Iword, lastYword + Jword};
                         float radius = new Float(Math.hypot(Xword-center[0], Yword-center[1]));
                         ArrayList<float[]> arc_points = getPointsOfArc(new float[]{lastXword, lastYword}, new float[]{Xword, Yword}, center, radius, "CCW");
-                        for (int y = 0; y < arc_points.size(); y+= 5)
+                        for (int y = 0; y < arc_points.size(); y+= 30)
                         {
-                            gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1]);
+                            gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1] + " F" + Fword);
                         }
+                        gcode.add("G1 X" + Xword + " Y" + Yword + " F" + Fword);
                     }
                 }*/
-                else if (Gword == 0 || Gword == 1 || Gword == 2 || Gword == 3)
+                /*else if (Gword == 0 || Gword == 1 || Gword == 2 || Gword == 3)
                 {
 
-                }
+                }*/
                 else
                 {
                     gcode.add(lines[x]);
@@ -672,10 +714,19 @@ public class MotionController {
         {
             if (GlobalData.GcodeFileLines != null)
             {
-                System.out.println("{Poll} Sending Line! " + GlobalData.SendLines);
+                //System.out.println("{Poll} Sending Line! " + GlobalData.SendLines);
                 if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
-                    System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
-                    WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+
+                    //System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
+                    if (GlobalData.ProbingCycleActive == false) //Stop writing gcode to planner until after probing cycle is finished
+                    {
+                        WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+                    }
+                    if (GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine].toLowerCase().contains("g38"))
+                    {
+                        System.out.println("Found probing cycle, waiting for touch before sending more lines!");
+                        GlobalData.ProbingCycleActive = true;
+                    }
                     GlobalData.GcodeFileCurrentLine++;
                 }
             }

@@ -27,6 +27,8 @@ public class GlobalData {
     public static String CurrentUnits = "Inch";
     public static boolean IsHomed = false;
     public static String JogMode = "Continuous";
+    public static boolean ProbingCycleActive = false;
+    public static boolean ResetOnIdle = false;
 
     public static int CurrentExecutionLine = 0; //Line that is currently executing
     public static int SendLines = 0;
