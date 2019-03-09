@@ -182,31 +182,20 @@ public class MotionController {
     }
     public static void ReadBuffer(String inputLine){
         mdi_console.RecieveBufferLine(inputLine);
+        System.out.println(inputLine);
         if (inputLine.contains("ok"))
         {
             System.out.println("Setting SendLine Flag!");
-            GlobalData.SendLines = true;
+            GlobalData.SendLines++;
+        }
+        else if (inputLine.contains("error"))
+        {
+            //Figure out what error it is and notify. Serious errors need to hold machine
+            System.out.println("Setting SendLine Flag!");
+            GlobalData.SendLines++;
         }
         String report = inputLine.substring(1, inputLine.length()-1);
         if (report == "") return;
-        //System.out.println("Read line: " + report);
-
-        /*if (report.contains("Slots:") && report.contains("MPos:") && report.contains("F:") && report.contains("Ln:"))
-        {
-            GlobalData.MachineState = report.substring(1, report.indexOf(',',0));
-
-
-            //System.out.println("pos: " + report.substring(report.indexOf("MPos:") + 5, report.indexOf(",Ln:")));
-            String[] pos = report.substring(report.indexOf("MPos:") + 5, report.indexOf(",Ln:")).split(",");
-            GlobalData.dro[0] = new Float(pos[0]);
-            GlobalData.dro[1] = new Float(pos[1]);
-            GlobalData.dro[2] = new Float(pos[2]);
-
-            GlobalData.CurrentVelocity = new Float(report.substring(report.indexOf("F:") + 2, report.indexOf(",", report.indexOf("F:") + 2 )));
-            GlobalData.SlotsAvailable = new Integer(report.substring(report.indexOf("Slots:") + 6, report.indexOf(">")));
-
-            Poll();
-        }*/
         if (inputLine.charAt(0) == '<') //We are a report
         {
             String[] pairs = report.split("\\|");
@@ -677,7 +666,7 @@ public class MotionController {
     }
     public static void Poll()
     {
-        if (GlobalData.SendLines == true)
+        while (GlobalData.SendLines > 0)
         {
             if (GlobalData.GcodeFileLines != null)
             {
@@ -686,14 +675,9 @@ public class MotionController {
                     System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
                     WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
                     GlobalData.GcodeFileCurrentLine++;
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
-            GlobalData.SendLines = false;
+            GlobalData.SendLines--;
         }
     }
 }

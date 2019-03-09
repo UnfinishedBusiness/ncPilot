@@ -35,7 +35,7 @@ public class MachineControl extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         serial = new SerialIO();
-        serial.initialize();
+        serial.open("/dev/tty.usbmodem1421");
         motion_controller = new MotionController(serial);
         serial.inherit_motion_controller(motion_controller);
         ui_widgets = new UIWidgets();

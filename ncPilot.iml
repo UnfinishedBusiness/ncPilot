@@ -13,5 +13,6 @@
     <orderEntry type="library" name="kabeja-0.4" level="project" />
     <orderEntry type="library" name="jts-1.14" level="project" />
     <orderEntry type="library" name="jtsio-1.14" level="project" />
+    <orderEntry type="library" name="jssc" level="project" />
   </component>
 </module>
