@@ -28,6 +28,9 @@ public class SerialIO {
                     SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
             serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
+
+            rx_line_buffer = "";
+
             return 0;
         }
         catch (SerialPortException ex) {
@@ -98,7 +101,7 @@ public class SerialIO {
                         {
                             if (receivedData.charAt(x) == '\n')
                             {
-                                if (rx_line_buffer != null)
+                                if (rx_line_buffer != null && rx_line_buffer != "")
                                 {
                                     motion_controller.ReadBuffer(rx_line_buffer);
                                     //System.out.println("Read Line: " + rx_line_buffer);
@@ -107,7 +110,7 @@ public class SerialIO {
                             }
                             else
                             {
-                                if (receivedData.charAt(x) != '\r')
+                                if (receivedData.charAt(x) != '\r' && receivedData.charAt(x) != '\0')
                                 {
                                     rx_line_buffer += receivedData.charAt(x);
                                 }

@@ -200,14 +200,12 @@ public class MotionController {
         {
             //System.out.println("Setting SendLine Flag!");
             GlobalData.SendLines++;
-            Poll();
         }
         else if (inputLine.contains("error"))
         {
             //Figure out what error it is and notify. Serious errors need to hold machine
             //System.out.println("Setting SendLine Flag!");
             GlobalData.SendLines++;
-            Poll();
         }
         else if (inputLine.contains("PRB")) //Probing cycle finished
         {
@@ -215,7 +213,6 @@ public class MotionController {
             //ResetOnIdle();
             GlobalData.ProbingCycleActive = false;
             GlobalData.SendLines++;
-            Poll();
         }
         String report = inputLine.substring(1, inputLine.length()-1);
         if (report == "") return;
@@ -638,18 +635,18 @@ public class MotionController {
                         String pierce_height = touchoff_split[1].substring(1, (touchoff_split[1].length() - 1));
                         String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
                         String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
-                        gcode.add("F30");
-                        gcode.add("M9"); //Turn of ATHC
-                        gcode.add("G38.3 Z-10"); //Probe Until Touch
-                        gcode.add("G91 G0 Z0.1875"); //Takeup slack in floating head
-                        gcode.add("G90"); //Switch to absolute
-                        gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
-                        gcode.add("G1 Z" + pierce_height); //Raise to pierce height
-                        gcode.add("M3 S5000"); //Turn on plasma
-                        gcode.add("G4 P" + pierce_delay); //Pierce Delay
-                        gcode.add("G1 Z" + cut_height); //Traverse to Cut Height
-                        gcode.add("G90"); //Switch to absolute
-                        gcode.add("M8"); //Turn on ATHC
+                        //gcode.add("F30");
+                        //gcode.add("M9"); //Turn of ATHC
+                        //gcode.add("G38.3 Z-10"); //Probe Until Touch
+                        //gcode.add("G91 G0 Z0.1875"); //Takeup slack in floating head
+                        //gcode.add("G90"); //Switch to absolute
+                        //gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
+                        //gcode.add("G1 Z" + pierce_height); //Raise to pierce height
+                        //gcode.add("M3 S5000"); //Turn on plasma
+                        //gcode.add("G4 P" + pierce_delay); //Pierce Delay
+                        //gcode.add("G1 Z" + cut_height); //Traverse to Cut Height
+                        //gcode.add("G90"); //Switch to absolute
+                        //gcode.add("M8"); //Turn on ATHC
                     }
                 }
                 /*else if (Gword == 2) //Clockwise arc - Convert to line segments
@@ -710,14 +707,14 @@ public class MotionController {
     }
     public static void Poll()
     {
-        while (GlobalData.SendLines > 0)
+        if (GlobalData.SendLines > 0)
         {
             if (GlobalData.GcodeFileLines != null)
             {
-                //System.out.println("{Poll} Sending Line! " + GlobalData.SendLines);
+                System.out.println("{Poll} Sending Line! " + GlobalData.SendLines);
                 if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
 
-                    //System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
+                    System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
                     if (GlobalData.ProbingCycleActive == false) //Stop writing gcode to planner until after probing cycle is finished
                     {
                         WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
