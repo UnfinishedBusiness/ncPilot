@@ -60,9 +60,10 @@ public class MotionController {
         for (int x = 0; x < ports.length; x++)
         {
             System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getPortDescription());
-            if (ports[x].getSystemPortName().contentEquals("tty.usbmodem1421"))
+            if (ports[x].getSystemPortName().contentEquals("COM8"))
             {
                 comPort = ports[x];
+                comPort.setBaudRate(115200);
                 comPort.openPort();
                 rx_buffer_line = "";
             }
@@ -593,7 +594,7 @@ public class MotionController {
                             gcode.add("M8"); //Turn on ATHC
                         }
                     }
-                    else if (Gword == 2) //Clockwise arc - Convert to line segments
+                    /*else if (Gword == 2) //Clockwise arc - Convert to line segments
                     {
                         if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
                         {
@@ -620,7 +621,7 @@ public class MotionController {
                             }
                             gcode.add("G1 X" + Xword + " Y" + Yword + " F" + Fword);
                         }
-                    }
+                    }*/
                 /*else if (Gword == 0 || Gword == 1 || Gword == 2 || Gword == 3)
                 {
 
