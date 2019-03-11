@@ -5,15 +5,14 @@
  */
 package com.nc.pilot.lib.MotionController;
 
-import com.google.gson.Gson;
-import com.nc.pilot.lib.GcodeInterpreter;
 import com.nc.pilot.lib.GlobalData;
 import com.nc.pilot.lib.MDIConsole.MDIConsole;
-import com.nc.pilot.lib.SerialIO;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import com.fazecast.jSerialComm.*;
 
 /**
  *
@@ -23,23 +22,19 @@ import java.util.ArrayList;
 public class MotionController {
 
     /* End Default Parameters */
-    private static SerialIO serial;
-    private static float lastExecutionLine = 0;
-    private static UIWidgets ui_widgets;
-    private static MDIConsole mdi_console;
-    private static boolean WaitingForStopMotion = false;
-    private static Runnable RunAfterStop = null;
-    public static int BlockNextStatusReports = 0;
-    public MotionController(SerialIO s)
-    {
-        serial = s;
-    }
-    private static float jog_speed = 0;
-    public static void inherit_ui_widgets(UIWidgets u)
+    private SerialPort comPort;
+    private String rx_buffer_line;
+    private UIWidgets ui_widgets;
+    private MDIConsole mdi_console;
+    private boolean WaitingForStopMotion = false;
+    public int BlockNextStatusReports = 0;
+    private float jog_speed = 0;
+
+    public void inherit_ui_widgets(UIWidgets u)
     {
         ui_widgets = u;
     }
-    public static void inherit_mdi_console(MDIConsole m)
+    public void inherit_mdi_console(MDIConsole m)
     {
         mdi_console = m;
     }
@@ -60,7 +55,21 @@ public class MotionController {
     private static float Iword;
     private static float Jword;
 
-    private static boolean inTolerance(float a, float b, float t)
+    public MotionController() {
+        SerialPort[] ports = SerialPort.getCommPorts();
+        for (int x = 0; x < ports.length; x++)
+        {
+            System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getPortDescription());
+            if (ports[x].getSystemPortName().contentEquals("tty.usbmodem1421"))
+            {
+                comPort = ports[x];
+                comPort.openPort();
+                rx_buffer_line = "";
+            }
+        }
+    }
+
+    private boolean inTolerance(float a, float b, float t)
     {
         float diff;
         if (a > b)
@@ -80,7 +89,7 @@ public class MotionController {
             return false;
         }
     }
-    public static float getAngle(float[] start_point, float[] end_point) {
+    public float getAngle(float[] start_point, float[] end_point) {
         float angle = (float) Math.toDegrees(Math.atan2(start_point[1] - end_point[1], start_point[0] - end_point[0]));
 
         angle += 180;
@@ -93,11 +102,11 @@ public class MotionController {
 
         return angle;
     }
-    public static float getLineLength(float[] start_point, float[] end_point)
+    public float getLineLength(float[] start_point, float[] end_point)
     {
         return new Float(Math.hypot(start_point[0]-end_point[0], start_point[1]-end_point[1]));
     }
-    public static float[] rotatePoint(float[] pivot, float[] rotated_point, float angle)
+    public float[] rotatePoint(float[] pivot, float[] rotated_point, float angle)
     {
         float s = (float)Math.sin(angle*Math.PI/180);
         float c = (float)Math.cos(angle*Math.PI/180);
@@ -115,12 +124,12 @@ public class MotionController {
         rotated_point[1] = ynew + pivot[1];
         return new float[] {rotated_point[0], rotated_point[1]};
     }
-    public static float[] getPolarLineEndpoint(float[] start_point, float length, float angle)
+    public float[] getPolarLineEndpoint(float[] start_point, float length, float angle)
     {
         float[] end_point = new float[] {start_point[0] + length, start_point[1]};
         return rotatePoint(start_point, end_point, angle);
     }
-    public static ArrayList<float[]> getPointsOfArc(float[] start, float[] end, float[] center, float radius, String direction)
+    public ArrayList<float[]> getPointsOfArc(float[] start, float[] end, float[] center, float radius, String direction)
     {
         float start_angle = getAngle(center, start);
         float end_angle = getAngle(center, end);
@@ -189,76 +198,14 @@ public class MotionController {
         }
         return points;
     }
-    public static void WriteBuffer(String data){
-        //GlobalData.WriteBuffer.add(data);
-        serial.write(data);
-    }
-    public static void ReadBuffer(String inputLine){
-        mdi_console.RecieveBufferLine(inputLine);
-        System.out.println(inputLine);
-        if (inputLine.contains("ok"))
-        {
-            //System.out.println("Setting SendLine Flag!");
-            GlobalData.SendLines++;
-        }
-        else if (inputLine.contains("error"))
-        {
-            //Figure out what error it is and notify. Serious errors need to hold machine
-            //System.out.println("Setting SendLine Flag!");
-            GlobalData.SendLines++;
-        }
-        else if (inputLine.contains("PRB")) //Probing cycle finished
-        {
-            System.out.println("Probing cycle touched! Continuing stream!");
-            //ResetOnIdle();
-            GlobalData.ProbingCycleActive = false;
-            GlobalData.SendLines++;
-        }
-        String report = inputLine.substring(1, inputLine.length()-1);
-        if (report == "") return;
-        if (inputLine.charAt(0) == '<') //We are a report
-        {
-            String[] pairs = report.split("\\|");
-            if (pairs.length > 0)
-            {
-                GlobalData.MachineState = pairs[0];
-                if (GlobalData.MachineState.contentEquals("Idle") && GlobalData.ResetOnIdle == true)
-                {
-                    ResetNow();
-                }
-                for (int x = 1; x < pairs.length; x++)
-                {
-                    if (pairs[x].contains("MPos"))
-                    {
-                        String[] abs_pos = pairs[x].substring(5).split(",");
-                        GlobalData.machine_cordinates[0] = new Float(abs_pos[0]);
-                        GlobalData.machine_cordinates[1] = new Float(abs_pos[1]);
-                        GlobalData.machine_cordinates[2] = new Float(abs_pos[2]);
-
-                        GlobalData.dro[0] = GlobalData.machine_cordinates[0] - GlobalData.work_offset[0];
-                        GlobalData.dro[1] = GlobalData.machine_cordinates[1] - GlobalData.work_offset[1];
-                        GlobalData.dro[2] = GlobalData.machine_cordinates[2] - GlobalData.work_offset[2];
-                    }
-                    else if (pairs[x].contains("WCO"))
-                    {
-                        String[] wo_pos = pairs[x].substring(5).split(",");
-                        GlobalData.work_offset[0] = new Float(wo_pos[0]);
-                        GlobalData.work_offset[1] = new Float(wo_pos[1]);
-                        GlobalData.work_offset[2] = new Float(wo_pos[2]);
-                    }
-                    else if (pairs[x].contains("FS"))
-                    {
-                        GlobalData.CurrentVelocity = new Float(pairs[x].substring(3).split(",")[0]);
-                    }
-                }
-            }
-        }
+    public void WriteBuffer(String data){
+        comPort.writeBytes(data.getBytes(), data.length());
     }
     public void SetJogSpeed(float jog)
     {
         jog_speed = jog;
     }
-    public static void CycleStart()
+    public void CycleStart()
     {
         WriteBuffer("~");
         if (GlobalData.GcodeFileLines == null)
@@ -271,36 +218,36 @@ public class MotionController {
             }
         }
     }
-    public static void FeedHold()
+    public void FeedHold()
     {
         WriteBuffer("!\n");
     }
-    public static void Abort()
+    public void Abort()
     {
         GlobalData.ResetOnIdle = true;
         FeedHold();
         GlobalData.GcodeFileCurrentLine = 0;
         GlobalData.GcodeFileLines = null;
     }
-    public static void ResetOnIdle()
+    public void ResetOnIdle()
     {
         GlobalData.ResetOnIdle = true;
         FeedHold();
     }
-    public static void ResetNow()
+    public void ResetNow()
     {
         System.out.println("ResetNow!");
         GlobalData.ResetOnIdle = false;
-        serial.writeByte((byte) 0x18);
+        comPort.writeBytes(new byte[]{ 0x18 }, 1);
     }
-    public static void JogX_Plus()
+    public void JogX_Plus()
     {
         //if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("G91 G20 G1 X" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1"))  WriteBuffer("G91 G20 G1 X" + 0.1 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.01"))  WriteBuffer("G91 G20 G1 X" + 0.01 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.001"))  WriteBuffer("G91 G20 G1 X" + 0.001 + " F" + jog_speed + "\n");
     }
-    public static void JogX_Minus()
+    public void JogX_Minus()
     {
         //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 X-" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 X-" + 0.1 + " F" + jog_speed + "\n");
@@ -308,14 +255,14 @@ public class MotionController {
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 X-" + 0.001 + " F" + jog_speed + "\n");
     }
 
-    public static void JogY_Plus()
+    public void JogY_Plus()
     {
         //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Y" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y" + 0.1 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Y" + 0.01 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y" + 0.001 + " F" + jog_speed + "\n");
     }
-    public static void JogY_Minus()
+    public void JogY_Minus()
     {
         //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Y-" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y-" + 0.1 + " F" + jog_speed + "\n");
@@ -323,14 +270,14 @@ public class MotionController {
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y-" + 0.001 + " F" + jog_speed + "\n");
     }
 
-    public static void JogZ_Plus()
+    public void JogZ_Plus()
     {
         //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Z" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z" + 0.1 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z" + 0.01 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z" + 0.001 + " F" + jog_speed + "\n");
     }
-    public static void JogZ_Minus()
+    public void JogZ_Minus()
     {
         //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Z-" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z-" + 0.1 + " F" + jog_speed + "\n");
@@ -338,31 +285,31 @@ public class MotionController {
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z-" + 0.001 + " F" + jog_speed + "\n");
     }
 
-    public static void EndJog()
+    public void EndJog()
     {
         FeedHold();
         Abort();
     }
-    public static void SetXzero()
+    public void SetXzero()
     {
         //WriteBuffer("G92 X=0\n");
         //StatusReport();
     }
-    public static void SetYzero()
+    public void SetYzero()
     {
         //WriteBuffer("G92 Y=0\n");
         //StatusReport();
     }
-    public static void SetZzero()
+    public void SetZzero()
     {
         //WriteBuffer("G92 Z=0\n");
         //StatusReport();
     }
-    public static void Home()
+    public void Home()
     {
 
     }
-    public static float getGword(String line, char Word)
+    public float getGword(String line, char Word)
     {
         boolean capture = false;
         String word_builder = "";
@@ -397,7 +344,7 @@ public class MotionController {
         }
         return -1f;
     }
-    public static String GetGcodeLineAtN(int n)
+    public String GetGcodeLineAtN(int n)
     {
         for (int x = 0; x < GlobalData.GcodeFileLines.length; x++)
         {
@@ -408,12 +355,7 @@ public class MotionController {
         }
         return "";
     }
-    public static void WriteBufferAndRunAfterStop(String mdi, Runnable run)
-    {
-        WriteBuffer(mdi);
-        RunAfterStop = run;
-    }
-    public static void updateGcodeRegisters(String line, char Word)
+    public void updateGcodeRegisters(String line, char Word)
     {
         boolean capture = false;
         String word_builder = "";
@@ -474,7 +416,7 @@ public class MotionController {
             }
         }
     }
-    public static void updateLastGcodeRegisters(String line, char Word)
+    public void updateLastGcodeRegisters(String line, char Word)
     {
         boolean capture = false;
         String word_builder = "";
@@ -535,7 +477,7 @@ public class MotionController {
             }
         }
     }
-    public static void LoadGcodeFile_()
+    public void LoadGcodeFile_()
     {
         String buffer = null;
         try {
@@ -590,7 +532,7 @@ public class MotionController {
         }
 
     }
-    public static void LoadGcodeFile_NoInlineMods()
+    public void LoadGcodeFile_NoInlineMods()
     {
         String buffer = null;
         try {
@@ -601,7 +543,7 @@ public class MotionController {
         }
 
     }
-    public static void LoadGcodeFile()
+    public void LoadGcodeFile()
     {
         try {
             String buffer = GlobalData.readFile(GlobalData.GcodeFile);
@@ -649,7 +591,7 @@ public class MotionController {
                         //gcode.add("M8"); //Turn on ATHC
                     }
                 }
-                /*else if (Gword == 2) //Clockwise arc - Convert to line segments
+                else if (Gword == 2) //Clockwise arc - Convert to line segments
                 {
                     if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
                     {
@@ -676,7 +618,7 @@ public class MotionController {
                         }
                         gcode.add("G1 X" + Xword + " Y" + Yword + " F" + Fword);
                     }
-                }*/
+                }
                 /*else if (Gword == 0 || Gword == 1 || Gword == 2 || Gword == 3)
                 {
 
@@ -705,13 +647,104 @@ public class MotionController {
             e.printStackTrace();
         }
     }
-    public static void Poll()
+    public void ReadBuffer(String inputLine){
+        mdi_console.RecieveBufferLine(inputLine);
+        //System.out.println(inputLine);
+        if (inputLine.contains("ok"))
+        {
+            //System.out.println("Setting SendLine Flag!");
+            GlobalData.SendLine = true;
+        }
+        else if (inputLine.contains("error"))
+        {
+            //Figure out what error it is and notify. Serious errors need to hold machine
+            //System.out.println("Setting SendLine Flag!");
+            GlobalData.SendLine = true;
+        }
+        else if (inputLine.contains("PRB")) //Probing cycle finished
+        {
+            System.out.println("Probing cycle touched! Continuing stream!");
+            //ResetOnIdle();
+            GlobalData.ProbingCycleActive = false;
+            GlobalData.SendLine = true;
+        }
+        String report = inputLine.substring(1, inputLine.length()-1);
+        if (report == "") return;
+        if (inputLine.charAt(0) == '<') //We are a report
+        {
+            String[] pairs = report.split("\\|");
+            if (pairs.length > 0)
+            {
+                GlobalData.MachineState = pairs[0];
+                if (GlobalData.MachineState.contentEquals("Idle") && GlobalData.ResetOnIdle == true)
+                {
+                    ResetNow();
+                }
+                for (int x = 1; x < pairs.length; x++)
+                {
+                    if (pairs[x].contains("MPos"))
+                    {
+                        String[] abs_pos = pairs[x].substring(5).split(",");
+                        GlobalData.machine_cordinates[0] = new Float(abs_pos[0]);
+                        GlobalData.machine_cordinates[1] = new Float(abs_pos[1]);
+                        GlobalData.machine_cordinates[2] = new Float(abs_pos[2]);
+
+                        GlobalData.dro[0] = GlobalData.machine_cordinates[0] - GlobalData.work_offset[0];
+                        GlobalData.dro[1] = GlobalData.machine_cordinates[1] - GlobalData.work_offset[1];
+                        GlobalData.dro[2] = GlobalData.machine_cordinates[2] - GlobalData.work_offset[2];
+                    }
+                    else if (pairs[x].contains("WCO"))
+                    {
+                        String[] wo_pos = pairs[x].substring(5).split(",");
+                        GlobalData.work_offset[0] = new Float(wo_pos[0]);
+                        GlobalData.work_offset[1] = new Float(wo_pos[1]);
+                        GlobalData.work_offset[2] = new Float(wo_pos[2]);
+                    }
+                    else if (pairs[x].contains("FS"))
+                    {
+                        GlobalData.CurrentVelocity = new Float(pairs[x].substring(3).split(",")[0]);
+                    }
+                }
+            }
+        }
+    }
+    public void Poll()
     {
-        if (GlobalData.SendLines > 0)
+        if (comPort.bytesAvailable() > 0)
+        {
+            byte[] readBuffer = new byte[comPort.bytesAvailable()];
+            int numRead = comPort.readBytes(readBuffer, readBuffer.length);
+            System.out.println("Read " + numRead + " bytes.");
+            for (int x = 0; x < numRead; x++)
+            {
+                char c = new Character((char)readBuffer[x]).charValue();
+                if (c != '\r') //Ignore carrage returns
+                {
+                    if (c == '\n')
+                    {
+                        //System.out.println("Found line break!");
+                        if (rx_buffer_line.length() > 0)
+                        {
+                            ReadBuffer(rx_buffer_line);
+                        }
+                        rx_buffer_line = "";
+                    }
+                    else
+                    {
+                        //System.out.println("Concatting: " + c);
+                        rx_buffer_line = rx_buffer_line + c;
+                        //System.out.println("rx_buffer_line: " + rx_buffer_line);
+                    }
+                }
+            }
+
+        }
+
+        if (GlobalData.SendLine == true)
         {
             if (GlobalData.GcodeFileLines != null)
             {
-                System.out.println("{Poll} Sending Line! " + GlobalData.SendLines);
+                System.out.println("{Poll} Sending Line!");
                 if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
 
                     System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
@@ -727,7 +760,7 @@ public class MotionController {
                     GlobalData.GcodeFileCurrentLine++;
                 }
             }
-            GlobalData.SendLines--;
+            GlobalData.SendLine = false;
         }
     }
 }

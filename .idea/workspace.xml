@@ -7,12 +7,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/SerialIO.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/SerialIO.class" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/SerialIO$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/SerialIO$PortReader.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/SerialIO.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MotionController/MotionController.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MotionController/MotionController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ncPilot.iml" afterPath="$PROJECT_DIR$/ncPilot.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,65 +32,42 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MotionController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MotionController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="716" column="118" lean-forward="true" selection-start-line="716" selection-start-column="118" selection-end-line="716" selection-end-column="118" />
-              <folding>
-                <element signature="e#9141#9142#0" expanded="true" />
-                <element signature="e#9172#9173#0" expanded="true" />
-                <element signature="e#9744#9745#0" expanded="true" />
-                <element signature="e#9778#9779#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SerialIO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1241">
-              <caret line="107" column="56" lean-forward="false" selection-start-line="107" selection-start-column="56" selection-end-line="107" selection-end-column="56" />
+            <state relative-caret-position="416">
+              <caret line="620" column="17" lean-forward="false" selection-start-line="620" selection-start-column="17" selection-end-line="620" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2168#2169#0" expanded="true" />
-                <element signature="e#2205#2206#0" expanded="true" />
+                <element signature="e#6458#6459#0" expanded="true" />
+                <element signature="e#6524#6525#0" expanded="true" />
+                <element signature="e#6569#6570#0" expanded="true" />
+                <element signature="e#6600#6601#0" expanded="true" />
+                <element signature="e#7158#7159#0" expanded="true" />
+                <element signature="e#7192#7193#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MDIConsole.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="56" column="10" lean-forward="false" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MachineControl.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MachineControl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="60" column="21" lean-forward="false" selection-start-line="60" selection-start-column="21" selection-end-line="60" selection-end-column="21" />
+            <state relative-caret-position="260">
+              <caret line="57" column="17" lean-forward="false" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
               <folding>
-                <element signature="e#1557#1679#0" expanded="true" />
-                <element signature="e#1678#1679#0" expanded="true" />
-                <element signature="e#1717#1854#0" expanded="true" />
-                <element signature="e#1853#1854#0" expanded="true" />
-                <marker date="1552255164071" expanded="false" signature="16262:16281" ph=" { " />
-                <marker date="1552255164071" expanded="false" signature="16314:16328" ph=" }" />
-                <marker date="1552255164071" expanded="false" signature="16505:16524" ph=" { " />
-                <marker date="1552255164071" expanded="false" signature="16556:16570" ph=" }" />
-                <marker date="1552255164071" expanded="false" signature="17032:17051" ph=" { " />
-                <marker date="1552255164071" expanded="false" signature="17082:17096" ph=" }" />
-                <marker date="1552255164071" expanded="false" signature="21735:21754" ph=" { " />
-                <marker date="1552255164071" expanded="false" signature="21792:21806" ph=" }" />
+                <element signature="e#1624#1761#0" expanded="true" />
+                <element signature="e#1760#1761#0" expanded="true" />
+                <element signature="e#21660#21661#0" expanded="true" />
+                <element signature="e#21729#21730#0" expanded="true" />
+                <marker date="1552263251000" expanded="false" signature="1464:1552" ph="() → { " />
+                <marker date="1552263251000" expanded="false" signature="1562:1586" ph=" }" />
+                <marker date="1552263251000" expanded="false" signature="16186:16205" ph=" { " />
+                <marker date="1552263251000" expanded="false" signature="16238:16252" ph=" }" />
+                <marker date="1552263251000" expanded="false" signature="16429:16448" ph=" { " />
+                <marker date="1552263251000" expanded="false" signature="16480:16494" ph=" }" />
+                <marker date="1552263251000" expanded="false" signature="16956:16975" ph=" { " />
+                <marker date="1552263251000" expanded="false" signature="17006:17020" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -92,11 +76,9 @@
       <file leaf-file-name="GlobalData.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="33" column="36" lean-forward="false" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
-              <folding>
-                <marker date="1552145568762" expanded="true" signature="2745:2848" ph="{...}" />
-              </folding>
+            <state relative-caret-position="360">
+              <caret line="33" column="34" lean-forward="false" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -139,6 +121,7 @@
       <find>split</find>
       <find>Writing</find>
       <find>serial</find>
+      <find>Serial</find>
     </findStrings>
     <replaceStrings>
       <replace>int[]</replace>
@@ -184,7 +167,6 @@
         <option value="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/PathEntity.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/Paths.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerEntity.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/PathObject.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/BuildPaths.java" />
@@ -195,19 +177,19 @@
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/StepGenStruct.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionEngine.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="y" value="23" />
+    <option name="width" value="1280" />
+    <option name="height" value="737" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -227,7 +209,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -253,8 +235,26 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="META-INF" />
+              <option name="myItemId" value="ncPilot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ncPilot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pilot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -320,7 +320,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="UIWidgets" />
+              <option name="myItemId" value="ToolPathViewer" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -386,13 +386,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
+              <option name="myItemId" value="libraries" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -407,6 +406,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -685,31 +685,31 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="737" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32769555" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3248503" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2260479" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18816067" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22708334" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2265625" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -731,8 +731,8 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2260479" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2260479" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2265625" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -791,10 +791,13 @@
         <state relative-caret-position="750">
           <caret line="54" column="23" lean-forward="false" selection-start-line="54" selection-start-column="23" selection-end-line="54" selection-end-column="23" />
           <folding>
-            <element signature="e#9141#9142#0" expanded="true" />
-            <element signature="e#9172#9173#0" expanded="true" />
-            <element signature="e#9744#9745#0" expanded="true" />
-            <element signature="e#9778#9779#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#6458#6459#0" expanded="true" />
+            <element signature="e#6524#6525#0" expanded="true" />
+            <element signature="e#6569#6570#0" expanded="true" />
+            <element signature="e#6600#6601#0" expanded="true" />
+            <element signature="e#7158#7159#0" expanded="true" />
+            <element signature="e#7192#7193#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -803,11 +806,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="7" column="22" lean-forward="false" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2168#2169#0" expanded="true" />
-            <element signature="e#2205#2206#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -816,11 +815,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="7" column="22" lean-forward="false" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2168#2169#0" expanded="true" />
-            <element signature="e#2205#2206#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -831,11 +826,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="22" lean-forward="false" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2168#2169#0" expanded="true" />
-            <element signature="e#2205#2206#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -922,14 +913,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138">
-          <caret line="198" column="63" lean-forward="false" selection-start-line="198" selection-start-column="63" selection-end-line="198" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-47">
@@ -984,76 +967,82 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="56" column="10" lean-forward="false" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="33" column="36" lean-forward="false" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
-          <folding>
-            <marker date="1552145568762" expanded="true" signature="2745:2848" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/libraries/jssc.jar!/jssc/SerialPort.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1914">
           <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="107" column="56" lean-forward="false" selection-start-line="107" selection-start-column="56" selection-end-line="107" selection-end-column="56" />
+        <state relative-caret-position="90">
+          <caret line="6" column="41" lean-forward="true" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2025">
+          <caret line="143" column="5" lean-forward="true" selection-start-line="143" selection-start-column="5" selection-end-line="143" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2168#2169#0" expanded="true" />
-            <element signature="e#2205#2206#0" expanded="true" />
+            <element signature="e#877#878#0" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="130" column="55" lean-forward="false" selection-start-line="130" selection-start-column="55" selection-end-line="130" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="33" column="34" lean-forward="false" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="620" column="17" lean-forward="false" selection-start-line="620" selection-start-column="17" selection-end-line="620" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6458#6459#0" expanded="true" />
+            <element signature="e#6524#6525#0" expanded="true" />
+            <element signature="e#6569#6570#0" expanded="true" />
+            <element signature="e#6600#6601#0" expanded="true" />
+            <element signature="e#7158#7159#0" expanded="true" />
+            <element signature="e#7192#7193#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="60" column="21" lean-forward="false" selection-start-line="60" selection-start-column="21" selection-end-line="60" selection-end-column="21" />
+        <state relative-caret-position="260">
+          <caret line="57" column="17" lean-forward="false" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
           <folding>
-            <element signature="e#1557#1679#0" expanded="true" />
-            <element signature="e#1678#1679#0" expanded="true" />
-            <element signature="e#1717#1854#0" expanded="true" />
-            <element signature="e#1853#1854#0" expanded="true" />
-            <marker date="1552255164071" expanded="false" signature="16262:16281" ph=" { " />
-            <marker date="1552255164071" expanded="false" signature="16314:16328" ph=" }" />
-            <marker date="1552255164071" expanded="false" signature="16505:16524" ph=" { " />
-            <marker date="1552255164071" expanded="false" signature="16556:16570" ph=" }" />
-            <marker date="1552255164071" expanded="false" signature="17032:17051" ph=" { " />
-            <marker date="1552255164071" expanded="false" signature="17082:17096" ph=" }" />
-            <marker date="1552255164071" expanded="false" signature="21735:21754" ph=" { " />
-            <marker date="1552255164071" expanded="false" signature="21792:21806" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="716" column="118" lean-forward="true" selection-start-line="716" selection-start-column="118" selection-end-line="716" selection-end-column="118" />
-          <folding>
-            <element signature="e#9141#9142#0" expanded="true" />
-            <element signature="e#9172#9173#0" expanded="true" />
-            <element signature="e#9744#9745#0" expanded="true" />
-            <element signature="e#9778#9779#0" expanded="true" />
+            <element signature="e#1624#1761#0" expanded="true" />
+            <element signature="e#1760#1761#0" expanded="true" />
+            <element signature="e#21660#21661#0" expanded="true" />
+            <element signature="e#21729#21730#0" expanded="true" />
+            <marker date="1552263251000" expanded="false" signature="1464:1552" ph="() → { " />
+            <marker date="1552263251000" expanded="false" signature="1562:1586" ph=" }" />
+            <marker date="1552263251000" expanded="false" signature="16186:16205" ph=" { " />
+            <marker date="1552263251000" expanded="false" signature="16238:16252" ph=" }" />
+            <marker date="1552263251000" expanded="false" signature="16429:16448" ph=" { " />
+            <marker date="1552263251000" expanded="false" signature="16480:16494" ph=" }" />
+            <marker date="1552263251000" expanded="false" signature="16956:16975" ph=" { " />
+            <marker date="1552263251000" expanded="false" signature="17006:17020" ph=" }" />
           </folding>
         </state>
       </provider>

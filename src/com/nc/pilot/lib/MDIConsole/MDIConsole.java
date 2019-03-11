@@ -1,6 +1,4 @@
 package com.nc.pilot.lib.MDIConsole;
-import com.nc.pilot.lib.GcodeViewer;
-import com.nc.pilot.lib.GlobalData;
 import com.nc.pilot.lib.MotionController.MotionController;
 
 import java.awt.*;
@@ -18,7 +16,7 @@ public class MDIConsole {
     private String cmd_line = "";
     private ArrayList<MDICommand> CommandStack = new ArrayList();
     private ArrayList<String> RecievedLines = new ArrayList();
-
+    private MotionController motion_controller;
 
     public MDIConsole()
     {
@@ -29,22 +27,10 @@ public class MDIConsole {
                 hide();
             }
         });
-        AddCommand("probez", new Runnable() {
-            @Override
-            public void run() {
-                MotionController.BlockNextStatusReports = 1;
-                MotionController.WriteBufferAndRunAfterStop("G92.2\nG38.2 Z-10 F40\n", new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("Z Probed!");
-                        MotionController.BlockNextStatusReports = 1;
-                        MotionController.WriteBuffer("G92.3\nG92 Z=0\n");
-                        MotionController.WriteBuffer("G90\nG0 Z0.375\n");
-                    }
-                });
-
-            }
-        });
+    }
+    public void inherit_MotionController(MotionController m)
+    {
+        motion_controller = m;
     }
     // Uses font metrics provided by the current font set to the
     // local Graphics2D to find the width of a string in pixels.
@@ -153,7 +139,7 @@ public class MDIConsole {
         }
         if (found_in_stack == false) //We are a MDI command, send to Motion Controller
         {
-            MotionController.WriteBuffer(cmd_line + "\n");
+            motion_controller.WriteBuffer(cmd_line + "\n");
         }
     }
     public void dispatchKeyEvent(KeyEvent ke)

@@ -20,7 +20,6 @@ import java.util.TimerTask;
  */
 public class MachineControl extends JFrame {
 
-    private SerialIO serial;
     Timer repaint_timer = new Timer();
     Timer poll_timer = new Timer();
     MotionController motion_controller;
@@ -34,13 +33,11 @@ public class MachineControl extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        serial = new SerialIO();
-        serial.open("COM8");
-        motion_controller = new MotionController(serial);
-        serial.inherit_motion_controller(motion_controller);
+        motion_controller = new MotionController();
         ui_widgets = new UIWidgets();
         gcode_viewer = new GcodeViewer();
         mdi_console = new MDIConsole();
+        mdi_console.inherit_MotionController(motion_controller);
         motion_controller.inherit_ui_widgets(ui_widgets);
         motion_controller.inherit_mdi_console(mdi_console);
         Layout_UI();
@@ -58,7 +55,7 @@ public class MachineControl extends JFrame {
             public void run() {
                 motion_controller.Poll();
             }
-        }, 100, 100);
+        }, 10, 10);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -127,37 +124,37 @@ public class MachineControl extends JFrame {
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
                                     if (GlobalData.UpArrowKeyState == false) {
                                         GlobalData.UpArrowKeyState = true;
-                                        MotionController.JogY_Plus();
+                                        motion_controller.JogY_Plus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
                                     if (GlobalData.DownArrowKeyState == false) {
                                         GlobalData.DownArrowKeyState = true;
-                                        MotionController.JogY_Minus();
+                                        motion_controller.JogY_Minus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
                                     if (GlobalData.RightArrowKeyState == false) {
                                         GlobalData.RightArrowKeyState = true;
-                                        MotionController.JogX_Plus();
+                                        motion_controller.JogX_Plus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
                                     if (GlobalData.LeftArrowKeyState == false) {
                                         GlobalData.LeftArrowKeyState = true;
-                                        MotionController.JogX_Minus();
+                                        motion_controller.JogX_Minus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
                                     if (GlobalData.PageUpKeyState == false) {
                                         GlobalData.PageUpKeyState = true;
-                                        MotionController.JogZ_Plus();
+                                        motion_controller.JogZ_Plus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
                                     if (GlobalData.PageDownKeyState == false) {
                                         GlobalData.PageDownKeyState = true;
-                                        MotionController.JogZ_Minus();
+                                        motion_controller.JogZ_Minus();
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_ALT) {
@@ -170,32 +167,32 @@ public class MachineControl extends JFrame {
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
                                     GlobalData.UpArrowKeyState = false;
-                                    MotionController.EndJog();
+                                    motion_controller.EndJog();
 
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
                                     GlobalData.DownArrowKeyState = false;
-                                    MotionController.EndJog();
+                                    motion_controller.EndJog();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
                                     GlobalData.LeftArrowKeyState = false;
-                                    MotionController.EndJog();
+                                    motion_controller.EndJog();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
                                     GlobalData.RightArrowKeyState = false;
-                                    MotionController.EndJog();
+                                    motion_controller.EndJog();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
                                     GlobalData.PageUpKeyState = false;
-                                    MotionController.EndJog();
+                                    motion_controller.EndJog();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
                                     GlobalData.PageDownKeyState = false;
-                                    MotionController.EndJog();
+                                    motion_controller.EndJog();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
 
-                                    MotionController.FeedHold();
+                                    motion_controller.FeedHold();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_TAB)
                                 {
@@ -224,8 +221,8 @@ public class MachineControl extends JFrame {
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                                    MotionController.FeedHold();
-                                    MotionController.Abort();
+                                    motion_controller.FeedHold();
+                                    motion_controller.Abort();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_R) {
 
@@ -295,22 +292,22 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 System.out.println("Clicked on Abort!");
-                MotionController.FeedHold();
-                MotionController.Abort();
+                motion_controller.FeedHold();
+                motion_controller.Abort();
             }
         });
         ui_widgets.AddMomentaryButton("Hold", "bottom-right", 80, 60, 190, 10, new Runnable() {
             @Override
             public void run() {
                 System.out.println("Clicked on Hold!");
-                MotionController.FeedHold();
+                motion_controller.FeedHold();
             }
         });
         ui_widgets.AddMomentaryButton("Start", "bottom-right", 80, 60, 280, 10, new Runnable() {
             @Override
             public void run() {
                 System.out.println("Clicked on Start!");
-                MotionController.CycleStart();
+                motion_controller.CycleStart();
             }
         });
         ui_widgets.AddSelectButton("Torch Off","torch", true, "bottom-right", 170, 60, 10, 80, new Runnable() {

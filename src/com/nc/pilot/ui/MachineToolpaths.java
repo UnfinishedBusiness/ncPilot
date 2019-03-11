@@ -124,77 +124,11 @@ public class MachineToolpaths extends JFrame {
                                     toolpath_viewer.RotateEngagedPart(-5);
                                     repaint();
                                 }
-                                if (ke.getKeyCode() == KeyEvent.VK_UP) {
-                                    if (GlobalData.UpArrowKeyState == false)
-                                    {
-                                        GlobalData.UpArrowKeyState = true;
-                                        MotionController.JogY_Plus();
-                                    }
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
-                                    if (GlobalData.DownArrowKeyState == false)
-                                    {
-                                        GlobalData.DownArrowKeyState = true;
-                                        MotionController.JogY_Minus();
-                                    }
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
-                                    if (GlobalData.RightArrowKeyState == false)
-                                    {
-                                        GlobalData.RightArrowKeyState = true;
-                                        MotionController.JogX_Plus();
-                                    }
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
-                                    if (GlobalData.LeftArrowKeyState == false)
-                                    {
-                                        GlobalData.LeftArrowKeyState = true;
-                                        MotionController.JogX_Minus();
-                                    }
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
-                                    if (GlobalData.RightArrowKeyState == false)
-                                    {
-                                        GlobalData.PageUpKeyState = true;
-                                        MotionController.JogZ_Plus();
-                                    }
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
-                                    if (GlobalData.LeftArrowKeyState == false)
-                                    {
-                                        GlobalData.PageDownKeyState = true;
-                                        MotionController.JogZ_Minus();
-                                    }
-                                }
+
                                 //repaint();
                                 break;
 
                             case KeyEvent.KEY_RELEASED:
-                                if (ke.getKeyCode() == KeyEvent.VK_UP) {
-                                    GlobalData.UpArrowKeyState = false;
-                                    MotionController.EndJog();
-
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
-                                    GlobalData.DownArrowKeyState = false;
-                                    MotionController.EndJog();
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
-                                    GlobalData.LeftArrowKeyState = false;
-                                    MotionController.EndJog();
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
-                                    GlobalData.RightArrowKeyState = false;
-                                    MotionController.EndJog();
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
-                                    GlobalData.PageUpKeyState = false;
-                                    MotionController.EndJog();
-                                }
-                                if (ke.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
-                                    GlobalData.PageDownKeyState = false;
-                                    MotionController.EndJog();
-                                }
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
                                     toolpath_viewer.getPaths();
                                     repaint();

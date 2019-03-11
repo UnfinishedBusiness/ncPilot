@@ -31,7 +31,7 @@ public class GlobalData {
     public static boolean ResetOnIdle = false;
 
     public static int CurrentExecutionLine = 0; //Line that is currently executing
-    public static int SendLines = 0;
+    public static boolean SendLine = false;
     public static String GcodeFile = null;
     public static String[] GcodeFileLines;
     public static int GcodeFileCurrentLine = 0; //Current Position in GcodeFileLines
