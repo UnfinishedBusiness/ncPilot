@@ -55,7 +55,7 @@ public class MachineControl extends JFrame {
             public void run() {
                 motion_controller.Poll();
             }
-        }, 10, 10);
+        }, 0, 1);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
