@@ -41,7 +41,7 @@ public class MDIConsole {
     public void RecieveBufferLine(String line)
     {
         //System.out.println("Read Buffer: " + line);
-        if (RecievedLines.size() < 30)
+        if (RecievedLines.size() < 40)
         {
             RecievedLines.add(line);
         }

@@ -59,8 +59,8 @@ public class MotionController {
         SerialPort[] ports = SerialPort.getCommPorts();
         for (int x = 0; x < ports.length; x++)
         {
-            System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getPortDescription());
-            if (ports[x].getSystemPortName().contentEquals("COM8"))
+            System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getDescriptivePortName());
+            if (ports[x].getSystemPortName().contentEquals("ttyACM0"))
             {
                 comPort = ports[x];
                 comPort.setBaudRate(115200);
@@ -478,72 +478,6 @@ public class MotionController {
             }
         }
     }
-    public void LoadGcodeFile_()
-    {
-        String buffer = null;
-        try {
-            buffer = GlobalData.readFile(GlobalData.GcodeFile);
-            String[] lines = buffer.split("\n");
-            ArrayList<String> gcode = new ArrayList();
-            for (int x = 0; x < lines.length; x++)
-            {
-                if (lines[x].toLowerCase().contains("o<touchoff>"))
-                {
-                    String touchoff = lines[x].toLowerCase().substring(lines[x].toLowerCase().indexOf("o<touchoff> ") + 12);
-                    //System.out.println("Touchoff String: " + touchoff);
-                    String[] touchoff_split = touchoff.split("\\s+");
-                    if (touchoff_split.length > 2)
-                    {
-                        String pierce_height = touchoff_split[1].substring(1, (touchoff_split[1].length() - 1));
-                        String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
-                        String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
-                        System.out.println("TouchOff-> Pierce Height: " + pierce_height + " Pierce Delay: " + pierce_delay + " Cut Height: " + cut_height);
-                        gcode.add("F30");
-                        gcode.add("M9"); //Turn of ATHC
-                        gcode.add("G38.3 Z-10"); //Probe Until Touch
-                        gcode.add("G91 G0 Z0.1875"); //Takeup slack in floating head
-                        gcode.add("G90"); //Switch to absolute
-                        gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
-                        gcode.add("G1 Z" + pierce_height); //Raise to pierce height
-                        gcode.add("M3 S5000"); //Turn on plasma
-                        gcode.add("G4 P" + pierce_delay); //Pierce Delay
-                        gcode.add("G1 Z" + cut_height); //Traverse to Cut Height
-                        gcode.add("G90"); //Switch to absolute
-                        gcode.add("M8"); //Turn on ATHC
-                    }
-                }
-                else if (lines[x].toLowerCase().contains("G64")) //We don't support G64 any more
-                {
-
-                }
-                else
-                {
-                    gcode.add(lines[x]);
-                }
-
-            }
-            GlobalData.GcodeFileLines = new String[gcode.size()];
-            for (int x = 0; x < gcode.size(); x++)
-            {
-                GlobalData.GcodeFileLines[x] = gcode.get(x);
-                System.out.println(gcode.get(x));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-    public void LoadGcodeFile_NoInlineMods()
-    {
-        String buffer = null;
-        try {
-            buffer = GlobalData.readFile(GlobalData.GcodeFile);
-            GlobalData.GcodeFileLines = buffer.split("\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
     public void LoadGcodeFile()
     {
         try {
@@ -582,10 +516,10 @@ public class MotionController {
                             String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
                             gcode.add("F30");
                             gcode.add("M9"); //Turn of ATHC
-                            gcode.add("G38.3 Z-10"); //Probe Until Touch
-                            gcode.add("G91 G0 Z0.1875"); //Takeup slack in floating head
+                            //gcode.add("G38.3 Z-10"); //Probe Until Touch
+                            //gcode.add("G91 G0 Z0.1875"); //Takeup slack in floating head
                             gcode.add("G90"); //Switch to absolute
-                            gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
+                            //gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
                             gcode.add("G1 Z" + pierce_height); //Raise to pierce height
                             gcode.add("M3 S5000"); //Turn on plasma
                             gcode.add("G4 P" + pierce_delay); //Pierce Delay
@@ -664,8 +598,8 @@ public class MotionController {
             //Figure out what error it is and notify. Serious errors need to hold machine
             //System.out.println("Setting SendLine Flag!");
             System.out.println(inputLine);
-            System.out.println("Found Error, halted!");
-            FeedHold();
+            //System.out.println("Found Error, halted!");
+            //FeedHold();
             GlobalData.SendLines = 1;
         }
         else if (inputLine.contains("PRB")) //Probing cycle finished
@@ -758,6 +692,12 @@ public class MotionController {
                     if (GlobalData.ProbingCycleActive == false) //Stop writing gcode to planner until after probing cycle is finished
                     {
                         WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+                        if (GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine].toLowerCase().contains("m30"))
+                        {
+                            System.out.println("Found end of program, resetting program!");
+                            GlobalData.GcodeFileLines = null;
+                            break;
+                        }
                     }
                     if (GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine].toLowerCase().contains("g38"))
                     {
