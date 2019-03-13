@@ -696,6 +696,7 @@ public class MotionController {
                         {
                             System.out.println("Found end of program, resetting program!");
                             GlobalData.GcodeFileLines = null;
+                            GlobalData.GcodeFileCurrentLine = 0;
                             break;
                         }
                     }
