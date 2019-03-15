@@ -124,7 +124,7 @@ public class MachineControl extends JFrame {
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
                                     if (GlobalData.UpArrowKeyState == false) {
                                         GlobalData.UpArrowKeyState = true;
-                                        //motion_controller.JogY_Plus();
+                                        motion_controller.JogY_Plus();
                                         motion_controller.JogY = true;
                                         motion_controller.JogYdir = true;
                                     }
@@ -132,7 +132,7 @@ public class MachineControl extends JFrame {
                                 if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
                                     if (GlobalData.DownArrowKeyState == false) {
                                         GlobalData.DownArrowKeyState = true;
-                                        //motion_controller.JogY_Minus();
+                                        motion_controller.JogY_Minus();
                                         motion_controller.JogY = true;
                                         motion_controller.JogYdir = false;
                                     }
@@ -140,7 +140,7 @@ public class MachineControl extends JFrame {
                                 if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
                                     if (GlobalData.RightArrowKeyState == false) {
                                         GlobalData.RightArrowKeyState = true;
-                                        //motion_controller.JogX_Plus();
+                                        motion_controller.JogX_Plus();
                                         motion_controller.JogX = true;
                                         motion_controller.JogXdir = true;
                                     }
@@ -148,7 +148,7 @@ public class MachineControl extends JFrame {
                                 if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
                                     if (GlobalData.LeftArrowKeyState == false) {
                                         GlobalData.LeftArrowKeyState = true;
-                                        //motion_controller.JogX_Minus();
+                                        motion_controller.JogX_Minus();
                                         motion_controller.JogX = true;
                                         motion_controller.JogXdir = false;
                                     }
@@ -156,7 +156,7 @@ public class MachineControl extends JFrame {
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
                                     if (GlobalData.PageUpKeyState == false) {
                                         GlobalData.PageUpKeyState = true;
-                                        //motion_controller.JogZ_Plus();
+                                        motion_controller.JogZ_Plus();
                                         motion_controller.JogZ = true;
                                         motion_controller.JogZdir = true;
                                     }
@@ -164,7 +164,7 @@ public class MachineControl extends JFrame {
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
                                     if (GlobalData.PageDownKeyState == false) {
                                         GlobalData.PageDownKeyState = true;
-                                        //motion_controller.JogZ_Minus();
+                                        motion_controller.JogZ_Minus();
                                         motion_controller.JogZ = true;
                                         motion_controller.JogZdir = false;
                                     }
