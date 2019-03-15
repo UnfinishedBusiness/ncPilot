@@ -33,8 +33,6 @@ public class MotionController {
     public boolean JogYdir = false;
     public boolean JogZ = false;
     public boolean JogZdir = false;
-    ArrayList<String> JogBuffer;
-    private int JogPushAhead = 1;
 
     String[] ErrorValues = new String[]{
             "", //there is no error 0
@@ -102,7 +100,6 @@ public class MotionController {
     private static float Jword;
 
     public MotionController() {
-        JogBuffer = new ArrayList();
         SerialPort[] ports = SerialPort.getCommPorts();
         for (int x = 0; x < ports.length; x++)
         {
@@ -735,26 +732,25 @@ public class MotionController {
             }
 
         }
-
-        if (GlobalData.JogMode.contentEquals("Continuous") && JogPushAhead > 0)
+        if (GlobalData.JogMode.contentEquals("Continuous") && (GlobalData.SendLines > 0 || GlobalData.MachineState.contentEquals("Idle")))
         {
             if (JogX == true || JogY == true || JogZ == true)
             {
-                boolean push_first = false;
-                if (JogBuffer.size() == 0) push_first = true;
-
+                GlobalData.MachineState = "Jog";
                 String jog_string = "$J=G20 G91 F + " + jog_speed + " ";
-
+                float jog_inc_dist = 1f * (jog_speed / 6000);
+                if (jog_inc_dist > 0.150f) jog_inc_dist = 0.150f;
+                if (jog_inc_dist < 0.001f) jog_inc_dist = 0.001f;
                 if (JogX == true)
                 {
                     //System.out.println("Jog X!");
                     if (JogXdir == true) //Jog Positive
                     {
-                        jog_string += "X0.040 ";
+                        jog_string += "X" + jog_inc_dist +  " ";
                     }
                     else //Jog negative
                     {
-                        jog_string += "X-0.040 ";
+                        jog_string += "X-" + jog_inc_dist + " ";
                     }
                 }
 
@@ -763,11 +759,11 @@ public class MotionController {
                     //System.out.println("Jog Y!");
                     if (JogYdir == true) //Jog Positive
                     {
-                        jog_string += "Y0.040 ";
+                        jog_string += "Y" + jog_inc_dist +  " ";
                     }
                     else //Jog negative
                     {
-                        jog_string += "Y-0.040 ";
+                        jog_string += "Y-" + jog_inc_dist +  " ";
                     }
                 }
 
@@ -776,30 +772,23 @@ public class MotionController {
                     //System.out.println("Jog Z!");
                     if (JogZdir == true) //Jog Positive
                     {
-                        jog_string += "Z0.040 ";
+                        jog_string += "Z" + jog_inc_dist +  " ";
                     }
                     else //Jog negative
                     {
-                        jog_string += "Z-0.040 ";
+                        jog_string += "Z-" + jog_inc_dist +  " ";
                     }
                 }
-
-                JogBuffer.add(jog_string);
-
-                if (push_first == true) //if its the first jog entity, push it to the controller to start cycle
-                {
-                    System.out.println("Writing first jog move!");
-                    WriteBuffer(JogBuffer.get(0) + "\n"); //Send the command on top then eat it
-                }
-                JogPushAhead--;
+                //System.out.println("Writing jog string: " + jog_string);
+                WriteBuffer(jog_string + "\n");
+                GlobalData.SendLines--;
             }
             else
             {
-                if (JogBuffer.size() > 0)
+                if (GlobalData.MachineState.contentEquals("Jog"))
                 {
-                    System.out.println("Ending Jog!");
-                    JogBuffer = new ArrayList(); //Wipe out entire buffer
-                    //EndJog();
+                    GlobalData.MachineState = "Idle";
+                    EndJog();
                 }
             }
         }
@@ -828,20 +817,6 @@ public class MotionController {
                         GlobalData.ProbingCycleActive = true;
                     }
                     GlobalData.GcodeFileCurrentLine++;
-                }
-            }
-            else
-            {
-                if (JogBuffer.size() > 0)
-                {
-                    WriteBuffer(JogBuffer.get(0) + "\n"); //Send the command on top then eat it
-                    ArrayList<String> tmp = new ArrayList();
-                    for (int x = 1; x < JogBuffer.size(); x++)
-                    {
-                        tmp.add(JogBuffer.get(x));
-                    }
-                    JogBuffer = tmp;
-                    JogPushAhead = 1;
                 }
             }
             GlobalData.SendLines--;

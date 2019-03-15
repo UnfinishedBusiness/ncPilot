@@ -7,9 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="541">
-              <caret line="858" column="43" selection-start-line="858" selection-start-column="43" selection-end-line="858" selection-end-column="43" />
+            <state relative-caret-position="495">
+              <caret line="790" column="29" selection-start-line="790" selection-start-column="29" selection-end-line="790" selection-end-column="29" />
               <folding>
                 <element signature="e#863#864#0" expanded="true" />
                 <element signature="e#893#894#0" expanded="true" />
@@ -243,7 +241,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552684513817" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552688303157" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
@@ -665,8 +663,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="858" column="43" selection-start-line="858" selection-start-column="43" selection-end-line="858" selection-end-column="43" />
+        <state relative-caret-position="495">
+          <caret line="790" column="29" selection-start-line="790" selection-start-column="29" selection-end-line="790" selection-end-column="29" />
           <folding>
             <element signature="e#863#864#0" expanded="true" />
             <element signature="e#893#894#0" expanded="true" />
