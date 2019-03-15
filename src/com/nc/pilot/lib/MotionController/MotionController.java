@@ -651,6 +651,10 @@ public class MotionController {
             GlobalData.ProbingCycleActive = false;
             GlobalData.SendLines = 1;
         }
+        else if (inputLine.contains("Hold Complete") && GlobalData.ResetOnIdle == true)
+        {
+            ResetNow();
+        }
         String report = inputLine.substring(1, inputLine.length()-1);
         if (report == "") return;
         if (inputLine.charAt(0) == '<') //We are a report
@@ -659,10 +663,6 @@ public class MotionController {
             if (pairs.length > 0)
             {
                 GlobalData.MachineState = pairs[0];
-                if (GlobalData.MachineState.contentEquals("Idle") && GlobalData.ResetOnIdle == true)
-                {
-                    ResetNow();
-                }
                 for (int x = 1; x < pairs.length; x++)
                 {
                     if (pairs[x].contains("MPos"))

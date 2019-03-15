@@ -124,6 +124,9 @@ void report_execute_startup_message(char *line, uint8_t status_code);
 // Prints build info and user info
 void report_build_info(char *line);
 
+//Print hold complete
+void report_hold_complete();
+
 #ifdef DEBUG
   void report_realtime_debug();
 #endif

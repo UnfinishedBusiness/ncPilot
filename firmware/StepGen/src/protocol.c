@@ -257,7 +257,10 @@ void protocol_exec_rt_system()
     }
     system_clear_exec_alarm(); // Clear alarm
   }
-
+  if ((sys.suspend & SUSPEND_HOLD_COMPLETE))
+  {
+    report_hold_complete();
+  }
   rt_exec = sys_rt_exec_state; // Copy volatile sys_rt_exec_state.
   if (rt_exec) {
 
@@ -272,10 +275,10 @@ void protocol_exec_rt_system()
       report_realtime_status();
       system_clear_exec_state_flag(EXEC_STATUS_REPORT);
     }
-
     // NOTE: Once hold is initiated, the system immediately enters a suspend state to block all
     // main program processes until either reset or resumed. This ensures a hold completes safely.
     if (rt_exec & (EXEC_MOTION_CANCEL | EXEC_FEED_HOLD | EXEC_SAFETY_DOOR | EXEC_SLEEP)) {
+
 
       // State check for allowable states for hold methods.
       if (!(sys.state & (STATE_ALARM | STATE_CHECK_MODE))) {
@@ -291,7 +294,10 @@ void protocol_exec_rt_system()
           }
         }
         // If IDLE, Grbl is not in motion. Simply indicate suspend state and hold is complete.
-        if (sys.state == STATE_IDLE) { sys.suspend = SUSPEND_HOLD_COMPLETE; }
+        if (sys.state == STATE_IDLE) {
+          report_hold_complete();
+          sys.suspend = SUSPEND_HOLD_COMPLETE;
+        }
 
         // Execute and flag a motion cancel with deceleration and return to idle. Used primarily by probing cycle
         // to halt and cancel the remainder of the motion.
@@ -299,7 +305,9 @@ void protocol_exec_rt_system()
           // MOTION_CANCEL only occurs during a CYCLE, but a HOLD and SAFETY_DOOR may been initiated beforehand
           // to hold the CYCLE. Motion cancel is valid for a single planner block motion only, while jog cancel
           // will handle and clear multiple planner block motions.
-          if (!(sys.state & STATE_JOG)) { sys.suspend |= SUSPEND_MOTION_CANCEL; } // NOTE: State is STATE_CYCLE.
+          if (!(sys.state & STATE_JOG)) {
+            sys.suspend |= SUSPEND_MOTION_CANCEL;
+          } // NOTE: State is STATE_CYCLE.
         }
 
         // Execute a feed hold with deceleration, if required. Then, suspend system.

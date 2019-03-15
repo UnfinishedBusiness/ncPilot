@@ -454,6 +454,11 @@ void report_echo_line_received(char *line)
   report_util_feedback_line_feed();
 }
 
+void report_hold_complete()
+{
+  printPgmString(PSTR("Hold Complete\n"));
+}
+
 
  // Prints real-time data. This function grabs a real-time snapshot of the stepper subprogram
  // and the actual location of the CNC machine. Users may change the following function to their
