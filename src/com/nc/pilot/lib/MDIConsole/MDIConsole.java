@@ -27,6 +27,12 @@ public class MDIConsole {
                 hide();
             }
         });
+        AddCommand("reset", new Runnable() {
+            @Override
+            public void run() {
+                motion_controller.ResetNow();
+            }
+        });
     }
     public void inherit_MotionController(MotionController m)
     {
@@ -176,7 +182,7 @@ public class MDIConsole {
 
                 case KeyEvent.KEY_RELEASED:
                     if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                        hide();
+                        //hide();
                     }
                     break;
             }

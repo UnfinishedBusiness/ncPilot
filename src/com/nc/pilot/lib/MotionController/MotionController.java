@@ -26,9 +26,55 @@ public class MotionController {
     private String rx_buffer_line;
     private UIWidgets ui_widgets;
     private MDIConsole mdi_console;
-    private boolean WaitingForStopMotion = false;
-    public int BlockNextStatusReports = 0;
     private float jog_speed = 0;
+    public boolean JogX = false;
+    public boolean JogXdir = false;
+    public boolean JogY = false;
+    public boolean JogYdir = false;
+    public boolean JogZ = false;
+    public boolean JogZdir = false;
+    ArrayList<String> JogBuffer;
+    private int JogPushAhead = 1;
+
+    String[] ErrorValues = new String[]{
+            "", //there is no error 0
+            "G-code words consist of a letter and a value. Letter was not found.",
+            "Numeric value format is not valid or missing an expected value.",
+            "Xmotion system command was not recognized or supported.",
+            "Negative value received for an expected positive value.",
+            "Homing cycle is not enabled via settings.",
+            "Minimum step pulse time must be greater than 3usec",
+            "EEPROM read failed. Reset and restored to default values.",
+            "Command cannot be used unless Xmotion is IDLE. Ensures smooth operation during a job.",
+            "G-code locked out during alarm or jog state",
+            "Soft limits cannot be enabled without homing also enabled.",
+            "Max characters per line exceeded. Line was not processed and executed.",
+            "Setting value exceeds the maximum step rate supported.",
+            "Safety door detected as opened and door state initiated.",
+            "Build info or startup line exceeded EEPROM line length limit.",
+            "Jog target exceeds machine travel. Command ignored.",
+            "Jog command with no '=' or contains prohibited g-code.",
+            "Laser mode requires PWM output.",
+            "Unsupported or invalid g-code command found in block.",
+            "More than one g-code command from same modal group found in block.",
+            "Feed rate has not yet been set or is undefined.",
+            "G-code command in block requires an integer value.",
+            "Two G-code commands that both require the use of the XYZ axis words were detected in the block.",
+            "A G-code word was repeated in the block.",
+            "A G-code command implicitly or explicitly requires XYZ axis words in the block, but none were detected.",
+            "N line number value is not within the valid range of 1 - 9,999,999.",
+            "A G-code command was sent, but is missing some required P or L value words in the line.",
+            "Xmotion supports six work coordinate systems G54-G59. G59.1, G59.2, and G59.3 are not supported.",
+            "The G53 G-code command requires either a G0 seek or G1 feed motion mode to be active. A different motion was active.",
+            "There are unused axis words in the block and G80 motion mode cancel is active.",
+            "A G2 or G3 arc was commanded but there are no XYZ axis words in the selected plane to trace the arc.",
+            "The motion command has an invalid target. G2, G3, and G38.2 generates this error, if the arc is impossible to generate or if the probe target is the current position.",
+            "A G2 or G3 arc, traced with the radius definition, had a mathematical error when computing the arc geometry. Try either breaking up the arc into semi-circles or quadrants, or redefine them with the arc offset definition.",
+            "A G2 or G3 arc, traced with the offset definition, is missing the IJK offset word in the selected plane to trace the arc.",
+            " There are unused, leftover G-code words that aren't used by any command in the block.",
+            "The G43.1 dynamic tool length offset command cannot apply an offset to an axis other than its configured axis. The Grbl default axis is the Z-axis.",
+            "Tool number greater than max supported value.",
+    };
 
     public void inherit_ui_widgets(UIWidgets u)
     {
@@ -56,6 +102,7 @@ public class MotionController {
     private static float Jword;
 
     public MotionController() {
+        JogBuffer = new ArrayList();
         SerialPort[] ports = SerialPort.getCommPorts();
         for (int x = 0; x < ports.length; x++)
         {
@@ -66,6 +113,9 @@ public class MotionController {
                 comPort.setBaudRate(115200);
                 comPort.openPort();
                 rx_buffer_line = "";
+
+                ResetNow();
+                WriteBuffer("?\n");
             }
         }
     }
@@ -225,8 +275,7 @@ public class MotionController {
     }
     public void Abort()
     {
-        GlobalData.ResetOnIdle = true;
-        FeedHold();
+        ResetOnIdle();
         GlobalData.GcodeFileCurrentLine = 0;
         GlobalData.GcodeFileLines = null;
     }
@@ -240,17 +289,19 @@ public class MotionController {
         System.out.println("ResetNow!");
         GlobalData.ResetOnIdle = false;
         comPort.writeBytes(new byte[]{ 0x18 }, 1);
+        WriteBuffer("~\n");
+
     }
     public void JogX_Plus()
     {
-        //if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("G91 G20 G1 X" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("$J=G20 X" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1"))  WriteBuffer("G91 G20 G1 X" + 0.1 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.01"))  WriteBuffer("G91 G20 G1 X" + 0.01 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.001"))  WriteBuffer("G91 G20 G1 X" + 0.001 + " F" + jog_speed + "\n");
     }
     public void JogX_Minus()
     {
-        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 X-" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("$J=G20 X-" + GlobalData.X_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 X-" + 0.1 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 X-" + 0.01 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 X-" + 0.001 + " F" + jog_speed + "\n");
@@ -258,14 +309,14 @@ public class MotionController {
 
     public void JogY_Plus()
     {
-        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Y" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("$J=G20 Y" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y" + 0.1 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Y" + 0.01 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y" + 0.001 + " F" + jog_speed + "\n");
     }
     public void JogY_Minus()
     {
-        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Y-" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("$J=G20 Y-" + GlobalData.Y_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y-" + 0.1 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Y-" + 0.01 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y-" + 0.001 + " F" + jog_speed + "\n");
@@ -273,14 +324,14 @@ public class MotionController {
 
     public void JogZ_Plus()
     {
-        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Z" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("$J=G20 Z" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z" + 0.1 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z" + 0.01 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z" + 0.001 + " F" + jog_speed + "\n");
     }
     public void JogZ_Minus()
     {
-        //if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("G91 G20 G1 Z-" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous")) WriteBuffer("$J=G20 Z-" + GlobalData.Z_Extents * 2 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z-" + 0.1 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z-" + 0.01 + " F" + jog_speed + "\n");
         //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z-" + 0.001 + " F" + jog_speed + "\n");
@@ -288,23 +339,23 @@ public class MotionController {
 
     public void EndJog()
     {
-        FeedHold();
-        Abort();
+        int cancel = 0x85;
+        byte[] data = {0, 0};
+        data[0] = (byte) (cancel & 0xFF);
+        data[1] = (byte) ((cancel >> 8) & 0xFF);
+        comPort.writeBytes(data, 2);
     }
     public void SetXzero()
     {
-        //WriteBuffer("G92 X=0\n");
-        //StatusReport();
+        WriteBuffer("G10 L20 P1 X0\n");
     }
     public void SetYzero()
     {
-        //WriteBuffer("G92 Y=0\n");
-        //StatusReport();
+        WriteBuffer("G10 L20 P1 Y0\n");
     }
     public void SetZzero()
     {
-        //WriteBuffer("G92 Z=0\n");
-        //StatusReport();
+        WriteBuffer("G10 L20 P1 Z0\n");
     }
     public void Home()
     {
@@ -597,7 +648,7 @@ public class MotionController {
         {
             //Figure out what error it is and notify. Serious errors need to hold machine
             //System.out.println("Setting SendLine Flag!");
-            System.out.println(inputLine);
+            ReportError(inputLine);
             //System.out.println("Found Error, halted!");
             //FeedHold();
             GlobalData.SendLines = 1;
@@ -636,10 +687,14 @@ public class MotionController {
                     }
                     else if (pairs[x].contains("WCO"))
                     {
-                        String[] wo_pos = pairs[x].substring(5).split(",");
+                        String[] wo_pos = pairs[x].substring(4).split(",");
                         GlobalData.work_offset[0] = new Float(wo_pos[0]);
                         GlobalData.work_offset[1] = new Float(wo_pos[1]);
                         GlobalData.work_offset[2] = new Float(wo_pos[2]);
+
+                        GlobalData.dro[0] = GlobalData.machine_cordinates[0] - GlobalData.work_offset[0];
+                        GlobalData.dro[1] = GlobalData.machine_cordinates[1] - GlobalData.work_offset[1];
+                        GlobalData.dro[2] = GlobalData.machine_cordinates[2] - GlobalData.work_offset[2];
                     }
                     else if (pairs[x].contains("FS"))
                     {
@@ -681,6 +736,73 @@ public class MotionController {
 
         }
 
+        if (GlobalData.JogMode.contentEquals("Continuous") && JogPushAhead > 0)
+        {
+            if (JogX == true || JogY == true || JogZ == true)
+            {
+                boolean push_first = false;
+                if (JogBuffer.size() == 0) push_first = true;
+
+                String jog_string = "$J=G20 G91 F + " + jog_speed + " ";
+
+                if (JogX == true)
+                {
+                    //System.out.println("Jog X!");
+                    if (JogXdir == true) //Jog Positive
+                    {
+                        jog_string += "X0.040 ";
+                    }
+                    else //Jog negative
+                    {
+                        jog_string += "X-0.040 ";
+                    }
+                }
+
+                if (JogY == true)
+                {
+                    //System.out.println("Jog Y!");
+                    if (JogYdir == true) //Jog Positive
+                    {
+                        jog_string += "Y0.040 ";
+                    }
+                    else //Jog negative
+                    {
+                        jog_string += "Y-0.040 ";
+                    }
+                }
+
+                if (JogZ == true)
+                {
+                    //System.out.println("Jog Z!");
+                    if (JogZdir == true) //Jog Positive
+                    {
+                        jog_string += "Z0.040 ";
+                    }
+                    else //Jog negative
+                    {
+                        jog_string += "Z-0.040 ";
+                    }
+                }
+
+                JogBuffer.add(jog_string);
+
+                if (push_first == true) //if its the first jog entity, push it to the controller to start cycle
+                {
+                    System.out.println("Writing first jog move!");
+                    WriteBuffer(JogBuffer.get(0) + "\n"); //Send the command on top then eat it
+                }
+                JogPushAhead--;
+            }
+            else
+            {
+                if (JogBuffer.size() > 0)
+                {
+                    System.out.println("Ending Jog!");
+                    JogBuffer = new ArrayList(); //Wipe out entire buffer
+                    //EndJog();
+                }
+            }
+        }
         while (GlobalData.SendLines > 0)
         {
             if (GlobalData.GcodeFileLines != null)
@@ -708,7 +830,37 @@ public class MotionController {
                     GlobalData.GcodeFileCurrentLine++;
                 }
             }
+            else
+            {
+                if (JogBuffer.size() > 0)
+                {
+                    WriteBuffer(JogBuffer.get(0) + "\n"); //Send the command on top then eat it
+                    ArrayList<String> tmp = new ArrayList();
+                    for (int x = 1; x < JogBuffer.size(); x++)
+                    {
+                        tmp.add(JogBuffer.get(x));
+                    }
+                    JogBuffer = tmp;
+                    JogPushAhead = 1;
+                }
+            }
             GlobalData.SendLines--;
+        }
+
+
+
+    }
+
+    private void ReportError(String line)
+    {
+        int error = new Integer(line.substring(6));
+        if (ErrorValues.length > error)
+        {
+            System.out.println("Error: " + ErrorValues[error]);
+        }
+        else
+        {
+            System.out.println("Unknown Error!");
         }
     }
 }

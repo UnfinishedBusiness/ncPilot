@@ -124,37 +124,49 @@ public class MachineControl extends JFrame {
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
                                     if (GlobalData.UpArrowKeyState == false) {
                                         GlobalData.UpArrowKeyState = true;
-                                        motion_controller.JogY_Plus();
+                                        //motion_controller.JogY_Plus();
+                                        motion_controller.JogY = true;
+                                        motion_controller.JogYdir = true;
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
                                     if (GlobalData.DownArrowKeyState == false) {
                                         GlobalData.DownArrowKeyState = true;
-                                        motion_controller.JogY_Minus();
+                                        //motion_controller.JogY_Minus();
+                                        motion_controller.JogY = true;
+                                        motion_controller.JogYdir = false;
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
                                     if (GlobalData.RightArrowKeyState == false) {
                                         GlobalData.RightArrowKeyState = true;
-                                        motion_controller.JogX_Plus();
+                                        //motion_controller.JogX_Plus();
+                                        motion_controller.JogX = true;
+                                        motion_controller.JogXdir = true;
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
                                     if (GlobalData.LeftArrowKeyState == false) {
                                         GlobalData.LeftArrowKeyState = true;
-                                        motion_controller.JogX_Minus();
+                                        //motion_controller.JogX_Minus();
+                                        motion_controller.JogX = true;
+                                        motion_controller.JogXdir = false;
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
                                     if (GlobalData.PageUpKeyState == false) {
                                         GlobalData.PageUpKeyState = true;
-                                        motion_controller.JogZ_Plus();
+                                        //motion_controller.JogZ_Plus();
+                                        motion_controller.JogZ = true;
+                                        motion_controller.JogZdir = true;
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
                                     if (GlobalData.PageDownKeyState == false) {
                                         GlobalData.PageDownKeyState = true;
-                                        motion_controller.JogZ_Minus();
+                                        //motion_controller.JogZ_Minus();
+                                        motion_controller.JogZ = true;
+                                        motion_controller.JogZdir = false;
                                     }
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_ALT) {
@@ -167,28 +179,33 @@ public class MachineControl extends JFrame {
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
                                     GlobalData.UpArrowKeyState = false;
-                                    motion_controller.EndJog();
-
+                                    //motion_controller.EndJog();
+                                    motion_controller.JogY = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
                                     GlobalData.DownArrowKeyState = false;
-                                    motion_controller.EndJog();
+                                    //motion_controller.EndJog();
+                                    motion_controller.JogY = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
                                     GlobalData.LeftArrowKeyState = false;
-                                    motion_controller.EndJog();
+                                    //motion_controller.EndJog();
+                                    motion_controller.JogX = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
                                     GlobalData.RightArrowKeyState = false;
-                                    motion_controller.EndJog();
+                                    //motion_controller.EndJog();
+                                    motion_controller.JogX = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
                                     GlobalData.PageUpKeyState = false;
-                                    motion_controller.EndJog();
+                                    //motion_controller.EndJog();
+                                    motion_controller.JogZ = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
                                     GlobalData.PageDownKeyState = false;
-                                    motion_controller.EndJog();
+                                    //motion_controller.EndJog();
+                                    motion_controller.JogZ = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
 
