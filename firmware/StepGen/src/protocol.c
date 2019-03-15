@@ -211,7 +211,7 @@ void protocol_execute_realtime()
     report_realtime_status();
     idle_after++;
   }
-  if (sys.state == STATE_CYCLE)
+  if (sys.state == STATE_CYCLE || sys.state == STATE_JOG)
   {
     if (report_timer > 2500)
     {
