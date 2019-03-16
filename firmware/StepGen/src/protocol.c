@@ -204,6 +204,7 @@ void protocol_auto_cycle_start()
 // limit switches, or the main program.
 int report_timer = 0;
 uint8_t idle_after = 0;
+uint8_t report_hold_complete_once = 0;
 void protocol_execute_realtime()
 {
   if ((sys.state == STATE_IDLE || sys.state == STATE_HOLD) && idle_after < 10)
@@ -257,9 +258,11 @@ void protocol_exec_rt_system()
     }
     system_clear_exec_alarm(); // Clear alarm
   }
-  if ((sys.suspend & SUSPEND_HOLD_COMPLETE))
+  //Notify that a hold command has been completed so we can reset without disrupting motion
+  if ((sys.suspend & SUSPEND_HOLD_COMPLETE) && report_hold_complete_once == 0)
   {
     report_hold_complete();
+    report_hold_complete_once++;
   }
   rt_exec = sys_rt_exec_state; // Copy volatile sys_rt_exec_state.
   if (rt_exec) {
@@ -267,6 +270,7 @@ void protocol_exec_rt_system()
     // Execute system abort.
     if (rt_exec & EXEC_RESET) {
       sys.abort = true;  // Only place this is set true.
+      report_hold_complete_once = 0;
       return; // Nothing else to do but exit.
     }
 

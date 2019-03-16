@@ -246,6 +246,10 @@ public class MotionController {
         }
         return points;
     }
+    public void StatusReport()
+    {
+        WriteBuffer("?\n");
+    }
     public void WriteBuffer(String data){
         comPort.writeBytes(data.getBytes(), data.length());
     }

@@ -308,41 +308,44 @@ public class MachineControl extends JFrame {
         ui_widgets.AddMomentaryButton("Abort", "bottom-right", 80, 60, 100, 10, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Clicked on Abort!");
-                motion_controller.FeedHold();
+                //System.out.println("Clicked on Abort!");
                 motion_controller.Abort();
             }
         });
         ui_widgets.AddMomentaryButton("Hold", "bottom-right", 80, 60, 190, 10, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Clicked on Hold!");
+                //System.out.println("Clicked on Hold!");
                 motion_controller.FeedHold();
             }
         });
         ui_widgets.AddMomentaryButton("Start", "bottom-right", 80, 60, 280, 10, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Clicked on Start!");
+                //System.out.println("Clicked on Start!");
                 motion_controller.CycleStart();
             }
         });
         ui_widgets.AddSelectButton("Torch Off","torch", true, "bottom-right", 170, 60, 10, 80, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Torch Off!");
+                //System.out.println("Torch Off!");
+                motion_controller.WriteBuffer("M5\n");
             }
         });
         ui_widgets.AddSelectButton("Torch On", "torch", false,"bottom-right", 170, 60, 190, 80, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Torch On!");
+                //
+                // System.out.println("Torch On!");
+                motion_controller.WriteBuffer("M3 S5000\n");
             }
         });
         ui_widgets.AddMomentaryButton("Go Home", "bottom-right", 120, 60, 10, 150, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Go Home!");
+                //System.out.println("Go Home!");
+                motion_controller.WriteBuffer("G90 G53 G0 Z0\n");
                 motion_controller.WriteBuffer("G90 G53 G0 X0 Y0\n");
             }
         });
@@ -366,21 +369,21 @@ public class MachineControl extends JFrame {
         ui_widgets.AddMomentaryButton("X=0", "bottom-right", 110, 60, 250, 220, new Runnable() {
             @Override
             public void run() {
-                System.out.println("X=0");
+                //System.out.println("X=0");
                 motion_controller.SetXzero();
             }
         });
         ui_widgets.AddMomentaryButton("Y=0", "bottom-right", 110, 60, 130, 220, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Y=0");
+                //System.out.println("Y=0");
                 motion_controller.SetYzero();
             }
         });
         ui_widgets.AddMomentaryButton("Z=0", "bottom-right", 110, 60, 10, 220, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Z=0");
+                //System.out.println("Z=0");
                 motion_controller.SetZzero();
             }
         });
