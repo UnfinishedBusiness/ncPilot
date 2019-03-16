@@ -7,30 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firmware/StepGen/src/gcode.c" beforeDir="false" afterPath="$PROJECT_DIR$/firmware/StepGen/src/gcode.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firmware/StepGen/src/protocol.c" beforeDir="false" afterPath="$PROJECT_DIR$/firmware/StepGen/src/protocol.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$10.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$11.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$12.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$13.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$14.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$15.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$16.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$17.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$18.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$19.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$20.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$20.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$21.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$21.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$22.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$22.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$23.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$23.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$24.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$24.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$9.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$GcodeViewerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$GcodeViewerPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="344" column="39" selection-start-line="344" selection-start-column="39" selection-end-line="344" selection-end-column="39" />
+            <state relative-caret-position="75">
+              <caret line="738" column="40" selection-start-line="738" selection-start-column="40" selection-end-line="738" selection-end-column="40" />
               <folding>
                 <element signature="e#10069#10070#0" expanded="true" />
                 <element signature="e#10098#10099#0" expanded="true" />
@@ -674,8 +651,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="344" column="39" selection-start-line="344" selection-start-column="39" selection-end-line="344" selection-end-column="39" />
+        <state relative-caret-position="75">
+          <caret line="738" column="40" selection-start-line="738" selection-start-column="40" selection-end-line="738" selection-end-column="40" />
           <folding>
             <element signature="e#10069#10070#0" expanded="true" />
             <element signature="e#10098#10099#0" expanded="true" />

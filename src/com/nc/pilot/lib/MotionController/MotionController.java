@@ -736,7 +736,7 @@ public class MotionController {
             {
                 GlobalData.MachineState = "Jog";
                 String jog_string = "$J=G20 G91 F + " + jog_speed + " ";
-                float jog_inc_dist = 1f * (jog_speed / 6000);
+                float jog_inc_dist = 1.5f * (jog_speed / 6000);
                 if (jog_inc_dist > 0.150f) jog_inc_dist = 0.150f;
                 if (jog_inc_dist < 0.001f) jog_inc_dist = 0.001f;
                 if (JogX == true)
