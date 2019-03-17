@@ -6,6 +6,8 @@
 package com.nc.pilot.lib;
 
 import java.awt.geom.Point2D;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -74,5 +76,14 @@ public class GlobalData {
     {
        byte[] encoded = Files.readAllBytes(Paths.get(path));
        return new String(encoded);
+    }
+    public static void writeFile(String path, ArrayList<String> lines) throws IOException
+    {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+        for (int x = 0; x < lines.size(); x++)
+        {
+            writer.write(lines.get(x) + "\n");
+        }
+        writer.close();
     }
 }

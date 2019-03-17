@@ -14,6 +14,7 @@ import org.kabeja.parser.ParserBuilder;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -293,6 +294,53 @@ public class ToolpathViewer {
 
                 //System.out.println("Adding toolpath #" + z);
             }
+        }
+
+    }
+    public void postProcess(String output_file)
+    {
+        ArrayList<String> GcodeStack = new ArrayList();
+        getPaths(); //Create toolpaths from contours in each part
+        for(int i = 0; i< ViewerPartStack.size(); i++)
+        {
+            ViewerPart part = ViewerPartStack.get(i);
+            if (part.paths != null)
+            {
+                //Post all contours in this part which are not an outside contour, save that for last
+                int outside_contour_index = -1;
+                for(int x = 0; x < part.paths.size(); x++)
+                {
+                    PathObject path = part.paths.get(x);
+                    if (path.isOutsideContour == true)
+                    {
+                        outside_contour_index = x;
+                    }
+                    else
+                    {
+                        GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));
+                        for(int z = 0; z < path.points.size(); z++)
+                        {
+                            float[] go_point = path.points.get(z);
+                            GcodeStack.add("G1 F35 X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
+                        }
+                    }
+                }
+                if (outside_contour_index > 0)
+                {
+                    PathObject path = part.paths.get(outside_contour_index);
+                    GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));
+                    for(int z = 0; z < path.points.size(); z++)
+                    {
+                        float[] go_point = path.points.get(z);
+                        GcodeStack.add("G1 F35 X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
+                    }
+                }
+            }
+        }
+        try {
+            GlobalData.writeFile(output_file, GcodeStack);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

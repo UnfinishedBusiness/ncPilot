@@ -130,7 +130,7 @@ public class MachineToolpaths extends JFrame {
 
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-                                    toolpath_viewer.getPaths();
+                                    toolpath_viewer.postProcess("test/gcode/0.ngc");
                                     repaint();
                                 }
                                 break;
