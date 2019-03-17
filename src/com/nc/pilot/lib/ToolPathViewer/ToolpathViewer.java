@@ -4,6 +4,8 @@ import com.nc.pilot.lib.GlobalData;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.operation.buffer.BufferOp;
+import com.vividsolutions.jts.operation.buffer.BufferParameters;
 import org.kabeja.dxf.*;
 import org.kabeja.parser.DXFParser;
 import org.kabeja.parser.ParseException;
@@ -232,29 +234,65 @@ public class ToolpathViewer {
         for(int i = 0; i< ViewerPartStack.size(); i++)
         {
             ViewerPart part = ViewerPartStack.get(i);
-            BuildPaths path = new BuildPaths(part.EntityStack);
-            part.paths = path.getPaths();
-            part.tool_paths = new ArrayList();
-            PathObject tp = new PathObject();
-            for (int z = 0; z < part.paths.size(); z++)
+            BuildPaths path = new BuildPaths(part.EntityStack); //Feed build paths our DXF entities
+            part.paths = path.getPaths(); //return a list of paths in contour chains
+            part.tool_paths = new ArrayList(); //Create a new array list to store our offset tool paths
+            for (int z = 0; z < part.paths.size(); z++) //Iterate our contour path and buffer it into a tool path
             {
+                PathObject tp = new PathObject();
+                //System.out.println("Iterating path# - > " + z);
                 ArrayList<float[]> points = part.paths.get(z).points;
                 Coordinate[] coordinates = new Coordinate[points.size()];
                 for (int x = 0; x < points.size(); x++)
                 {
-                    coordinates[x] = new Coordinate(points.get(x)[0], points.get(x)[1]);
+                    //System.out.println("\tAdding coordinate point! -> " + new Coordinate(points.get(x)[0], points.get(x)[1], 0) );
+                    coordinates[x] = new Coordinate(points.get(x)[0], points.get(x)[1], 0);
                 }
+
                 Geometry g = new GeometryFactory().createLineString(coordinates);
-                Geometry buffer = g.buffer(-0.048);
+
+                // creates BufferParameters
+                BufferParameters bufferParam = new BufferParameters();
+
+                bufferParam.setEndCapStyle(BufferParameters.CAP_ROUND);
+                // if using any other parameter result is as expected
+                // bufferParam.setEndCapStyle(BufferParameters.CAP_ROUND);
+                //bufferParam.setJoinStyle(BufferParameters.JOIN_BEVEL );
+                //bufferParam.setMitreLimit(5);
+                //bufferParam.setSimplifyFactor(0.01);
+                bufferParam.setQuadrantSegments(8);
+                //bufferParam.setSingleSided(true);
+
+
+                // creates buffer geom on point with 10m distance and use set bufferParameters
+                Geometry buffer =  BufferOp.bufferOp(g ,0.038f, bufferParam);
+
                 Coordinate[] buffered_path = buffer.getCoordinates();
-                ArrayList<float[]> buffered_points = new ArrayList();
+
+                tp.points = new ArrayList();
+
+                int contour_to_find = 2; //Assume we are an inside contour
+                if (part.paths.get(z).isOutsideContour == true)
+                {
+                    contour_to_find = 1; //We are an outside contour
+                }
+                float[] begin_point = new float[] {0, 0};
+                int current_contour = 0;
                 for (int x = 0; x < buffered_path.length; x++)
                 {
-                    buffered_points.add(new float[]{new Float(buffered_path[x].x), new Float(buffered_path[x].y)});
+                    float[] current_point = new float[]{new Float(buffered_path[x].x), new Float(buffered_path[x].y)};
+                    if (x == 0) begin_point = current_point;
+                    if (current_contour == contour_to_find) tp.points.add(new float[]{new Float(buffered_path[x].x), new Float(buffered_path[x].y)});
+                    if (begin_point[0] == current_point[0] && begin_point[1] == current_point[1]) //We are a closed path
+                    {
+                        current_contour++;
+                    }
+
                 }
-                tp.points = buffered_points;
+                part.tool_paths.add(tp);
+
+                //System.out.println("Adding toolpath #" + z);
             }
-            part.tool_paths.add(tp);
         }
 
     }
