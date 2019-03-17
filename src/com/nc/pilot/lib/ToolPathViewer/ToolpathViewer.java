@@ -290,7 +290,8 @@ public class ToolpathViewer {
 
                 Coordinate[] buffered_path = buffer.getCoordinates();
 
-                tp.points = new ArrayList();
+
+                ArrayList<float[]> tool_path = new ArrayList();
 
                 int contour_to_find = 2; //Assume we are an inside contour
                 if (part.paths.get(z).isOutsideContour == true)
@@ -299,18 +300,36 @@ public class ToolpathViewer {
                 }
                 float[] begin_point = new float[] {0, 0};
                 int current_contour = 0;
-                for (int x = 0; x < buffered_path.length; x++)
+
+                if (buffered_path.length > 0)
                 {
-                    float[] current_point = new float[]{new Float(buffered_path[x].x), new Float(buffered_path[x].y)};
-                    if (x == 0) begin_point = current_point;
-                    if (current_contour == contour_to_find) tp.points.add(new float[]{new Float(buffered_path[x].x), new Float(buffered_path[x].y)});
-                    if (begin_point[0] == current_point[0] && begin_point[1] == current_point[1]) //We are a closed path
+                    //Calculate Lead in begin point
+
+                    for (int x = 0; x < buffered_path.length; x++)
                     {
-                        current_contour++;
+                        float[] current_point = new float[]{new Float(buffered_path[x].x), new Float(buffered_path[x].y)};
+                        if (x == 0) begin_point = current_point;
+                        if (current_contour == contour_to_find) tool_path.add(new float[]{new Float(buffered_path[x].x), new Float(buffered_path[x].y)});
+                        if (begin_point[0] == current_point[0] && begin_point[1] == current_point[1]) //We are a closed path
+                        {
+                            current_contour++;
+                        }
+
                     }
 
+                    //Calculate and add lead in and lead out to top and bottom of stack
+                    tp.points = new ArrayList();
+                    if (tool_path.size() > 3)
+                    {
+                        float[] lead_in_point = getPolarLineEndpoint(new float[]{new Float(tool_path.get(0)[0]), new Float(tool_path.get(0)[1])}, 0.030f, getAngle(new float[]{new Float(tool_path.get(0)[0]), new Float(tool_path.get(0)[1])}, new float[]{new Float(tool_path.get(1)[0]), new Float(tool_path.get(1)[1])}) + 140);
+                        tp.points.add(lead_in_point);
+                        for (int x = 0; x < tool_path.size(); x++) tp.points.add(tool_path.get(x));
+                        float[] lead_out_point = getPolarLineEndpoint(new float[]{new Float(tool_path.get(tool_path.size()-1)[0]), new Float(tool_path.get(tool_path.size()-1)[1])}, 0.030f, getAngle(new float[]{new Float(tool_path.get(tool_path.size()-1)[0]), new Float(tool_path.get(tool_path.size()-1)[1])}, new float[]{new Float(tool_path.get(tool_path.size()-2)[0]), new Float(tool_path.get(tool_path.size()-2)[1])}) + 230);
+                        tp.points.add(lead_out_point);
+                    }
+                    part.tool_paths.add(tp);
                 }
-                part.tool_paths.add(tp);
+
 
                 //System.out.println("Adding toolpath #" + z);
             }
@@ -328,26 +347,29 @@ public class ToolpathViewer {
             {
                 //Post all contours in this part which are not an outside contour, save that for last
                 int outside_contour_index = -1;
-                for(int x = 0; x < part.paths.size(); x++)
+                for(int x = 0; x < part.tool_paths.size(); x++)
                 {
-                    PathObject path = part.paths.get(x);
-                    if (path.isOutsideContour == true)
+                    PathObject path = part.tool_paths.get(x);
+                    if (path.points.size() > 5) //Ignore random segments left in drawing
                     {
-                        outside_contour_index = x;
-                    }
-                    else
-                    {
-                        GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));
-                        for(int z = 0; z < path.points.size(); z++)
+                        if (part.paths.get(x).isOutsideContour == true)
                         {
-                            float[] go_point = path.points.get(z);
-                            GcodeStack.add("G1 F35 X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
+                            outside_contour_index = x;
+                        }
+                        else
+                        {
+                            GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));
+                            for(int z = 0; z < path.points.size(); z++)
+                            {
+                                float[] go_point = path.points.get(z);
+                                GcodeStack.add("G1 F35 X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
+                            }
                         }
                     }
                 }
                 if (outside_contour_index > 0)
                 {
-                    PathObject path = part.paths.get(outside_contour_index);
+                    PathObject path = part.tool_paths.get(outside_contour_index);
                     GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));
                     for(int z = 0; z < path.points.size(); z++)
                     {

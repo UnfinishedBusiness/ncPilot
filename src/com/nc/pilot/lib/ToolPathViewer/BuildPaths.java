@@ -75,19 +75,57 @@ public class BuildPaths {
         float[] end_point = new float[] {start_point[0] + length, start_point[1]};
         return rotatePoint(start_point, end_point, angle);
     }
+    public float getAngularDifference(float beginAngle, float endAngle, int direction)
+    {
+        //Direction is positive 1 for inc plus or -1 for inc negative
+        float difference = 0;
+        if (direction > 0) //Inc +
+        {
+            if (beginAngle > endAngle)
+            {
+                difference = 360 - (beginAngle - endAngle);
+            }
+            else
+            {
+                difference = (endAngle - beginAngle);
+            }
+        }
+        else //Inc -
+        {
+            if (beginAngle < endAngle)
+            {
+                difference = 360 - (endAngle - beginAngle);
+            }
+            else
+            {
+                difference = (beginAngle - endAngle);
+            }
+        }
+        return difference;
+    }
     public ArrayList<float[]> getPointsOfArc(float[] start, float[] end, float[] center, float radius, String direction)
     {
         float start_angle = getAngle(center, start);
         float end_angle = getAngle(center, end);
-        float angle_inc = 1;
+        float number_of_segments = 100 * radius; //Scale number of segments by radius
+        float angle_inc;
         ArrayList<float[]> points = new ArrayList();
         points.add(start);
         //System.out.println("start_angle: " + start_angle + " end_angle: " + end_angle);
         if (start_angle == end_angle) //We are a circle
         {
-            for (float x = 0; x < 360; x += angle_inc)
+            float angularDifference = 360;
+            angle_inc = angularDifference / number_of_segments;
+            for (float x = 0; x < angularDifference; x += angle_inc)
             {
-                start_angle += angle_inc;
+                if (direction == "CW")
+                {
+                    start_angle -= angle_inc;
+                }
+                else
+                {
+                    start_angle += angle_inc;
+                }
                 float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
                 points.add(new_point);
             }
@@ -96,38 +134,28 @@ public class BuildPaths {
         {
             if (direction == "CW")
             {
-                for (int x = 0; x < 400; x++) //Runaway protection!
+                float angularDifference = getAngularDifference(start_angle, end_angle, -1);
+                angle_inc = angularDifference / number_of_segments;
+                for (float x = 0; x < angularDifference - angle_inc; x += angle_inc)
                 {
                     start_angle -= angle_inc;
-                    if (start_angle <= 0)
-                    {
-                        start_angle = 360;
-                    }
-                    else if (inTolerance(start_angle, end_angle, angle_inc * 2))
-                    {
-                        break; //End of arc, break loop!
-                    }
                     float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
                     points.add(new_point);
                 }
             }
             else
             {
-                for (int x = 0; x < 400; x++) //Runaway protection!
+                float angularDifference = getAngularDifference(start_angle, end_angle, 1);
+                angle_inc = angularDifference / number_of_segments;
+                for (float x = 0; x < angularDifference - angle_inc; x += angle_inc)
                 {
                     start_angle += angle_inc;
-                    if (start_angle >= 360)
-                    {
-                        start_angle = 0;
-                    }
-                    else if (inTolerance(start_angle, end_angle, angle_inc * 2)) break; //End of arc, break loop!
                     float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
                     points.add(new_point);
                 }
             }
-            //float [] new_point = getPolarLineEndpoint(center, radius, end_angle);
-            //points.add(new_point);
-            points.add(end);
+            float [] new_point = getPolarLineEndpoint(center, radius, end_angle);
+            points.add(new_point);
         }
         return points;
     }
