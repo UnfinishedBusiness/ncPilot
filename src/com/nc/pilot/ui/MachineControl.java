@@ -273,7 +273,7 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File("."));
+                fileChooser.setCurrentDirectory(new File("/root/Share/Post"));
                 int result = fileChooser.showOpenDialog(getParent());
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();

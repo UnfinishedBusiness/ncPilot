@@ -550,7 +550,7 @@ public class MotionController {
                     {
                         //Just filter out G64 to avoid error
                     }
-                    else if (lines[x].toLowerCase().contains("o<touchoff>"))
+                    /*else if (lines[x].toLowerCase().contains("o<touchoff>"))
                     {
                         String touchoff = lines[x].toLowerCase().substring(lines[x].toLowerCase().indexOf("o<touchoff> ") + 12);
                         //System.out.println("Touchoff String: " + touchoff);
@@ -573,7 +573,7 @@ public class MotionController {
                             gcode.add("G90"); //Switch to absolute
                             gcode.add("M8"); //Turn on ATHC
                         }
-                    }
+                    }*/
                     /*else if (Gword == 2) //Clockwise arc - Convert to line segments
                     {
                         if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
@@ -645,7 +645,7 @@ public class MotionController {
             //System.out.println("Setting SendLine Flag!");
             ReportError(inputLine);
             //System.out.println("Found Error, halted!");
-            //FeedHold();
+            FeedHold();
             GlobalData.SendLines = 1;
         }
         else if (inputLine.contains("PRB")) //Probing cycle finished
@@ -829,11 +829,13 @@ public class MotionController {
         int error = new Integer(line.substring(6));
         if (ErrorValues.length > error)
         {
-            System.out.println("Error: " + ErrorValues[error]);
+            //System.out.println("Error: " + ErrorValues[error]);
+            mdi_console.RecieveBufferLine("Error: " + ErrorValues[error]);
         }
         else
         {
-            System.out.println("Unknown Error!");
+            //System.out.println("Unknown Error!");
+            mdi_console.RecieveBufferLine("Unknown Error!");
         }
     }
 }
