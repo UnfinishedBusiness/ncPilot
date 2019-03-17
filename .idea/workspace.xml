@@ -7,7 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/BuildPaths.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/BuildPaths.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/gcode/0.ngc" afterPath="$PROJECT_DIR$/test/gcode/0.ngc" />
     </list>
@@ -37,8 +36,8 @@
       <file leaf-file-name="ToolpathViewer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="376" column="46" lean-forward="false" selection-start-line="376" selection-start-column="46" selection-end-line="376" selection-end-column="46" />
+            <state relative-caret-position="490">
+              <caret line="391" column="21" lean-forward="true" selection-start-line="391" selection-start-column="21" selection-end-line="391" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -894,8 +893,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="376" column="46" lean-forward="false" selection-start-line="376" selection-start-column="46" selection-end-line="376" selection-end-column="46" />
+        <state relative-caret-position="490">
+          <caret line="391" column="21" lean-forward="true" selection-start-line="391" selection-start-column="21" selection-end-line="391" selection-end-column="21" />
           <folding />
         </state>
       </provider>

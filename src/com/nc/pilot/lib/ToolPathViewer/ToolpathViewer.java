@@ -359,11 +359,20 @@ public class ToolpathViewer {
                         else
                         {
                             GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));
+                            GcodeStack.add("G0 Z0.180"); //Rapid to pierce height
+                            GcodeStack.add("M3S5000"); //Turn Torch on
+                            GcodeStack.add("G4 P1.2"); //Pierce Delay
+                            GcodeStack.add("G1 F3 Z0.150"); //Feed to Cut height
+                            GcodeStack.add("M8"); //Turn on ATHC
                             for(int z = 0; z < path.points.size(); z++)
                             {
                                 float[] go_point = path.points.get(z);
                                 GcodeStack.add("G1 F35 X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
                             }
+                            GcodeStack.add("M5"); //Turn Torch off
+                            GcodeStack.add("M9"); //Turn ATHC
+                            GcodeStack.add("G4 P1"); //Post Delay
+                            GcodeStack.add("G0 Z2"); //Rapid to clearance distance
                         }
                     }
                 }
@@ -371,11 +380,20 @@ public class ToolpathViewer {
                 {
                     PathObject path = part.tool_paths.get(outside_contour_index);
                     GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));
+                    GcodeStack.add("G0 Z0.180"); //Rapid to pierce height
+                    GcodeStack.add("M3S5000"); //Turn Torch on
+                    GcodeStack.add("G4 P1.2"); //Pierce Delay
+                    GcodeStack.add("G1 F3 Z0.150"); //Feed to Cut height
+                    GcodeStack.add("M8"); //Turn on ATHC
                     for(int z = 0; z < path.points.size(); z++)
                     {
                         float[] go_point = path.points.get(z);
                         GcodeStack.add("G1 F35 X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
                     }
+                    GcodeStack.add("M5"); //Turn Torch off
+                    GcodeStack.add("M9"); //Turn ATHC
+                    GcodeStack.add("G4 P1"); //Post Delay
+                    GcodeStack.add("G0 Z2"); //Rapid to clearance distance
                 }
             }
         }
