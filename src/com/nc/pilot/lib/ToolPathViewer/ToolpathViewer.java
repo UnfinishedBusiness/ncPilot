@@ -100,6 +100,35 @@ public class ToolpathViewer {
         job_stock_size[0] = width;
         job_stock_size[1] = height;
     }
+    public float getAngularDifference(float beginAngle, float endAngle, int direction)
+    {
+        //Direction is positive 1 for inc plus or -1 for inc negative
+        float difference = 0;
+        if (direction > 0) //Inc +
+        {
+            if (beginAngle > endAngle)
+            {
+                difference = 360 - (beginAngle - endAngle);
+            }
+            else
+            {
+                difference = (endAngle - beginAngle);
+            }
+        }
+        else //Inc -
+        {
+            if (beginAngle < endAngle)
+            {
+                difference = 360 - (endAngle - beginAngle);
+            }
+            else
+            {
+                difference = (beginAngle - endAngle);
+            }
+        }
+        return difference;
+
+    }
     public void RenderLine(float[] start, float end[])
     {
         g2d.draw(new Line2D.Float(((start[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((start[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((end[0] + GlobalData.work_offset[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((end[1] + GlobalData.work_offset[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
@@ -108,14 +137,24 @@ public class ToolpathViewer {
     {
         float start_angle = getAngle(center, start);
         float end_angle = getAngle(center, end);
-        float angle_inc = 1;
+        float number_of_segments = 100 * radius; //Scale number of segments by radius
+        float angle_inc;
         float[] last_point = start;
         //System.out.println("start_angle: " + start_angle + " end_angle: " + end_angle);
         if (start_angle == end_angle) //We are a circle
         {
-            for (float x = 0; x < 360; x += angle_inc)
+            float angularDifference = 360;
+            angle_inc = angularDifference / number_of_segments;
+            for (float x = 0; x < angularDifference; x += angle_inc)
             {
-                start_angle += angle_inc;
+                if (direction == "CW")
+                {
+                    start_angle -= angle_inc;
+                }
+                else
+                {
+                    start_angle += angle_inc;
+                }
                 float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
                 RenderLine(last_point, new_point);
                 last_point = new_point;
@@ -125,45 +164,26 @@ public class ToolpathViewer {
         {
             if (direction == "CW")
             {
-                for (int x = 0; x < 400; x++) //Runaway protection!
+                float angularDifference = getAngularDifference(start_angle, end_angle, -1);
+                angle_inc = angularDifference / number_of_segments;
+                for (float x = 0; x < angularDifference - angle_inc; x += angle_inc)
                 {
                     start_angle -= angle_inc;
-                    //System.out.println("current_angle: " + start_angle + " end_angle: " + end_angle);
-                    if (start_angle <= 0)
-                    {
-                        start_angle = 360;
-                    }
-                    else if (inTolerance(start_angle, end_angle, angle_inc * 2))
-                    {
-                        //System.out.println("Found Endpoint!");
-                        break; //End of arc, break loop!
-                    }
                     float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
                     RenderLine(last_point, new_point);
                     last_point = new_point;
-                    if (x == 399)
-                    {
-                        //System.out.println("Missed endpoint on Clockwise arc! start_angle: " + start_angle + " end_angle: " + end_angle);
-                    }
                 }
             }
             else
             {
-                for (int x = 0; x < 400; x++) //Runaway protection!
+                float angularDifference = getAngularDifference(start_angle, end_angle, 1);
+                angle_inc = angularDifference / number_of_segments;
+                for (float x = 0; x < angularDifference - angle_inc; x += angle_inc)
                 {
                     start_angle += angle_inc;
-                    if (start_angle >= 360)
-                    {
-                        start_angle = 0;
-                    }
-                    else if (inTolerance(start_angle, end_angle, angle_inc * 2)) break; //End of arc, break loop!
                     float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
                     RenderLine(last_point, new_point);
                     last_point = new_point;
-                    if (x == 399)
-                    {
-                        //System.out.println("Missed endpoint on Counter-Clockwise arc! start_angle: " + start_angle + " end_angle: " + end_angle);
-                    }
                 }
             }
             float [] new_point = getPolarLineEndpoint(center, radius, end_angle);
@@ -378,10 +398,12 @@ public class ToolpathViewer {
                 }
                 if (entity.type == "cw_arc")
                 {
+                    //g2d.setColor(Color.red);
                     RenderArc(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]}, new float[]{entity.center[0] + part.offset[0], entity.center[1] + part.offset[1]}, entity.radius, "CW");
                 }
                 if (entity.type == "ccw_arc")
                 {
+                    //g2d.setColor(Color.blue);
                     RenderArc(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]}, new float[]{entity.center[0] + part.offset[0], entity.center[1] + part.offset[1]}, entity.radius, "CCW");
                 }
             }
