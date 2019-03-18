@@ -20,6 +20,7 @@ import java.util.TimerTask;
  */
 public class MachineControl extends JFrame {
 
+    JMenuBar menu_bar;
     Timer repaint_timer = new Timer();
     Timer poll_timer = new Timer();
     MotionController motion_controller;
@@ -28,7 +29,7 @@ public class MachineControl extends JFrame {
     MDIConsole mdi_console;
     public MachineControl() {
 
-        super("Xmotion Gen3 - Machine Control");
+        super("Xmotion Gen3");
         setSize(1100, 800);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +42,8 @@ public class MachineControl extends JFrame {
         motion_controller.inherit_ui_widgets(ui_widgets);
         motion_controller.inherit_mdi_console(mdi_console);
         Layout_UI();
+        createMenuBar();
+        setJMenuBar(menu_bar);
         GcodeViewerPanel panel = new GcodeViewerPanel();
         add(panel);
 
@@ -265,6 +268,56 @@ public class MachineControl extends JFrame {
                         return false;
                     }
                 });
+    }
+    private void createMenuBar()
+    {
+        //Where the GUI is created:
+        JMenu menu;
+        JMenuItem menuItem;
+
+        //Create the menu bar.
+        menu_bar = new JMenuBar();
+
+        //Build Wqrkbench menu
+        menu = new JMenu("Workbench");
+        menu.setMnemonic(KeyEvent.VK_W);
+        menu.getAccessibleContext().setAccessibleDescription("Switch to different workbenches");
+        menu_bar.add(menu);
+
+        menuItem = new JMenuItem("Jet Toolpaths");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Create Toolpaths from Part Drawings");
+        menu.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JetToolpaths toolpaths = new JetToolpaths();
+                toolpaths.setVisible(true);
+            }
+
+        });
+        menuItem = new JMenuItem("JetCad");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Create Part Drawings");
+        menu.add(menuItem);
+
+        //Build Wqrkbench menu
+        menu = new JMenu("Settings");
+        menu.setMnemonic(KeyEvent.VK_S);
+        menu.getAccessibleContext().setAccessibleDescription("Set Machine Parameters");
+        menu_bar.add(menu);
+
+        //Controller
+        menuItem = new JMenuItem("Controller");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Control CNC Machine connected to Xmotion CNC Motion Controller");
+        menu.add(menuItem);
+
+        //Interface
+        menuItem = new JMenuItem("Interface");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Create Toolpaths from Part Drawings");
+        menu.add(menuItem);
+
     }
     private void Layout_UI()
     {

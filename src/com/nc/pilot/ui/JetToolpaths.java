@@ -1,7 +1,7 @@
 package com.nc.pilot.ui;
 
+import com.nc.pilot.dialogs.JetToolpathCutChart;
 import com.nc.pilot.lib.*;
-import com.nc.pilot.lib.MotionController.MotionController;
 import com.nc.pilot.lib.ToolPathViewer.ToolpathViewer;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 import org.kabeja.parser.ParseException;
@@ -16,16 +16,16 @@ import java.io.File;
  * @author www.codejava.net
  *
  */
-public class MachineToolpaths extends JFrame {
-
+public class JetToolpaths extends JFrame {
+    JMenuBar menu_bar;
     UIWidgets ui_widgets;
     ToolpathViewer toolpath_viewer;
-    public MachineToolpaths() {
+    public JetToolpaths() {
 
-        super("Xmotion Gen3 - Machine Toolpaths");
+        super("Jet Toolpaths");
         setSize(1100, 800);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         //motion_controller.InitMotionController();
@@ -33,6 +33,8 @@ public class MachineToolpaths extends JFrame {
         toolpath_viewer = new ToolpathViewer();
         
         Layout_UI();
+        createMenuBar();
+        setJMenuBar(menu_bar);
         ToolpathViewerPanel panel = new ToolpathViewerPanel();
         add(panel);
         panel.addMouseListener(new MouseAdapter() {
@@ -130,6 +132,7 @@ public class MachineToolpaths extends JFrame {
 
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
+                                    System.out.println("Posting Gcode!");
                                     toolpath_viewer.postProcess("test/gcode/0.ngc");
                                     repaint();
                                 }
@@ -139,11 +142,36 @@ public class MachineToolpaths extends JFrame {
                     }
                 });
     }
-    private void Layout_UI()
+    private void createMenuBar()
     {
-        ui_widgets.AddMomentaryButton("Open", "bottom-right", 80, 60, 10, 10, new Runnable() {
-            @Override
-            public void run() {
+        //Where the GUI is created:
+        JMenu menu;
+        JMenuItem menuItem;
+
+        //Create the menu bar.
+        menu_bar = new JMenuBar();
+
+        //Build File menu
+        menu = new JMenu("File");
+        menu.setMnemonic(KeyEvent.VK_S);
+        menu.getAccessibleContext().setAccessibleDescription("File operations");
+        menu_bar.add(menu);
+
+        menuItem = new JMenuItem("Open Job");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Open Job File");
+        menu.add(menuItem);
+
+        menuItem = new JMenuItem("Save Job");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Save Job File");
+        menu.add(menuItem);
+
+        menuItem = new JMenuItem("Import Part");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Import Part Drawing");
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File("."));
                 int result = fileChooser.showOpenDialog(getParent());
@@ -151,13 +179,56 @@ public class MachineToolpaths extends JFrame {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                     try {
-                        toolpath_viewer.OpenDXFasPart(selectedFile.getAbsolutePath(), "test_part");
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                        toolpath_viewer.OpenDXFasPart(selectedFile.getAbsolutePath(), selectedFile.getAbsolutePath());
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
                     }
                 }
             }
         });
+        menu.add(menuItem);
+
+        menuItem = new JMenuItem("Post Process");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Post Job into Gcode");
+        menu.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File("."));
+                if (fileChooser.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    toolpath_viewer.postProcess(file.getAbsolutePath());
+                    repaint();
+                }
+            }
+        });
+
+        //Build Setup menu
+        menu = new JMenu("Setup");
+        menu.setMnemonic(KeyEvent.VK_S);
+        menu.getAccessibleContext().setAccessibleDescription("Job Setup Parameters");
+        menu_bar.add(menu);
+
+        menuItem = new JMenuItem("Cut Chart");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Setup Cut Library");
+        menu.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JetToolpathCutChart.main(null);
+            }
+        });
+
+        menuItem = new JMenuItem("Job Setup");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Setup Job Parameters");
+        menu.add(menuItem);
+
+    }
+    private void Layout_UI()
+    {
+
     }
     // create a panel that you can draw on.
     class ToolpathViewerPanel extends JPanel {
@@ -182,7 +253,7 @@ public class MachineToolpaths extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MachineToolpaths().setVisible(true);
+                new JetToolpaths().setVisible(true);
             }
         });
     }
