@@ -107,7 +107,7 @@ public class BuildPaths {
     {
         float start_angle = getAngle(center, start);
         float end_angle = getAngle(center, end);
-        float number_of_segments = 100 * radius; //Scale number of segments by radius
+        float number_of_segments = 200 * radius; //Scale number of segments by radius
         float angle_inc;
         ArrayList<float[]> points = new ArrayList();
         points.add(start);
