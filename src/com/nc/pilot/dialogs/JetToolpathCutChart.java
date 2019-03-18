@@ -1,5 +1,7 @@
 package com.nc.pilot.dialogs;
 
+import com.nc.pilot.lib.GlobalData;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,11 +20,26 @@ public class JetToolpathCutChart extends JFrame {
                 "Material", "Consumable", "Amperage", "Kerf Diam.", "Pierce Height", "Pierce Delay", "Cut Height", "Post Delay", "ATHC Voltage", "Feedrate"
         };
         //actual data for the table in a 2d array
-        Object[][] data = new Object[][] {
+        /*Object[][] data = new Object[][] {
                 {"1/8 Mild Steel", "45A Finecut", 38, 0.039f, 0.150f, 1.2f, 0.175f, 1, 100, 52},
                 {"1/4 Mild Steel", "45A Finecut", 45, 0.042f, 0.150f, 1.8f, 0.175f, 1, 100, 35},
                 {"3/8 Mild Steel", "45A Finecut", 45, 0.048f, 0.150f, 1.8f, 0.175f, 1, 100, 28},
-        };
+        };*/
+
+        Object[][] data = new Object[GlobalData.configData.CutChart.size()][10];
+        for (int x = 0; x < GlobalData.configData.CutChart.size(); x++)
+        {
+            data[x][0] = GlobalData.configData.CutChart.get(x).Material;
+            data[x][1] = GlobalData.configData.CutChart.get(x).Consumable;
+            data[x][2] = GlobalData.configData.CutChart.get(x).Amperage;
+            data[x][3] = GlobalData.configData.CutChart.get(x).KerfDiameter;
+            data[x][4] = GlobalData.configData.CutChart.get(x).PierceHeight;
+            data[x][5] = GlobalData.configData.CutChart.get(x).PierceDelay;
+            data[x][6] = GlobalData.configData.CutChart.get(x).CutHeight;
+            data[x][7] = GlobalData.configData.CutChart.get(x).PostDelay;
+            data[x][8] = GlobalData.configData.CutChart.get(x).ATHCVoltage;
+            data[x][9] = GlobalData.configData.CutChart.get(x).Feedrate;
+        }
         //create table with data
         table1 = new JTable(data, columns);
         table1.setPreferredScrollableViewportSize(table1.getPreferredSize());

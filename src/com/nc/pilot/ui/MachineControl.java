@@ -1,5 +1,7 @@
 package com.nc.pilot.ui;
 
+import com.nc.pilot.config.ConfigData;
+import com.nc.pilot.config.JetToolpathCutChartData;
 import com.nc.pilot.lib.*;
 import com.nc.pilot.lib.MDIConsole.MDIConsole;
 import com.nc.pilot.lib.MotionController.MotionController;
@@ -9,9 +11,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 /**
  * This program demonstrates how to draw lines using Graphics2D object.
@@ -46,6 +51,66 @@ public class MachineControl extends JFrame {
         setJMenuBar(menu_bar);
         GcodeViewerPanel panel = new GcodeViewerPanel();
         add(panel);
+
+        File f = new File("Xmotion.conf");
+        if(!f.exists() && !f.isDirectory()) {
+            System.out.println("Config file does not exist, creating it!");
+            GlobalData.configData = new ConfigData();
+            GlobalData.configData.CutChart = new ArrayList();
+
+            JetToolpathCutChartData cut = new JetToolpathCutChartData();
+            cut.Material = "1/8 Mild Steel";
+            cut.Consumable = "45A Finecut";
+            cut.Amperage = 38;
+            cut.KerfDiameter = 0.039f;
+            cut.PierceHeight = 0.150f;
+            cut.PierceDelay = 1.2f;
+            cut.CutHeight = 0.175f;
+            cut.PostDelay = 1f;
+            cut.ATHCVoltage = 100;
+            cut.Feedrate = 52f;
+            GlobalData.configData.CutChart.add(cut);
+
+            cut = new JetToolpathCutChartData();
+            cut.Material = "1/4 Mild Steel";
+            cut.Consumable = "45A Finecut";
+            cut.Amperage = 45;
+            cut.KerfDiameter = 0.042f;
+            cut.PierceHeight = 0.150f;
+            cut.PierceDelay = 1.8f;
+            cut.CutHeight = 0.175f;
+            cut.PostDelay = 1f;
+            cut.ATHCVoltage = 100;
+            cut.Feedrate = 35f;
+            GlobalData.configData.CutChart.add(cut);
+
+            cut = new JetToolpathCutChartData();
+            cut.Material = "3/8 Mild Steel";
+            cut.Consumable = "45A Finecut";
+            cut.Amperage = 45;
+            cut.KerfDiameter = 0.048f;
+            cut.PierceHeight = 0.150f;
+            cut.PierceDelay = 2.5f;
+            cut.CutHeight = 0.175f;
+            cut.PostDelay = 1f;
+            cut.ATHCVoltage = 100;
+            cut.Feedrate = 28f;
+            GlobalData.configData.CutChart.add(cut);
+
+            try {
+                GlobalData.pushConfig();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            try {
+                GlobalData.pullConfig();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
 
         repaint_timer.schedule(new TimerTask() {
             @Override

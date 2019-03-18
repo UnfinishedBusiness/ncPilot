@@ -5,10 +5,14 @@
  */
 package com.nc.pilot.lib;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.nc.pilot.config.ConfigData;
+
 import java.awt.geom.Point2D;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -71,6 +75,8 @@ public class GlobalData {
     public static float MousePositionX_MCS;
     public static float MousePositionY_MCS;
 
+    public static ConfigData configData;
+
     
     public static String readFile(String path) throws IOException 
     {
@@ -85,5 +91,20 @@ public class GlobalData {
             writer.write(lines.get(x) + "\n");
         }
         writer.close();
+    }
+    public static void pushConfig() throws FileNotFoundException {
+        XMLEncoder e = new XMLEncoder(
+                new BufferedOutputStream(
+                        new FileOutputStream("Xmotion.conf")));
+        e.writeObject(configData);
+        e.close();
+    }
+
+    public static void pullConfig() throws FileNotFoundException {
+        XMLDecoder d = new XMLDecoder(
+                new BufferedInputStream(
+                        new FileInputStream("Xmotion.conf")));
+        configData = (ConfigData) d.readObject();
+        d.close();
     }
 }
