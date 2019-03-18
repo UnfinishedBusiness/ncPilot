@@ -1,5 +1,6 @@
 package com.nc.pilot.lib.ToolPathViewer;
 
+import com.nc.pilot.config.JetToolpathCutChartData;
 import com.nc.pilot.lib.GlobalData;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -338,6 +339,24 @@ public class ToolpathViewer {
     }
     public void postProcess(String output_file)
     {
+        System.out.println("Posting for material: " + GlobalData.configData.MaterialSelection);
+        System.out.println("Posting for consumable: " + GlobalData.configData.ConsumableSelection);
+
+        JetToolpathCutChartData jet_param = new JetToolpathCutChartData();
+        for (int x = 0; x < GlobalData.configData.CutChart.size(); x++)
+        {
+            if (GlobalData.configData.CutChart.get(x).Material.contentEquals(GlobalData.configData.MaterialSelection) &&
+                    GlobalData.configData.CutChart.get(x).Consumable.contentEquals(GlobalData.configData.ConsumableSelection))
+            {
+                jet_param = GlobalData.configData.CutChart.get(x);
+            }
+        }
+        if (jet_param == null)
+        {
+            System.out.println("Cut Options don't exist!");
+            return;
+        }
+
         ArrayList<String> GcodeStack = new ArrayList();
         getPaths(); //Create toolpaths from contours in each part
         for(int i = 0; i< ViewerPartStack.size(); i++)
@@ -359,19 +378,19 @@ public class ToolpathViewer {
                         else
                         {
                             GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));
-                            GcodeStack.add("G0 Z0.180"); //Rapid to pierce height
+                            GcodeStack.add("G0 Z" + jet_param.PierceHeight); //Rapid to pierce height
                             GcodeStack.add("M3S5000"); //Turn Torch on
-                            GcodeStack.add("G4 P1.2"); //Pierce Delay
-                            GcodeStack.add("G1 F3 Z0.150"); //Feed to Cut height
+                            GcodeStack.add("G4 P" + jet_param.PierceDelay); //Pierce Delay
+                            GcodeStack.add("G1 F3 Z" + jet_param.CutHeight); //Feed to Cut height
                             GcodeStack.add("M8"); //Turn on ATHC
                             for(int z = 0; z < path.points.size(); z++)
                             {
                                 float[] go_point = path.points.get(z);
-                                GcodeStack.add("G1 F35 X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
+                                GcodeStack.add("G1 F" + jet_param.Feedrate + " X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
                             }
                             GcodeStack.add("M5"); //Turn Torch off
                             GcodeStack.add("M9"); //Turn ATHC
-                            GcodeStack.add("G4 P1"); //Post Delay
+                            GcodeStack.add("G4 P" + jet_param.PostDelay); //Post Delay
                             GcodeStack.add("G0 Z2"); //Rapid to clearance distance
                         }
                     }
@@ -380,10 +399,10 @@ public class ToolpathViewer {
                 {
                     PathObject path = part.tool_paths.get(outside_contour_index);
                     GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));
-                    GcodeStack.add("G0 Z0.180"); //Rapid to pierce height
+                    GcodeStack.add("G0 Z" + jet_param.PierceHeight); //Rapid to pierce height
                     GcodeStack.add("M3S5000"); //Turn Torch on
-                    GcodeStack.add("G4 P1.2"); //Pierce Delay
-                    GcodeStack.add("G1 F3 Z0.150"); //Feed to Cut height
+                    GcodeStack.add("G4 P" + jet_param.PierceDelay); //Pierce Delay
+                    GcodeStack.add("G1 F3 Z" + jet_param.CutHeight); //Feed to Cut height
                     GcodeStack.add("M8"); //Turn on ATHC
                     for(int z = 0; z < path.points.size(); z++)
                     {
@@ -392,7 +411,7 @@ public class ToolpathViewer {
                     }
                     GcodeStack.add("M5"); //Turn Torch off
                     GcodeStack.add("M9"); //Turn ATHC
-                    GcodeStack.add("G4 P1"); //Post Delay
+                    GcodeStack.add("G4 P" + jet_param.PostDelay); //Post Delay
                     GcodeStack.add("G0 Z2"); //Rapid to clearance distance
                 }
             }

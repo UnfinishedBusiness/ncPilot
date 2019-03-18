@@ -1,6 +1,7 @@
 package com.nc.pilot.ui;
 
 import com.nc.pilot.dialogs.JetToolpathCutChart;
+import com.nc.pilot.dialogs.JetToolpathJobSetup;
 import com.nc.pilot.lib.*;
 import com.nc.pilot.lib.ToolPathViewer.ToolpathViewer;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
@@ -20,6 +21,8 @@ public class JetToolpaths extends JFrame {
     JMenuBar menu_bar;
     UIWidgets ui_widgets;
     ToolpathViewer toolpath_viewer;
+
+
     public JetToolpaths() {
 
         super("Jet Toolpaths");
@@ -224,6 +227,11 @@ public class JetToolpaths extends JFrame {
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("Setup Job Parameters");
         menu.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JetToolpathJobSetup.main(null);
+            }
+        });
 
     }
     private void Layout_UI()

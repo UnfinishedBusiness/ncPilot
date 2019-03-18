@@ -18,11 +18,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-/**
- * This program demonstrates how to draw lines using Graphics2D object.
- * @author www.codejava.net
- *
- */
 public class MachineControl extends JFrame {
 
     JMenuBar menu_bar;

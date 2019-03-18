@@ -1,10 +1,14 @@
 package com.nc.pilot.dialogs;
 
+import com.nc.pilot.config.JetToolpathCutChartData;
 import com.nc.pilot.lib.GlobalData;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 
 public class JetToolpathCutChart extends JFrame {
     private JPanel contentPane;
@@ -44,6 +48,33 @@ public class JetToolpathCutChart extends JFrame {
         table1 = new JTable(data, columns);
         table1.setPreferredScrollableViewportSize(table1.getPreferredSize());
         table1.setFillsViewportHeight(true);
+        table1.getModel().addTableModelListener(new TableModelListener() {
+
+            public void tableChanged(TableModelEvent e) {
+                // your code goes here, whatever you want to do when something changes in the table
+                int row = table1.getSelectedRow();
+                //int column = table1.getSelectedColumn();
+                //System.out.println(table1.getValueAt(table1.getSelectedRow(),table1.getSelectedColumn()));
+                if (row < GlobalData.configData.CutChart.size())
+                {
+                    GlobalData.configData.CutChart.get(row).Material = (String)table1.getValueAt(row, 0);
+                    GlobalData.configData.CutChart.get(row).Consumable = (String)table1.getValueAt(row, 1);
+                    GlobalData.configData.CutChart.get(row).Amperage = new Integer(table1.getValueAt(row, 2).toString());
+                    GlobalData.configData.CutChart.get(row).KerfDiameter = new Float(table1.getValueAt(row, 3).toString());
+                    GlobalData.configData.CutChart.get(row).PierceHeight = new Float(table1.getValueAt(row, 4).toString());
+                    GlobalData.configData.CutChart.get(row).PierceDelay = new Float(table1.getValueAt(row, 5).toString());
+                    GlobalData.configData.CutChart.get(row).CutHeight = new Float(table1.getValueAt(row, 6).toString());
+                    GlobalData.configData.CutChart.get(row).PostDelay = new Float(table1.getValueAt(row, 7).toString());
+                    GlobalData.configData.CutChart.get(row).ATHCVoltage = new Integer(table1.getValueAt(row, 8).toString());
+                    GlobalData.configData.CutChart.get(row).Feedrate = new Float(table1.getValueAt(row, 9).toString());
+                    try {
+                        GlobalData.pushConfig();
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        });
         scrollPane = new JScrollPane(table1);
         scrollPane.setPreferredSize(new Dimension(800, 400));
 

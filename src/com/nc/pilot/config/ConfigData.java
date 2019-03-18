@@ -8,4 +8,8 @@ import java.util.ArrayList;
  */
 public class ConfigData {
     public ArrayList<JetToolpathCutChartData> CutChart;
+
+    //Static variables for Jet Toolpath class
+    public String MaterialSelection = "";
+    public String ConsumableSelection = "";
 }
