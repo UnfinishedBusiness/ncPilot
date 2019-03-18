@@ -242,6 +242,23 @@ public class ToolpathViewer {
                 if (arc_lst.get(index).getBounds().getMaximumY() > maxY) maxY = (float)arc_lst.get(index).getBounds().getMaximumY();
             }
         }
+        java.util.List<DXFCircle> circle_lst = doc.getDXFLayer("0").getDXFEntities(DXFConstants.ENTITY_TYPE_CIRCLE);
+        if (circle_lst != null)
+        {
+            for (int index = 0; index < circle_lst.size(); index++) {
+                org.kabeja.dxf.helpers.Point center_point = circle_lst.get(index).getCenterPoint();
+                float radius = (float)circle_lst.get(index).getRadius();
+                part.addArc(new float[]{(float)center_point.getX() + radius,(float)center_point.getY()}, new float[]{(float)center_point.getX() + radius,(float)center_point.getY()}, new float[]{(float)center_point.getX(), (float)center_point.getY()}, radius, "CCW");
+                //part.addArc(new float[]{(float)center_point.getX(),(float)center_point.getY() + radius}, new float[]{(float)center_point.getX() - radius,(float)center_point.getY()}, new float[]{(float)center_point.getX(), (float)center_point.getY()}, radius, "CCW");
+                //part.addArc(new float[]{(float)center_point.getX() - radius,(float)center_point.getY()}, new float[]{(float)center_point.getX(),(float)center_point.getY() - radius}, new float[]{(float)center_point.getX(), (float)center_point.getY()}, radius, "CCW");
+                //part.addArc(new float[]{(float)center_point.getX(),(float)center_point.getY() - radius}, new float[]{(float)center_point.getX() + radius,(float)center_point.getY()}, new float[]{(float)center_point.getX(), (float)center_point.getY()}, radius, "CCW");
+                if (circle_lst.get(index).getBounds().getMinimumX() < minX) minX = (float)circle_lst.get(index).getBounds().getMinimumX();
+                if (circle_lst.get(index).getBounds().getMaximumX() > maxX) maxX = (float)circle_lst.get(index).getBounds().getMaximumX();
+                if (circle_lst.get(index).getBounds().getMinimumY() < minY) minY = (float)circle_lst.get(index).getBounds().getMinimumY();
+                if (circle_lst.get(index).getBounds().getMaximumY() > maxY) maxY = (float)circle_lst.get(index).getBounds().getMaximumY();
+            }
+        }
+
         float bound_width = maxX - minX;
         float bound_height = maxY - minY;
         //part.addLine(new float[]{minX,minY}, new float[]{maxX, minY});
@@ -395,7 +412,7 @@ public class ToolpathViewer {
                         }
                     }
                 }
-                if (outside_contour_index > 0)
+                if (outside_contour_index >= 0)
                 {
                     PathObject path = part.tool_paths.get(outside_contour_index);
                     GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1]));

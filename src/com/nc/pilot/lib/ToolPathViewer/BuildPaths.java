@@ -116,6 +116,7 @@ public class BuildPaths {
         {
             float angularDifference = 360;
             angle_inc = angularDifference / number_of_segments;
+            //if (angle_inc == 0) angle_inc = 360;
             for (float x = 0; x < angularDifference; x += angle_inc)
             {
                 if (direction == "CW")
@@ -292,6 +293,22 @@ public class BuildPaths {
             else
             {
                 break; //All paths have been found!
+            }
+        }
+        //Add all circles to paths
+        for (int x = 0; x < EntityStack.size(); x++)
+        {
+            ViewerEntity e = EntityStack.get(x);
+            if (e.start[0] == e.end[0] && e.start[1] == e.end[1]) //We are a circle
+            {
+                current_path = new PathObject();
+                ArrayList<float[]> circle_points = getPointsOfArc(e.start, e.end, e.center, e.radius, "CCW");
+                for (int y = 0; y < circle_points.size(); y++)
+                {
+                    current_path.points.add(circle_points.get(y));
+                }
+                current_path.isClosed = true;
+                PathStack.add(current_path);
             }
         }
         //Calculate chain lengths of each path
