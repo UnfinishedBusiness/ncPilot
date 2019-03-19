@@ -173,13 +173,13 @@ public class JetToolpathCutChart extends JFrame {
                         cut.Material = dtm.getValueAt(x, 0).toString();
                         cut.Consumable = dtm.getValueAt(x, 1).toString();
                         cut.Amperage = new Integer(dtm.getValueAt(x, 2).toString());
-                        cut.KerfDiameter = new Float(dtm.getValueAt(x, 3).toString());;
-                        cut.PierceHeight = new Float(dtm.getValueAt(x, 4).toString());;
-                        cut.PierceDelay = new Float(dtm.getValueAt(x, 5).toString());;
-                        cut.CutHeight = new Float(dtm.getValueAt(x, 6).toString());;
-                        cut.PostDelay = new Float(dtm.getValueAt(x, 7).toString());;
-                        cut.ATHCVoltage = new Integer(dtm.getValueAt(x, 8).toString());;
-                        cut.Feedrate = new Float(dtm.getValueAt(x, 9).toString());;
+                        cut.KerfDiameter = new Float(dtm.getValueAt(x, 3).toString());
+                        cut.PierceHeight = new Float(dtm.getValueAt(x, 4).toString());
+                        cut.PierceDelay = new Float(dtm.getValueAt(x, 5).toString());
+                        cut.CutHeight = new Float(dtm.getValueAt(x, 6).toString());
+                        cut.PostDelay = new Float(dtm.getValueAt(x, 7).toString());
+                        cut.ATHCVoltage = new Integer(dtm.getValueAt(x, 8).toString());
+                        cut.Feedrate = new Float(dtm.getValueAt(x, 9).toString());
                         GlobalData.configData.CutChart.add(cut);
                     }
                     try {

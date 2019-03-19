@@ -1,16 +1,22 @@
 package com.nc.pilot.ui;
 
+import com.nc.pilot.config.ConfigData;
 import com.nc.pilot.dialogs.JetToolpathCutChart;
 import com.nc.pilot.dialogs.JetToolpathJobSetup;
 import com.nc.pilot.lib.*;
 import com.nc.pilot.lib.ToolPathViewer.ToolpathViewer;
+import com.nc.pilot.lib.ToolPathViewer.ViewerPart;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 import org.kabeja.parser.ParseException;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.*;
+import java.util.ArrayList;
 
 /**
  * This program demonstrates how to draw lines using Graphics2D object.
@@ -163,11 +169,66 @@ public class JetToolpaths extends JFrame {
         menuItem = new JMenuItem("Open Job");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("Open Job File");
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File("."));
+                int result = fileChooser.showOpenDialog(getParent());
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                    try {
+                        XMLDecoder d = new XMLDecoder(
+                                new BufferedInputStream(
+                                        new FileInputStream(selectedFile)));
+                        toolpath_viewer.ViewerPartStack = (ArrayList<ViewerPart>) d.readObject();
+                        System.out.println("Toolpath Viewer Imported " + toolpath_viewer.ViewerPartStack.size() + " entities!");
+                        d.close();
+                        repaint();
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        });
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Save Job");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("Save Job File");
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File("."));
+                fileChooser.addChoosableFileFilter(new FileFilter() {
+
+                    public String getDescription() {
+                        return "Xmotion Job File (*.xmj)";
+                    }
+
+                    public boolean accept(File f) {
+                        if (f.isDirectory()) {
+                            return true;
+                        } else {
+                            return f.getName().toLowerCase().endsWith(".xmj");
+                        }
+                    }
+                });
+                if (fileChooser.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    XMLEncoder x = null;
+                    try {
+                        x = new XMLEncoder(
+                                new BufferedOutputStream(
+                                        new FileOutputStream(file)));
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                    x.writeObject(toolpath_viewer.ViewerPartStack);
+                    x.close();
+                }
+            }
+        });
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Import Part");
