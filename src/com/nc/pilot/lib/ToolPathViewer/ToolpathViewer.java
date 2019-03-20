@@ -268,7 +268,7 @@ public class ToolpathViewer {
         //System.out.println("Bound width: " + bound_width + " Bound height: " + bound_height);
         AddPart(part_name, new float[]{0, 0}, bound_width, bound_height, minX, maxX, minY, maxY, part);
     }
-    public void getPaths()
+    public void getPaths(JetToolpathCutChartData jet_param)
     {
         for(int i = 0; i< ViewerPartStack.size(); i++)
         {
@@ -304,7 +304,7 @@ public class ToolpathViewer {
 
 
                 // creates buffer geom on point with 10m distance and use set bufferParameters
-                Geometry buffer =  BufferOp.bufferOp(g ,0.038f, bufferParam);
+                Geometry buffer =  BufferOp.bufferOp(g ,jet_param.KerfDiameter / 2, bufferParam);
 
                 Coordinate[] buffered_path = buffer.getCoordinates();
 
@@ -339,10 +339,11 @@ public class ToolpathViewer {
                     tp.points = new ArrayList();
                     if (tool_path.size() > 3)
                     {
-                        float[] lead_in_point = getPolarLineEndpoint(new float[]{new Float(tool_path.get(0)[0]), new Float(tool_path.get(0)[1])}, 0.030f, getAngle(new float[]{new Float(tool_path.get(0)[0]), new Float(tool_path.get(0)[1])}, new float[]{new Float(tool_path.get(1)[0]), new Float(tool_path.get(1)[1])}) + 140);
+                        float[] lead_in_point = getPolarLineEndpoint(new float[]{new Float(tool_path.get(0)[0]), new Float(tool_path.get(0)[1])}, 0.0625f, getAngle(new float[]{new Float(tool_path.get(0)[0]), new Float(tool_path.get(0)[1])}, new float[]{new Float(tool_path.get(1)[0]), new Float(tool_path.get(1)[1])}) + 140);
                         tp.points.add(lead_in_point);
                         for (int x = 0; x < tool_path.size(); x++) tp.points.add(tool_path.get(x));
-                        float[] lead_out_point = getPolarLineEndpoint(new float[]{new Float(tool_path.get(tool_path.size()-1)[0]), new Float(tool_path.get(tool_path.size()-1)[1])}, 0.030f, getAngle(new float[]{new Float(tool_path.get(tool_path.size()-1)[0]), new Float(tool_path.get(tool_path.size()-1)[1])}, new float[]{new Float(tool_path.get(tool_path.size()-2)[0]), new Float(tool_path.get(tool_path.size()-2)[1])}) + 230);
+                        tp.points.add(tool_path.get(0)); //First point is always the same as last point on closed contours!
+                        float[] lead_out_point = getPolarLineEndpoint(new float[]{new Float(tool_path.get(0)[0]), new Float(tool_path.get(0)[1])}, 0.0625f, getAngle(new float[]{new Float(tool_path.get(0)[0]), new Float(tool_path.get(0)[1])}, new float[]{new Float(tool_path.get(1)[0]), new Float(tool_path.get(1)[1])}) + (140 - 45));
                         tp.points.add(lead_out_point);
                     }
                     part.tool_paths.add(tp);
@@ -377,7 +378,7 @@ public class ToolpathViewer {
         //Post Gcode Header
         GcodeStack.add("G20 M5 M9");
         GcodeStack.add("G53 G0 Z0"); //Rapid to Z Clearance plane
-        getPaths(); //Create toolpaths from contours in each part
+        getPaths(jet_param); //Create toolpaths from contours in each part
         for(int i = 0; i< ViewerPartStack.size(); i++)
         {
             ViewerPart part = ViewerPartStack.get(i);
@@ -398,12 +399,12 @@ public class ToolpathViewer {
                         {
                             GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1])); //Rapid to entry point of contour
                             GcodeStack.add("G38.3 F30 Z-10"); //Probe for top of work piece
-                            GcodeStack.add("G91 G0 Z0.220"); //Remove Slack in Floating Head
+                            GcodeStack.add("G91 G0 Z0.1875"); //Remove Slack in Floating Head
                             //GcodeStack.add("G10 L20 P1 Z0"); //Set Z=0
                             GcodeStack.add("G91 G0 Z" + jet_param.PierceHeight); //Rapid to pierce height
                             GcodeStack.add("M3S5000"); //Turn Torch on
                             GcodeStack.add("G4 P" + jet_param.PierceDelay); //Pierce Delay
-                            GcodeStack.add("G91 G1 F30 Z" + jet_param.CutHeight); //Feed to Cut height
+                            GcodeStack.add("G91 G1 F30 Z" + (jet_param.PierceHeight - jet_param.CutHeight)); //Feed to Cut height
                             GcodeStack.add("M8"); //Turn on ATHC
                             GcodeStack.add("G90"); //Switch back to absolute mode
                             for(int z = 0; z < path.points.size(); z++)
@@ -423,12 +424,12 @@ public class ToolpathViewer {
                     PathObject path = part.tool_paths.get(outside_contour_index);
                     GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1])); //Rapid to entry point of contour
                     GcodeStack.add("G38.3 F30 Z-10"); //Probe for top of work piece
-                    GcodeStack.add("G91 G0 Z0.220"); //Remove Slack in Floating Head
+                    GcodeStack.add("G91 G0 Z0.1875"); //Remove Slack in Floating Head
                     //GcodeStack.add("G10 L20 P1 Z0"); //Set Z=0
                     GcodeStack.add("G91 G0 Z" + jet_param.PierceHeight); //Rapid to pierce height
                     GcodeStack.add("M3S5000"); //Turn Torch on
                     GcodeStack.add("G4 P" + jet_param.PierceDelay); //Pierce Delay
-                    GcodeStack.add("G91 G1 F30 Z" + jet_param.CutHeight); //Feed to Cut height
+                    GcodeStack.add("G91 G1 F30 Z" + (jet_param.PierceHeight - jet_param.CutHeight)); //Feed to Cut height
                     GcodeStack.add("M8"); //Turn on ATHC
                     GcodeStack.add("G90"); //Switch back to absolute mode
                     for(int z = 0; z < path.points.size(); z++)
