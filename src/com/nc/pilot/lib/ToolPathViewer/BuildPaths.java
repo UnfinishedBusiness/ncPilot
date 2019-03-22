@@ -33,6 +33,7 @@ public class BuildPaths {
         }
     }
     public float getAngle(float[] start_point, float[] end_point) {
+        //if (start_point == null || end_point == null) return 0;
         float angle = (float) Math.toDegrees(Math.atan2(start_point[1] - end_point[1], start_point[0] - end_point[0]));
 
         angle += 180;
@@ -119,7 +120,7 @@ public class BuildPaths {
             //if (angle_inc == 0) angle_inc = 360;
             for (float x = 0; x < angularDifference; x += angle_inc)
             {
-                if (direction == "CW")
+                if (direction.contentEquals("CW"))
                 {
                     start_angle -= angle_inc;
                 }
@@ -133,7 +134,7 @@ public class BuildPaths {
         }
         else
         {
-            if (direction == "CW")
+            if (direction.contentEquals("CW"))
             {
                 float angularDifference = getAngularDifference(start_angle, end_angle, -1);
                 angle_inc = angularDifference / number_of_segments;
@@ -186,7 +187,7 @@ public class BuildPaths {
         for (int x = 0; x < indexes.size(); x++)
         {
             ViewerEntity e = EntityStack.get(indexes.get(x));
-            if (e.type == "line")
+            if (e.type.contentEquals("line"))
             {
                 if (inTolerance(p[0], e.start[0], point_tolorance) && inTolerance(p[1], e.start[1], point_tolorance))
                 {
@@ -201,7 +202,7 @@ public class BuildPaths {
                     return true;
                 }
             }
-            else if (e.type == "ccw_arc")
+            else if (e.type.contentEquals("ccw_arc"))
             {
                 if (inTolerance(p[0], e.start[0], point_tolorance) && inTolerance(p[1], e.start[1], point_tolorance))
                 {
@@ -224,7 +225,7 @@ public class BuildPaths {
                     return true;
                 }
             }
-            else if (e.type == "cw_arc")
+            else if (e.type.contentEquals("cw_arc"))
             {
                 if (inTolerance(p[0], e.start[0], point_tolorance) && inTolerance(p[1], e.start[1], point_tolorance))
                 {
@@ -299,7 +300,7 @@ public class BuildPaths {
         for (int x = 0; x < EntityStack.size(); x++)
         {
             ViewerEntity e = EntityStack.get(x);
-            if (e.start[0] == e.end[0] && e.start[1] == e.end[1]) //We are a circle
+            if (e.start[0] == e.end[0] && e.start[1] == e.end[1] && e.type.contentEquals("arc_ccw")) //We are a circle
             {
                 current_path = new PathObject();
                 ArrayList<float[]> circle_points = getPointsOfArc(e.start, e.end, e.center, e.radius, "CCW");

@@ -489,12 +489,14 @@ public class ToolpathViewer {
                 }
             }
         }
-        try {
-            GlobalData.writeFile(output_file, GcodeStack);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (output_file != null)
+        {
+            try {
+                GlobalData.writeFile(output_file, GcodeStack);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
     public void RenderStack(Graphics2D graphics)
     {
@@ -650,7 +652,7 @@ public class ToolpathViewer {
         for (int i = 0; i < part.EntityStack.size(); i++)
         {
             ViewerEntity entity = part.EntityStack.get(i);
-            if (entity.type == "line")
+            if (entity.type.contentEquals("line"))
             {
                 if (entity.start[0] < minX) minX = entity.start[0];
                 if (entity.start[0] > maxX) maxX = entity.start[0];
@@ -662,7 +664,7 @@ public class ToolpathViewer {
                 if (entity.end[1] < minY) minY = entity.end[1];
                 if (entity.end[1] > maxY) maxY = entity.end[1];
             }
-            if (entity.type == "cw_arc" || entity.type == "ccw_arc")
+            if (entity.type.contentEquals("cw_arc") || entity.type.contentEquals("ccw_arc"))
             {
                 if (entity.start[0] < minX) minX = entity.start[0];
                 if (entity.start[0] > maxX) maxX = entity.start[0];
@@ -697,12 +699,12 @@ public class ToolpathViewer {
                 for (int i = 0; i < part.EntityStack.size(); i++)
                 {
                     ViewerEntity entity = part.EntityStack.get(i);
-                    if (entity.type == "line")
+                    if (entity.type.contentEquals("line"))
                     {
                         rotatePoint(pivot_point, entity.start, inc_degrees);
                         rotatePoint(pivot_point, entity.end, inc_degrees);
                     }
-                    if (entity.type == "cw_arc" || entity.type == "ccw_arc")
+                    if (entity.type.contentEquals("cw_arc") || entity.type.contentEquals("ccw_arc"))
                     {
                         rotatePoint(pivot_point, entity.start, inc_degrees);
                         rotatePoint(pivot_point, entity.end, inc_degrees);

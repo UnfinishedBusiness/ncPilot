@@ -117,7 +117,7 @@ public class JetToolpaths extends JFrame {
                         if (!GlobalData.configData.CurrentWorkbench.contentEquals("JetToolpaths")) return false;
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
-                                System.out.println("(Jet Toolpath) Key: " + ke.getKeyCode());
+                                //System.out.println("(Jet Toolpath) Key: " + ke.getKeyCode());
                                 if (ke.getKeyCode() == 44) //< key
                                 {
                                     toolpath_viewer.RotateEngagedPart(5);
@@ -134,8 +134,8 @@ public class JetToolpaths extends JFrame {
 
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-                                    System.out.println("Posting Gcode!");
-                                    toolpath_viewer.postProcess("test/gcode/0.ngc");
+                                    System.out.println("Toolpath Dry run!");
+                                    toolpath_viewer.postProcess(null);
                                     repaint();
                                 }
                                 break;
@@ -187,6 +187,11 @@ public class JetToolpaths extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 GlobalData.configData.JetToolpathJobFile = "";
                 toolpath_viewer.ViewerPartStack = new ArrayList();
+                try {
+                    GlobalData.pushConfig();
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
                 repaint();
             }
         });

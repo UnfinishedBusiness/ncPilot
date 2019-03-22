@@ -186,7 +186,7 @@ public class MachineControl extends JFrame {
                         if (!GlobalData.configData.CurrentWorkbench.contentEquals("MachineControl")) return false;
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
-                                System.out.println("(Machine Control) Key: " + ke.getKeyCode());
+                                //System.out.println("(Machine Control) Key: " + ke.getKeyCode());
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
                                     if (GlobalData.UpArrowKeyState == false) {
                                         GlobalData.UpArrowKeyState = true;
