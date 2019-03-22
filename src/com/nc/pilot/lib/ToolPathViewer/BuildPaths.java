@@ -300,7 +300,7 @@ public class BuildPaths {
         for (int x = 0; x < EntityStack.size(); x++)
         {
             ViewerEntity e = EntityStack.get(x);
-            if (e.start[0] == e.end[0] && e.start[1] == e.end[1] && e.type.contentEquals("arc_ccw")) //We are a circle
+            if (e.start[0] == e.end[0] && e.start[1] == e.end[1] && e.type.contentEquals("ccw_arc")) //We are a circle
             {
                 current_path = new PathObject();
                 ArrayList<float[]> circle_points = getPointsOfArc(e.start, e.end, e.center, e.radius, "CCW");
