@@ -12,4 +12,6 @@ public class ConfigData {
     //Static variables for Jet Toolpath class
     public String MaterialSelection = "";
     public String ConsumableSelection = "";
+
+    public String JetToolpathJobFile;
 }

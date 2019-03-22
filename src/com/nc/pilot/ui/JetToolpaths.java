@@ -1,11 +1,9 @@
 package com.nc.pilot.ui;
 
-import com.nc.pilot.config.ConfigData;
 import com.nc.pilot.dialogs.JetToolpathCutChart;
 import com.nc.pilot.dialogs.JetToolpathJobSetup;
 import com.nc.pilot.lib.*;
 import com.nc.pilot.lib.ToolPathViewer.ToolpathViewer;
-import com.nc.pilot.lib.ToolPathViewer.ViewerPart;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 import org.kabeja.parser.ParseException;
 
@@ -13,16 +11,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
 import java.io.*;
-import java.util.ArrayList;
 
-/**
- * This program demonstrates how to draw lines using Graphics2D object.
- * @author www.codejava.net
- *
- */
 public class JetToolpaths extends JFrame {
     JMenuBar menu_bar;
     UIWidgets ui_widgets;
@@ -37,7 +27,6 @@ public class JetToolpaths extends JFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        //motion_controller.InitMotionController();
         ui_widgets = new UIWidgets();
         toolpath_viewer = new ToolpathViewer();
         
@@ -150,6 +139,13 @@ public class JetToolpaths extends JFrame {
                         return false;
                     }
                 });
+        if (GlobalData.configData.JetToolpathJobFile != null)
+        {
+            File f = new File(GlobalData.configData.JetToolpathJobFile);
+            if(f.exists() && !f.isDirectory()) {
+                toolpath_viewer.OpenJob(GlobalData.configData.JetToolpathJobFile);
+            }
+        }
     }
     private void createMenuBar()
     {
@@ -177,7 +173,8 @@ public class JetToolpaths extends JFrame {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                    toolpath_viewer.OpenJob(selectedFile.getAbsolutePath());
+                    GlobalData.configData.JetToolpathJobFile = selectedFile.getAbsolutePath();
+                    toolpath_viewer.OpenJob(GlobalData.configData.JetToolpathJobFile);
                     repaint();
                 }
             }
@@ -187,6 +184,47 @@ public class JetToolpaths extends JFrame {
         menuItem = new JMenuItem("Save Job");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("Save Job File");
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (GlobalData.configData.JetToolpathJobFile == null) {
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setCurrentDirectory(new File("."));
+                    fileChooser.addChoosableFileFilter(new FileFilter() {
+
+                        public String getDescription() {
+                            return "Xmotion Job File (*.xmj)";
+                        }
+
+                        public boolean accept(File f) {
+                            if (f.isDirectory()) {
+                                return true;
+                            } else {
+                                return f.getName().toLowerCase().endsWith(".xmj");
+                            }
+                        }
+                    });
+                    if (fileChooser.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
+                        File file = fileChooser.getSelectedFile();
+                        GlobalData.configData.JetToolpathJobFile = file.getAbsolutePath();
+                        toolpath_viewer.SaveJob(GlobalData.configData.JetToolpathJobFile);
+                        try {
+                            GlobalData.pushConfig();
+                        } catch (FileNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+                else
+                {
+                    toolpath_viewer.SaveJob(GlobalData.configData.JetToolpathJobFile);
+                }
+            }
+        });
+        menu.add(menuItem);
+
+        menuItem = new JMenuItem("Save Job As");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Save Job File As");
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
@@ -207,14 +245,15 @@ public class JetToolpaths extends JFrame {
                 });
                 if (fileChooser.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
                     File file = fileChooser.getSelectedFile();
-                    toolpath_viewer.SaveJob(file.getAbsolutePath());
+                    GlobalData.configData.JetToolpathJobFile = file.getAbsolutePath();
+                    toolpath_viewer.SaveJob(GlobalData.configData.JetToolpathJobFile);
                 }
             }
         });
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Import Part");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("Import Part Drawing");
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -235,7 +274,7 @@ public class JetToolpaths extends JFrame {
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Post Process");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, ActionEvent.ALT_MASK));
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("Post Job into Gcode");
         menu.add(menuItem);
         menuItem.addActionListener(new ActionListener() {
