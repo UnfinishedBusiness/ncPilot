@@ -1,5 +1,6 @@
 package com.nc.pilot.lib.ToolPathViewer;
 
+import com.nc.pilot.config.ConfigData;
 import com.nc.pilot.config.JetToolpathCutChartData;
 import com.nc.pilot.lib.GlobalData;
 import com.vividsolutions.jts.geom.Coordinate;
@@ -15,7 +16,9 @@ import org.kabeja.parser.ParserBuilder;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.io.IOException;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -33,6 +36,48 @@ public class ToolpathViewer {
 
     // constructor
     public ToolpathViewer() {
+
+    }
+    public void SaveJob(String file)
+    {
+        try {
+            // create a new file with an ObjectOutputStream
+            XMLEncoder e = new XMLEncoder(
+                    new BufferedOutputStream(
+                            new FileOutputStream(file)));
+            e.writeObject(ViewerPartStack);
+            e.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void OpenJob(String file)
+    {
+        XMLDecoder d = null;
+        try {
+            d = new XMLDecoder(
+                    new BufferedInputStream(
+                            new FileInputStream(file)));
+            ViewerPartStack = (ArrayList<ViewerPart>) d.readObject();
+            /*for (int x = 0; x < ViewerPartStack.size(); x++)
+            {
+                ViewerPart part = ViewerPartStack.get(x);
+                System.out.println("Importing part# " + x + " With " + part.EntityStack.size() + " Entities");
+                for (int i = 0; i < ViewerPartStack.get(x).EntityStack.size(); i++)
+                {
+                    ViewerEntity e = ViewerPartStack.get(x).EntityStack.get(i);
+                    System.out.println("\tType-> " + e.type + " Offset X" + part.offset[0] + " Offset Y" + part.offset[1]);
+                    if (e.type.contentEquals("line"))
+                    {
+                        System.out.println("\tline -> X" + e.start[0] + " Y" + e.start[1] + " - X" + e.end[0] + " Y" + e.end[1]);
+                    }
+                }
+            }
+            ViewerPartStack = new ArrayList();*/
+            d.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
     public float getAngle(float[] start_point, float[] end_point) {
@@ -467,6 +512,7 @@ public class ToolpathViewer {
 
         for(int i = 0; i< ViewerPartStack.size(); i++)
         {
+            //System.out.println("Rendering part " + i);
             ViewerPart part = ViewerPartStack.get(i);
             if (part.engaged == true)
             {
@@ -479,16 +525,17 @@ public class ToolpathViewer {
             for(int x = 0; x < part.EntityStack.size(); x++)
             {
                 ViewerEntity entity = ViewerPartStack.get(i).EntityStack.get(x);
-                if (entity.type == "line")
+                if (entity.type.contentEquals("line"))
                 {
+                    //System.out.println("Rendering line -> " + new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]} + " - " + new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]});
                     RenderLine(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]});
                 }
-                if (entity.type == "cw_arc")
+                if (entity.type.contentEquals("cw_arc"))
                 {
                     //g2d.setColor(Color.red);
                     RenderArc(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]}, new float[]{entity.center[0] + part.offset[0], entity.center[1] + part.offset[1]}, entity.radius, "CW");
                 }
-                if (entity.type == "ccw_arc")
+                if (entity.type.contentEquals("ccw_arc"))
                 {
                     //g2d.setColor(Color.blue);
                     RenderArc(new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]}, new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]}, new float[]{entity.center[0] + part.offset[0], entity.center[1] + part.offset[1]}, entity.radius, "CCW");

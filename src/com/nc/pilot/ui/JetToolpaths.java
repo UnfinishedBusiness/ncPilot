@@ -177,17 +177,8 @@ public class JetToolpaths extends JFrame {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                    try {
-                        XMLDecoder d = new XMLDecoder(
-                                new BufferedInputStream(
-                                        new FileInputStream(selectedFile)));
-                        toolpath_viewer.ViewerPartStack = (ArrayList<ViewerPart>) d.readObject();
-                        System.out.println("Toolpath Viewer Imported " + toolpath_viewer.ViewerPartStack.size() + " entities!");
-                        d.close();
-                        repaint();
-                    } catch (FileNotFoundException e1) {
-                        e1.printStackTrace();
-                    }
+                    toolpath_viewer.OpenJob(selectedFile.getAbsolutePath());
+                    repaint();
                 }
             }
         });
@@ -216,16 +207,7 @@ public class JetToolpaths extends JFrame {
                 });
                 if (fileChooser.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
                     File file = fileChooser.getSelectedFile();
-                    XMLEncoder x = null;
-                    try {
-                        x = new XMLEncoder(
-                                new BufferedOutputStream(
-                                        new FileOutputStream(file)));
-                    } catch (FileNotFoundException e1) {
-                        e1.printStackTrace();
-                    }
-                    x.writeObject(toolpath_viewer.ViewerPartStack);
-                    x.close();
+                    toolpath_viewer.SaveJob(file.getAbsolutePath());
                 }
             }
         });

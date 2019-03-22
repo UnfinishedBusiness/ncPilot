@@ -7,19 +7,19 @@ import java.util.ArrayList;
  */
 public class ViewerPart{
     public ArrayList<ViewerEntity> EntityStack = new ArrayList();
-    float[] offset;
-    float bound_width;
-    float bound_height;
-    float scale;
-    float minX;
-    float maxX;
-    float minY;
-    float maxY;
-    float rotation_angle;
-    String name;
-    boolean engaged;
-    ArrayList<PathObject>  paths;
-    ArrayList<PathObject>  tool_paths;
+    public float[] offset;
+    public float bound_width;
+    public float bound_height;
+    public float scale;
+    public float minX;
+    public float maxX;
+    public float minY;
+    public float maxY;
+    public float rotation_angle;
+    public String name;
+    public boolean engaged;
+    public ArrayList<PathObject>  paths;
+    public ArrayList<PathObject>  tool_paths;
     public ViewerPart(){
 
     }
