@@ -12,6 +12,7 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.ArrayList;
 
 public class JetToolpaths extends JFrame {
     JMenuBar menu_bar;
@@ -22,6 +23,7 @@ public class JetToolpaths extends JFrame {
     public JetToolpaths() {
 
         super("Jet Toolpaths");
+        GlobalData.configData.CurrentWorkbench = "JetToolpaths";
         setSize(1100, 800);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -112,8 +114,10 @@ public class JetToolpaths extends JFrame {
                 .addKeyEventDispatcher(new KeyEventDispatcher() {
                     @Override
                     public boolean dispatchKeyEvent(KeyEvent ke) {
+                        if (!GlobalData.configData.CurrentWorkbench.contentEquals("JetToolpaths")) return false;
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
+                                System.out.println("(Jet Toolpath) Key: " + ke.getKeyCode());
                                 if (ke.getKeyCode() == 44) //< key
                                 {
                                     toolpath_viewer.RotateEngagedPart(5);
@@ -139,6 +143,15 @@ public class JetToolpaths extends JFrame {
                         return false;
                     }
                 });
+
+        // call onCancel() when cross is clicked
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onClose();
+            }
+        });
+
         if (GlobalData.configData.JetToolpathJobFile != null)
         {
             File f = new File(GlobalData.configData.JetToolpathJobFile);
@@ -146,6 +159,11 @@ public class JetToolpaths extends JFrame {
                 toolpath_viewer.OpenJob(GlobalData.configData.JetToolpathJobFile);
             }
         }
+    }
+    private void onClose() {
+        // add your code here if necessary
+        GlobalData.configData.CurrentWorkbench = "MachineControl";
+        dispose();
     }
     private void createMenuBar()
     {
@@ -161,6 +179,18 @@ public class JetToolpaths extends JFrame {
         menu.setMnemonic(KeyEvent.VK_S);
         menu.getAccessibleContext().setAccessibleDescription("File operations");
         menu_bar.add(menu);
+
+        menuItem = new JMenuItem("New Job");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("New Job File");
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                GlobalData.configData.JetToolpathJobFile = "";
+                toolpath_viewer.ViewerPartStack = new ArrayList();
+                repaint();
+            }
+        });
+        menu.add(menuItem);
 
         menuItem = new JMenuItem("Open Job");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));

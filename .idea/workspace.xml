@@ -7,10 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Xmotion.conf" afterPath="$PROJECT_DIR$/Xmotion.conf" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$6$1.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/config/ConfigData.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/config/ConfigData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/JetToolpaths.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/JetToolpaths.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/jobs/0.xmj" afterPath="$PROJECT_DIR$/test/jobs/0.xmj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,12 +26,13 @@
       <file leaf-file-name="MotionController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="274" column="0" lean-forward="false" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
+            <state relative-caret-position="261">
+              <caret line="281" column="5" lean-forward="false" selection-start-line="281" selection-start-column="5" selection-end-line="281" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#10145#10146#0" expanded="true" />
                 <element signature="e#10211#10212#0" expanded="true" />
+                <element signature="e#10845#10846#0" expanded="true" />
                 <element signature="e#10879#10880#0" expanded="true" />
               </folding>
             </state>
@@ -51,8 +52,8 @@
       <file leaf-file-name="ConfigData.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/config/ConfigData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+            <state relative-caret-position="255">
+              <caret line="17" column="38" lean-forward="false" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -63,9 +64,12 @@
       <file leaf-file-name="MachineControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="306" column="37" lean-forward="false" selection-start-line="306" selection-start-column="37" selection-end-line="306" selection-end-column="37" />
-              <folding />
+            <state relative-caret-position="395">
+              <caret line="107" column="70" lean-forward="false" selection-start-line="107" selection-start-column="70" selection-end-line="107" selection-end-column="70" />
+              <folding>
+                <element signature="e#27674#27675#0" expanded="true" />
+                <element signature="e#27743#27744#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -73,19 +77,39 @@
       <file leaf-file-name="JetToolpaths.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/JetToolpaths.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2833">
-              <caret line="193" column="24" lean-forward="true" selection-start-line="193" selection-start-column="24" selection-end-line="193" selection-end-column="24" />
+            <state relative-caret-position="347">
+              <caret line="208" column="17" lean-forward="true" selection-start-line="208" selection-start-column="17" selection-end-line="208" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9207#9208#0" expanded="true" />
-                <element signature="e#9296#9297#0" expanded="true" />
-                <element signature="e#11050#11051#0" expanded="true" />
-                <element signature="e#11131#11132#0" expanded="true" />
-                <element signature="e#14358#14359#0" expanded="true" />
-                <element signature="e#14420#14421#0" expanded="true" />
-                <element signature="e#14807#14808#0" expanded="true" />
-                <element signature="e#14869#14870#0" expanded="true" />
+                <element signature="e#10481#10482#0" expanded="true" />
+                <element signature="e#10570#10571#0" expanded="true" />
+                <element signature="e#12324#12325#0" expanded="true" />
+                <element signature="e#12405#12406#0" expanded="true" />
+                <element signature="e#15632#15633#0" expanded="true" />
+                <element signature="e#15694#15695#0" expanded="true" />
+                <element signature="e#16081#16082#0" expanded="true" />
+                <element signature="e#16143#16144#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViewerPart.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="145">
+              <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JetToolpathCutChart.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/dialogs/JetToolpathCutChart.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="245" column="4" lean-forward="false" selection-start-line="245" selection-start-column="4" selection-end-line="248" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -200,7 +224,6 @@
         <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineToolpaths.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/dialogs/JetToolpathCutChart.form" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/config/JetToolpathCutChartData.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/dialogs/JobSetupDialog.form" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/dialogs/JetToolpathJobSetup.java" />
@@ -210,6 +233,7 @@
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/config/ConfigData.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/JetToolpaths.java" />
       </list>
     </option>
@@ -712,6 +736,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2265625" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -743,7 +768,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2260479" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2265625" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
     </layout>
@@ -794,7 +818,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4675">
           <caret line="275" column="25" lean-forward="true" selection-start-line="275" selection-start-column="25" selection-end-line="275" selection-end-column="25" />
-          <folding />
+          <folding>
+            <element signature="e#27674#27675#0" expanded="true" />
+            <element signature="e#27743#27744#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -941,13 +968,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/dialogs/JetToolpathCutChart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="182" column="64" lean-forward="true" selection-start-line="182" selection-start-column="64" selection-end-line="182" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/dialogs/JetToolpathJobSetup.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -955,47 +975,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="103" column="8" lean-forward="false" selection-start-line="103" selection-start-column="8" selection-end-line="107" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/JobFile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="18" lean-forward="false" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="21" column="11" lean-forward="false" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="274" column="0" lean-forward="false" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10145#10146#0" expanded="true" />
-            <element signature="e#10211#10212#0" expanded="true" />
-            <element signature="e#10879#10880#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="306" column="37" lean-forward="false" selection-start-line="306" selection-start-column="37" selection-end-line="306" selection-end-column="37" />
           <folding />
         </state>
       </provider>
@@ -1011,30 +994,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="281" column="5" lean-forward="false" selection-start-line="281" selection-start-column="5" selection-end-line="281" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#10145#10146#0" expanded="true" />
+            <element signature="e#10211#10212#0" expanded="true" />
+            <element signature="e#10845#10846#0" expanded="true" />
+            <element signature="e#10879#10880#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/dialogs/JetToolpathCutChart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="245" column="4" lean-forward="false" selection-start-line="245" selection-start-column="4" selection-end-line="248" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="103" column="8" lean-forward="false" selection-start-line="103" selection-start-column="8" selection-end-line="107" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/config/ConfigData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+        <state relative-caret-position="255">
+          <caret line="17" column="38" lean-forward="false" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="107" column="70" lean-forward="false" selection-start-line="107" selection-start-column="70" selection-end-line="107" selection-end-column="70" />
+          <folding>
+            <element signature="e#27674#27675#0" expanded="true" />
+            <element signature="e#27743#27744#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ViewerPart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/JetToolpaths.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2833">
-          <caret line="193" column="24" lean-forward="true" selection-start-line="193" selection-start-column="24" selection-end-line="193" selection-end-column="24" />
+        <state relative-caret-position="347">
+          <caret line="208" column="17" lean-forward="true" selection-start-line="208" selection-start-column="17" selection-end-line="208" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9207#9208#0" expanded="true" />
-            <element signature="e#9296#9297#0" expanded="true" />
-            <element signature="e#11050#11051#0" expanded="true" />
-            <element signature="e#11131#11132#0" expanded="true" />
-            <element signature="e#14358#14359#0" expanded="true" />
-            <element signature="e#14420#14421#0" expanded="true" />
-            <element signature="e#14807#14808#0" expanded="true" />
-            <element signature="e#14869#14870#0" expanded="true" />
+            <element signature="e#10481#10482#0" expanded="true" />
+            <element signature="e#10570#10571#0" expanded="true" />
+            <element signature="e#12324#12325#0" expanded="true" />
+            <element signature="e#12405#12406#0" expanded="true" />
+            <element signature="e#15632#15633#0" expanded="true" />
+            <element signature="e#15694#15695#0" expanded="true" />
+            <element signature="e#16081#16082#0" expanded="true" />
+            <element signature="e#16143#16144#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -14,4 +14,6 @@ public class ConfigData {
     public String ConsumableSelection = "";
 
     public String JetToolpathJobFile;
+
+    public String CurrentWorkbench = "";
 }

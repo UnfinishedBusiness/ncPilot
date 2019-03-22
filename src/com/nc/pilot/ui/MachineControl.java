@@ -105,6 +105,7 @@ public class MachineControl extends JFrame {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            GlobalData.configData.CurrentWorkbench = "MachineControl";
         }
 
         repaint_timer.schedule(new TimerTask() {
@@ -182,8 +183,10 @@ public class MachineControl extends JFrame {
                 .addKeyEventDispatcher(new KeyEventDispatcher() {
                     @Override
                     public boolean dispatchKeyEvent(KeyEvent ke) {
+                        if (!GlobalData.configData.CurrentWorkbench.contentEquals("MachineControl")) return false;
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
+                                System.out.println("(Machine Control) Key: " + ke.getKeyCode());
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
                                     if (GlobalData.UpArrowKeyState == false) {
                                         GlobalData.UpArrowKeyState = true;
