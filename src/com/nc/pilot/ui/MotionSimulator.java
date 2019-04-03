@@ -22,13 +22,52 @@ public class MotionSimulator extends JFrame {
 
     java.util.Timer interupt_timer = new java.util.Timer();
 
+    /* Machine Parameters */
+    int x_scale = 400; //Steps per inch
+    int y_scale = 325;
+
+    float max_linear_velocity = 10.0f;
+    /* ---------- */
+
+    /* These units are in steps */
     int[] target_position;
     int[] machine_position;
-    int dx, dy, err, e2, sx, sy, x0, x1, y0, y1;
+    /* --------- */
 
-    void set_target_position(int x, int y)
+    /* These are in scaled units */
+    float[] last_position = {0.0f, 0.0f};
+    float[] machine_position_dro;
+    /* ------------ */
+
+    int dx, dy, err, e2, sx, sy, x0, x1, y0, y1;
+    long velocity_update_timestamp;
+    int sample_period = 25; //Sample every x milliseconds
+    float x_scale_inverse = 1 / (float)x_scale;
+    float y_scale_inverse = 1 / (float)y_scale;
+
+    /* Variables updated by sample check */
+    float linear_velocity = 0.0f;
+    float x_velocity = 0.0f;
+    float y_velocity = 0.0f;
+    long motion_timestamp = 0;
+    /* ---------------- */
+
+    int cycle_speed = 0;
+
+    float filter(float rawValue, float weight, float lastValue) {
+        // run the filter:
+        float result = (float) (weight * rawValue + (1.0-weight)*lastValue);
+        // return the result:
+        return result;
+    }
+    public float getDistance(float[] start_point, float[] end_point)
     {
-        target_position = new int[]{x, y};
+        return new Float(Math.hypot(start_point[0]-end_point[0], start_point[1]-end_point[1]));
+    }
+    void set_target_position(float x, float y)
+    {
+        cycle_speed = 100;
+        target_position = new int[]{(int)(x * x_scale), (int)(y * y_scale)};
         x1 = target_position[0];
         y1 = target_position[1];
         x0 = machine_position[0];
@@ -42,20 +81,43 @@ public class MotionSimulator extends JFrame {
 
     private void interupt()
     {
-        //setPixel(x0,y0);
-        machine_position[0] = x0;
-        machine_position[1] = y0;
-        if (x0==x1 && y0==y1)
+        if ((System.currentTimeMillis() - velocity_update_timestamp) > sample_period)
         {
+            float sample_distance = getDistance(machine_position_dro, last_position);
+            //(distance/time)*60,000 = velocity in steps per minute
+            linear_velocity = (sample_distance/(System.currentTimeMillis() - velocity_update_timestamp))*60000;
+            x_velocity = (Math.abs(machine_position_dro[0] - last_position[0])/(System.currentTimeMillis() - velocity_update_timestamp))*60000; //in steps per minute
+            y_velocity = (Math.abs(machine_position_dro[1] - last_position[1])/(System.currentTimeMillis() - velocity_update_timestamp))*60000; //in steps per minute
+            if (linear_velocity < max_linear_velocity)
+            {
+                cycle_speed -= 1;
+            }
+            else
+            {
+                cycle_speed += 1;
+            }
+            last_position = new float[] {machine_position_dro[0], machine_position_dro[1]};
+            velocity_update_timestamp = System.currentTimeMillis();
+        }
+        if ((System.currentTimeMillis() - motion_timestamp) > cycle_speed)
+        {
+            machine_position[0] = x0;
+            machine_position[1] = y0;
+            machine_position_dro[0] = machine_position[0] * x_scale_inverse;
+            machine_position_dro[1] = machine_position[1] * y_scale_inverse;
+            if (x0==x1 && y0==y1)
+            {
 
+            }
+            else
+            {
+                e2 = err;
+                if (e2 >-dx) { err -= dy; x0 += sx; }
+                if (e2 < dy) { err += dx; y0 += sy; }
+            }
+            motion_timestamp = System.currentTimeMillis();
+            repaint();
         }
-        else
-        {
-            e2 = err;
-            if (e2 >-dx) { err -= dy; x0 += sx; }
-            if (e2 < dy) { err += dx; y0 += sy; }
-        }
-        repaint();
     }
 
     public MotionSimulator() {
@@ -76,14 +138,15 @@ public class MotionSimulator extends JFrame {
         add(panel);
 
         machine_position = new int[] {100, 100};
+        machine_position_dro = new float[] { machine_position[0] * x_scale_inverse, machine_position[1] * y_scale_inverse};
 
-        set_target_position(300, 200);
+        set_target_position(3.250f, 2.375f);
         interupt_timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 interupt();
             }
-        }, 0, 25);
+        }, 0, 1);
 
 
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
@@ -110,7 +173,7 @@ public class MotionSimulator extends JFrame {
 
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-                                    set_target_position(200, 400);
+                                    set_target_position(0.250f, 0.3076f);
                                     repaint();
                                 }
                                 break;
@@ -189,8 +252,10 @@ public class MotionSimulator extends JFrame {
 
             g.setColor(Color.green);
             g.setFont(new Font("Arial", Font.BOLD, 12));
-            g.drawString(String.format("DRO MCS-> X: %d Y: %d", machine_position[0], machine_position[1]), 10, 10);
-            g.drawString(String.format("DRO Move DTG-> X: %d Y: %d", dx, dy), 10, 25);
+            g.drawString(String.format("DRO MCS-> X: %.4f Y: %.4f", machine_position_dro[0], machine_position_dro[1]), 10, 10);
+            g.drawString(String.format("Linear Velocity -> %.2f Inch/min", linear_velocity), 10, 25);
+            g.drawString(String.format("X Velocity -> %.2f Inch/min", x_velocity), 10, 40);
+            g.drawString(String.format("Y Velocity -> %.2f Inch/min", y_velocity), 10, 55);
         }
     }
     public static void main(String[] args) {
