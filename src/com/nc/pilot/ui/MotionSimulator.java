@@ -41,7 +41,7 @@ public class MotionSimulator extends JFrame {
 
     int dx, dy, err, e2, sx, sy, x0, x1, y0, y1;
     long velocity_update_timestamp;
-    int sample_period = 25; //Sample every x milliseconds
+    int sample_period = 100; //Sample every x milliseconds
     float x_scale_inverse = 1 / (float)x_scale;
     float y_scale_inverse = 1 / (float)y_scale;
 
@@ -66,8 +66,21 @@ public class MotionSimulator extends JFrame {
     }
     void set_target_position(float x, float y)
     {
-        cycle_speed = 100;
         target_position = new int[]{(int)(x * x_scale), (int)(y * y_scale)};
+
+        //Figure out which axis has more distance to travel then calculate the time between steps to make it arrive at its target in specified amount of time, AKA feedrate
+        int x_dist_in_steps = Math.abs(target_position[0] - machine_position[0]);
+        int y_dist_in_steps = Math.abs(target_position[1] - machine_position[1]);
+        if (x_dist_in_steps > y_dist_in_steps) //The x axis has farther to travel. Coordinate feedrate on X axis
+        {
+            cycle_speed = (int)(60000 / max_linear_velocity) / x_scale;
+        }
+        else
+        {
+            cycle_speed = (int)(60000 / max_linear_velocity) / y_scale;
+        }
+
+
         x1 = target_position[0];
         y1 = target_position[1];
         x0 = machine_position[0];
@@ -81,33 +94,27 @@ public class MotionSimulator extends JFrame {
 
     private void interupt()
     {
-        if ((System.currentTimeMillis() - velocity_update_timestamp) > sample_period)
-        {
-            float sample_distance = getDistance(machine_position_dro, last_position);
-            //(distance/time)*60,000 = velocity in steps per minute
-            linear_velocity = (sample_distance/(System.currentTimeMillis() - velocity_update_timestamp))*60000;
-            x_velocity = (Math.abs(machine_position_dro[0] - last_position[0])/(System.currentTimeMillis() - velocity_update_timestamp))*60000; //in steps per minute
-            y_velocity = (Math.abs(machine_position_dro[1] - last_position[1])/(System.currentTimeMillis() - velocity_update_timestamp))*60000; //in steps per minute
-            if (linear_velocity < max_linear_velocity)
-            {
-                cycle_speed -= 1;
-            }
-            else
-            {
-                cycle_speed += 1;
-            }
-            last_position = new float[] {machine_position_dro[0], machine_position_dro[1]};
-            velocity_update_timestamp = System.currentTimeMillis();
-        }
         if ((System.currentTimeMillis() - motion_timestamp) > cycle_speed)
         {
+            if ((System.currentTimeMillis() - velocity_update_timestamp) > sample_period)
+            {
+                float sample_distance = getDistance(machine_position_dro, last_position);
+                System.out.println("Sample Distance: " + sample_distance);
+                //(distance/time)*60,000 = velocity in steps per minute
+                linear_velocity = (sample_distance/(System.currentTimeMillis() - velocity_update_timestamp))*60000;
+                x_velocity = (Math.abs(machine_position_dro[0] - last_position[0])/(System.currentTimeMillis() - velocity_update_timestamp))*60000; //in steps per minute
+                y_velocity = (Math.abs(machine_position_dro[1] - last_position[1])/(System.currentTimeMillis() - velocity_update_timestamp))*60000; //in steps per minute
+                last_position = new float[] {machine_position_dro[0], machine_position_dro[1]};
+                velocity_update_timestamp = System.currentTimeMillis();
+            }
+
             machine_position[0] = x0;
             machine_position[1] = y0;
             machine_position_dro[0] = machine_position[0] * x_scale_inverse;
             machine_position_dro[1] = machine_position[1] * y_scale_inverse;
             if (x0==x1 && y0==y1)
             {
-
+                //We are at our target position. Set next target position
             }
             else
             {
