@@ -73,11 +73,11 @@ public class MotionSimulator extends JFrame {
         int y_dist_in_steps = Math.abs(target_position[1] - machine_position[1]);
         if (x_dist_in_steps > y_dist_in_steps) //The x axis has farther to travel. Coordinate feedrate on X axis
         {
-            cycle_speed = (int)(60000 / max_linear_velocity) / x_scale;
+            cycle_speed = (int)(((x_dist_in_steps * x_scale_inverse) / max_linear_velocity) * 60000) / x_dist_in_steps;
         }
         else
         {
-            cycle_speed = (int)(60000 / max_linear_velocity) / y_scale;
+            cycle_speed = (int)(((y_dist_in_steps * y_scale_inverse) / max_linear_velocity) * 60000) / y_dist_in_steps;
         }
 
 
@@ -144,10 +144,10 @@ public class MotionSimulator extends JFrame {
         ToolpathViewerPanel panel = new ToolpathViewerPanel();
         add(panel);
 
-        machine_position = new int[] {100, 100};
+        machine_position = new int[] {0, 0};
         machine_position_dro = new float[] { machine_position[0] * x_scale_inverse, machine_position[1] * y_scale_inverse};
 
-        set_target_position(3.250f, 2.375f);
+
         interupt_timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -180,7 +180,7 @@ public class MotionSimulator extends JFrame {
 
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-                                    set_target_position(0.250f, 0.3076f);
+                                    set_target_position(5.0f, 5.0f);
                                     repaint();
                                 }
                                 break;
