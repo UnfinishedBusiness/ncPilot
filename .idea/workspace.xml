@@ -7,6 +7,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$1.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$2.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$3.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$4.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$5.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$6.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$ToolpathViewerPanel.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$ToolpathViewerPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator.class" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MotionSimulator.java" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MotionSimulator.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -23,15 +32,15 @@
       <file leaf-file-name="MotionSimulator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MotionSimulator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="86" column="119" lean-forward="true" selection-start-line="86" selection-start-column="119" selection-end-line="86" selection-end-column="119" />
+            <state relative-caret-position="527">
+              <caret line="172" column="102" lean-forward="true" selection-start-line="172" selection-start-column="102" selection-end-line="172" selection-end-column="102" />
               <folding>
-                <marker date="1554397379368" expanded="false" signature="6028:6116" ph="() → { " />
-                <marker date="1554397379368" expanded="false" signature="6127:6151" ph=" }" />
-                <marker date="1554397379368" expanded="false" signature="7870:7963" ph="(WindowAdapter) windowClosing(e) → { " />
-                <marker date="1554397379368" expanded="false" signature="7973:7997" ph=" }" />
-                <marker date="1554397379368" expanded="false" signature="11162:11181" ph=" { " />
-                <marker date="1554397379368" expanded="false" signature="11220:11234" ph=" }" />
+                <marker date="1554421785005" expanded="false" signature="9768:9856" ph="() → { " />
+                <marker date="1554421785005" expanded="false" signature="9867:9891" ph=" }" />
+                <marker date="1554421785005" expanded="false" signature="12071:12164" ph="(WindowAdapter) windowClosing(e) → { " />
+                <marker date="1554421785005" expanded="false" signature="12174:12198" ph=" }" />
+                <marker date="1554421785005" expanded="false" signature="15607:15626" ph=" { " />
+                <marker date="1554421785005" expanded="false" signature="15665:15679" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -952,15 +961,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MotionSimulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="86" column="119" lean-forward="true" selection-start-line="86" selection-start-column="119" selection-end-line="86" selection-end-column="119" />
+        <state relative-caret-position="527">
+          <caret line="172" column="102" lean-forward="true" selection-start-line="172" selection-start-column="102" selection-end-line="172" selection-end-column="102" />
           <folding>
-            <marker date="1554397379368" expanded="false" signature="6028:6116" ph="() → { " />
-            <marker date="1554397379368" expanded="false" signature="6127:6151" ph=" }" />
-            <marker date="1554397379368" expanded="false" signature="7870:7963" ph="(WindowAdapter) windowClosing(e) → { " />
-            <marker date="1554397379368" expanded="false" signature="7973:7997" ph=" }" />
-            <marker date="1554397379368" expanded="false" signature="11162:11181" ph=" { " />
-            <marker date="1554397379368" expanded="false" signature="11220:11234" ph=" }" />
+            <marker date="1554421785005" expanded="false" signature="9768:9856" ph="() → { " />
+            <marker date="1554421785005" expanded="false" signature="9867:9891" ph=" }" />
+            <marker date="1554421785005" expanded="false" signature="12071:12164" ph="(WindowAdapter) windowClosing(e) → { " />
+            <marker date="1554421785005" expanded="false" signature="12174:12198" ph=" }" />
+            <marker date="1554421785005" expanded="false" signature="15607:15626" ph=" { " />
+            <marker date="1554421785005" expanded="false" signature="15665:15679" ph=" }" />
           </folding>
         </state>
       </provider>

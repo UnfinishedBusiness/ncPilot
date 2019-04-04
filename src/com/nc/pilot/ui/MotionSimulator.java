@@ -24,10 +24,11 @@ public class MotionSimulator extends JFrame {
     java.util.Timer repaint_timer = new java.util.Timer();
 
     /* Machine Parameters */
+    float min_feed_rate = 0.25f;
     int x_scale = 400; //Steps per inch
     int y_scale = 325;
-
-    float max_linear_velocity = 100.0f;
+    float x_accel = 1.0f;
+    float max_linear_velocity = 25.0f;
     /* ---------- */
 
     /* These units are in steps */
@@ -38,21 +39,27 @@ public class MotionSimulator extends JFrame {
     /* These are in scaled units */
     float[] last_position = {0.0f, 0.0f};
     float[] machine_position_dro;
+    float[] target_position_in_real_units;
     /* ------------ */
 
     int dx, dy, err, e2, sx, sy, x0, x1, y0, y1;
     long velocity_update_timestamp;
-    int sample_period = 100; //Sample every x milliseconds
+    int sample_period = 5; //Sample every x milliseconds
     float x_scale_inverse = 1 / (float)x_scale;
     float y_scale_inverse = 1 / (float)y_scale;
 
-    /* Variables updated by sample check */
+    /* Variables updated by sample check and used my move */
+    float target_velocity = 0.0f;
     float linear_velocity = 0.0f;
     float x_velocity = 0.0f;
     float y_velocity = 0.0f;
     long motion_timestamp = 0;
     long move_start_timestamp = 0;
+    long move_decel_timestamp = 0;
     boolean InMotion = false;
+    long x_dist_in_steps;
+    long y_dist_in_steps;
+    float decceleration_dtg_marker;
     /* ---------------- */
 
     int cycle_speed = 0;
@@ -67,26 +74,55 @@ public class MotionSimulator extends JFrame {
     {
         return new Float(Math.hypot(start_point[0]-end_point[0], start_point[1]-end_point[1]));
     }
-    void set_target_position(float x, float y)
+    //Initial Velocity is in units per minute, acceleration is in units/min^2, time is in milliseconds
+    public float getAcceleratedVelocity(float initial_velocity, float acceleration, float time_into_move) //Returns feedrate in inches/min
     {
-        last_position = new float[] {machine_position_dro[0], machine_position_dro[1]};
-        target_position = new int[]{(int)(x * x_scale), (int)(y * y_scale)};
-        move_start_timestamp = System.currentTimeMillis();
-        //Figure out which axis has more distance to travel then calculate the time between steps to make it arrive at its target in specified amount of time, AKA feedrate
-        int x_dist_in_steps = Math.abs(target_position[0] - machine_position[0]);
-        int y_dist_in_steps = Math.abs(target_position[1] - machine_position[1]);
-        float  linear_distance_in_scaled_units = getDistance(machine_position_dro, new float[] {x, y});
+       return (initial_velocity / 60) + ((acceleration / 60) * (time_into_move / 60)) * 60;
+    }
+    public void setFeedrate(float feedrate)
+    {
+        x_dist_in_steps = Math.abs(target_position[0] - machine_position[0]);
+        y_dist_in_steps = Math.abs(target_position[1] - machine_position[1]);
+        float  linear_distance_in_scaled_units = getDistance(machine_position_dro, target_position_in_real_units);
         if (x_dist_in_steps > y_dist_in_steps) //The x axis has farther to travel. Coordinate feedrate on X axis
         {
-            System.out.println("X has farther to travel!");
-            cycle_speed = (int)(((linear_distance_in_scaled_units / max_linear_velocity) * 60000) / x_dist_in_steps) - 1;
+            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000) / x_dist_in_steps) - 1;
         }
         else
         {
-            System.out.println("Y has farther to travel!");
-            cycle_speed = (int)((linear_distance_in_scaled_units / max_linear_velocity) * 60000) / y_dist_in_steps - 1;
+            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000) / y_dist_in_steps) - 1;
         }
+    }
+    void set_target_position(float x, float y, float target_feed_rate)
+    {
+        System.out.println("Target velocity - " + target_feed_rate);
+        target_position_in_real_units = new float[] {x, y};
+        float total_move_distance = getDistance(machine_position_dro, target_position_in_real_units);
+        System.out.println("total_move_distance - " + total_move_distance);
+        last_position = new float[] {machine_position_dro[0], machine_position_dro[1]};
+        target_position = new int[]{(int)(x * x_scale), (int)(y * y_scale)};
+        move_start_timestamp = System.currentTimeMillis();
 
+        long time_required_to_accelerate = (long) (((target_feed_rate / 60) - (min_feed_rate / 60)) / (x_accel / 60)) * 60;
+        System.out.println("time_required_to_accelerate - " + time_required_to_accelerate);
+        float distance_required_to_accelerate = (float) (((min_feed_rate / 60) * (time_required_to_accelerate / 60)) + 0.5 * (x_accel / 60) * Math.pow(time_required_to_accelerate / 60, 2));
+        System.out.println("distance_required_to_accelerate - " + distance_required_to_accelerate);
+        //Can we accelerate to the target velocity and decelerate to exit velocity in the distance we have to travel?
+        if (distance_required_to_accelerate * 2 < total_move_distance)
+        {
+            System.out.println("We can accelerate to target velocity!");
+            target_velocity = target_feed_rate;
+            //Set the deceleration marker. We need to start decelerating when we get to "total_move_distance - distance_required_to_accelerate" on distance traveled
+            decceleration_dtg_marker = total_move_distance - distance_required_to_accelerate;
+            System.out.println("decceleration_dtg_marker - " + decceleration_dtg_marker);
+        }
+        else
+        {
+            System.out.println("We can't accelerate to target velocity!");
+            target_velocity = target_feed_rate;
+            //Figure out the maximum feedrate from acceleration on half of the distance to travel
+        }
+        setFeedrate(min_feed_rate); //Set initial feedrate for move
 
         x1 = target_position[0];
         y1 = target_position[1];
@@ -101,20 +137,52 @@ public class MotionSimulator extends JFrame {
 
     private void interupt()
     {
-        if ((System.currentTimeMillis() - motion_timestamp) > cycle_speed)
+        if ((System.currentTimeMillis() - velocity_update_timestamp) > sample_period && InMotion == true)
         {
-            if ((System.currentTimeMillis() - velocity_update_timestamp) > sample_period && InMotion == true)
+            float sample_distance = getDistance(machine_position_dro, last_position);
+            //System.out.println("Sample Distance: " + sample_distance);
+            //(distance/time)*60,000 = velocity in steps per minute
+            linear_velocity = (sample_distance/(System.currentTimeMillis() - move_start_timestamp))*60000;
+            x_velocity = (Math.abs(machine_position_dro[0] - last_position[0])/(System.currentTimeMillis() - move_start_timestamp))*60000; //in steps per minute
+            y_velocity = (Math.abs(machine_position_dro[1] - last_position[1])/(System.currentTimeMillis() - move_start_timestamp))*60000; //in steps per minute
+            float distance_traveled = getDistance(machine_position_dro, last_position);
+            float new_velocity = getAcceleratedVelocity(min_feed_rate, x_accel, (System.currentTimeMillis() - move_start_timestamp));
+            //System.out.println("new_velocity - " + new_velocity);
+            if (distance_traveled < decceleration_dtg_marker)
             {
-                float sample_distance = getDistance(machine_position_dro, last_position);
-                //System.out.println("Sample Distance: " + sample_distance);
-                //(distance/time)*60,000 = velocity in steps per minute
-                linear_velocity = (sample_distance/(System.currentTimeMillis() - move_start_timestamp))*60000;
-                x_velocity = (Math.abs(machine_position_dro[0] - last_position[0])/(System.currentTimeMillis() - move_start_timestamp))*60000; //in steps per minute
-                y_velocity = (Math.abs(machine_position_dro[1] - last_position[1])/(System.currentTimeMillis() - move_start_timestamp))*60000; //in steps per minute
-
-                velocity_update_timestamp = System.currentTimeMillis();
+                //We accelerate to target velocity
+                if (new_velocity < target_velocity)
+                {
+                    setFeedrate(new_velocity);
+                }
+                else
+                {
+                    setFeedrate(target_velocity);
+                }
+                move_decel_timestamp = 0;
+            }
+            else
+            {
+                if (move_decel_timestamp == 0) move_decel_timestamp = System.currentTimeMillis();
+                //We deccelerate to target velocity
+                System.out.println("Time into deceleration: " + (System.currentTimeMillis() - move_decel_timestamp));
+                new_velocity = getAcceleratedVelocity(target_velocity, x_accel * -1, (System.currentTimeMillis() - move_decel_timestamp));
+                System.out.println("new_velocity - " + new_velocity);
+                if (new_velocity < min_feed_rate)
+                {
+                    System.out.println("Clamping feedrate to min feed rate to ensure move finishes!");
+                    setFeedrate(min_feed_rate);
+                }
+                else
+                {
+                    setFeedrate(new_velocity);
+                }
             }
 
+            velocity_update_timestamp = System.currentTimeMillis();
+        }
+        if ((System.currentTimeMillis() - motion_timestamp) > cycle_speed)
+        {
             machine_position[0] = x0;
             machine_position[1] = y0;
             machine_position_dro[0] = machine_position[0] * x_scale_inverse;
@@ -195,7 +263,15 @@ public class MotionSimulator extends JFrame {
 
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-                                    set_target_position(5.0f, 4.0f);
+                                    set_target_position(5.0f, 4.0f, 10f);
+                                    repaint();
+                                }
+                                if (ke.getKeyCode() == KeyEvent.VK_1) {
+                                    set_target_position(1.0f, 0.250f, 20f);
+                                    repaint();
+                                }
+                                if (ke.getKeyCode() == KeyEvent.VK_2) {
+                                    set_target_position(1.0f, 1.0f, 30f);
                                     repaint();
                                 }
                                 break;
@@ -278,6 +354,8 @@ public class MotionSimulator extends JFrame {
             g.drawString(String.format("Linear Velocity -> %.2f Inch/min", linear_velocity), 10, 25);
             g.drawString(String.format("X Velocity -> %.2f Inch/min", x_velocity), 10, 40);
             g.drawString(String.format("Y Velocity -> %.2f Inch/min", y_velocity), 10, 55);
+            g.drawString(String.format("Target Linear Velocity -> %.2f Inch/min", target_velocity), 10, 70);
+            g.drawString(String.format("Distance Traveled -> %.4f Inches", getDistance(machine_position_dro, last_position)), 10, 85);
         }
     }
     public static void main(String[] args) {
