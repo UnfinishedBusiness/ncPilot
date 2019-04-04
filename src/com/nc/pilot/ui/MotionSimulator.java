@@ -21,12 +21,13 @@ public class MotionSimulator extends JFrame {
     UIWidgets ui_widgets;
 
     java.util.Timer interupt_timer = new java.util.Timer();
+    java.util.Timer repaint_timer = new java.util.Timer();
 
     /* Machine Parameters */
     int x_scale = 400; //Steps per inch
     int y_scale = 325;
 
-    float max_linear_velocity = 10.0f;
+    float max_linear_velocity = 100.0f;
     /* ---------- */
 
     /* These units are in steps */
@@ -50,6 +51,8 @@ public class MotionSimulator extends JFrame {
     float x_velocity = 0.0f;
     float y_velocity = 0.0f;
     long motion_timestamp = 0;
+    long move_start_timestamp = 0;
+    boolean InMotion = false;
     /* ---------------- */
 
     int cycle_speed = 0;
@@ -66,18 +69,22 @@ public class MotionSimulator extends JFrame {
     }
     void set_target_position(float x, float y)
     {
+        last_position = new float[] {machine_position_dro[0], machine_position_dro[1]};
         target_position = new int[]{(int)(x * x_scale), (int)(y * y_scale)};
-
+        move_start_timestamp = System.currentTimeMillis();
         //Figure out which axis has more distance to travel then calculate the time between steps to make it arrive at its target in specified amount of time, AKA feedrate
         int x_dist_in_steps = Math.abs(target_position[0] - machine_position[0]);
         int y_dist_in_steps = Math.abs(target_position[1] - machine_position[1]);
+        float  linear_distance_in_scaled_units = getDistance(machine_position_dro, new float[] {x, y});
         if (x_dist_in_steps > y_dist_in_steps) //The x axis has farther to travel. Coordinate feedrate on X axis
         {
-            cycle_speed = (int)(((x_dist_in_steps * x_scale_inverse) / max_linear_velocity) * 60000) / x_dist_in_steps;
+            System.out.println("X has farther to travel!");
+            cycle_speed = (int)(((linear_distance_in_scaled_units / max_linear_velocity) * 60000) / x_dist_in_steps) - 1;
         }
         else
         {
-            cycle_speed = (int)(((y_dist_in_steps * y_scale_inverse) / max_linear_velocity) * 60000) / y_dist_in_steps;
+            System.out.println("Y has farther to travel!");
+            cycle_speed = (int)((linear_distance_in_scaled_units / max_linear_velocity) * 60000) / y_dist_in_steps - 1;
         }
 
 
@@ -96,15 +103,15 @@ public class MotionSimulator extends JFrame {
     {
         if ((System.currentTimeMillis() - motion_timestamp) > cycle_speed)
         {
-            if ((System.currentTimeMillis() - velocity_update_timestamp) > sample_period)
+            if ((System.currentTimeMillis() - velocity_update_timestamp) > sample_period && InMotion == true)
             {
                 float sample_distance = getDistance(machine_position_dro, last_position);
-                System.out.println("Sample Distance: " + sample_distance);
+                //System.out.println("Sample Distance: " + sample_distance);
                 //(distance/time)*60,000 = velocity in steps per minute
-                linear_velocity = (sample_distance/(System.currentTimeMillis() - velocity_update_timestamp))*60000;
-                x_velocity = (Math.abs(machine_position_dro[0] - last_position[0])/(System.currentTimeMillis() - velocity_update_timestamp))*60000; //in steps per minute
-                y_velocity = (Math.abs(machine_position_dro[1] - last_position[1])/(System.currentTimeMillis() - velocity_update_timestamp))*60000; //in steps per minute
-                last_position = new float[] {machine_position_dro[0], machine_position_dro[1]};
+                linear_velocity = (sample_distance/(System.currentTimeMillis() - move_start_timestamp))*60000;
+                x_velocity = (Math.abs(machine_position_dro[0] - last_position[0])/(System.currentTimeMillis() - move_start_timestamp))*60000; //in steps per minute
+                y_velocity = (Math.abs(machine_position_dro[1] - last_position[1])/(System.currentTimeMillis() - move_start_timestamp))*60000; //in steps per minute
+
                 velocity_update_timestamp = System.currentTimeMillis();
             }
 
@@ -115,15 +122,16 @@ public class MotionSimulator extends JFrame {
             if (x0==x1 && y0==y1)
             {
                 //We are at our target position. Set next target position
+                InMotion = false;
             }
             else
             {
+                InMotion = true;
                 e2 = err;
                 if (e2 >-dx) { err -= dy; x0 += sx; }
                 if (e2 < dy) { err += dx; y0 += sy; }
             }
             motion_timestamp = System.currentTimeMillis();
-            repaint();
         }
     }
 
@@ -155,6 +163,13 @@ public class MotionSimulator extends JFrame {
             }
         }, 0, 1);
 
+        repaint_timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                repaint();
+            }
+        }, 0, 30);
+
 
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
                 .addKeyEventDispatcher(new KeyEventDispatcher() {
@@ -180,7 +195,7 @@ public class MotionSimulator extends JFrame {
 
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-                                    set_target_position(5.0f, 5.0f);
+                                    set_target_position(5.0f, 4.0f);
                                     repaint();
                                 }
                                 break;
