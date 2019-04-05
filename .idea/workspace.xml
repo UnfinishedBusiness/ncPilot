@@ -23,17 +23,17 @@
       <file leaf-file-name="MotionSimulator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MotionSimulator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="93" column="12" lean-forward="true" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
+            <state relative-caret-position="153">
+              <caret line="164" column="131" lean-forward="true" selection-start-line="164" selection-start-column="131" selection-end-line="164" selection-end-column="131" />
               <folding>
-                <element signature="e#11444#11567#0" expanded="true" />
-                <element signature="e#11566#11567#0" expanded="true" />
-                <element signature="e#11608#11730#0" expanded="true" />
-                <element signature="e#11729#11730#0" expanded="true" />
-                <marker date="1554472377293" expanded="false" signature="13745:13838" ph="(WindowAdapter) windowClosing(e) → { " />
-                <marker date="1554472377293" expanded="false" signature="13848:13872" ph=" }" />
-                <marker date="1554472377293" expanded="false" signature="17281:17300" ph=" { " />
-                <marker date="1554472377293" expanded="false" signature="17339:17353" ph=" }" />
+                <element signature="e#11685#11808#0" expanded="true" />
+                <element signature="e#11807#11808#0" expanded="true" />
+                <element signature="e#11849#11971#0" expanded="true" />
+                <element signature="e#11970#11971#0" expanded="true" />
+                <marker date="1554480679074" expanded="false" signature="13985:14078" ph="(WindowAdapter) windowClosing(e) → { " />
+                <marker date="1554480679074" expanded="false" signature="14088:14112" ph=" }" />
+                <marker date="1554480679074" expanded="false" signature="17521:17540" ph=" { " />
+                <marker date="1554480679074" expanded="false" signature="17579:17593" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -901,17 +901,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MotionSimulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="93" column="12" lean-forward="true" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
+        <state relative-caret-position="153">
+          <caret line="164" column="131" lean-forward="true" selection-start-line="164" selection-start-column="131" selection-end-line="164" selection-end-column="131" />
           <folding>
-            <element signature="e#11444#11567#0" expanded="true" />
-            <element signature="e#11566#11567#0" expanded="true" />
-            <element signature="e#11608#11730#0" expanded="true" />
-            <element signature="e#11729#11730#0" expanded="true" />
-            <marker date="1554472377293" expanded="false" signature="13745:13838" ph="(WindowAdapter) windowClosing(e) → { " />
-            <marker date="1554472377293" expanded="false" signature="13848:13872" ph=" }" />
-            <marker date="1554472377293" expanded="false" signature="17281:17300" ph=" { " />
-            <marker date="1554472377293" expanded="false" signature="17339:17353" ph=" }" />
+            <element signature="e#11685#11808#0" expanded="true" />
+            <element signature="e#11807#11808#0" expanded="true" />
+            <element signature="e#11849#11971#0" expanded="true" />
+            <element signature="e#11970#11971#0" expanded="true" />
+            <marker date="1554480679074" expanded="false" signature="13985:14078" ph="(WindowAdapter) windowClosing(e) → { " />
+            <marker date="1554480679074" expanded="false" signature="14088:14112" ph=" }" />
+            <marker date="1554480679074" expanded="false" signature="17521:17540" ph=" { " />
+            <marker date="1554480679074" expanded="false" signature="17579:17593" ph=" }" />
           </folding>
         </state>
       </provider>

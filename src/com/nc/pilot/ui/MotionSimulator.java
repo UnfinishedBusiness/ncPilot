@@ -27,7 +27,7 @@ public class MotionSimulator extends JFrame {
     float min_feed_rate = 0.5f;
     int x_scale = 400; //Steps per inch
     int y_scale = 325;
-    float x_accel = 5.0f;
+    float x_accel = 30.0f; //inches/min^2
     float max_linear_velocity = 25.0f;
     /* ---------- */
 
@@ -147,6 +147,7 @@ public class MotionSimulator extends JFrame {
         sy = y0<y1 ? 1 : -1;
         err = (dx>dy ? dx : -dy)/2;
         move_start_timestamp = System.currentTimeMillis();
+        motion_timestamp = 0; //This ensures that as soon as there is a target we don't have to wait for the next cycle at "min_feed_rate" for the move to begin
     }
 
     private void interupt()
@@ -161,7 +162,7 @@ public class MotionSimulator extends JFrame {
             y_velocity = (Math.abs(machine_position_dro[1] - last_position[1])/(System.currentTimeMillis() - move_start_timestamp))*60000; //in steps per minute
             float distance_traveled = getDistance(machine_position_dro, last_position);
             float new_velocity = getAcceleratedVelocity(min_feed_rate, x_accel, (System.currentTimeMillis() - move_start_timestamp));
-            //System.out.println("new_velocity - " + new_velocity);
+            //System.out.println("(t=" + (System.currentTimeMillis() - move_start_timestamp) + ") new_velocity - " + new_velocity);
             if (distance_traveled < decceleration_dtg_marker)
             {
                 //We accelerate to target velocity
@@ -260,7 +261,7 @@ public class MotionSimulator extends JFrame {
             public void run() {
                 repaint();
             }
-        }, 0, 30);
+        }, 0, 5);
 
 
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
