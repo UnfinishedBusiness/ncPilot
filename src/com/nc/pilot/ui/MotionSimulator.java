@@ -27,7 +27,7 @@ public class MotionSimulator extends JFrame {
     float min_feed_rate = 0.25f;
     int x_scale = 400; //Steps per inch
     int y_scale = 325;
-    float x_accel = 1.0f;
+    float x_accel = 5.0f;
     float max_linear_velocity = 25.0f;
     /* ---------- */
 
@@ -60,6 +60,7 @@ public class MotionSimulator extends JFrame {
     long x_dist_in_steps;
     long y_dist_in_steps;
     float decceleration_dtg_marker;
+    long time_required_to_accelerate;
     /* ---------------- */
 
     int cycle_speed = 0;
@@ -77,20 +78,22 @@ public class MotionSimulator extends JFrame {
     //Initial Velocity is in units per minute, acceleration is in units/min^2, time is in milliseconds
     public float getAcceleratedVelocity(float initial_velocity, float acceleration, float time_into_move) //Returns feedrate in inches/min
     {
-       return (initial_velocity / 60) + ((acceleration / 60) * (time_into_move / 60)) * 60;
+       return (initial_velocity / 60.0f) + ((acceleration / 60.0f) * (time_into_move / 1000.0f)) * 60.0f;
     }
     public void setFeedrate(float feedrate)
     {
+        linear_velocity = feedrate;
+        System.out.println("Setting Feedrate too: " + feedrate);
         x_dist_in_steps = Math.abs(target_position[0] - machine_position[0]);
         y_dist_in_steps = Math.abs(target_position[1] - machine_position[1]);
         float  linear_distance_in_scaled_units = getDistance(machine_position_dro, target_position_in_real_units);
         if (x_dist_in_steps > y_dist_in_steps) //The x axis has farther to travel. Coordinate feedrate on X axis
         {
-            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000) / x_dist_in_steps) - 1;
+            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000.0f) / x_dist_in_steps) - 1;
         }
         else
         {
-            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000) / y_dist_in_steps) - 1;
+            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000.0f) / y_dist_in_steps) - 1;
         }
     }
     void set_target_position(float x, float y, float target_feed_rate)
@@ -101,11 +104,10 @@ public class MotionSimulator extends JFrame {
         System.out.println("total_move_distance - " + total_move_distance);
         last_position = new float[] {machine_position_dro[0], machine_position_dro[1]};
         target_position = new int[]{(int)(x * x_scale), (int)(y * y_scale)};
-        move_start_timestamp = System.currentTimeMillis();
-
-        long time_required_to_accelerate = (long) (((target_feed_rate / 60) - (min_feed_rate / 60)) / (x_accel / 60)) * 60;
+        move_decel_timestamp = 0;
+        time_required_to_accelerate = (long) ((((target_feed_rate / 60.0f) - (min_feed_rate / 60.0f)) / (x_accel / 60.0f)) * 60.0f);
         System.out.println("time_required_to_accelerate - " + time_required_to_accelerate);
-        float distance_required_to_accelerate = (float) (((min_feed_rate / 60) * (time_required_to_accelerate / 60)) + 0.5 * (x_accel / 60) * Math.pow(time_required_to_accelerate / 60, 2));
+        float distance_required_to_accelerate = (float) (((min_feed_rate / 60.0f) * (time_required_to_accelerate / 60.0f)) + 0.5f * (x_accel / 60.0f) * Math.pow(time_required_to_accelerate / 60.0f, 2));
         System.out.println("distance_required_to_accelerate - " + distance_required_to_accelerate);
         //Can we accelerate to the target velocity and decelerate to exit velocity in the distance we have to travel?
         if (distance_required_to_accelerate * 2 < total_move_distance)
@@ -133,6 +135,7 @@ public class MotionSimulator extends JFrame {
         dy = Math.abs(y1-y0);
         sy = y0<y1 ? 1 : -1;
         err = (dx>dy ? dx : -dy)/2;
+        move_start_timestamp = System.currentTimeMillis();
     }
 
     private void interupt()
@@ -142,7 +145,7 @@ public class MotionSimulator extends JFrame {
             float sample_distance = getDistance(machine_position_dro, last_position);
             //System.out.println("Sample Distance: " + sample_distance);
             //(distance/time)*60,000 = velocity in steps per minute
-            linear_velocity = (sample_distance/(System.currentTimeMillis() - move_start_timestamp))*60000;
+            //linear_velocity = (sample_distance/(System.currentTimeMillis() - move_start_timestamp))*60000;
             x_velocity = (Math.abs(machine_position_dro[0] - last_position[0])/(System.currentTimeMillis() - move_start_timestamp))*60000; //in steps per minute
             y_velocity = (Math.abs(machine_position_dro[1] - last_position[1])/(System.currentTimeMillis() - move_start_timestamp))*60000; //in steps per minute
             float distance_traveled = getDistance(machine_position_dro, last_position);
@@ -161,17 +164,26 @@ public class MotionSimulator extends JFrame {
                 }
                 move_decel_timestamp = 0;
             }
+            else if (move_decel_timestamp == 0)
+            {
+                move_decel_timestamp = System.currentTimeMillis();
+                //System.out.println("move_decel_timestamp - " + move_decel_timestamp);
+            }
+            else if (move_decel_timestamp == -1)
+            {
+
+            }
             else
             {
-                if (move_decel_timestamp == 0) move_decel_timestamp = System.currentTimeMillis();
                 //We deccelerate to target velocity
-                System.out.println("Time into deceleration: " + (System.currentTimeMillis() - move_decel_timestamp));
-                new_velocity = getAcceleratedVelocity(target_velocity, x_accel * -1, (System.currentTimeMillis() - move_decel_timestamp));
-                System.out.println("new_velocity - " + new_velocity);
+                //System.out.println("Decelleration Period: " + (time_required_to_accelerate - (System.currentTimeMillis() - move_decel_timestamp)));
+                new_velocity = getAcceleratedVelocity(target_velocity, x_accel, time_required_to_accelerate - (System.currentTimeMillis() - move_decel_timestamp));
+                //System.out.println("new_velocity - " + new_velocity);
                 if (new_velocity < min_feed_rate)
                 {
-                    System.out.println("Clamping feedrate to min feed rate to ensure move finishes!");
+                    //System.out.println("Clamping feedrate to min feed rate to ensure move finishes!");
                     setFeedrate(min_feed_rate);
+                    move_decel_timestamp = -1; //Deceleration is finished
                 }
                 else
                 {
@@ -263,7 +275,7 @@ public class MotionSimulator extends JFrame {
 
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-                                    set_target_position(5.0f, 4.0f, 10f);
+                                    set_target_position(2f, 1.5f, 10f);
                                     repaint();
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_1) {
