@@ -105,9 +105,9 @@ public class MotionSimulator extends JFrame {
         last_position = new float[] {machine_position_dro[0], machine_position_dro[1]};
         target_position = new int[]{(int)(x * x_scale), (int)(y * y_scale)};
         move_decel_timestamp = 0;
-        time_required_to_accelerate = (long) ((((target_feed_rate / 60.0f) - (min_feed_rate / 60.0f)) / (x_accel / 60.0f)) * 60.0f);
+        time_required_to_accelerate = (long) ((((target_feed_rate / 60.0f) - (min_feed_rate / 60.0f)) / (x_accel / 60.0f)) * 1000.0f);
         System.out.println("time_required_to_accelerate - " + time_required_to_accelerate);
-        float distance_required_to_accelerate = (float) (((min_feed_rate / 60.0f) * (time_required_to_accelerate / 60.0f)) + 0.5f * (x_accel / 60.0f) * Math.pow(time_required_to_accelerate / 60.0f, 2));
+        float distance_required_to_accelerate = (float) (((min_feed_rate / 60.0f) * (time_required_to_accelerate / 1000.0f)) + 0.5f * (x_accel / 60.0f) * Math.pow(time_required_to_accelerate / 1000.0f, 2));
         System.out.println("distance_required_to_accelerate - " + distance_required_to_accelerate);
         //Can we accelerate to the target velocity and decelerate to exit velocity in the distance we have to travel?
         if (distance_required_to_accelerate * 2 < total_move_distance)
