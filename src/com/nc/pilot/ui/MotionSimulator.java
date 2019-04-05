@@ -24,7 +24,7 @@ public class MotionSimulator extends JFrame {
     java.util.Timer repaint_timer = new java.util.Timer();
 
     /* Machine Parameters */
-    float min_feed_rate = 0.25f;
+    float min_feed_rate = 0.5f;
     int x_scale = 400; //Steps per inch
     int y_scale = 325;
     float x_accel = 5.0f;
@@ -83,17 +83,17 @@ public class MotionSimulator extends JFrame {
     public void setFeedrate(float feedrate)
     {
         linear_velocity = feedrate;
-        System.out.println("Setting Feedrate too: " + feedrate);
+        //System.out.println("Setting Feedrate too: " + feedrate);
         x_dist_in_steps = Math.abs(target_position[0] - machine_position[0]);
         y_dist_in_steps = Math.abs(target_position[1] - machine_position[1]);
         float  linear_distance_in_scaled_units = getDistance(machine_position_dro, target_position_in_real_units);
         if (x_dist_in_steps > y_dist_in_steps) //The x axis has farther to travel. Coordinate feedrate on X axis
         {
-            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000.0f) / x_dist_in_steps) - 1;
+            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000.0f) / x_dist_in_steps) - 3; //The -3 is about what the interupt loop costs in time. This is critical for accel/deccel timing
         }
         else
         {
-            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000.0f) / y_dist_in_steps) - 1;
+            cycle_speed = (int)(((linear_distance_in_scaled_units / feedrate) * 60000.0f) / y_dist_in_steps) - 3;
         }
     }
     void set_target_position(float x, float y, float target_feed_rate)
@@ -121,7 +121,18 @@ public class MotionSimulator extends JFrame {
         else
         {
             System.out.println("We can't accelerate to target velocity!");
-            target_velocity = target_feed_rate;
+            float dist = 0;
+            long time = 0;
+            while(dist < (total_move_distance / 2)) //Increment time until distance is more than half of the move, the velocity at this distance is our maximum achievable feedreate
+            {
+                dist = (float) (((min_feed_rate / 60.0f) * (time / 1000.0f)) + 0.5f * (x_accel / 60.0f) * Math.pow(time / 1000.0f, 2));
+                time++;
+            }
+            target_velocity = getAcceleratedVelocity(min_feed_rate, x_accel, time);
+            System.out.println("Maximum feedrate is - " + target_velocity);
+            time_required_to_accelerate = (long) ((((target_velocity / 60.0f) - (min_feed_rate / 60.0f)) / (x_accel / 60.0f)) * 1000.0f);
+            distance_required_to_accelerate = (float) (((min_feed_rate / 60.0f) * (time_required_to_accelerate / 1000.0f)) + 0.5f * (x_accel / 60.0f) * Math.pow(time_required_to_accelerate / 1000.0f, 2));
+            decceleration_dtg_marker = total_move_distance - distance_required_to_accelerate;
             //Figure out the maximum feedrate from acceleration on half of the distance to travel
         }
         setFeedrate(min_feed_rate); //Set initial feedrate for move
@@ -203,6 +214,7 @@ public class MotionSimulator extends JFrame {
             {
                 //We are at our target position. Set next target position
                 InMotion = false;
+                linear_velocity = 0;
             }
             else
             {
