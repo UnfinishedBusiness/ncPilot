@@ -35,14 +35,12 @@ float targets[][3] = {
             {1, 1, 10},
             {1, 3, 20},
             {3, 3, 30},
-            {3, 1, 40},
-            {1, 1, 50},
-
-            //{1, 1, 60},
-            {1, 3, 70},
-            {3, 3, 80},
+            {8, 5, 40},
+            {1, 3, 50},
+            {9, 3, 70},
+            {10, 5, 80},
             {3, 1, 90},
-            {10, 18, 100},
+            {10, 18, 70},
     };
 int target_pointer = 0;
 int target_pointer_length = 9;
@@ -187,6 +185,8 @@ void interupt()
     }
     if ((micros() - motion_timestamp) > cycle_speed)
     {
+        digitalWrite(X_STEP, LOW);
+        digitalWrite(Y_STEP, LOW);
         machine_position[0] = xx0;
         machine_position[1] = yy0;
         machine_position_dro[0] = machine_position[0] * X_SCALE_INVERSE;
@@ -204,6 +204,8 @@ void interupt()
                 else //We reached the end of the program. Set pointer back to beginning
                 {
                     target_pointer = 0;
+                    set_target_position(targets[target_pointer][0], targets[target_pointer][1], targets[target_pointer][2]);
+                    target_pointer++;
                 }
             }
             InMotion = false;
@@ -217,15 +219,11 @@ void interupt()
             {
               err -= dy; xx0 += sx;
               digitalWrite(X_STEP, HIGH);
-              delayMicroseconds(5);
-              digitalWrite(X_STEP, LOW);
             }
             if (e2 < dy)
             {
               err += dx; yy0 += sy;
               digitalWrite(Y_STEP, HIGH);
-              delayMicroseconds(5);
-              digitalWrite(Y_STEP, LOW);
             }
         }
         motion_timestamp = micros();
