@@ -18,7 +18,7 @@ float target_position_in_real_units[] = {0.0, 0.0};
 
 int dx, dy, err, e2, sx, sy, xx0, xx1, yy0, yy1;
 long velocity_update_timestamp;
-unsigned long sample_period = 5; //Sample every x milliseconds
+unsigned long sample_period = 10; //Sample every x milliseconds
 
 /* Variables updated by sample check and used my move */
 float target_velocity = 0.0;
@@ -37,8 +37,8 @@ unsigned long time_required_to_accelerate;
 /* ---------------- */
 
 float targets[][3] = {
-            {1, 1, 40},
-            {5, 8, 70},
+            {1, 1, 200},
+            {10, 15, 350},
     };
 int target_pointer = 0;
 int target_pointer_length = 2;
@@ -47,7 +47,13 @@ unsigned long x_cycle_speed = 0; //Interupt timer in ms, needs to be in microsec
 unsigned long y_cycle_speed = 0;
 bool x_dir = false;
 bool y_dir = false;
-
+float weighted_average(float rawValue, float weight, float lastValue)
+{
+        // run the filter:
+        float result = (float) (weight * rawValue + (1.0-weight)*lastValue);
+        // return the result:
+        return result;
+}
 float getDistance(float start_point[], float end_point[])
 {
   float x,y;

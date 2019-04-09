@@ -1,12 +1,12 @@
 #define X_STEP 12
 #define X_DIR 11
-#define X_SCALE 1600
+#define X_SCALE 1250
 #define X_SCALE_INVERSE  (1 / (float)X_SCALE);
 #define X_ACCEL 30
 
 #define Y_STEP 10
 #define Y_DIR 9
-#define Y_SCALE 4000
+#define Y_SCALE 1250
 #define Y_SCALE_INVERSE (1 / (float)Y_SCALE);
 #define Y_ACCEL 30
 
