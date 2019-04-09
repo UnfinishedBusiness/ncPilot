@@ -1,6 +1,6 @@
 #define X_STEP 12
 #define X_DIR 11
-#define X_SCALE 16000
+#define X_SCALE 1600
 #define X_SCALE_INVERSE  (1 / (float)X_SCALE);
 #define X_ACCEL 30
 
@@ -12,5 +12,5 @@
 
 #define LED 13
 
-#define MIN_FEED_RATE 0.5
+#define MIN_FEED_RATE 0.1
 #define MAX_LINEAR_VELOCITY 100

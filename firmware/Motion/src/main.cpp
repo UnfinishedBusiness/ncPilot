@@ -1,6 +1,10 @@
 #include "Arduino.h"
 #include "Machine.h"
 
+#include <mk20dx128.h>
+
+IntervalTimer MotionTimer;
+
 /* These units are in steps */
 int target_position[] = {0, 0};
 int machine_position[] = {0, 0};
@@ -14,14 +18,15 @@ float target_position_in_real_units[] = {0.0, 0.0};
 
 int dx, dy, err, e2, sx, sy, xx0, xx1, yy0, yy1;
 long velocity_update_timestamp;
-unsigned long sample_period = 10; //Sample every x milliseconds
+unsigned long sample_period = 5; //Sample every x milliseconds
 
 /* Variables updated by sample check and used my move */
 float target_velocity = 0.0;
 float linear_velocity = 0.0;
 float x_velocity = 0.0;
 float y_velocity = 0.0;
-unsigned long motion_timestamp = 0;
+unsigned long x_motion_timestamp = 0;
+unsigned long y_motion_timestamp = 0;
 unsigned long move_start_timestamp = 0;
 unsigned long move_decel_timestamp = 0;
 boolean InMotion = false;
@@ -32,20 +37,17 @@ unsigned long time_required_to_accelerate;
 /* ---------------- */
 
 float targets[][3] = {
-            {1, 1, 10},
-            {1, 3, 20},
-            {3, 3, 30},
-            {8, 5, 40},
-            {1, 3, 50},
-            {9, 3, 70},
-            {10, 5, 80},
-            {3, 1, 90},
-            {10, 18, 70},
+            {1, 1, 40},
+            {5, 8, 70},
     };
 int target_pointer = 0;
-int target_pointer_length = 9;
+int target_pointer_length = 2;
 
-unsigned long cycle_speed = 0; //Interupt timer in ms, needs to be in microseconds once we are ported to ARM embedded
+unsigned long x_cycle_speed = 0; //Interupt timer in ms, needs to be in microseconds once we are ported to ARM embedded
+unsigned long y_cycle_speed = 0;
+bool x_dir = false;
+bool y_dir = false;
+
 float getDistance(float start_point[], float end_point[])
 {
   float x,y;
@@ -58,23 +60,47 @@ float getAcceleratedVelocity(float initial_velocity, float acceleration, float t
 {
     return (initial_velocity / 60.0) + ((acceleration / 60.0) * (time_into_move / 1000.0)) * 60.0;
 }
+/*
+Figure out how long the move will take at MIN_FEED_RATE for each axis total distance to travel.
+Then multiply the scale factor of feedrate to each axis cycle speed variable
+*/
 void setFeedrate(float feedrate)
 {
+    float feed_scale_factor = MIN_FEED_RATE / feedrate;
     linear_velocity = feedrate;
-    x_dist_in_steps = fabs(target_position[0] - machine_position[0]);
-    y_dist_in_steps = fabs(target_position[1] - machine_position[1]);
-    float linear_distance_in_scaled_units = getDistance(machine_position_dro, target_position_in_real_units);
-    if (x_dist_in_steps > y_dist_in_steps) //The x axis has farther to travel. Coordinate feedrate on X axis
-    {
-        cycle_speed = (int)((((linear_distance_in_scaled_units / feedrate) * (60000.0 * 1000)) / x_dist_in_steps) - 0.7); //The -n is about what the interupt loop costs in time. This is critical for accel/deccel timing
-    }
-    else
-    {
-        cycle_speed = (int)((((linear_distance_in_scaled_units / feedrate) * (60000.0 * 1000)) / y_dist_in_steps) - 0.7);
-    }
+    //Serial.print("Setting Feedrate: ");
+    //Serial.println(feedrate);
+
+    float total_move_distance = getDistance(machine_position_dro, target_position_in_real_units);
+    unsigned long x_steps = abs((machine_position_dro[0] * X_SCALE) - (target_position_in_real_units[0] * X_SCALE));
+    unsigned long y_steps = abs((machine_position_dro[1] * Y_SCALE) - (target_position_in_real_units[1] * Y_SCALE));
+    //How long will the move take if feedrate is contstant at MIN_FEED_RATE until we reach target? (in uSec)
+    unsigned long move_time = (total_move_distance / MIN_FEED_RATE) * (60 * 1000 * 1000);
+    //Serial.print("Move Time: ");
+    //Serial.println(move_time);
+    //How long do we have to wait between steps so that each axis runs out of steps at the same time at MIN_FEED_RATE?
+    x_cycle_speed = ((move_time / x_steps) * feed_scale_factor);
+    y_cycle_speed = ((move_time / y_steps) * feed_scale_factor);
+
+    //Serial.print("X Cycle Time: ");
+    //Serial.println(x_cycle_speed);
+
+    //Serial.print("Y Cycle Time: ");
+    //Serial.println(y_cycle_speed);
 }
 void set_target_position(float x, float y, float target_feed_rate)
 {
+    Serial.print("Currently at -> X: ");
+    Serial.print(machine_position_dro[0]);
+    Serial.print(" Y: ");
+    Serial.print(machine_position_dro[1]);
+    Serial.print(" Setting target to -> X: ");
+    Serial.print(x);
+    Serial.print(" Y: ");
+    Serial.print(y);
+    Serial.print(" at F ");
+    Serial.println(target_feed_rate);
+
     target_position_in_real_units[0] = x;
     target_position_in_real_units[1] = y;
 
@@ -114,22 +140,115 @@ void set_target_position(float x, float y, float target_feed_rate)
         decceleration_dtg_marker = total_move_distance - distance_required_to_accelerate;
         //Figure out the maximum feedrate from acceleration on half of the distance to travel
     }
-    setFeedrate(MIN_FEED_RATE); //Set initial feedrate for move
 
-    xx1 = target_position[0];
-    yy1 = target_position[1];
-    xx0 = machine_position[0];
-    yy0 = machine_position[1];
-    dx = abs(xx1-xx0);
-    sx = xx0<xx1 ? 1 : -1;
-    dy = abs(yy1-yy0);
-    sy = yy0<yy1 ? 1 : -1;
-    err = (dx>dy ? dx : -dy)/2;
+    //We also need to keep track of direction here as well, we can set the direction pins here!
+    if (target_position[0] - machine_position[0] < 0)
+    {
+      x_dir = false;
+    }
+    else
+    {
+      x_dir = true;
+    }
+    digitalWrite(X_DIR, x_dir);
+    if (target_position[1] - machine_position[1] < 0)
+    {
+      y_dir = false;
+    }
+    else
+    {
+      y_dir = true;
+    }
+    digitalWrite(Y_DIR, y_dir);
+    x_dist_in_steps = fabs(target_position[0] - machine_position[0]);
+    y_dist_in_steps = fabs(target_position[1] - machine_position[1]);
+    setFeedrate(MIN_FEED_RATE); //Set initial feedrate for move
     move_start_timestamp = millis();
-    motion_timestamp = 0; //This ensures that as soon as there is a target we don't have to wait for the next cycle at "min_feed_rate" for the move to begin
+    x_motion_timestamp = 0; //This ensures that as soon as there is a target we don't have to wait for the next cycle at "min_feed_rate" for the move to begin
+    y_motion_timestamp = 0; //And that both axis start moving at the same time
 }
-void interupt()
+void motion_interupt()
 {
+    if (((micros() - x_motion_timestamp) > x_cycle_speed) && (x_dist_in_steps > 0))
+    {
+        InMotion = true;
+        digitalWrite(X_STEP, HIGH);
+        if (x_dir == true)
+        {
+          machine_position[0]++;
+        }
+        else
+        {
+          machine_position[0]--;
+        }
+         //This needs to be incremented or decremented based on direction of travel!
+        x_dist_in_steps--; //Remove one step from axis distance counter
+        machine_position_dro[0] = machine_position[0] * X_SCALE_INVERSE;
+        x_motion_timestamp = micros();
+    }
+    else if (((micros() - y_motion_timestamp) > y_cycle_speed) && (y_dist_in_steps > 0))
+    {
+      InMotion = true;
+      digitalWrite(Y_STEP, HIGH);
+      if (y_dir == true)
+      {
+        machine_position[1]++;
+      }
+      else
+      {
+        machine_position[1]--;
+      }
+      y_dist_in_steps--; //Remove one step from axis distance counter
+      machine_position_dro[1] = machine_position[1] * Y_SCALE_INVERSE;
+      y_motion_timestamp = micros();
+    }
+    else if (x_dist_in_steps == 0 && y_dist_in_steps == 0) //Move is done
+    {
+      if (InMotion == true)
+      {
+        if (target_pointer_length > target_pointer)
+        {
+            set_target_position(targets[target_pointer][0], targets[target_pointer][1], targets[target_pointer][2]);
+            target_pointer++;
+        }
+        else //We reached the end of the program. Set pointer back to beginning
+        {
+            target_pointer = 0;
+            set_target_position(targets[target_pointer][0], targets[target_pointer][1], targets[target_pointer][2]);
+            target_pointer++;
+        }
+      }
+      InMotion = false;
+      linear_velocity = 0;
+    }
+    else
+    {
+      delayMicroseconds(2);
+      digitalWrite(Y_STEP, LOW);
+      digitalWrite(X_STEP, LOW);
+    }
+}
+void setup()
+{
+  pinMode(LED, OUTPUT);
+
+  pinMode(X_STEP, OUTPUT);
+  pinMode(X_DIR, OUTPUT);
+
+  pinMode(Y_STEP, OUTPUT);
+  pinMode(Y_DIR, OUTPUT);
+
+  Serial.begin(115200);
+
+  MotionTimer.begin(motion_interupt, 10);
+
+  set_target_position(targets[target_pointer][0], targets[target_pointer][1], targets[target_pointer][2]);
+  target_pointer++;
+}
+void loop()
+{
+  while(true)
+  {
     if ((millis() - velocity_update_timestamp) > sample_period && InMotion == true)
     {
         //float sample_distance = getDistance(machine_position_dro, last_position);
@@ -183,78 +302,9 @@ void interupt()
 
         velocity_update_timestamp = millis();
     }
-    if ((micros() - motion_timestamp) > cycle_speed)
+    else
     {
-        digitalWrite(X_STEP, LOW);
-        digitalWrite(Y_STEP, LOW);
-        machine_position[0] = xx0;
-        machine_position[1] = yy0;
-        machine_position_dro[0] = machine_position[0] * X_SCALE_INVERSE;
-        machine_position_dro[1] = machine_position[1] * Y_SCALE_INVERSE;
-        if (xx0==xx1 && yy0==yy1)
-        {
-            //We are at our target position. Set next target position
-            if (InMotion == true) //If we are in motion when the due ends, set the next target position as long as there is one.
-            {
-                if (target_pointer_length > target_pointer)
-                {
-                    set_target_position(targets[target_pointer][0], targets[target_pointer][1], targets[target_pointer][2]);
-                    target_pointer++;
-                }
-                else //We reached the end of the program. Set pointer back to beginning
-                {
-                    target_pointer = 0;
-                    set_target_position(targets[target_pointer][0], targets[target_pointer][1], targets[target_pointer][2]);
-                    target_pointer++;
-                }
-            }
-            InMotion = false;
-            linear_velocity = 0;
-        }
-        else
-        {
-            InMotion = true;
-            e2 = err;
-            if (e2 >-dx)
-            {
-              err -= dy; xx0 += sx;
-              digitalWrite(X_STEP, HIGH);
-            }
-            if (e2 < dy)
-            {
-              err += dx; yy0 += sy;
-              digitalWrite(Y_STEP, HIGH);
-            }
-        }
-        motion_timestamp = micros();
+      digitalWrite(LED, !digitalRead(LED));
     }
-}
-void setup()
-{
-  pinMode(LED, OUTPUT);
-
-  pinMode(X_STEP, OUTPUT);
-  pinMode(X_DIR, OUTPUT);
-
-  pinMode(Y_STEP, OUTPUT);
-  pinMode(Y_DIR, OUTPUT);
-
-  set_target_position(targets[target_pointer][0], targets[target_pointer][1], targets[target_pointer][2]);
-  target_pointer++;
-}
-
-void loop()
-{
-  while(true)
-  {
-    interupt();
   }
-  digitalWrite(LED, HIGH);
-  digitalWrite(X_STEP, HIGH);
-  digitalWrite(Y_STEP, HIGH);
-  delayMicroseconds(5);
-  digitalWrite(LED, LOW);
-  digitalWrite(X_STEP, LOW);
-  digitalWrite(Y_STEP, LOW);
-  delayMicroseconds(900);
 }
