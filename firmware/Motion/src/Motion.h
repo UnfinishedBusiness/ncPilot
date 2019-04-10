@@ -28,9 +28,10 @@ extern "C" {
    int number_of_axis;
    /* ----------------- */
 
-   /* Variables updated by sample check and used by move */
    float target_velocity;
-   float linear_velocity;
+   float current_velocity;
+   float exit_velocity;
+
    unsigned long move_start_timestamp;
    unsigned long move_decel_timestamp;
    bool InMotion;
@@ -71,7 +72,7 @@ extern "C" {
  **********************/
  void motion_init_axis(int, int, int, int, char, char*, float, float, float);
  void motion_init(int, float, float);
- void motion_set_target_position(char*, float);
+ void motion_set_target_position(char*, float, float);
  void motion_timer_tick();
 /**********************
  * CONTROLS PROTOTYPES

@@ -12,5 +12,5 @@
 
 #define LED 13
 
-#define MIN_FEED_RATE 0.250
+#define MIN_FEED_RATE 0.100
 #define MAX_LINEAR_VELOCITY 100

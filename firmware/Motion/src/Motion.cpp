@@ -10,7 +10,8 @@ void motion_init(int number_of_axis, float min_feed_rate, float max_linear_veloc
   if (number_of_axis < MAX_NUMBER_OF_AXIS)
   {
     motion.target_velocity = 0;
-    motion.linear_velocity = 0;
+    motion.current_velocity = 0;
+    motion.exit_velocity = 0;
     motion.move_start_timestamp = 0;
     motion.move_decel_timestamp = 0;
     motion.InMotion = false;
@@ -67,7 +68,7 @@ float getLinearDistance(float start_point[3], float end_point[3])
   return sqrtf(x*x + y*y + z*z);
 }
 //Initial Velocity is in units per minute, acceleration is in units/min^2, distance is in "scale_units" (Hopefully inches because MERICA!)
-float getAccelerationVelocity(float initial_velocity, float acceleration_rate, float distance_into_move) //Returns feedrate in inches/min
+float getAccelerationVelocity(float initial_velocity, float acceleration_rate, float distance_into_move) //Returns feedrate in inches/min at giben distance into move
 {
     //Calculate the time required to accelerate from initial_velocity to target_feedrate in seconds
     float time = ((motion.target_velocity / 60.0) - (initial_velocity / 60.0)) / (acceleration_rate / 60.0);
@@ -85,7 +86,7 @@ angular axis need to arive at the endpoint at the same time as the linear axis
 void motion_set_feedrate(float feedrate)
 {
     float feed_scale_factor = motion.min_feed_rate / feedrate;
-    motion.linear_velocity = feedrate;
+    motion.current_velocity = feedrate;
     for (int x = 0; x < motion.number_of_axis; x++)
     {
       axis[x].cycle_speed = axis[x].cycle_speed_at_min_feed_rate * feed_scale_factor;
@@ -97,8 +98,11 @@ When we set the target position we need to calculate how long the move will take
 linear distance. Divide the amount of time the move should take at "min_feed_rate" by the amount of steps
 each axis has to travel to get the cycle_speed for each axis.
 */
-void motion_set_target_position(char* target_words, float target_feed_rate)
+void motion_set_target_position(char* target_words, float target_velocity, float exit_velocity)
 {
+  motion.target_velocity = target_velocity;
+  motion.exit_velocity = exit_velocity;
+
   Serial.print("Setting target -> ");
   Serial.println(target_words);
   //Set Target positions for each axis by parsing target_words
@@ -176,6 +180,82 @@ void motion_set_target_position(char* target_words, float target_feed_rate)
     Serial.print(axis[x].initial_velocity);
     Serial.print(" and Initial Cycle speed is ");
     Serial.println(axis[x].cycle_speed_at_min_feed_rate);
+  }
+  /* Calculate amount of distance required to accelrate to target velocity using the axis that has to travel the farthest's max_accel constraint
+  If we don't have enough distance to accelerate from motion.current_velocity to motion.target_velocity, update motion.target_velocity to the highest
+  feesable target_velocity given max accel contraints*/
+
+  int biggest_axis = 0;
+  int biggest_distance = 0;
+  for (int x = 0; x < motion.number_of_axis; x++)
+  {
+    if (biggest_distance < axis[x].steps_left_to_travel)
+    {
+      biggest_axis = x;
+      biggest_distance = axis[x].steps_left_to_travel;
+    }
+  }
+  //Calculate the time required to accelerate from initial_velocity to target_feedrate in seconds
+  float accel_time = ((motion.target_velocity / 60.0) - (motion.current_velocity / 60.0)) / (axis[biggest_axis].max_accel / 60.0);
+  //Calculate the distance needed to reach target velocity from current velocity
+  float accel_displacement = 0.5 * ((motion.target_velocity / 60) + (motion.current_velocity / 60)) * accel_time;
+  Serial.print("Acceleration requires ");
+  Serial.print(accel_time);
+  Serial.print("s aka a distance of ");
+  Serial.print(accel_displacement);
+  Serial.println(" to accelerate from current_velocity to target_velocity");
+
+  //Calculate the time required to accelerate from initial_velocity to target_feedrate in seconds
+  float deccel_time = ((motion.target_velocity / 60.0) - (motion.exit_velocity / 60.0)) / (axis[biggest_axis].max_accel / 60.0);
+  //Calculate the distance needed to reach target velocity from current velocity
+  float deccel_displacement = 0.5 * ((motion.target_velocity / 60) + (motion.exit_velocity / 60)) * deccel_time;
+  Serial.print("deceleration requires ");
+  Serial.print(deccel_time);
+  Serial.print("s aka a distance of ");
+  Serial.print(deccel_displacement);
+  Serial.println(" to decelerate from target_velocity to exit_velocity");
+
+  /* Do we have enough distance to travel to accelerate to target_velocity then decelerate to exit_velocity?*/
+  if (total_move_distance > (accel_displacement + deccel_displacement))
+  {
+    //No Further calculations will be needed here
+    Serial.println("We have enough distance to accel and deccel!");
+  }
+  else
+  {
+    /* Since we don't have enough distance, we need to find the maximum possible target feedrate that we can accelrate to and decelerate from within
+     our constraints for the move */
+    Serial.println("We don't enough distance to accel and deccel!");
+    /* The idea is to decrement target_velocity by one "min_feedrate" and re-calculate accel and decel until we find a target that fits whithin our contraints*/
+    while (motion.target_velocity > motion.min_feed_rate)
+    {
+      motion.target_velocity -= motion.min_feed_rate;
+      accel_time = ((motion.target_velocity / 60.0) - (motion.current_velocity / 60.0)) / (axis[biggest_axis].max_accel / 60.0);
+      accel_displacement = 0.5 * ((motion.target_velocity / 60) + (motion.current_velocity / 60)) * accel_time;
+
+      //Calculate the time required to accelerate from initial_velocity to target_feedrate in seconds
+      deccel_time = ((motion.target_velocity / 60.0) - (motion.exit_velocity / 60.0)) / (axis[biggest_axis].max_accel / 60.0);
+      //Calculate the distance needed to reach target velocity from current velocity
+      deccel_displacement = 0.5 * ((motion.target_velocity / 60) + (motion.exit_velocity / 60)) * deccel_time;
+      if (total_move_distance > (accel_displacement + deccel_displacement))
+      {
+        Serial.print("Maximum target_velocity is ");
+        Serial.println(motion.target_velocity);
+
+        Serial.print("Acceleration requires ");
+        Serial.print(accel_time);
+        Serial.print("s aka a distance of ");
+        Serial.print(accel_displacement);
+        Serial.println(" to accelerate from current_velocity to target_velocity");
+
+        Serial.print("deceleration requires ");
+        Serial.print(deccel_time);
+        Serial.print("s aka a distance of ");
+        Serial.print(deccel_displacement);
+        Serial.println(" to decelerate from target_velocity to exit_velocity");        
+        break;
+      }
+    }
   }
 
 }

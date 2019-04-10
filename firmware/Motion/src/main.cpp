@@ -32,7 +32,7 @@ void loop()
 {
   if (Serial.available())
   {
-    motion_set_target_position("X10.250Y10.250", 30);
+    motion_set_target_position("X0.010Y0.125", 30, 0);
     Serial.read();
   }
 }
