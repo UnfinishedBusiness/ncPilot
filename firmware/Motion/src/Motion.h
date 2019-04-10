@@ -22,17 +22,6 @@ extern "C" {
  **********************/
  typedef struct
  {
-   /* These units are in steps */
-   int target_position[MAX_NUMBER_OF_AXIS];
-   int machine_position[MAX_NUMBER_OF_AXIS];
-   /* --------- */
-
-   /* These are in scaled units */
-   float last_position[MAX_NUMBER_OF_AXIS];
-   float machine_position_dro[MAX_NUMBER_OF_AXIS];
-   float target_position_in_real_units[MAX_NUMBER_OF_AXIS];
-   /* ------------ */
-
    /* Motion Parameters */
    float min_feed_rate;
    float max_linear_velocity;
@@ -65,7 +54,7 @@ extern "C" {
 
    /* Positional Data */
    float current_position;
-   
+
    /* Target Data */
    float target_position;
 
@@ -81,7 +70,8 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************/
  void motion_init_axis(int, int, int, int, char, char*, float, float, float);
- void motion_init(int, int, int);
+ void motion_init(int, float, float);
+ void motion_set_target_position(char*, float);
  void motion_timer_tick();
 /**********************
  * CONTROLS PROTOTYPES

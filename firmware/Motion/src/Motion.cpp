@@ -5,26 +5,20 @@ motion_t motion;
 axis_t axis[MAX_NUMBER_OF_AXIS];
 
 
-void motion_init(int number_of_axis, int min_feed_rate, int max_linear_velocity)
+void motion_init(int number_of_axis, float min_feed_rate, float max_linear_velocity)
 {
   if (number_of_axis < MAX_NUMBER_OF_AXIS)
   {
-    for (int x = 0; x < number_of_axis; x++)
-    {
-      motion.target_position[x] = 0;
-      motion.last_position[x] = 0;
-      motion.target_position_in_real_units[x] = 0;
-      motion.target_velocity = 0;
-      motion.linear_velocity = 0;
-      motion.move_start_timestamp = 0;
-      motion.move_decel_timestamp = 0;
-      motion.InMotion = false;
-      motion.decceleration_dtg_marker = 0;
-      motion.time_required_to_accelerate = 0;
-      motion.number_of_axis = number_of_axis;
-      motion.min_feed_rate = min_feed_rate;
-      motion.max_linear_velocity = max_linear_velocity;
-    }
+    motion.target_velocity = 0;
+    motion.linear_velocity = 0;
+    motion.move_start_timestamp = 0;
+    motion.move_decel_timestamp = 0;
+    motion.InMotion = false;
+    motion.decceleration_dtg_marker = 0;
+    motion.time_required_to_accelerate = 0;
+    motion.number_of_axis = number_of_axis;
+    motion.min_feed_rate = min_feed_rate;
+    motion.max_linear_velocity = max_linear_velocity;
   }
 }
 void motion_init_axis(int axis_number, int axis_type, int step_pin, int dir_pin, char axis_letter, char* scaled_units, float scale, float max_accel, float max_velocity)
@@ -41,7 +35,7 @@ void motion_init_axis(int axis_number, int axis_type, int step_pin, int dir_pin,
     axis[axis_number].max_velocity = max_velocity;
   }
 }
-float getAxisTargetByLetter(char letter)
+float getAxisTargetByLetter(char axis_word)
 {
   for (int x = 0; x < motion.number_of_axis; x++)
   {
@@ -50,8 +44,9 @@ float getAxisTargetByLetter(char letter)
       return axis[x].target_position;
     }
   }
+  return 0.0; //If we can't find the axed for axis we assume zer0;
 }
-float getAxisPositionByLetter(char letter)
+float getAxisPositionByLetter(char axis_word)
 {
   for (int x = 0; x < motion.number_of_axis; x++)
   {
@@ -60,6 +55,7 @@ float getAxisPositionByLetter(char letter)
       return axis[x].current_position;
     }
   }
+  return 0.0; //If we can't find the axed for axis we assume zer0;
 }
 //We can only have XYZ on linear axis. There can be more than one axis with the same letter but with different scales
 float getLinearDistance(float start_point[3], float end_point[3])
@@ -88,9 +84,9 @@ angular axis need to arive at the endpoint at the same time as the linear axis
 */
 void motion_set_feedrate(float feedrate)
 {
-    float feed_scale_factor = MIN_FEED_RATE / feedrate;
-    linear_velocity = feedrate;
-    for (int x = 0; x < number_of_axis; x++)
+    float feed_scale_factor = motion.min_feed_rate / feedrate;
+    motion.linear_velocity = feedrate;
+    for (int x = 0; x < motion.number_of_axis; x++)
     {
       axis[x].cycle_speed = axis[x].cycle_speed_at_min_feed_rate * feed_scale_factor;
       axis[x].current_velocity = axis[x].initial_velocity * feed_scale_factor;
@@ -103,6 +99,8 @@ each axis has to travel to get the cycle_speed for each axis.
 */
 void motion_set_target_position(char* target_words, float target_feed_rate)
 {
+  Serial.print("Setting target -> ");
+  Serial.println(target_words);
   //Set Target positions for each axis by parsing target_words
   int x = 0;
   char axis_word;
@@ -119,17 +117,22 @@ void motion_set_target_position(char* target_words, float target_feed_rate)
         num_p = 0;
         do{
               x++;
-              number[num_p] = gline[x];
+              number[num_p] = target_words[x];
               num_p++;
         }while(isdigit(target_words[x]) || target_words[x] == '.' || target_words[x] == '-');
         number[num_p-1] = '\0';
         x--;
+        //Serial.print("\tParsed Number: ");
+        //Serial.println(number);
         axis_value = atof(number);
         for (int x = 0; x < motion.number_of_axis; x++)
         {
           if (toupper(axis[x].axis_letter) == toupper(axis_word))
           {
             axis[x].target_position = axis_value;
+            Serial.print(axis[x].axis_letter);
+            Serial.print(" Axis Target Position is ");
+            Serial.print(axis[x].target_position);
             float diff = axis[x].target_position - axis[x].current_position;
             if (diff < 0)
             {
@@ -140,6 +143,8 @@ void motion_set_target_position(char* target_words, float target_feed_rate)
               digitalWrite(axis[x].dir_pin, true);
             }
             axis[x].steps_left_to_travel = fabs(diff) * axis[x].scale;
+            Serial.print(" and steps to travel is ");
+            Serial.println(axis[x].steps_left_to_travel);
           }
         }
       }
@@ -147,21 +152,32 @@ void motion_set_target_position(char* target_words, float target_feed_rate)
   }
   //Calculate the amount of time the move will take at min_feed_rate
   float target_position[3];
-  target_position[0] = getAxisTargetByLetter("x");
-  target_position[1] = getAxisTargetByLetter("y");
-  target_position[2] = getAxisTargetByLetter("z");
+  target_position[0] = getAxisTargetByLetter('x');
+  target_position[1] = getAxisTargetByLetter('y');
+  target_position[2] = getAxisTargetByLetter('z');
   float current_position[3];
-  current_position[0] = getAxisPositionByLetter("x");
-  current_position[1] = getAxisPositionByLetter("y");
-  current_position[2] = getAxisPositionByLetter("z");
-  float total_move_distance = getDistance(target_position, current_position);
+  current_position[0] = getAxisPositionByLetter('x');
+  current_position[1] = getAxisPositionByLetter('y');
+  current_position[2] = getAxisPositionByLetter('z');
+  float total_move_distance = getLinearDistance(target_position, current_position);
+  Serial.print("Moves Linear Distance: ");
+  Serial.println(total_move_distance);
   unsigned long move_time = (total_move_distance / motion.min_feed_rate) * (60 * 1000 * 1000);
-  for (int x = 0; x < number_of_axis; x++)
+  Serial.print("Move will take  ");
+  Serial.print(move_time);
+  Serial.print(" uSec at ");
+  Serial.println(motion.min_feed_rate);
+  for (int x = 0; x < motion.number_of_axis; x++)
   {
-    axis[x].cycle_speed_at_min_feed_rate = ((move_time / axis[x].steps_left_to_travel);
-    axis[x].initial_velocity = ((60 * 1000 * 1000) / cycle_speed_at_min_feed_rate) / axis[x].scale;
+    axis[x].cycle_speed_at_min_feed_rate = (move_time / axis[x].steps_left_to_travel);
+    axis[x].initial_velocity = ((60 * 1000 * 1000) / axis[x].cycle_speed_at_min_feed_rate) / axis[x].scale;
+    Serial.print(axis[x].axis_letter);
+    Serial.print(" Axis Initial Velocity is ");
+    Serial.print(axis[x].initial_velocity);
+    Serial.print(" and Initial Cycle speed is ");
+    Serial.println(axis[x].cycle_speed_at_min_feed_rate);
   }
-  
+
 }
 /* Facilitate High Priority Step Train timing */
 void motion_timer_tick()
