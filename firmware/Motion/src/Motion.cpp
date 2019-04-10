@@ -12,9 +12,7 @@ void motion_init(int number_of_axis, int min_feed_rate, int max_linear_velocity)
     for (int x = 0; x < number_of_axis; x++)
     {
       motion.target_position[x] = 0;
-      motion.machine_position[x] = 0;
       motion.last_position[x] = 0;
-      motion.machine_position_dro[x] = 0;
       motion.target_position_in_real_units[x] = 0;
       motion.target_velocity = 0;
       motion.linear_velocity = 0;
@@ -43,6 +41,26 @@ void motion_init_axis(int axis_number, int axis_type, int step_pin, int dir_pin,
     axis[axis_number].max_velocity = max_velocity;
   }
 }
+float getAxisTargetByLetter(char letter)
+{
+  for (int x = 0; x < motion.number_of_axis; x++)
+  {
+    if (toupper(axis[x].axis_letter) == toupper(axis_word))
+    {
+      return axis[x].target_position;
+    }
+  }
+}
+float getAxisPositionByLetter(char letter)
+{
+  for (int x = 0; x < motion.number_of_axis; x++)
+  {
+    if (toupper(axis[x].axis_letter) == toupper(axis_word))
+    {
+      return axis[x].current_position;
+    }
+  }
+}
 //We can only have XYZ on linear axis. There can be more than one axis with the same letter but with different scales
 float getLinearDistance(float start_point[3], float end_point[3])
 {
@@ -68,14 +86,82 @@ we scale the "cycle_speed" by a scale factor of "min_feed_rate" from input feedr
 This function needs to scale the cycle speed for all axis, not just linear beacuse
 angular axis need to arive at the endpoint at the same time as the linear axis
 */
-void setFeedrate(float feedrate)
+void motion_set_feedrate(float feedrate)
 {
     float feed_scale_factor = MIN_FEED_RATE / feedrate;
     linear_velocity = feedrate;
     for (int x = 0; x < number_of_axis; x++)
     {
       axis[x].cycle_speed = axis[x].cycle_speed_at_min_feed_rate * feed_scale_factor;
+      axis[x].current_velocity = axis[x].initial_velocity * feed_scale_factor;
     }
+}
+/*
+When we set the target position we need to calculate how long the move will take at "min_feed_rate" in
+linear distance. Divide the amount of time the move should take at "min_feed_rate" by the amount of steps
+each axis has to travel to get the cycle_speed for each axis.
+*/
+void motion_set_target_position(char* target_words, float target_feed_rate)
+{
+  //Set Target positions for each axis by parsing target_words
+  int x = 0;
+  char axis_word;
+  char number[10];
+  int num_p;
+  float axis_value;
+  while(true)
+  {
+      if (target_words[x] == '\0') break;
+      if (isalpha(target_words[x]) && target_words[x] != '-' && target_words[x] != '.') //We are a Axis leter
+      {
+        axis_word = target_words[x];
+        number[0] = '\0';
+        num_p = 0;
+        do{
+              x++;
+              number[num_p] = gline[x];
+              num_p++;
+        }while(isdigit(target_words[x]) || target_words[x] == '.' || target_words[x] == '-');
+        number[num_p-1] = '\0';
+        x--;
+        axis_value = atof(number);
+        for (int x = 0; x < motion.number_of_axis; x++)
+        {
+          if (toupper(axis[x].axis_letter) == toupper(axis_word))
+          {
+            axis[x].target_position = axis_value;
+            float diff = axis[x].target_position - axis[x].current_position;
+            if (diff < 0)
+            {
+              digitalWrite(axis[x].dir_pin, false);
+            }
+            else
+            {
+              digitalWrite(axis[x].dir_pin, true);
+            }
+            axis[x].steps_left_to_travel = fabs(diff) * axis[x].scale;
+          }
+        }
+      }
+      x++;
+  }
+  //Calculate the amount of time the move will take at min_feed_rate
+  float target_position[3];
+  target_position[0] = getAxisTargetByLetter("x");
+  target_position[1] = getAxisTargetByLetter("y");
+  target_position[2] = getAxisTargetByLetter("z");
+  float current_position[3];
+  current_position[0] = getAxisPositionByLetter("x");
+  current_position[1] = getAxisPositionByLetter("y");
+  current_position[2] = getAxisPositionByLetter("z");
+  float total_move_distance = getDistance(target_position, current_position);
+  unsigned long move_time = (total_move_distance / motion.min_feed_rate) * (60 * 1000 * 1000);
+  for (int x = 0; x < number_of_axis; x++)
+  {
+    axis[x].cycle_speed_at_min_feed_rate = ((move_time / axis[x].steps_left_to_travel);
+    axis[x].initial_velocity = ((60 * 1000 * 1000) / cycle_speed_at_min_feed_rate) / axis[x].scale;
+  }
+  
 }
 /* Facilitate High Priority Step Train timing */
 void motion_timer_tick()

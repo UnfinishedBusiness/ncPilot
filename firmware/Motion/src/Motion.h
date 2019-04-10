@@ -63,8 +63,15 @@ extern "C" {
    float max_accel;
    float max_velocity;
 
+   /* Positional Data */
+   float current_position;
+   
+   /* Target Data */
+   float target_position;
+
    /* Used for interpolation */
    float current_velocity;
+   float initial_velocity;
    int steps_left_to_travel;
    unsigned long cycle_timestamp;
    unsigned long cycle_speed_at_min_feed_rate;
