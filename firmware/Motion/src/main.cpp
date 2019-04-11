@@ -1,24 +1,36 @@
-#include <AccelStepper.h>
-#include <Machine.h>
+#include "Arduino.h"
+#include "Machine.h"
+#include "Motion.h"
 
-//AccelStepper Xaxis(1, 2, 5); // pin 2 = step, pin 5 = direction
-//AccelStepper Yaxis(1, 3, 6); // pin 3 = step, pin 6 = direction
-//AccelStepper Zaxis(1, 4, 7); // pin 4 = step, pin 7 = direction
+#include <mk20dx128.h>
 
-AccelStepper Xaxis(1, X_STEP, X_DIR); // pin 3 = step, pin 6 = direction
-AccelStepper Yaxis(1, Y_STEP, Y_DIR); // pin 4 = step, pin 7 = direction
+void setup()
+{
+  pinMode(LED, OUTPUT);
 
-void setup() {
-  Xaxis.setMaxSpeed(X_SCALE * 0.666);
-  Xaxis.setAcceleration(X_SCALE * X_ACCEL);
-  Xaxis.moveTo(X_SCALE * 10);
+  pinMode(X_STEP, OUTPUT);
+  pinMode(X_DIR, OUTPUT);
 
-  Yaxis.setMaxSpeed(Y_SCALE * 0.666);
-  Yaxis.setAcceleration(Y_SCALE * Y_ACCEL);
-  Yaxis.moveTo(Y_SCALE * 10);
+  pinMode(Y_STEP, OUTPUT);
+  pinMode(Y_DIR, OUTPUT);
+
+  Serial.begin(115200);
+
+  //MotionTimer.begin(motion_interupt, 10);
+
+  //set_target_position(targets[target_pointer][0], targets[target_pointer][1], targets[target_pointer][2]);
+  //target_pointer++;
+
+  motion_init(2, MIN_FEED_RATE, MAX_LINEAR_VELOCITY);
+  motion_init_axis(0, LINEAR_AXIS, X_STEP, X_DIR, 'X', "Inch", X_SCALE, X_ACCEL, X_MAX_VELOCITY);
+  motion_init_axis(1, LINEAR_AXIS, Y_STEP, Y_DIR, 'Y', "Inch", Y_SCALE, Y_ACCEL, Y_MAX_VELOCITY);
 }
-
-void loop() {
-   Xaxis.run();
-   Yaxis.run();
+void loop()
+{
+  if (Serial.available())
+  {
+    motion_set_target_position("X1Y0", 1, 4);
+    Serial.read();
+  }
+  motion_loop_tick();
 }
