@@ -28,17 +28,24 @@ extern "C" {
    int number_of_axis;
    /* ----------------- */
 
+   float entry_velocity;
    float target_velocity;
    float current_velocity;
    float exit_velocity;
+   float total_move_distance;
 
-   unsigned long move_start_timestamp;
-   unsigned long move_decel_timestamp;
    bool InMotion;
-   float decceleration_dtg_marker;
-   unsigned long time_required_to_accelerate;
    /* ---------------- */
 
+   float acceleration_marker;
+   float decceleration_marker;
+   float acceleration_rate;
+
+   float accel_time;
+   float deccel_time;
+
+   unsigned long move_start_timestamp;
+   unsigned long decceleration_timestamp;
  }motion_t;
 
  typedef struct
@@ -47,9 +54,11 @@ extern "C" {
    int axis_type;
    int step_pin;
    int dir_pin;
+   bool move_direction;
    char axis_letter;
    char *scale_units;
    float scale;
+   float inverse_scale;
    float max_accel;
    float max_velocity;
 
@@ -62,6 +71,8 @@ extern "C" {
    /* Used for interpolation */
    float current_velocity;
    float initial_velocity;
+
+   int total_move_steps;
    int steps_left_to_travel;
    unsigned long cycle_timestamp;
    unsigned long cycle_speed_at_min_feed_rate;
@@ -74,6 +85,7 @@ extern "C" {
  void motion_init(int, float, float);
  void motion_set_target_position(char*, float, float);
  void motion_timer_tick();
+ void motion_loop_tick();
 /**********************
  * CONTROLS PROTOTYPES
  **********************/

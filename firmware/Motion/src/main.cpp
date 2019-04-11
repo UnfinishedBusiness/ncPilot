@@ -4,8 +4,6 @@
 
 #include <mk20dx128.h>
 
-IntervalTimer MotionTimer;
-
 void setup()
 {
   pinMode(LED, OUTPUT);
@@ -23,16 +21,16 @@ void setup()
   //set_target_position(targets[target_pointer][0], targets[target_pointer][1], targets[target_pointer][2]);
   //target_pointer++;
 
-  motion_init(3, MIN_FEED_RATE, MAX_LINEAR_VELOCITY);
+  motion_init(2, MIN_FEED_RATE, MAX_LINEAR_VELOCITY);
   motion_init_axis(0, LINEAR_AXIS, X_STEP, X_DIR, 'X', "Inch", X_SCALE, X_ACCEL, X_MAX_VELOCITY);
   motion_init_axis(1, LINEAR_AXIS, Y_STEP, Y_DIR, 'Y', "Inch", Y_SCALE, Y_ACCEL, Y_MAX_VELOCITY);
-  motion_init_axis(2, LINEAR_AXIS, Y_STEP, Y_DIR, 'Y', "Inch", Y_SCALE*2, Y_ACCEL, Y_MAX_VELOCITY);
 }
 void loop()
 {
   if (Serial.available())
   {
-    motion_set_target_position("X0.010Y0.125", 30, 0);
+    motion_set_target_position("X100", 800, 4);
     Serial.read();
   }
+  motion_loop_tick();
 }
