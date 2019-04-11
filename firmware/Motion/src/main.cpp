@@ -29,7 +29,7 @@ void loop()
 {
   if (Serial.available())
   {
-    motion_set_target_position("X100", 800, 4);
+    motion_set_target_position("X100Y100", 350, 4);
     Serial.read();
   }
   motion_loop_tick();
