@@ -17,6 +17,8 @@ extern "C" {
  #define LINEAR_AXIS 0
  #define ANGULAR_AXIS 1
 
+ #define ACCEL_TICK_PERIOD 10 * 1000 //10 millisecond period
+
 /**********************
  *      TYPEDEFS
  **********************/
@@ -33,19 +35,17 @@ extern "C" {
    float current_velocity;
    float exit_velocity;
    float total_move_distance;
+   float distance_into_move;
+   float distance_to_go;
 
    bool InMotion;
    /* ---------------- */
 
    float acceleration_marker;
    float decceleration_marker;
-   float acceleration_rate;
-
-   float accel_time;
-   float deccel_time;
+   float acceleration_rate_per_cycle;
 
    unsigned long move_start_timestamp;
-   unsigned long decceleration_timestamp;
  }motion_t;
 
  typedef struct

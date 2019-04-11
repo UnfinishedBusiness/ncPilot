@@ -5,6 +5,7 @@ motion_t motion;
 axis_t axis[MAX_NUMBER_OF_AXIS];
 
 IntervalTimer MotionTimer;
+IntervalTimer AccelTimer;
 
 void motion_init(int number_of_axis, float min_feed_rate, float max_linear_velocity)
 {
@@ -70,25 +71,6 @@ float getLinearDistance(float start_point[3], float end_point[3])
   y = end_point[1] - start_point[1];
   z = end_point[2] - start_point[2];
   return sqrtf(x*x + y*y + z*z);
-}
-//Initial Velocity is in units per minute, acceleration is in units/min^2, distance is in "scale_units" (Hopefully inches because MERICA!)
-float getAccelerationVelocity(float initial_velocity, float acceleration_rate, float time_into_move) //Returns feedrate in inches/min at giben distance into move
-{
-    return ((initial_velocity / 60) + ((acceleration_rate) * (time_into_move / (1000 * 1000)))) * 60;
-}
-/*
-When we set the target we calculate how long the move is supposed to take in each linear axis at "min_feed_rate"
-Then we divide that time by the number of steps that each axis has to travel. This gives us the amount of time
-that we need to wait between steps to arive at the endpoint at the same time. In order to change the feedrate
-we scale the "cycle_speed" by a scale factor of "min_feed_rate" from input feedrate.
-This function needs to scale the cycle speed for all axis, not just linear beacuse
-angular axis need to arive at the endpoint at the same time as the linear axis
-*/
-void motion_set_feedrate(float feedrate)
-{
-    //Serial.print("Setting Feedrate to: ");
-    //Serial.println(feedrate);
-    motion.current_velocity = feedrate;
 }
 /*
 When we set the target position we need to calculate how long the move will take at "min_feed_rate" in
@@ -223,7 +205,7 @@ void motion_set_target_position(char* target_words, float target_velocity, float
     Serial.println("We have enough distance to accel and deccel!");
     motion.acceleration_marker = accel_displacement;
     motion.decceleration_marker = total_move_distance - deccel_displacement;
-    motion.acceleration_rate = axis[biggest_axis].max_accel;
+    motion.acceleration_rate_per_cycle = (axis[biggest_axis].max_accel / 1000) * (ACCEL_TICK_PERIOD / 100); //Feedrate velocity increments by this amount each accel cycle tick
     motion.total_move_distance = total_move_distance;
   }
   else
@@ -260,7 +242,7 @@ void motion_set_target_position(char* target_words, float target_velocity, float
         Serial.println(" to decelerate from target_velocity to exit_velocity");
         motion.acceleration_marker = accel_displacement;
         motion.decceleration_marker = total_move_distance - deccel_displacement;
-        motion.acceleration_rate = axis[biggest_axis].max_accel;
+        motion.acceleration_rate_per_cycle = (axis[biggest_axis].max_accel / 1000) * (ACCEL_TICK_PERIOD / 100); //Feedrate velocity increments by this amount each accel cycle tick
         motion.total_move_distance = total_move_distance;
         break;
       }
@@ -271,15 +253,15 @@ void motion_set_target_position(char* target_words, float target_velocity, float
     Serial.println("Current Velocity is zero, setting feedrate to motion.min_feed_rate!");
     //motion_set_feedrate(motion.min_feed_rate);
     motion.entry_velocity = motion.min_feed_rate;
-    motion_set_feedrate(motion.entry_velocity);
+    motion.current_velocity = motion.entry_velocity;
   }
   else
   {
     motion.entry_velocity = motion.current_velocity;
   }
   motion.move_start_timestamp = micros();
-  motion.decceleration_timestamp = 0;
   MotionTimer.begin(motion_timer_tick, 10);
+  AccelTimer.begin(motion_accel_tick, ACCEL_TICK_PERIOD);
 }
 /* Facilitate High Priority Step Train timing */
 void motion_timer_tick()
@@ -304,6 +286,28 @@ void motion_timer_tick()
     }
   }
 }
+/* Facilitate Acceleration and Deceleration */
+void motion_accel_tick()
+{
+  if (distance_into_move < motion.acceleration_marker) //We should currently be accelerating
+  {
+    motion.current_velocity += motion.acceleration_rate_per_cycle;
+    if (motion.current_velocity > motion.target_velocity) motion.current_velocity = motion.target_velocity;
+  }
+  else if (distance_into_move > motion.decceleration_marker)
+  {
+    motion.current_velocity -= motion.acceleration_rate_per_cycle;
+    if (motion.current_velocity < motion.exit_velocity) motion.current_velocity = motion.exit_velocity;
+  }
+
+  //Update cycle_scale for each axis to new feedrate
+  float cycle_scale = motion.min_feed_rate / motion.current_velocity;
+  for (int x = 0; x < motion.number_of_axis; x++)
+  {
+    axis[x].cycle_speed = axis[x].cycle_speed_at_min_feed_rate * cycle_scale;
+    axis[x].current_velocity = axis[x].initial_velocity * cycle_scale;
+  }
+}
 void motion_loop_tick()
 {
   float distance_into_move, dtg, x_dtg, y_dtg, z_dtg = 0;
@@ -326,52 +330,13 @@ void motion_loop_tick()
   }
   if (motion.InMotion == true)
   {
-    dtg = sqrtf(x_dtg*x_dtg + y_dtg*y_dtg + z_dtg*z_dtg);
-    //Serial.print("DTG: ");
-    //Serial.println(dtg);
-    distance_into_move = motion.total_move_distance - dtg;
-    if (motion.current_velocity < motion.min_feed_rate) motion.current_velocity = motion.min_feed_rate;
-    if (motion.current_velocity > motion.max_linear_velocity) motion.current_velocity = motion.max_linear_velocity;
-    unsigned long move_time = (dtg / motion.current_velocity) * (60 * 1000 * 1000);
-    for (int x = 0; x < motion.number_of_axis; x++)
-    {
-      axis[x].cycle_speed = (move_time / axis[x].steps_left_to_travel);
-      axis[x].current_velocity = axis[x].initial_velocity;
-    }
-
-    if (distance_into_move < motion.acceleration_marker) //We should currently be accelerating
-    {
-      float new_velocity = getAccelerationVelocity(motion.entry_velocity, motion.acceleration_rate, (micros() - motion.move_start_timestamp));
-      if (new_velocity < motion.target_velocity)
-      {
-        motion_set_feedrate(new_velocity);
-      }
-      else
-      {
-        motion_set_feedrate(motion.target_velocity);
-      }
-    }
-    else if (distance_into_move > motion.decceleration_marker)
-    {
-      if (motion.decceleration_timestamp == 0) motion.decceleration_timestamp = micros();
-      float new_velocity = getAccelerationVelocity(motion.exit_velocity, motion.acceleration_rate, (motion.accel_time * 1000 * 1000) - (micros() - motion.decceleration_timestamp));
-      if (new_velocity < motion.current_velocity)
-      {
-        if (new_velocity > motion.exit_velocity)
-        {
-          motion_set_feedrate(new_velocity);
-        }
-        else
-        {
-          motion_set_feedrate(motion.exit_velocity);
-        }
-      }
-    }
+    motion.distance_to_go = sqrtf(x_dtg*x_dtg + y_dtg*y_dtg + z_dtg*z_dtg);
+    motion.distance_into_move = motion.total_move_distance - dtg;
   }
-
   if (total_steps_left == 0) //There is no more distance to travel!
   {
     MotionTimer.end();
+    AccelTimer.end();
     motion.InMotion = false;
   }
 }
