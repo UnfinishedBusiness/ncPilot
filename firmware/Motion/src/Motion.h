@@ -17,6 +17,8 @@ extern "C" {
  #define LINEAR_AXIS 0
  #define ANGULAR_AXIS 1
 
+ #define ACCEL_TICK_PERIOD 1000
+
 /**********************
  *      TYPEDEFS
  **********************/
@@ -33,19 +35,20 @@ extern "C" {
    float current_velocity;
    float exit_velocity;
    float total_move_distance;
+   float distance_into_move;
+   float distance_to_go;
 
    bool InMotion;
    /* ---------------- */
 
    float acceleration_marker;
    float decceleration_marker;
-   float acceleration_rate;
+   float acceleration_rate_per_cycle;
 
    float accel_time;
    float deccel_time;
 
    unsigned long move_start_timestamp;
-   unsigned long decceleration_timestamp;
  }motion_t;
 
  typedef struct
@@ -75,7 +78,6 @@ extern "C" {
    int total_move_steps;
    int steps_left_to_travel;
    unsigned long cycle_timestamp;
-   unsigned long cycle_speed_at_min_feed_rate;
    unsigned long cycle_speed;
  }axis_t;
 /**********************
@@ -85,7 +87,10 @@ extern "C" {
  void motion_init(int, float, float);
  void motion_set_target_position(char*, float, float);
  void motion_timer_tick();
+ void motion_accel_tick();
  void motion_loop_tick();
+
+ void motion_block_until_move_finished();
 /**********************
  * CONTROLS PROTOTYPES
  **********************/

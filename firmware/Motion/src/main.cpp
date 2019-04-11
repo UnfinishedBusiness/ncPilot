@@ -29,8 +29,12 @@ void loop()
 {
   if (Serial.available())
   {
-    motion_set_target_position("X1Y0", 1, 4);
     Serial.read();
   }
-  motion_loop_tick();
+  motion_set_target_position("X20Y20", 150, 50);
+  motion_block_until_move_finished();
+  motion_set_target_position("X25Y40", 150, 0);
+  motion_block_until_move_finished();
+  motion_set_target_position("X0Y0", 300, 0);
+  motion_block_until_move_finished();
 }
