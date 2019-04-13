@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "Motion.h"
+#include "StepGen.h"
 
 int axis_counter;
 axis_t axis[MAX_NUMBER_OF_AXIS];
@@ -9,7 +10,7 @@ void motion_init()
   axis_counter = 0;
 }
 
-void motion_init_axis(int step_gen, char *axis_letter, float max_accel, float scale)
+void motion_init_axis(int step_gen, char axis_letter, float max_accel, float scale)
 {
   axis[axis_counter].stepgen_number = step_gen;
   axis[axis_counter].axis_letter = axis_letter;
@@ -34,6 +35,7 @@ void motion_plan_target(char *target_words, float feedrate)
   char number[10];
   int num_p;
   float axis_value;
+  int x;
   while(true)
   {
       if (target_words[x] == '\0') break;
@@ -50,7 +52,7 @@ void motion_plan_target(char *target_words, float feedrate)
         number[num_p-1] = '\0';
         x--;
         axis_value = atof(number);
-        for (int x = 0; x < motion.number_of_axis; x++)
+        for (int x = 0; x < axis_counter; x++)
         {
           if (toupper(axis[x].axis_letter) == toupper(axis_word))
           {

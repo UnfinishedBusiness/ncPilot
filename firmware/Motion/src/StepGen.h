@@ -14,6 +14,7 @@ extern "C" {
  *********************/
 #define MAX_NUMBER_OF_STEPGENS 2
 #define MAX_NUMBER_OF_SEGMENTS 2000
+ #define SEGMENT_LENGTH 0.005
 /**********************
  *      TYPEDEFS
  **********************/
@@ -30,9 +31,9 @@ extern "C" {
 
  typedef struct
  {
-   int steps_to_move[MAX_NUMBER_OF_STEPGENS]; //Move this number of steps, dir indicated by negative/positive sign
-   int segment_speed[MAX_NUMBER_OF_STEPGENS]; //This needs to be the length of time between steps
-   int segment_velocity[MAX_NUMBER_OF_STEPGENS]; //This needs to be in steps / second
+   int8_t steps_to_move[MAX_NUMBER_OF_STEPGENS]; //Move this number of steps, dir indicated by negative/positive sign
+   int segment_rate[MAX_NUMBER_OF_STEPGENS]; //This needs to be the length of time between steps
+   int8_t segment_velocity[MAX_NUMBER_OF_STEPGENS]; //This needs to be in steps / second
  }stepgen_segment_t;
 
  typedef struct
@@ -52,8 +53,8 @@ extern "C" {
  void stepgen_init(int);
  void stepgen_init_gen(int, int, int);
  bool stepgen_push_segment_to_stack(stepgen_segment_t);
- long stepgen_get_position(int);
- long stepgen_get_velocity(int);
+ int stepgen_get_position(int);
+ int stepgen_get_velocity(int);
  accel_t stepgen_plan_acceleration(float, float, float, float);
  accel_t stepgen_plan_decceleration(float, float, float, float);
 /**********************

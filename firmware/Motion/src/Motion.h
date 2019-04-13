@@ -13,7 +13,6 @@ extern "C" {
  *      DEFINES
  *********************/
  #define MAX_NUMBER_OF_AXIS 6
- #define SEGMENT_LENGTH 0.005
 /**********************
  *      TYPEDEFS
  **********************/
@@ -21,7 +20,7 @@ extern "C" {
  {
    /* Axis Parameters */
    int stepgen_number;
-   char *axis_letter;
+   char axis_letter;
    float max_accel;
    float scale;
 
@@ -38,7 +37,7 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************/
 void motion_init();
-void motion_init_axis(int, char *, float, float);
+void motion_init_axis(int, char, float, float);
 void motion_tick();
 void motion_plan_target(char *, float);
 /**********************
