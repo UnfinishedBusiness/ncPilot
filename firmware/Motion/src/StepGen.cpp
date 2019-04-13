@@ -51,11 +51,48 @@ void stepgen_timer_tick()
     {
       //Serial.println("Segment finished!");
       segment_buffer.shift(); //Eat first segment. First is now next segment
-      for (int x = 0; x < number_of_stepgens; x++) step_counters[x] = 0;
+      for (int x = 0; x < number_of_stepgens; x++)
+      {
+        step_counters[x] = 0;
+        StepGen[x].velocity = segment_buffer.first().segment_velocity[x];
+      }
     }
   }
 }
-
+accel_t stepgen_plan_acceleration(float initial_velocity, float target_velocity, float acceleration_rate, float scale)
+{
+  accel_t ret;
+  float velocity = initial_velocity;
+  ret.accel_time = (target_velocity - initial_velocity) / acceleration_rate;
+  ret.accel_distance = 0.5 * ((target_velocity + initial_velocity) * accel_time);
+  ret.velocity_inc_per_cycle = (float)(target_velocity - initial_velocity) / (float)(accel_distance / SEGMENT_LENGTH);
+  ret.number_of_cycles = (int)(accel_distance / SEGMENT_LENGTH);
+  for (int x = 0; x < ret.number_of_cycles; x++)
+  {
+    ret.steps_to_move = scale * SEGMENT_LENGTH;
+    ret.segment_rate = (velocity * scale);
+    ret.segment_velocity = (int)(1000000.0 / (velocity * scale));
+    velocity += velocity_inc_per_cycle;
+  }
+  return ret;
+}
+accel_t stepgen_plan_decceleration(float initial_velocity, float target_velocity, float acceleration_rate, float scale)
+{
+  accel_t ret;
+  float velocity = initial_velocity;
+  ret.accel_time = (initial_velocity - target_velocity) / acceleration_rate;
+  ret.accel_distance = 0.5 * ((target_velocity + initial_velocity) * accel_time);
+  ret.velocity_inc_per_cycle = (float)(initial_velocity - target_velocity) / (float)(accel_distance / SEGMENT_LENGTH);
+  ret.number_of_cycles = (int)(accel_distance / SEGMENT_LENGTH);
+  for (int x = 0; x < ret.number_of_cycles; x++)
+  {
+    ret.steps_to_move = scale * SEGMENT_LENGTH;
+    ret.segment_rate = (velocity * scale);
+    ret.segment_velocity = (int)(1000000.0 / (velocity * scale));
+    velocity += velocity_inc_per_cycle;
+  }
+  return ret;
+}
 void stepgen_init(int stepgens)
 {
   if (stepgens <= MAX_NUMBER_OF_STEPGENS)
@@ -77,7 +114,16 @@ void stepgen_init_gen(int stepgen, int step_pin, int dir_pin)
     StepGen[stepgen].dir_pin = dir_pin;
   }
 }
+long stepgen_get_position(int gen)
+{
+  return StepGen[gen].position;
+}
+long stepgen_get_velocity(int gen)
+{
+  return StepGen[gen].velocity;
+}
 bool stepgen_push_segment_to_stack(stepgen_segment_t segment)
 {
-    return segment_buffer.push(segment);
+  while(segment_buffer.isFull()); //Don't add any data until there is room in the buffer
+  segment_buffer.push(segment);
 }

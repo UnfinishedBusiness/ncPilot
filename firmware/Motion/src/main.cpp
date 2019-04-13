@@ -17,8 +17,14 @@ void setup()
   Serial.begin(115200);
 
   stepgen_init(2);
+  motion_init();
+
   stepgen_init_gen(0, Y_STEP, Y_DIR);
   stepgen_init_gen(1, X_STEP, X_DIR);
+
+  motion_init_axis(0, 'Y', Y_ACCEL, Y_SCALE);
+  motion_init_axis(1, 'X', X_ACCEL, X_SCALE);
+
 }
 void plan_acceleration(float initial_velocity, float target_velocity, float acceleration_rate)
 {
@@ -43,10 +49,12 @@ void plan_acceleration(float initial_velocity, float target_velocity, float acce
   for (int x = 0; x < (int)(accel_distance / segment_length); x++)
   {
     segment.steps_to_move[0] = Y_SCALE * segment_length;
+    segment.segment_rate[0] = (velocity * Y_SCALE);
+    segment.segment_velocity[0] = (int)(1000000.0 / (velocity * Y_SCALE));
 
-    segment.segment_speed[0] = (int)(1000000.0 / (velocity * Y_SCALE));
     segment.steps_to_move[1] = 0;
-    segment.segment_speed[1] = (MIN_FEED_RATE * X_SCALE);
+    segment.segment_rate[0] = (velocity * X_SCALE);
+    segment.segment_velocity[1] = (int)(1000000.0 / (velocity * X_SCALE));
     stepgen_push_segment_to_stack(segment);
     velocity += velocity_inc_per_cycle;
   }
