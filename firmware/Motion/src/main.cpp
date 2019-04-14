@@ -10,10 +10,10 @@ void setup()
   pinMode(LED, OUTPUT);
 
   pinMode(X_STEP, OUTPUT);
-  pinMode(X_DIR, OUTPUT);
+  //pinMode(X_DIR, OUTPUT);
 
   pinMode(Y_STEP, OUTPUT);
-  pinMode(Y_DIR, OUTPUT);
+  //pinMode(Y_DIR, OUTPUT);
 
   Serial.begin(115200);
 
@@ -27,84 +27,55 @@ void setup()
   motion_init_axis(1, 'X', X_ACCEL, X_SCALE);
 
 }
-void plan_acceleration(float initial_velocity, float target_velocity, float acceleration_rate)
-{
-  stepgen_segment_t segment;
-  float segment_length = 0.005;
-  float velocity = initial_velocity;
-
-  //How long will acceleration take?
-  float accel_time = (target_velocity - initial_velocity) / acceleration_rate;
-  float accel_distance = 0.5 * ((target_velocity + initial_velocity) * accel_time);
-  Serial.print("Accel Time: ");
-  Serial.println(accel_time);
-  Serial.print("Accel Distance: ");
-  Serial.println(accel_distance);
-  Serial.print("Number of segments: ");
-  Serial.println((int)(accel_distance / segment_length));
-
-  float velocity_inc_per_cycle = (float)(target_velocity - initial_velocity) / (float)(accel_distance / segment_length);
-  Serial.print("Velocity inc per cycle: ");
-  Serial.println(velocity_inc_per_cycle, 4);
-
-  for (int x = 0; x < (int)(accel_distance / segment_length); x++)
-  {
-    segment.steps_to_move[0] = Y_SCALE * segment_length;
-    segment.segment_velocity[0] = (velocity * Y_SCALE);
-    segment.segment_rate[0] = (int)(1000000.0 / (velocity * Y_SCALE));
-
-    segment.steps_to_move[1] = 0;
-    segment.segment_rate[1] = 0;
-    segment.segment_velocity[1] = 0;
-    stepgen_push_segment_to_stack(segment);
-    velocity += velocity_inc_per_cycle;
-  }
-}
-void plan_decceleration(float initial_velocity, float target_velocity, float acceleration_rate)
-{
-  stepgen_segment_t segment;
-  float segment_length = 0.005;
-  float velocity = initial_velocity;
-
-  //How long will acceleration take?
-  float accel_time = (initial_velocity - target_velocity) / acceleration_rate;
-  float accel_distance = 0.5 * ((target_velocity + initial_velocity) * accel_time);
-  Serial.print("Accel Time: ");
-  Serial.println(accel_time);
-  Serial.print("Accel Distance: ");
-  Serial.println(accel_distance);
-  Serial.print("Number of segments: ");
-  Serial.println((int)(accel_distance / segment_length));
-
-  float velocity_inc_per_cycle = (float)(initial_velocity - target_velocity) / (float)(accel_distance / segment_length);
-  Serial.print("Velocity inc per cycle: ");
-  Serial.println(velocity_inc_per_cycle, 4);
-
-  for (int x = 0; x < (int)(accel_distance / segment_length); x++)
-  {
-    segment.steps_to_move[0] = Y_SCALE * segment_length;
-    segment.segment_velocity[0] = (velocity * Y_SCALE);
-    segment.segment_rate[0] = (int)(1000000.0 / (velocity * Y_SCALE));
-
-    segment.steps_to_move[1] = 0;
-    segment.segment_rate[1] = 0;
-    segment.segment_velocity[1] = 0;
-    stepgen_push_segment_to_stack(segment);
-    velocity -= velocity_inc_per_cycle;
-  }
-}
 void loop()
 {
   if (Serial.available())
   {
     Serial.read();
-    plan_acceleration(MIN_FEED_RATE, 4.0, 30.0);
-    plan_decceleration(4.0, MIN_FEED_RATE, 30.0);
+    stepgen_segment_t segment;
+    float x_target = 10;
+    float y_target = 5;
+    float initial_feedrate = MIN_FEED_RATE;
+    float target_feedrate = 5.0;
+    float target_accel = 20.0;
+    //Find the axis that has to travel the farthest. Then divide each axis target position by the big axis. This is the scale factor for each axis' target feedrate
+    // and acceleration rate
+    accel_t x_accel = stepgen_plan_acceleration(MIN_FEED_RATE, target_feedrate, target_accel);
+    accel_t y_accel = stepgen_plan_acceleration(MIN_FEED_RATE, target_feedrate * (y_target / x_target), target_accel * (y_target / x_target));
+    Serial.print("x_accel.target_velocity: ");
+    Serial.println(x_accel.target_velocity);
+    Serial.print("x_accel.accel_distance: ");
+    Serial.println(x_accel.accel_distance);
+    Serial.print("y_accel.target_velocity: ");
+    Serial.println(y_accel.target_velocity);
+    Serial.print("y_accel.accel_distance: ");
+    Serial.println(y_accel.accel_distance);
+    int number_of_cycles = (int)(x_accel.accel_distance / SEGMENT_LENGTH);
+    float x_velocity_inc_per_cycle = (float)(x_accel.target_velocity - x_accel.initial_velocity) / number_of_cycles;
+    float y_velocity_inc_per_cycle = (float)(y_accel.target_velocity - y_accel.initial_velocity) / number_of_cycles;
+    Serial.print("number_of_cycles: ");
+    Serial.println(number_of_cycles);
+    Serial.print("x_velocity_inc_per_cycle: ");
+    Serial.println(x_velocity_inc_per_cycle, 4);
+    Serial.print("y_velocity_inc_per_cycle: ");
+    Serial.println(y_velocity_inc_per_cycle, 4);
+    float x_velocity = initial_feedrate;
+    float y_velocity = initial_feedrate;
+    for (int x = 0; x < number_of_cycles; x++)
+    {
+      segment.steps_to_move[0] = X_SCALE * SEGMENT_LENGTH;
+      segment.segment_velocity[0] = (x_velocity * X_SCALE);
+      segment.segment_rate[0] = (int)(1000000.0 / (x_velocity * X_SCALE));
+      x_velocity += x_velocity_inc_per_cycle;
+
+      segment.steps_to_move[1] = (Y_SCALE * (SEGMENT_LENGTH * (y_target / x_target)));
+      segment.segment_velocity[1] = (y_velocity * Y_SCALE);
+      segment.segment_rate[1] = (int)(1000000.0 / (y_velocity * Y_SCALE));
+      y_velocity += y_velocity_inc_per_cycle;
+
+      stepgen_push_segment_to_stack(segment);
+    }
   }
-  plan_acceleration(MIN_FEED_RATE, 12, 1.0);
-  plan_decceleration(12, MIN_FEED_RATE, 1.0);
-  //digitalWrite(Y_DIR, !digitalRead(Y_DIR));
-  //delay(2000);
   digitalWrite(LED, !digitalRead(LED));
-  //delay(100);
+  delay(100);
 }
