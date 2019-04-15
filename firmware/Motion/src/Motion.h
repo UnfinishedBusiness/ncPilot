@@ -24,8 +24,9 @@ extern "C" {
    float max_accel;
    float scale;
 
-   /* Target Data */
-   float target_position;
+   /* Word parsing function sets these variables */
+   float planned_current_position;
+   float planned_target_position;
 
    /* Real-Time Information */
    float absolute_position; //At scale
@@ -33,13 +34,14 @@ extern "C" {
    float current_velocity; //In scale/sec
 
  }axis_t;
+
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
 void motion_init();
 void motion_init_axis(int, char, float, float);
 void motion_tick();
-void motion_plan_target(char *, float);
+void motion_plan_move(char *, char*, float, float, float);
 /**********************
  * CONTROLS PROTOTYPES
  **********************/

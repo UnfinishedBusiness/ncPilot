@@ -471,7 +471,7 @@ public class ToolpathViewer {
                             GcodeStack.add("M5"); //Turn Torch off
                             GcodeStack.add("M9"); //Turn ATHC
                             GcodeStack.add("G4 P" + jet_param.PostDelay); //Post Delay
-                            GcodeStack.add("G53 G0 Z0"); //Rapid to Z Clearance plane
+                            GcodeStack.add("G0 Z1"); //Rapid to Z Clearance plane
                         }
                     }
                 }
@@ -503,7 +503,7 @@ public class ToolpathViewer {
                     GcodeStack.add("M5"); //Turn Torch off
                     GcodeStack.add("M9"); //Turn ATHC
                     GcodeStack.add("G4 P" + jet_param.PostDelay); //Post Delay
-                    GcodeStack.add("G53 G0 Z0"); //Rapid to Z Clearance plane
+                    GcodeStack.add("G0 Z1"); //Rapid to Z Clearance plane
                 }
                 //Post Program Footer
                 GcodeStack.add("M30");
