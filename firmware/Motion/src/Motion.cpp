@@ -160,7 +160,9 @@ void motion_plan_move(char *current_position, char* target_position, float entry
   motion_parse_target_position_words(target_position);
   _debug_print_parsed_axis_positions();
   int biggest_axis = motion_get_axis_with_biggest_planned_move();
-  float target_accel = 5.0;
+  Serial.print("Biggest Axes: ");
+  Serial.println(axis[biggest_axis].axis_letter);
+  float target_accel = 30.0;
   accel_t accel[axis_counter];
   float constraint_scale[axis_counter];
   for (int x = 0; x < axis_counter; x ++)

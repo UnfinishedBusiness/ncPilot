@@ -1,6 +1,6 @@
 #define X_STEP 12
 #define X_DIR 11
-#define X_SCALE 1650
+#define X_SCALE 3300
 #define X_ACCEL 1
 #define X_MAX_VELOCITY 5000
 

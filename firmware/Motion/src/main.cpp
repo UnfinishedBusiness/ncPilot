@@ -32,7 +32,7 @@ void loop()
   if (Serial.available())
   {
     Serial.read();
-    motion_plan_move("X0Y0", "X1Y2", MIN_FEED_RATE, 5.0, MIN_FEED_RATE);
+    motion_plan_move("X0Y0", "X20Y4", MIN_FEED_RATE, 5.0, MIN_FEED_RATE);
   }
   digitalWrite(LED, !digitalRead(LED));
   delay(100);
