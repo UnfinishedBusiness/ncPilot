@@ -209,5 +209,17 @@ void motion_plan_move(char *current_position, char* target_position, float entry
     }
     stepgen_push_segment_to_stack(segment);
   }
+  for (int x = 0; x < number_of_cycles; x++)
+  {
+    for (int y = 0; y < axis_counter; y++)
+    {
+      segment.steps_to_move[axis[y].stepgen_number] = ((axis[y].scale * SEGMENT_LENGTH) * constraint_scale[y]);
+      segment.segment_velocity[axis[y].stepgen_number] = (segment_velocity[y] * axis[y].scale);
+      segment.segment_rate[axis[y].stepgen_number] = (int)(1000000.0 / (segment_velocity[y] * axis[y].scale));
+      segment_velocity[y] -= velocity_inc_per_cycle[y];
+      if (segment_velocity[y] < exit_velocity) segment_velocity[y] = exit_velocity;
+    }
+    stepgen_push_segment_to_stack(segment);
+  }
 
 }
