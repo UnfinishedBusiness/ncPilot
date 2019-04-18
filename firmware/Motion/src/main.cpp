@@ -2,6 +2,7 @@
 #include "Machine.h"
 #include "StepGen.h"
 #include "Motion.h"
+#include "Config.h"
 
 #include <mk20dx128.h>
 
@@ -26,14 +27,17 @@ void setup()
   motion_init_axis(0, 'Y', Y_ACCEL, Y_SCALE);
   motion_init_axis(1, 'X', X_ACCEL, X_SCALE);
 
+  Config_Init();
+
 }
 void loop()
 {
   if (Serial.available())
   {
     Serial.read();
-    motion_plan_move("X0Y0", "X20Y4", MIN_FEED_RATE, 5.0, MIN_FEED_RATE);
+    //motion_plan_move("X0Y0", "X20Y4", MIN_FEED_RATE, 5.0, MIN_FEED_RATE);
+    Config_ParseINI();
   }
   digitalWrite(LED, !digitalRead(LED));
-  delay(100);
+  delay(500);
 }
