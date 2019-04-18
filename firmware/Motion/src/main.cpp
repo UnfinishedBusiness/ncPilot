@@ -18,25 +18,30 @@ void setup()
 
   Serial.begin(115200);
 
-  stepgen_init(2);
-  motion_init();
-
-  stepgen_init_gen(0, Y_STEP, Y_DIR);
-  stepgen_init_gen(1, X_STEP, X_DIR);
-
-  motion_init_axis(0, 'Y', Y_ACCEL, Y_SCALE);
-  motion_init_axis(1, 'X', X_ACCEL, X_SCALE);
-
   Config_Init();
-
+  Config_ParseINI();
+  stepgen_init(MachineConfig.number_of_axis);
+  motion_init();
+  for (int x = 0; x < MachineConfig.number_of_axis; x++)
+  {
+    pinMode(MachineConfig.axis[x].step_pin, OUTPUT);
+    pinMode(MachineConfig.axis[x].dir_pin, OUTPUT);
+    stepgen_init_gen(x, MachineConfig.axis[x].step_pin, MachineConfig.axis[x].dir_pin);
+    motion_init_axis(x, MachineConfig.axis[x].axis_letter, MachineConfig.axis[x].max_accel, MachineConfig.axis[x].scale);
+  }
 }
 void loop()
 {
   if (Serial.available())
   {
     Serial.read();
-    //motion_plan_move("X0Y0", "X20Y4", MIN_FEED_RATE, 5.0, MIN_FEED_RATE);
-    Config_ParseINI();
+    while(true)
+    {
+      motion_plan_move("X0Y0Z0", "X4Y2Z4", MIN_FEED_RATE, 2.0, MIN_FEED_RATE);
+      delay(2000);
+    }
+
+    //Config_DumpINI();
   }
   digitalWrite(LED, !digitalRead(LED));
   delay(500);
