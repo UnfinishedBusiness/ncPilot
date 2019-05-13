@@ -65,9 +65,13 @@ void Planner_PlanActionBuffer()
 
 }
 /*
-If we are not in motion, start at planned action 0 and create small segments to add to the stepgen segment buffer
-while we facilitate acceration or deceleration across these segments. Never let the segmentizer push segments
-past LOOK_AHEAD_SLOTS/2 so that PlanActionBuffer is able to react to new moves that become availble. 
+Segmentize the first planned move on stack and push to stepgen. As soon as the move is pushed to the stepgen, shift the planned and unplanned buffers so there's room
+for the next actions to be added to the stack.
+It's important that the stepgen buffer is always full or motion will get jerky.
+
+This function should be the primary "bottle-neck" of our main loop while executing motion. Motion Interupt Actions, such as feedhold, should
+be pulled in a timer function and events should be placed onto a pending event stack. These events (feedhold, feedrate override, etc) should be factored in
+while breaking the moves into small chewable stepgen segments
 */
 void Planner_SegmentizeActionsInBuffer()
 {

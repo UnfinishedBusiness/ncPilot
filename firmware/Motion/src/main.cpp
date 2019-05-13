@@ -36,6 +36,21 @@ void setup()
     motion_init_axis(x, MachineConfig.axis[x].axis_letter, MachineConfig.axis[x].max_accel, MachineConfig.axis[x].scale);
   }
 }
+
+/*
+The main loop will be used to plan motion from parsing the Move.xmp action file.
+
+The Serial Communication protocal (single-line JSON objects) will be facilitated via a IntervolTimer
+- Will handle Motion Interupt Actions (feedhold, feerate override, ATHC, etc) by adding to a pending event stack
+- Will over-write Move.xmp file to SDCARD by reading data from ncPilot HMU and facilitate a checksum to ensure all
+moves have been written to controller without communication error
+
+The StepGen will be polled via an IntervolTimer and will push out small sycronized segments at pre-specified frequencies
+ that have been preppared by the motion planner.
+
+
+
+*/
 int action_line = 0;
 void loop()
 {
