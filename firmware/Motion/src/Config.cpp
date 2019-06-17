@@ -7,19 +7,12 @@
 
 config_t MachineConfig;
 
-const int chipSelect = BUILTIN_SDCARD;
 const size_t bufferLen = 80;
 char buffer[bufferLen];
 
 //------------------------------------------------------------------------------
 void Config_Init() {
-  if (!SD.begin(BUILTIN_SDCARD)) {
-    while (1)
-    {
-      digitalWrite(LED, !digitalRead(LED));
-      delay(50);
-    }
-  }
+
 }
 void Config_DumpINI()
 {
@@ -105,5 +98,5 @@ void Config_ParseINI()
         MachineConfig.axis[x].axis_letter = toupper(buffer[0]);
       }
     }
-
+    ini.close();
 }

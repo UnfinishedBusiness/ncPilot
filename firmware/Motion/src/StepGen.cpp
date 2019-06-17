@@ -9,7 +9,7 @@ stepgen_t StepGen[MAX_NUMBER_OF_STEPGENS];
 
 int step_counters[MAX_NUMBER_OF_STEPGENS];
 
-
+#define CIRCULAR_BUFFER_INT_SAFE
 CircularBuffer<stepgen_segment_t, MAX_NUMBER_OF_SEGMENTS> segment_buffer;
 
 /* Facilitate High Priority Step Train timing */
