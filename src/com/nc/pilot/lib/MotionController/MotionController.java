@@ -99,12 +99,24 @@ public class MotionController {
     private static float Iword;
     private static float Jword;
 
+    private static int checksum(byte[] buf, int len)
+    {
+        int checksum = 0;
+        int count = len;
+        while (count > 0)
+        {
+            checksum ^= buf[--count];
+        }
+        return checksum;
+    }
+
     public MotionController() {
         SerialPort[] ports = SerialPort.getCommPorts();
         for (int x = 0; x < ports.length; x++)
         {
             System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getDescriptivePortName());
-            if (ports[x].getSystemPortName().contentEquals("cu.usbmodem55365501"))
+            //if (ports[x].getSystemPortName().contentEquals("COM11") && ports[x].getDescriptivePortName().contentEquals("USBSER001"))
+            if (ports[x].getSystemPortName().contentEquals("COM11"))
             {
                 comPort = ports[x];
                 comPort.setBaudRate(115200);
@@ -258,20 +270,27 @@ public class MotionController {
     }
     public void CycleStart()
     {
-        WriteBuffer("~");
         if (GlobalData.GcodeFileLines == null)
         {
+            WriteBuffer("M110 N0\n");
+            WriteBuffer("M28 0.nc\n");
             LoadGcodeFile();
-            if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
-                System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
-                WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
-                GlobalData.GcodeFileCurrentLine++;
+            int n_val = 1;
+            for (int x = 0; x < GlobalData.GcodeFileLines.length; x++) {
+                String line = "N" + n_val + " " + GlobalData.GcodeFileLines[x];
+                int sum = checksum(line.getBytes(), line.length());
+                System.out.println("Writing line: " + line + "*" + sum);
+                WriteBuffer(line + "*" + sum + "\n");
+                n_val++;
             }
+            WriteBuffer("M29\n");
+            WriteBuffer("M23 0.nc\n");
+            WriteBuffer("M24\n");
         }
     }
     public void FeedHold()
     {
-        WriteBuffer("!\n");
+        //WriteBuffer("!\n");
     }
     public void Abort()
     {
@@ -654,14 +673,17 @@ public class MotionController {
                 if (axis_pairs[x].contains("X_MCS"))
                 {
                     GlobalData.machine_cordinates[0] = new Float(axis_pairs[x].split("\\=")[1]);
+                    GlobalData.dro[0] = GlobalData.machine_cordinates[0] + GlobalData.work_offset[0];
                 }
                 if (axis_pairs[x].contains("Y_MCS"))
                 {
                     GlobalData.machine_cordinates[1] = new Float(axis_pairs[x].split("\\=")[1]);
+                    GlobalData.dro[1] = GlobalData.machine_cordinates[1] + GlobalData.work_offset[1];
                 }
                 if (axis_pairs[x].contains("Z_MCS"))
                 {
                     GlobalData.machine_cordinates[2] = new Float(axis_pairs[x].split("\\=")[1]);
+                    GlobalData.dro[2] = GlobalData.machine_cordinates[2] + GlobalData.work_offset[2];
                 }
                 if (axis_pairs[x].contains("UNITS"))
                 {
@@ -674,6 +696,10 @@ public class MotionController {
                 if (axis_pairs[x].contains("VELOCITY"))
                 {
                     GlobalData.CurrentVelocity = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("STATUS"))
+                {
+                    GlobalData.MachineState = axis_pairs[x].split("\\=")[1];
                 }
             }
         }
