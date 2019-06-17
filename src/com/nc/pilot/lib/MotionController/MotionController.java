@@ -104,15 +104,14 @@ public class MotionController {
         for (int x = 0; x < ports.length; x++)
         {
             System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getDescriptivePortName());
-            if (ports[x].getSystemPortName().contentEquals("ttyACM0"))
+            if (ports[x].getSystemPortName().contentEquals("cu.usbmodem55365501"))
             {
                 comPort = ports[x];
                 comPort.setBaudRate(115200);
                 comPort.openPort();
                 rx_buffer_line = "";
 
-                ResetNow();
-                WriteBuffer("?\n");
+                WriteBuffer("G20\n");
             }
         }
     }
@@ -632,6 +631,62 @@ public class MotionController {
         }
     }
     public void ReadBuffer(String inputLine){
+        mdi_console.RecieveBufferLine(inputLine);
+        if (inputLine.contains("DRO"))
+        {
+            String dro_line = inputLine.split("DRO:\\ ")[1];
+            String[] axis_pairs = dro_line.split("\\ ");
+            for (int x = 0; x < axis_pairs.length; x++)
+            {
+                //System.out.println(axis_pairs[x]);
+                if (axis_pairs[x].contains("X"))
+                {
+                    GlobalData.dro[0] = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("Y"))
+                {
+                    GlobalData.dro[1] = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("Z"))
+                {
+                    GlobalData.dro[2] = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("X_WO"))
+                {
+                    GlobalData.work_offset[0] = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("Y_WO"))
+                {
+                    GlobalData.work_offset[1] = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("Z_WO"))
+                {
+                    GlobalData.work_offset[2] = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("X_MCS"))
+                {
+                    GlobalData.machine_cordinates[0] = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("Y_MCS"))
+                {
+                    GlobalData.machine_cordinates[1] = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("Z_MCS"))
+                {
+                    GlobalData.machine_cordinates[2] = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("UNITS"))
+                {
+                    GlobalData.CurrentUnits = axis_pairs[x].split("\\=")[1];
+                }
+                if (axis_pairs[x].contains("VELOCITY"))
+                {
+                    GlobalData.CurrentVelocity = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+            }
+        }
+    }
+    public void ReadBuffer_(String inputLine){
         mdi_console.RecieveBufferLine(inputLine);
         //System.out.println(inputLine);
         if (inputLine.contains("ok"))
