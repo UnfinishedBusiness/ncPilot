@@ -639,18 +639,6 @@ public class MotionController {
             for (int x = 0; x < axis_pairs.length; x++)
             {
                 //System.out.println(axis_pairs[x]);
-                if (axis_pairs[x].contains("X"))
-                {
-                    GlobalData.dro[0] = new Float(axis_pairs[x].split("\\=")[1]);
-                }
-                if (axis_pairs[x].contains("Y"))
-                {
-                    GlobalData.dro[1] = new Float(axis_pairs[x].split("\\=")[1]);
-                }
-                if (axis_pairs[x].contains("Z"))
-                {
-                    GlobalData.dro[2] = new Float(axis_pairs[x].split("\\=")[1]);
-                }
                 if (axis_pairs[x].contains("X_WO"))
                 {
                     GlobalData.work_offset[0] = new Float(axis_pairs[x].split("\\=")[1]);
@@ -678,6 +666,10 @@ public class MotionController {
                 if (axis_pairs[x].contains("UNITS"))
                 {
                     GlobalData.CurrentUnits = axis_pairs[x].split("\\=")[1];
+                }
+                if (axis_pairs[x].contains("FEEDRATE"))
+                {
+                    GlobalData.ProgrammedFeedrate = new Float(axis_pairs[x].split("\\=")[1]);
                 }
                 if (axis_pairs[x].contains("VELOCITY"))
                 {
