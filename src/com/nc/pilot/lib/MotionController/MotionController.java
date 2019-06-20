@@ -309,19 +309,20 @@ public class MotionController {
         GlobalData.ResetOnIdle = false;
         comPort.writeBytes(new byte[]{ 0x18 }, 1);
         WriteBuffer("~\n");
-
     }
     public void JogX_Plus()
     {
         if (GlobalData.JogMode.contentEquals("0.1"))  WriteBuffer("G91 G20 G1 X" + 0.1 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.01"))  WriteBuffer("G91 G20 G1 X" + 0.01 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.001"))  WriteBuffer("G91 G20 G1 X" + 0.001 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P0 S" + jog_speed + " D1\n");
     }
     public void JogX_Minus()
     {
         if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 X-" + 0.1 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 X-" + 0.01 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 X-" + 0.001 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P0 S" + jog_speed + " D-1\n");
     }
 
     public void JogY_Plus()
@@ -350,13 +351,9 @@ public class MotionController {
         if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z-" + 0.001 + " F" + jog_speed + "\n");
     }
 
-    public void EndJog()
+    public void EndXJog()
     {
-        int cancel = 0x85;
-        byte[] data = {0, 0};
-        data[0] = (byte) (cancel & 0xFF);
-        data[1] = (byte) ((cancel >> 8) & 0xFF);
-        comPort.writeBytes(data, 2);
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3001 P0\n");
     }
     public void SetXzero()
     {
@@ -803,98 +800,6 @@ public class MotionController {
             }
 
         }
-        if (GlobalData.JogMode.contentEquals("Continuous") && (GlobalData.SendLines > 0 || GlobalData.MachineState.contentEquals("Idle")))
-        {
-            if (JogX == true || JogY == true || JogZ == true)
-            {
-                GlobalData.MachineState = "Jog";
-                String jog_string = "$J=G20 G91 F + " + jog_speed + " ";
-                float jog_inc_dist = 1.5f * (jog_speed / 6000);
-                if (jog_inc_dist > 0.150f) jog_inc_dist = 0.150f;
-                if (jog_inc_dist < 0.001f) jog_inc_dist = 0.001f;
-                if (JogX == true)
-                {
-                    //System.out.println("Jog X!");
-                    if (JogXdir == true) //Jog Positive
-                    {
-                        jog_string += "X" + jog_inc_dist +  " ";
-                    }
-                    else //Jog negative
-                    {
-                        jog_string += "X-" + jog_inc_dist + " ";
-                    }
-                }
-
-                if (JogY == true)
-                {
-                    //System.out.println("Jog Y!");
-                    if (JogYdir == true) //Jog Positive
-                    {
-                        jog_string += "Y" + jog_inc_dist +  " ";
-                    }
-                    else //Jog negative
-                    {
-                        jog_string += "Y-" + jog_inc_dist +  " ";
-                    }
-                }
-
-                if (JogZ == true)
-                {
-                    //System.out.println("Jog Z!");
-                    if (JogZdir == true) //Jog Positive
-                    {
-                        jog_string += "Z" + jog_inc_dist +  " ";
-                    }
-                    else //Jog negative
-                    {
-                        jog_string += "Z-" + jog_inc_dist +  " ";
-                    }
-                }
-                //System.out.println("Writing jog string: " + jog_string);
-                WriteBuffer(jog_string + "\n");
-                GlobalData.SendLines--;
-            }
-            else
-            {
-                if (GlobalData.MachineState.contentEquals("Jog"))
-                {
-                    GlobalData.MachineState = "Idle";
-                    EndJog();
-                }
-            }
-        }
-        while (GlobalData.SendLines > 0)
-        {
-            if (GlobalData.GcodeFileLines != null)
-            {
-                //System.out.println("{Poll} Sending Line!");
-                if (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length) {
-
-                    //System.out.println("Writing line: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
-                    if (GlobalData.ProbingCycleActive == false) //Stop writing gcode to planner until after probing cycle is finished
-                    {
-                        WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
-                        if (GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine].toLowerCase().contains("m30"))
-                        {
-                            System.out.println("Found end of program, resetting program!");
-                            GlobalData.GcodeFileLines = null;
-                            GlobalData.GcodeFileCurrentLine = 0;
-                            break;
-                        }
-                    }
-                    if (GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine].toLowerCase().contains("g38"))
-                    {
-                        //System.out.println("Found probing cycle, waiting for touch before sending more lines!");
-                        GlobalData.ProbingCycleActive = true;
-                    }
-                    GlobalData.GcodeFileCurrentLine++;
-                }
-            }
-            GlobalData.SendLines--;
-        }
-
-
-
     }
 
     private void ReportError(String line)

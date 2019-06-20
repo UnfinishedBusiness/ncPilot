@@ -255,12 +255,12 @@ public class MachineControl extends JFrame {
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
                                     GlobalData.LeftArrowKeyState = false;
-                                    //motion_controller.EndJog();
+                                    motion_controller.EndXJog();
                                     motion_controller.JogX = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
                                     GlobalData.RightArrowKeyState = false;
-                                    //motion_controller.EndJog();
+                                    motion_controller.EndXJog();
                                     motion_controller.JogX = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
