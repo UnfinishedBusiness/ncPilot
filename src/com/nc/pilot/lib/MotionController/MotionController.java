@@ -330,12 +330,14 @@ public class MotionController {
         if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y" + 0.1 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Y" + 0.01 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y" + 0.001 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P1 S" + jog_speed + " D1\n");
     }
     public void JogY_Minus()
     {
         if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Y-" + 0.1 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Y-" + 0.01 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Y-" + 0.001 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P1 S" + jog_speed + " D-1\n");
     }
 
     public void JogZ_Plus()
@@ -343,17 +345,27 @@ public class MotionController {
         if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z" + 0.1 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z" + 0.01 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z" + 0.001 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P2 S" + jog_speed + " D1\n");
     }
     public void JogZ_Minus()
     {
         if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z-" + 0.1 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z-" + 0.01 + " F" + jog_speed + "\n");
         if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z-" + 0.001 + " F" + jog_speed + "\n");
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P2 S" + jog_speed + " D-1\n");
     }
 
     public void EndXJog()
     {
         if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3001 P0\n");
+    }
+    public void EndYJog()
+    {
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3001 P1\n");
+    }
+    public void EndZJog()
+    {
+        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3001 P2\n");
     }
     public void SetXzero()
     {

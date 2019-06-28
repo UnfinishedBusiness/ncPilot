@@ -245,12 +245,12 @@ public class MachineControl extends JFrame {
                             case KeyEvent.KEY_RELEASED:
                                 if (ke.getKeyCode() == KeyEvent.VK_UP) {
                                     GlobalData.UpArrowKeyState = false;
-                                    //motion_controller.EndJog();
+                                    motion_controller.EndYJog();
                                     motion_controller.JogY = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
                                     GlobalData.DownArrowKeyState = false;
-                                    //motion_controller.EndJog();
+                                    motion_controller.EndYJog();
                                     motion_controller.JogY = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -265,12 +265,12 @@ public class MachineControl extends JFrame {
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_UP) {
                                     GlobalData.PageUpKeyState = false;
-                                    //motion_controller.EndJog();
+                                    motion_controller.EndZJog();
                                     motion_controller.JogZ = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
                                     GlobalData.PageDownKeyState = false;
-                                    //motion_controller.EndJog();
+                                    motion_controller.EndZJog();
                                     motion_controller.JogZ = false;
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
