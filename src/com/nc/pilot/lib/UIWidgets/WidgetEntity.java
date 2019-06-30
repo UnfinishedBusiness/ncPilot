@@ -24,4 +24,5 @@ class WidgetEntity {
     public int real_posx;
     public int real_posy;
     public boolean engaged;
+    public boolean visable;
 }

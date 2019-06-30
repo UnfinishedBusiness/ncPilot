@@ -136,6 +136,17 @@ public class UIWidgets {
         }
         g.drawRect( slider_leftmost + slider_offset, real_posy + 35, 15, 15); //Slider
     }
+    public void DrawInputBox(String text, boolean engaged, boolean visable, int width, int height, int posx, int posy) {
+        if (visable)
+        {
+            int button_font_size = 15;
+            g.setFont(new Font("Arial", Font.PLAIN, button_font_size));
+            int text_posx = (width / 2) - (calculateTextWidth(text) / 2) + posx;
+            int text_posy = posy + (height / 2) + (button_font_size/2);
+            g.drawString(text, text_posx, text_posy);
+            g.drawRect(posx, posy, width, height);
+        }
+    }
     public void AddDRO(){
         //System.out.println("Adding: " + text);
         WidgetEntity w = new WidgetEntity();
@@ -193,6 +204,22 @@ public class UIWidgets {
         WidgetStack.add(w);
         action.run();
     }
+    public int AddInputBox(String text, String anchor, int width, int height, int posx, int posy, Runnable action){
+        //System.out.println("Adding: " + text);
+        WidgetEntity w = new WidgetEntity();
+        w.type = "momentary_button";
+        w.anchor = anchor;
+        w.text = text;
+        w.engaged = false;
+        w.visable = true;
+        w.width = width;
+        w.height = height;
+        w.posx = posx;
+        w.posy = posy;
+        w.action = action;
+        WidgetStack.add(w);
+        return WidgetStack.size() - 1;
+    }
     public int getSliderPosition(String text)
     {
         for (int x = 0; x < WidgetStack.size(); x++)
@@ -228,6 +255,21 @@ public class UIWidgets {
                     WidgetStack.get(x).real_posy = WidgetStack.get(x).posy;
                 }
                 DrawButton(WidgetStack.get(x).text, WidgetStack.get(x).engaged, WidgetStack.get(x).width, WidgetStack.get(x).height, WidgetStack.get(x).real_posx, WidgetStack.get(x).real_posy);
+            }
+            if (WidgetStack.get(x).type.equals("input_box")){
+                if (WidgetStack.get(x).anchor.equals("top-right")){
+                    WidgetStack.get(x).real_posx = Frame_Bounds.width - WidgetStack.get(x).posx - WidgetStack.get(x).width;
+                    WidgetStack.get(x).real_posy = WidgetStack.get(x).posy;
+                }
+                else if (WidgetStack.get(x).anchor.equals("bottom-right")){
+                    WidgetStack.get(x).real_posx = Frame_Bounds.width - WidgetStack.get(x).posx - WidgetStack.get(x).width;
+                    WidgetStack.get(x).real_posy = Frame_Bounds.height - WidgetStack.get(x).posy - WidgetStack.get(x).height;
+                }
+                else {
+                    WidgetStack.get(x).real_posx = WidgetStack.get(x).posx;
+                    WidgetStack.get(x).real_posy = WidgetStack.get(x).posy;
+                }
+                DrawInputBox(WidgetStack.get(x).text, WidgetStack.get(x).engaged, WidgetStack.get(x).visable, WidgetStack.get(x).width, WidgetStack.get(x).height, WidgetStack.get(x).real_posx, WidgetStack.get(x).real_posy);
             }
             if (WidgetStack.get(x).type.equals("select_button")){
                 if (WidgetStack.get(x).anchor.equals("top-right")){

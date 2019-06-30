@@ -1,12 +1,9 @@
 package com.nc.pilot.ui;
 
-import com.nc.pilot.dialogs.JetToolpathCutChart;
-import com.nc.pilot.dialogs.JetToolpathJobSetup;
 import com.nc.pilot.lib.GlobalData;
 import com.nc.pilot.lib.JetCad.DrawingStack.RenderEngine;
 import com.nc.pilot.lib.JetCad.DrawingTools;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
-import org.kabeja.parser.ParseException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -14,13 +11,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 public class JetCad extends JFrame {
     JMenuBar menu_bar;
     UIWidgets ui_widgets;
     RenderEngine render_engine;
     DrawingTools drawing_tools;
+
+    boolean ControlKeyState = false;
 
 
     public JetCad() {
@@ -122,12 +120,26 @@ public class JetCad extends JFrame {
                         if (!GlobalData.configData.CurrentWorkbench.contentEquals("JetCad")) return false;
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
-
-                                //repaint();
+                                //System.out.println("(JetCad) Key: " + ke.getKeyCode());
+                                String c = ke.getKeyText(ke.getKeyCode()).toLowerCase();
+                                //System.out.println("(JetCad) KeyText: " + c);
+                                if (ke.getKeyCode() == 17)
+                                {
+                                    ControlKeyState = true;
+                                }
+                                if (ControlKeyState == true)
+                                {
+                                    //System.out.println("Ctrl-" + c);
+                                    drawing_tools.CheckKeyPress("ctrl-" + c);
+                                    break;
+                                }
                                 break;
 
                             case KeyEvent.KEY_RELEASED:
-
+                                if (ke.getKeyCode() == 17)
+                                {
+                                    ControlKeyState = false;
+                                }
                                 break;
                         }
                         return false;
@@ -158,7 +170,7 @@ public class JetCad extends JFrame {
 
         //Build File menu
         menu = new JMenu("File");
-        menu.setMnemonic(KeyEvent.VK_S);
+        //menu.setMnemonic(VK_S);
         menu.getAccessibleContext().setAccessibleDescription("File operations");
         menu_bar.add(menu);
 

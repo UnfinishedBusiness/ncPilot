@@ -373,4 +373,8 @@ public class DrawingTools {
             }
         });
     }
+    public void CheckKeyPress(String key)
+    {
+
+    }
 }
