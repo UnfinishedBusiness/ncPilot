@@ -2,7 +2,6 @@ package com.nc.pilot.lib.JetCad;
 
 import com.nc.pilot.lib.JetCad.DrawingStack.DrawingEntity;
 import com.nc.pilot.lib.JetCad.DrawingStack.RenderEngine;
-import com.nc.pilot.lib.MDIConsole.MDICommand;
 
 import java.util.ArrayList;
 
@@ -147,6 +146,10 @@ public class DrawingTools {
 
     }
     private void LatheMode()
+    {
+
+    }
+    private void Tab()
     {
 
     }
@@ -372,9 +375,23 @@ public class DrawingTools {
                 LatheMode();
             }
         });
+        AddTool("", "Tab", new Runnable() {
+            @Override
+            public void run() {
+                Tab();
+            }
+        });
     }
     public void CheckKeyPress(String key)
     {
-
+        for (int x = 0; x < ToolStack.size(); x++)
+        {
+            DrawingToolStruct tool = ToolStack.get(x);
+            if (tool.hotkey.contentEquals(key))
+            {
+                tool.action.run();
+                return;
+            }
+        }
     }
 }

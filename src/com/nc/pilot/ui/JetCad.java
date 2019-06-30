@@ -120,7 +120,7 @@ public class JetCad extends JFrame {
                         if (!GlobalData.configData.CurrentWorkbench.contentEquals("JetCad")) return false;
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
-                                //System.out.println("(JetCad) Key: " + ke.getKeyCode());
+                                System.out.println("(JetCad) Key: " + ke.getKeyCode());
                                 String c = ke.getKeyText(ke.getKeyCode()).toLowerCase();
                                 //System.out.println("(JetCad) KeyText: " + c);
                                 if (ke.getKeyCode() == 17)
@@ -132,6 +132,21 @@ public class JetCad extends JFrame {
                                     //System.out.println("Ctrl-" + c);
                                     drawing_tools.CheckKeyPress("ctrl-" + c);
                                     break;
+                                }
+                                else
+                                {
+                                    if (ke.getKeyCode() == 27)
+                                    {
+                                        drawing_tools.CheckKeyPress("Escape");
+                                    }
+                                    else if (ke.getKeyCode() == 9)
+                                    {
+                                        drawing_tools.CheckKeyPress("Tab");
+                                    }
+                                    else
+                                    {
+                                        drawing_tools.CheckKeyPress(c);
+                                    }
                                 }
                                 break;
 
@@ -303,7 +318,12 @@ public class JetCad extends JFrame {
     }
     private void Layout_UI()
     {
+        ui_widgets.AddInputBox("Search", "bottom-left", true,110, 60, 10, 10, new Runnable() {
+            @Override
+            public void run() {
 
+            }
+        });
     }
     // create a panel that you can draw on.
     class JetCadViewerPanel extends JPanel {

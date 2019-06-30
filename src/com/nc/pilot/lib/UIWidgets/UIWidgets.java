@@ -204,14 +204,14 @@ public class UIWidgets {
         WidgetStack.add(w);
         action.run();
     }
-    public int AddInputBox(String text, String anchor, int width, int height, int posx, int posy, Runnable action){
+    public int AddInputBox(String text, String anchor, boolean visable, int width, int height, int posx, int posy, Runnable action){
         //System.out.println("Adding: " + text);
         WidgetEntity w = new WidgetEntity();
-        w.type = "momentary_button";
+        w.type = "input_box";
         w.anchor = anchor;
         w.text = text;
         w.engaged = false;
-        w.visable = true;
+        w.visable = visable;
         w.width = width;
         w.height = height;
         w.posx = posx;

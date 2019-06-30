@@ -7,9 +7,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$17.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$18.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$19.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$20.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$20.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$21.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$21.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$22.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$22.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$23.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$23.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$24.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$24.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$25.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$25.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$26.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$26.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$27.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$27.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$28.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$28.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$29.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$29.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$30.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$30.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$31.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$31.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$32.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$32.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$33.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$33.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/UIWidgets/UIWidgets.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/UIWidgets/UIWidgets.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$JetCadViewerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$JetCadViewerPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/WidgetEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/WidgetEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -27,18 +75,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="133" column="42" selection-start-line="133" selection-start-column="42" selection-end-line="133" selection-end-column="42" />
+            <state relative-caret-position="91">
+              <caret line="320" column="76" selection-start-line="320" selection-start-column="76" selection-end-line="320" selection-end-column="76" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7380#7507#0" expanded="true" />
-                <element signature="e#7506#7507#0" expanded="true" />
                 <element signature="e#9614#9615#0" expanded="true" />
                 <element signature="e#9707#9708#0" expanded="true" />
                 <element signature="e#11474#11475#0" expanded="true" />
                 <element signature="e#11556#11557#0" expanded="true" />
-                <element signature="e#15153#15154#0" expanded="true" />
-                <element signature="e#15214#15215#0" expanded="true" />
+                <element signature="e#16135#16136#0" expanded="true" />
+                <element signature="e#16196#16197#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -47,20 +93,78 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="375" column="29" selection-start-line="375" selection-start-column="16" selection-end-line="375" selection-end-column="29" />
+            <state relative-caret-position="45">
+              <caret line="3" column="57" selection-start-line="3" selection-start-column="57" selection-end-line="3" selection-end-column="57" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#2846#2847#0" expanded="true" />
+                <element signature="e#2889#2890#0" expanded="true" />
+                <element signature="e#3014#3015#0" expanded="true" />
+                <element signature="e#3059#3060#0" expanded="true" />
+                <element signature="e#3176#3177#0" expanded="true" />
+                <element signature="e#3222#3223#0" expanded="true" />
+                <element signature="e#3340#3341#0" expanded="true" />
+                <element signature="e#3387#3388#0" expanded="true" />
+                <element signature="e#3504#3505#0" expanded="true" />
+                <element signature="e#3542#3543#0" expanded="true" />
+                <element signature="e#3661#3662#0" expanded="true" />
+                <element signature="e#3709#3710#0" expanded="true" />
+                <element signature="e#3821#3822#0" expanded="true" />
+                <element signature="e#3863#3864#0" expanded="true" />
+                <element signature="e#3980#3981#0" expanded="true" />
+                <element signature="e#4027#4028#0" expanded="true" />
+                <element signature="e#4141#4142#0" expanded="true" />
+                <element signature="e#4185#4186#0" expanded="true" />
+                <element signature="e#4297#4298#0" expanded="true" />
+                <element signature="e#4335#4336#0" expanded="true" />
+                <element signature="e#4449#4450#0" expanded="true" />
+                <element signature="e#4489#4490#0" expanded="true" />
+                <element signature="e#4603#4604#0" expanded="true" />
+                <element signature="e#4643#4644#0" expanded="true" />
+                <element signature="e#4755#4756#0" expanded="true" />
+                <element signature="e#4793#4794#0" expanded="true" />
+                <element signature="e#4901#4902#0" expanded="true" />
+                <element signature="e#4958#4959#0" expanded="true" />
+                <element signature="e#5066#5067#0" expanded="true" />
+                <element signature="e#5113#5114#0" expanded="true" />
+                <element signature="e#5234#5235#0" expanded="true" />
+                <element signature="e#5280#5281#0" expanded="true" />
+                <element signature="e#5393#5394#0" expanded="true" />
+                <element signature="e#5433#5434#0" expanded="true" />
+                <element signature="e#5557#5558#0" expanded="true" />
+                <element signature="e#5602#5603#0" expanded="true" />
+                <element signature="e#5715#5716#0" expanded="true" />
+                <element signature="e#5755#5756#0" expanded="true" />
+                <element signature="e#5878#5879#0" expanded="true" />
+                <element signature="e#5927#5928#0" expanded="true" />
+                <element signature="e#6039#6040#0" expanded="true" />
+                <element signature="e#6078#6079#0" expanded="true" />
+                <element signature="e#6191#6192#0" expanded="true" />
+                <element signature="e#6231#6232#0" expanded="true" />
+                <element signature="e#6343#6344#0" expanded="true" />
+                <element signature="e#6382#6383#0" expanded="true" />
+                <element signature="e#6494#6495#0" expanded="true" />
+                <element signature="e#6533#6534#0" expanded="true" />
+                <element signature="e#6644#6645#0" expanded="true" />
+                <element signature="e#6682#6683#0" expanded="true" />
+                <element signature="e#6798#6799#0" expanded="true" />
+                <element signature="e#6849#6850#0" expanded="true" />
+                <element signature="e#6961#6962#0" expanded="true" />
+                <element signature="e#7007#7008#0" expanded="true" />
+                <element signature="e#7118#7119#0" expanded="true" />
+                <element signature="e#7156#7157#0" expanded="true" />
+                <element signature="e#7270#7271#0" expanded="true" />
+                <element signature="e#7311#7312#0" expanded="true" />
+                <element signature="e#7421#7422#0" expanded="true" />
+                <element signature="e#7458#7459#0" expanded="true" />
+                <element signature="e#7578#7579#0" expanded="true" />
+                <element signature="e#7624#7625#0" expanded="true" />
+                <element signature="e#7748#7749#0" expanded="true" />
+                <element signature="e#7798#7799#0" expanded="true" />
+                <element signature="e#7915#7916#0" expanded="true" />
+                <element signature="e#7958#7959#0" expanded="true" />
+                <element signature="e#8068#8069#0" expanded="true" />
+                <element signature="e#8105#8106#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="176" column="25" lean-forward="true" selection-start-line="176" selection-start-column="25" selection-end-line="176" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -68,8 +172,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="209" column="36" lean-forward="true" selection-start-line="209" selection-start-column="36" selection-end-line="209" selection-end-column="36" />
+            <state relative-caret-position="248">
+              <caret line="213" column="28" lean-forward="true" selection-start-line="213" selection-start-column="28" selection-end-line="213" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -78,7 +182,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/WidgetEntity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="390">
-              <caret line="26" column="27" lean-forward="true" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+              <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -94,8 +198,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Line:</find>
-      <find>ViewerPartStack</find>
       <find>toolpathViewerStack</find>
       <find>Free</find>
       <find>line</find>
@@ -124,6 +226,8 @@
       <find>float</find>
       <find>Render</find>
       <find>Fit</find>
+      <find>Tab</find>
+      <find>Layout</find>
     </findStrings>
     <replaceStrings>
       <replace>int[]</replace>
@@ -185,9 +289,9 @@
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/ToolpathViewer.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/RenderEngine.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/WidgetEntity.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java" />
       </list>
     </option>
@@ -238,39 +342,6 @@
               <item name="pilot" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="JetCad" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ncPilot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ncPilot" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pilot" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="JetCad" type="462c0819:PsiDirectoryNode" />
-              <item name="DrawingStack" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ncPilot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ncPilot" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pilot" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="MDIConsole" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ncPilot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ncPilot" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pilot" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="ToolPathViewer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ncPilot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ncPilot" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pilot" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="UIWidgets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ncPilot" type="b2602c69:ProjectViewProjectNode" />
@@ -438,7 +509,7 @@
     <frame x="0" y="23" width="1280" height="737" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" id="Project" order="0" visible="true" weight="0.35541195" />
+      <window_info id="Project" order="0" visible="true" weight="0.35541195" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Nl-Palette" order="3" />
@@ -448,7 +519,7 @@
       <window_info id="UI Designer" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32868218" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.21705426" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21705426" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -637,13 +708,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDICommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="4" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="8" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingToolStruct.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -684,14 +748,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/WidgetEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
-          <caret line="26" column="27" lean-forward="true" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="209" column="36" lean-forward="true" selection-start-line="209" selection-start-column="36" selection-end-line="209" selection-end-column="36" />
+          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -722,20 +779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="188" column="32" selection-start-line="188" selection-start-column="32" selection-end-line="188" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="176" column="25" lean-forward="true" selection-start-line="176" selection-start-column="25" selection-end-line="176" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/RenderEngine.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1695">
@@ -743,30 +786,123 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDICommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="4" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="8" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole/MDIConsole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="141" column="42" lean-forward="true" selection-start-line="141" selection-start-column="42" selection-end-line="141" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="505" column="8" selection-start-line="505" selection-start-column="8" selection-end-line="511" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="375" column="29" selection-start-line="375" selection-start-column="16" selection-end-line="375" selection-end-column="29" />
+        <state relative-caret-position="45">
+          <caret line="3" column="57" selection-start-line="3" selection-start-column="57" selection-end-line="3" selection-end-column="57" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2846#2847#0" expanded="true" />
+            <element signature="e#2889#2890#0" expanded="true" />
+            <element signature="e#3014#3015#0" expanded="true" />
+            <element signature="e#3059#3060#0" expanded="true" />
+            <element signature="e#3176#3177#0" expanded="true" />
+            <element signature="e#3222#3223#0" expanded="true" />
+            <element signature="e#3340#3341#0" expanded="true" />
+            <element signature="e#3387#3388#0" expanded="true" />
+            <element signature="e#3504#3505#0" expanded="true" />
+            <element signature="e#3542#3543#0" expanded="true" />
+            <element signature="e#3661#3662#0" expanded="true" />
+            <element signature="e#3709#3710#0" expanded="true" />
+            <element signature="e#3821#3822#0" expanded="true" />
+            <element signature="e#3863#3864#0" expanded="true" />
+            <element signature="e#3980#3981#0" expanded="true" />
+            <element signature="e#4027#4028#0" expanded="true" />
+            <element signature="e#4141#4142#0" expanded="true" />
+            <element signature="e#4185#4186#0" expanded="true" />
+            <element signature="e#4297#4298#0" expanded="true" />
+            <element signature="e#4335#4336#0" expanded="true" />
+            <element signature="e#4449#4450#0" expanded="true" />
+            <element signature="e#4489#4490#0" expanded="true" />
+            <element signature="e#4603#4604#0" expanded="true" />
+            <element signature="e#4643#4644#0" expanded="true" />
+            <element signature="e#4755#4756#0" expanded="true" />
+            <element signature="e#4793#4794#0" expanded="true" />
+            <element signature="e#4901#4902#0" expanded="true" />
+            <element signature="e#4958#4959#0" expanded="true" />
+            <element signature="e#5066#5067#0" expanded="true" />
+            <element signature="e#5113#5114#0" expanded="true" />
+            <element signature="e#5234#5235#0" expanded="true" />
+            <element signature="e#5280#5281#0" expanded="true" />
+            <element signature="e#5393#5394#0" expanded="true" />
+            <element signature="e#5433#5434#0" expanded="true" />
+            <element signature="e#5557#5558#0" expanded="true" />
+            <element signature="e#5602#5603#0" expanded="true" />
+            <element signature="e#5715#5716#0" expanded="true" />
+            <element signature="e#5755#5756#0" expanded="true" />
+            <element signature="e#5878#5879#0" expanded="true" />
+            <element signature="e#5927#5928#0" expanded="true" />
+            <element signature="e#6039#6040#0" expanded="true" />
+            <element signature="e#6078#6079#0" expanded="true" />
+            <element signature="e#6191#6192#0" expanded="true" />
+            <element signature="e#6231#6232#0" expanded="true" />
+            <element signature="e#6343#6344#0" expanded="true" />
+            <element signature="e#6382#6383#0" expanded="true" />
+            <element signature="e#6494#6495#0" expanded="true" />
+            <element signature="e#6533#6534#0" expanded="true" />
+            <element signature="e#6644#6645#0" expanded="true" />
+            <element signature="e#6682#6683#0" expanded="true" />
+            <element signature="e#6798#6799#0" expanded="true" />
+            <element signature="e#6849#6850#0" expanded="true" />
+            <element signature="e#6961#6962#0" expanded="true" />
+            <element signature="e#7007#7008#0" expanded="true" />
+            <element signature="e#7118#7119#0" expanded="true" />
+            <element signature="e#7156#7157#0" expanded="true" />
+            <element signature="e#7270#7271#0" expanded="true" />
+            <element signature="e#7311#7312#0" expanded="true" />
+            <element signature="e#7421#7422#0" expanded="true" />
+            <element signature="e#7458#7459#0" expanded="true" />
+            <element signature="e#7578#7579#0" expanded="true" />
+            <element signature="e#7624#7625#0" expanded="true" />
+            <element signature="e#7748#7749#0" expanded="true" />
+            <element signature="e#7798#7799#0" expanded="true" />
+            <element signature="e#7915#7916#0" expanded="true" />
+            <element signature="e#7958#7959#0" expanded="true" />
+            <element signature="e#8068#8069#0" expanded="true" />
+            <element signature="e#8105#8106#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="213" column="28" lean-forward="true" selection-start-line="213" selection-start-column="28" selection-end-line="213" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="133" column="42" selection-start-line="133" selection-start-column="42" selection-end-line="133" selection-end-column="42" />
+        <state relative-caret-position="91">
+          <caret line="320" column="76" selection-start-line="320" selection-start-column="76" selection-end-line="320" selection-end-column="76" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7380#7507#0" expanded="true" />
-            <element signature="e#7506#7507#0" expanded="true" />
             <element signature="e#9614#9615#0" expanded="true" />
             <element signature="e#9707#9708#0" expanded="true" />
             <element signature="e#11474#11475#0" expanded="true" />
             <element signature="e#11556#11557#0" expanded="true" />
-            <element signature="e#15153#15154#0" expanded="true" />
-            <element signature="e#15214#15215#0" expanded="true" />
+            <element signature="e#16135#16136#0" expanded="true" />
+            <element signature="e#16196#16197#0" expanded="true" />
           </folding>
         </state>
       </provider>
