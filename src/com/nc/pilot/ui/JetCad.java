@@ -3,7 +3,7 @@ package com.nc.pilot.ui;
 import com.nc.pilot.dialogs.JetToolpathCutChart;
 import com.nc.pilot.dialogs.JetToolpathJobSetup;
 import com.nc.pilot.lib.GlobalData;
-import com.nc.pilot.lib.ToolPathViewer.ToolpathViewer;
+import com.nc.pilot.lib.JetCad.DrawingStack.RenderEngine;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 import org.kabeja.parser.ParseException;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class JetCad extends JFrame {
     JMenuBar menu_bar;
     UIWidgets ui_widgets;
-    ToolpathViewer toolpath_viewer;
+    RenderEngine render_engine;
 
 
     public JetCad() {
@@ -31,12 +31,12 @@ public class JetCad extends JFrame {
         setLocationRelativeTo(null);
 
         ui_widgets = new UIWidgets();
-        toolpath_viewer = new ToolpathViewer();
+        render_engine = new RenderEngine();
         
         Layout_UI();
         createMenuBar();
         setJMenuBar(menu_bar);
-        ToolpathViewerPanel panel = new ToolpathViewerPanel();
+        JetCadViewerPanel panel = new JetCadViewerPanel();
         add(panel);
         panel.addMouseListener(new MouseAdapter() {
             @Override
@@ -45,7 +45,7 @@ public class JetCad extends JFrame {
                 ui_widgets.ClickPressStack(e.getX(), e.getY());
                 GlobalData.MousePositionX_MCS = (GlobalData.MousePositionX - GlobalData.ViewerPan[0]) / GlobalData.ViewerZoom;
                 GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
-                toolpath_viewer.ClickPressStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
+                render_engine.ClickPressStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
                 repaint();
             }
             public void mouseReleased(MouseEvent e) {
@@ -53,7 +53,7 @@ public class JetCad extends JFrame {
                 ui_widgets.ClickReleaseStack(e.getX(), e.getY());
                 GlobalData.MousePositionX_MCS = (GlobalData.MousePositionX - GlobalData.ViewerPan[0]) / GlobalData.ViewerZoom;
                 GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
-                toolpath_viewer.ClickReleaseStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
+                render_engine.ClickReleaseStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
                 repaint();
             }
         });
@@ -66,7 +66,7 @@ public class JetCad extends JFrame {
                 ui_widgets.MouseMotionStack(e.getX(), e.getY());
                 GlobalData.MousePositionX_MCS = (GlobalData.MousePositionX - GlobalData.ViewerPan[0]) / GlobalData.ViewerZoom;
                 GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
-                toolpath_viewer.MouseMotionStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
+                render_engine.MouseMotionStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
                 repaint();
             }
             public void mouseDragged(MouseEvent e) {
@@ -76,7 +76,7 @@ public class JetCad extends JFrame {
                 ui_widgets.MouseMotionStack(e.getX(), e.getY());
                 GlobalData.MousePositionX_MCS = (GlobalData.MousePositionX - GlobalData.ViewerPan[0]) / GlobalData.ViewerZoom;
                 GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
-                toolpath_viewer.MouseMotionStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
+                render_engine.MouseMotionStack(GlobalData.MousePositionX_MCS, GlobalData.MousePositionY_MCS);
                 repaint();
             }
         });
@@ -118,27 +118,12 @@ public class JetCad extends JFrame {
                         if (!GlobalData.configData.CurrentWorkbench.contentEquals("JetCad")) return false;
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
-                                //System.out.println("(Jet Toolpath) Key: " + ke.getKeyCode());
-                                if (ke.getKeyCode() == 44) //< key
-                                {
-                                    toolpath_viewer.RotateEngagedPart(5);
-                                    repaint();
-                                }
-                                if (ke.getKeyCode() == 46) //> key
-                                {
-                                    toolpath_viewer.RotateEngagedPart(-5);
-                                    repaint();
-                                }
 
                                 //repaint();
                                 break;
 
                             case KeyEvent.KEY_RELEASED:
-                                if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-                                    System.out.println("Toolpath Dry run!");
-                                    toolpath_viewer.postProcess(null);
-                                    repaint();
-                                }
+
                                 break;
                         }
                         return false;
@@ -152,14 +137,6 @@ public class JetCad extends JFrame {
                 onClose();
             }
         });
-
-        if (GlobalData.configData.JetToolpathJobFile != null)
-        {
-            File f = new File(GlobalData.configData.JetToolpathJobFile);
-            if(f.exists() && !f.isDirectory()) {
-                toolpath_viewer.OpenJob(GlobalData.configData.JetToolpathJobFile);
-            }
-        }
     }
     private void onClose() {
         // add your code here if necessary
@@ -181,45 +158,31 @@ public class JetCad extends JFrame {
         menu.getAccessibleContext().setAccessibleDescription("File operations");
         menu_bar.add(menu);
 
-        menuItem = new JMenuItem("New Job");
+        menuItem = new JMenuItem("New Drawing");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("New Job File");
+        menuItem.getAccessibleContext().setAccessibleDescription("New Drawing File");
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                GlobalData.configData.JetToolpathJobFile = "";
-                toolpath_viewer.ViewerPartStack = new ArrayList();
-                try {
-                    GlobalData.pushConfig();
-                } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
-                }
+
                 repaint();
             }
         });
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Open Job");
+        menuItem = new JMenuItem("Open Drawing");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("Open Job File");
+        menuItem.getAccessibleContext().setAccessibleDescription("Open Drawing File");
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File("."));
-                int result = fileChooser.showOpenDialog(getParent());
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                    GlobalData.configData.JetToolpathJobFile = selectedFile.getAbsolutePath();
-                    toolpath_viewer.OpenJob(GlobalData.configData.JetToolpathJobFile);
-                    repaint();
-                }
+
+                repaint();
             }
         });
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Save Job");
+        menuItem = new JMenuItem("Save Drawing");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("Save Job File");
+        menuItem.getAccessibleContext().setAccessibleDescription("Save Drawing File");
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (GlobalData.configData.JetToolpathJobFile == null) {
@@ -228,21 +191,21 @@ public class JetCad extends JFrame {
                     fileChooser.addChoosableFileFilter(new FileFilter() {
 
                         public String getDescription() {
-                            return "Xmotion Job File (*.xmj)";
+                            return "JetCad Drawing File (*.jcad)";
                         }
 
                         public boolean accept(File f) {
                             if (f.isDirectory()) {
                                 return true;
                             } else {
-                                return f.getName().toLowerCase().endsWith(".xmj");
+                                return f.getName().toLowerCase().endsWith(".jcad");
                             }
                         }
                     });
                     if (fileChooser.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
                         File file = fileChooser.getSelectedFile();
                         GlobalData.configData.JetToolpathJobFile = file.getAbsolutePath();
-                        toolpath_viewer.SaveJob(GlobalData.configData.JetToolpathJobFile);
+                        //toolpath_viewer.SaveJob(GlobalData.configData.JetToolpathJobFile);
                         try {
                             GlobalData.pushConfig();
                         } catch (FileNotFoundException e1) {
@@ -252,15 +215,15 @@ public class JetCad extends JFrame {
                 }
                 else
                 {
-                    toolpath_viewer.SaveJob(GlobalData.configData.JetToolpathJobFile);
+                    //toolpath_viewer.SaveJob(GlobalData.configData.JetToolpathJobFile);
                 }
             }
         });
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Save Job As");
+        menuItem = new JMenuItem("Save Drawing As");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("Save Job File As");
+        menuItem.getAccessibleContext().setAccessibleDescription("Save Drawing File As");
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
@@ -268,29 +231,29 @@ public class JetCad extends JFrame {
                 fileChooser.addChoosableFileFilter(new FileFilter() {
 
                     public String getDescription() {
-                        return "Xmotion Job File (*.xmj)";
+                        return "Xmotion Job File (*.jcad)";
                     }
 
                     public boolean accept(File f) {
                         if (f.isDirectory()) {
                             return true;
                         } else {
-                            return f.getName().toLowerCase().endsWith(".xmj");
+                            return f.getName().toLowerCase().endsWith(".jcad");
                         }
                     }
                 });
                 if (fileChooser.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
                     File file = fileChooser.getSelectedFile();
                     GlobalData.configData.JetToolpathJobFile = file.getAbsolutePath();
-                    toolpath_viewer.SaveJob(GlobalData.configData.JetToolpathJobFile);
+                    //toolpath_viewer.SaveJob(GlobalData.configData.JetToolpathJobFile);
                 }
             }
         });
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Import Part");
+        menuItem = new JMenuItem("Import DXF");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("Import Part Drawing");
+        menuItem.getAccessibleContext().setAccessibleDescription("Import DXF Drawing");
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
@@ -299,75 +262,45 @@ public class JetCad extends JFrame {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                    try {
-                        toolpath_viewer.OpenDXFasPart(selectedFile.getAbsolutePath(), selectedFile.getAbsolutePath());
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    }
+
                 }
             }
         });
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Post Process");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("Post Job into Gcode");
-        menu.add(menuItem);
+        menuItem = new JMenuItem("Import SVG");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("Import SVG Drawing");
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File("."));
-                if (fileChooser.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
-                    toolpath_viewer.postProcess(file.getAbsolutePath());
-                    repaint();
+                int result = fileChooser.showOpenDialog(getParent());
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+
                 }
             }
         });
-
-        //Build Setup menu
-        menu = new JMenu("Setup");
-        menu.setMnemonic(KeyEvent.VK_S);
-        menu.getAccessibleContext().setAccessibleDescription("Job Setup Parameters");
-        menu_bar.add(menu);
-
-        menuItem = new JMenuItem("Cut Chart");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("Setup Cut Library");
         menu.add(menuItem);
-        menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JetToolpathCutChart.main(null);
-            }
-        });
-
-        menuItem = new JMenuItem("Job Setup");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("Setup Job Parameters");
-        menu.add(menuItem);
-        menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JetToolpathJobSetup.main(null);
-            }
-        });
-
     }
     private void Layout_UI()
     {
 
     }
     // create a panel that you can draw on.
-    class ToolpathViewerPanel extends JPanel {
+    class JetCadViewerPanel extends JPanel {
         public void paint(Graphics g) {
             Rectangle Frame_Bounds = this.getParent().getBounds();
             GlobalData.MousePositionX_MCS = (GlobalData.MousePositionX - GlobalData.ViewerPan[0]) / GlobalData.ViewerZoom;
             GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
             Graphics2D g2d = (Graphics2D) g;
             /* Begin Wallpaper */
-            g.setColor(Color.black);
+            g.setColor(Color.DARK_GRAY);
             g.fillRect(0,0,Frame_Bounds.width,Frame_Bounds.height);
             /* End Wallpaper */
-            toolpath_viewer.RenderStack(g2d);
+            render_engine.RenderStack(g2d);
             ui_widgets.RenderStack(g2d, Frame_Bounds);
             //Display Mouse position in MCS and Screen Cord
             //g.setColor(Color.green);

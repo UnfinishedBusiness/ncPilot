@@ -362,6 +362,13 @@ public class MachineControl extends JFrame {
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("Create Part Drawings");
         menu.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JetCad jetcad = new JetCad();
+                jetcad.setVisible(true);
+            }
+
+        });
 
         //Build Wqrkbench menu
         menu = new JMenu("Settings");

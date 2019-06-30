@@ -6,7 +6,49 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="" />
+    <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$13.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$14.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$ToolpathViewerPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$17.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$18.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$19.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$20.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$20.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$21.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$21.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$22.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$22.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$23.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$23.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$24.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$24.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$25.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$25.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$GcodeViewerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$GcodeViewerPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="721">
-              <caret line="691" column="52" lean-forward="true" selection-start-line="691" selection-start-column="52" selection-end-line="691" selection-end-column="52" />
+              <caret line="691" column="52" selection-start-line="691" selection-start-column="52" selection-end-line="691" selection-end-column="52" />
               <folding>
                 <element signature="e#10402#10403#0" expanded="true" />
                 <element signature="e#10436#10437#0" expanded="true" />
@@ -48,11 +90,33 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+              <folding>
+                <element signature="e#16684#16685#0" expanded="true" />
+                <element signature="e#16745#16746#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/RenderEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="196" column="118" selection-start-line="196" selection-start-column="118" selection-end-line="196" selection-end-column="118" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="145" column="26" selection-start-line="145" selection-start-column="26" selection-end-line="145" selection-end-column="26" />
+            <state relative-caret-position="171">
+              <caret line="139" selection-start-line="139" selection-end-line="139" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2007#2008#0" expanded="true" />
@@ -139,7 +203,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingToolStruct.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+              <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -155,8 +219,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>GlobalData</find>
-      <find>impor</find>
       <find>serial.write</find>
       <find>K</find>
       <find>Line</find>
@@ -185,6 +247,8 @@
       <find>GlobalData.JogMode</find>
       <find>EndX</find>
       <find>addcom</find>
+      <find>JetCad</find>
+      <find>ToolpathViewerPanel</find>
     </findStrings>
     <replaceStrings>
       <replace>int[]</replace>
@@ -199,10 +263,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ncCommands.java" />
-        <option value="$PROJECT_DIR$/test/gcode/0.ngc" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ViewerEntity.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/XmotionGen3.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolpathViewer.java" />
         <option value="$PROJECT_DIR$/libraries/kabeja-0.4.jar!/org/kabeja/dxf/DXFLine.class" />
@@ -244,20 +304,23 @@
         <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/TrajectorySimulator.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MotionSimulator.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingToolType.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingToolStruct.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/ToolPathViewer/ViewerPart.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/ViewerPart.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/ToolpathViewer.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/RenderEngine.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
+    <option name="width" value="1228" />
+    <option name="height" value="737" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -299,7 +362,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pilot" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="JetCad" type="462c0819:PsiDirectoryNode" />
+              <item name="MDIConsole" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ncPilot" type="b2602c69:ProjectViewProjectNode" />
@@ -307,7 +370,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pilot" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="MDIConsole" type="462c0819:PsiDirectoryNode" />
+              <item name="ToolPathViewer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ncPilot" type="b2602c69:ProjectViewProjectNode" />
@@ -336,7 +399,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="240" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552841716305" />
-    <property name="last_opened_file_path" value="/usr/lib/jni" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -353,6 +416,7 @@
       <recent name="com.nc.pilot.lib" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad" />
       <recent name="$PROJECT_DIR$/src/com/nc/pilot/lib/MDIConsole" />
       <recent name="$PROJECT_DIR$/src/com/nc/pilot/lib" />
     </key>
@@ -479,10 +543,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="23" width="1936" height="737" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="737" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" id="Project" order="0" visible="true" weight="0.23231256" />
+      <window_info id="Project" order="0" visible="true" weight="0.35541195" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Nl-Palette" order="3" />
@@ -491,8 +555,8 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="UI Designer" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32934132" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2248062" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32868218" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21705426" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -500,7 +564,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.3248503" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32248062" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24947916" />
@@ -547,24 +611,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Parameters.cfg" />
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/LinesDrawingExample.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/SerialIO_TinyG.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/About.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="80" column="80" selection-start-line="80" selection-start-column="80" selection-end-line="80" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/HMI.java" />
-    <entry file="file://$PROJECT_DIR$/test/gcode/0.ngc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="59" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/libraries/kabeja-0.4.jar!/org/kabeja/dxf/DXFLine.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="47">
@@ -701,15 +747,8 @@
         <state relative-caret-position="798">
           <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
           <folding>
-            <element signature="imports" expanded="false" />
+            <element signature="imports" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="494" column="151" lean-forward="true" selection-start-line="494" selection-start-column="151" selection-end-line="494" selection-end-column="151" />
         </state>
       </provider>
     </entry>
@@ -717,7 +756,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="90" column="68" selection-start-line="90" selection-start-column="68" selection-end-line="90" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -728,17 +766,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1204">
-          <caret line="272" column="64" lean-forward="true" selection-start-line="272" selection-start-column="64" selection-end-line="272" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="721">
-          <caret line="691" column="52" lean-forward="true" selection-start-line="691" selection-start-column="52" selection-end-line="691" selection-end-column="52" />
+          <caret line="691" column="52" selection-start-line="691" selection-start-column="52" selection-end-line="691" selection-end-column="52" />
           <folding>
             <element signature="e#10402#10403#0" expanded="true" />
             <element signature="e#10436#10437#0" expanded="true" />
@@ -772,7 +803,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingToolStruct.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -785,8 +816,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="145" column="26" selection-start-line="145" selection-start-column="26" selection-end-line="145" selection-end-column="26" />
+        <state relative-caret-position="171">
+          <caret line="139" selection-start-line="139" selection-end-line="139" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2007#2008#0" expanded="true" />
@@ -856,6 +887,60 @@
             <element signature="e#7076#7077#0" expanded="true" />
             <element signature="e#7119#7120#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="365" column="56" lean-forward="true" selection-start-line="365" selection-start-column="56" selection-end-line="365" selection-end-column="56" />
+          <folding>
+            <element signature="e#23208#23209#0" expanded="true" />
+            <element signature="e#23270#23271#0" expanded="true" />
+            <element signature="e#27917#27918#0" expanded="true" />
+            <element signature="e#27986#27987#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-238">
+          <caret line="494" column="151" lean-forward="true" selection-start-line="494" selection-start-column="151" selection-end-line="494" selection-end-column="151" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/PathObject.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/BuildPaths.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/ViewerPart.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/DrawingEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="24" lean-forward="true" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/JetCad.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+          <folding>
+            <element signature="e#16684#16685#0" expanded="true" />
+            <element signature="e#16745#16746#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/RenderEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="196" column="118" selection-start-line="196" selection-start-column="118" selection-end-line="196" selection-end-column="118" />
         </state>
       </provider>
     </entry>

@@ -65,7 +65,7 @@ public class ToolpathViewer {
                 System.out.println("Importing part# " + x + " With " + part.EntityStack.size() + " Entities");
                 for (int i = 0; i < ViewerPartStack.get(x).EntityStack.size(); i++)
                 {
-                    ViewerEntity e = ViewerPartStack.get(x).EntityStack.get(i);
+                    DrawingEntity e = ViewerPartStack.get(x).EntityStack.get(i);
                     System.out.println("\tType-> " + e.type + " Offset X" + part.offset[0] + " Offset Y" + part.offset[1]);
                     if (e.type.contentEquals("line"))
                     {
