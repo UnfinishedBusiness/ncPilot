@@ -1,11 +1,14 @@
 package com.nc.pilot.lib.JetCad;
 
+import com.nc.pilot.lib.JetCad.DrawingStack.DrawingEntity;
+import com.nc.pilot.lib.JetCad.DrawingStack.RenderEngine;
 import com.nc.pilot.lib.MDIConsole.MDICommand;
 
 import java.util.ArrayList;
 
 public class DrawingTools {
     private ArrayList<DrawingToolStruct> ToolStack = new ArrayList();
+    private RenderEngine render_engine;
 
     private void AddTool(String name, String hotkey, Runnable action)
     {
@@ -147,8 +150,30 @@ public class DrawingTools {
     {
 
     }
-    public DrawingTools()
+    public DrawingTools(RenderEngine r)
     {
+        render_engine = r;
+        //Add a few enties to test rendering engine
+        DrawingEntity e;
+
+        e = new DrawingEntity();
+        e.type = "line";
+        e.start = new float[]{5, 5};
+        e.end = new float[]{25, 15};
+        render_engine.DrawingStack.add(e);
+
+        e = new DrawingEntity();
+        e.type = "line";
+        e.start = new float[]{25, 15};
+        e.end = new float[]{20, 5};
+        render_engine.DrawingStack.add(e);
+
+        e = new DrawingEntity();
+        e.type = "line";
+        e.start = new float[]{20, 5};
+        e.end = new float[]{5, 5};
+        render_engine.DrawingStack.add(e);
+
         AddTool("select_all", "ctrl-a", new Runnable() {
             @Override
             public void run() {

@@ -126,7 +126,7 @@ public class RenderEngine {
     }
     public void RenderLine(float[] start, float end[])
     {
-        g2d.draw(new Line2D.Float(((start[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((start[1]) * GlobalData.ViewerZoom) * -1), ((end[0]) * GlobalData.ViewerZoom), (((end[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
+        g2d.draw(new Line2D.Float(((start[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((start[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((end[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((end[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
     }
     public void RenderArc(float[] start, float[] end, float[] center, float radius, String direction)
     {

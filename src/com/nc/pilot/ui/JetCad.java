@@ -4,6 +4,7 @@ import com.nc.pilot.dialogs.JetToolpathCutChart;
 import com.nc.pilot.dialogs.JetToolpathJobSetup;
 import com.nc.pilot.lib.GlobalData;
 import com.nc.pilot.lib.JetCad.DrawingStack.RenderEngine;
+import com.nc.pilot.lib.JetCad.DrawingTools;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 import org.kabeja.parser.ParseException;
 
@@ -19,6 +20,7 @@ public class JetCad extends JFrame {
     JMenuBar menu_bar;
     UIWidgets ui_widgets;
     RenderEngine render_engine;
+    DrawingTools drawing_tools;
 
 
     public JetCad() {
@@ -32,6 +34,8 @@ public class JetCad extends JFrame {
 
         ui_widgets = new UIWidgets();
         render_engine = new RenderEngine();
+        drawing_tools = new DrawingTools(render_engine);
+
         
         Layout_UI();
         createMenuBar();
