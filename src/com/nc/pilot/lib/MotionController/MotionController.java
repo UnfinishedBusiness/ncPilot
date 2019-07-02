@@ -116,10 +116,10 @@ public class MotionController {
         {
             System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getDescriptivePortName());
             //if (ports[x].getSystemPortName().contentEquals("COM11") && ports[x].getDescriptivePortName().contentEquals("USBSER001"))
-            if (ports[x].getSystemPortName().contentEquals("COM3"))
+            if (ports[x].getSystemPortName().contentEquals("COM9"))
             {
                 comPort = ports[x];
-                comPort.setBaudRate(115200);
+                //comPort.setBaudRate(115200);
                 comPort.openPort();
                 rx_buffer_line = "";
 
@@ -270,7 +270,7 @@ public class MotionController {
     }
     public void CycleStart()
     {
-        if (GlobalData.GcodeFileLines == null)
+        /*if (GlobalData.GcodeFileLines == null)
         {
             WriteBuffer("M110 N0\n");
             WriteBuffer("M28 0.nc\n");
@@ -297,6 +297,17 @@ public class MotionController {
             WriteBuffer("M24\n");
         }
         else //We are currently in a feedhold
+        {
+            WriteBuffer("M24\n");
+        }*/
+        //WriteBuffer("M110 N0\n");
+        //WriteBuffer("M28 0.nc\n");
+        if (GlobalData.GcodeFileLines == null)
+        {
+            GlobalData.GcodeFileCurrentLine = 0;
+            LoadGcodeFile();
+        }
+        else
         {
             WriteBuffer("M24\n");
         }
@@ -572,7 +583,19 @@ public class MotionController {
             GlobalData.GcodeFileLines = lines;
             for (int x = 0; x < GlobalData.GcodeFileLines.length; x++)
             {
-                GlobalData.GcodeFileLines[x].replaceAll("(?:\\n|\\r)", "");
+                String line = "N" + x + " " + GlobalData.GcodeFileLines[x];
+                char[] new_line = line.toCharArray();
+                String new_string = "";
+                for (int y = 0; y < new_line.length; y++)
+                {
+                    if (Character.isAlphabetic(new_line[y]) || Character.isDigit(new_line[y]) || Character.isSpaceChar(new_line[y]) || new_line[y] == '-' || new_line[y] == '.')
+                    {
+                        new_string = new_string + new_line[y];
+                    }
+                }
+                String sum = String.valueOf(checksum(new_string.getBytes(), new_string.length()));
+                //System.out.println(new_string + "*" + sum);
+                GlobalData.GcodeFileLines[x] = new_string + "*" + sum;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -731,6 +754,24 @@ public class MotionController {
                 }
             }
 
+        }
+        if (GlobalData.GcodeFileLines != null) //If Gcode file is open
+        {
+            //System.out.println("Gcode file is open and we are at line: " + GlobalData.GcodeFileCurrentLine);
+            if  (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length)
+            {
+                WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+                //System.out.println(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
+                GlobalData.GcodeFileCurrentLine++;
+            }
+            else //End of file reached. Null it and send the finishing block to the controller
+            {
+                GlobalData.GcodeFileLines = null;
+                GlobalData.GcodeFileCurrentLine = 0;
+                WriteBuffer("M29\n");
+                WriteBuffer("M23 0.nc\n");
+                WriteBuffer("M24\n");
+            }
         }
     }
 
