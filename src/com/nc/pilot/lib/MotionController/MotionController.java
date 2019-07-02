@@ -116,7 +116,7 @@ public class MotionController {
         {
             System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getDescriptivePortName());
             //if (ports[x].getSystemPortName().contentEquals("COM11") && ports[x].getDescriptivePortName().contentEquals("USBSER001"))
-            if (ports[x].getSystemPortName().contentEquals("COM11"))
+            if (ports[x].getSystemPortName().contentEquals("COM3"))
             {
                 comPort = ports[x];
                 comPort.setBaudRate(115200);
@@ -278,25 +278,38 @@ public class MotionController {
             int n_val = 1;
             for (int x = 0; x < GlobalData.GcodeFileLines.length; x++) {
                 String line = "N" + n_val + " " + GlobalData.GcodeFileLines[x];
-                int sum = checksum(line.getBytes(), line.length());
-                //System.out.println("Writing line: " + line + "*" + sum);
-                WriteBuffer(line + "*" + sum + "\n");
+                char[] new_line = line.toCharArray();
+                String new_string = "";
+                for (int y = 0; y < new_line.length; y++)
+                {
+                    if (Character.isAlphabetic(new_line[y]) || Character.isDigit(new_line[y]) || Character.isSpaceChar(new_line[y]) || new_line[y] == '-' || new_line[y] == '.')
+                    {
+                        new_string = new_string + new_line[y];
+                    }
+                }
+                String sum = String.valueOf(checksum(new_string.getBytes(), new_string.length()));
+                System.out.println(new_string + "*" + sum);
+                WriteBuffer(new_string + "*" + sum + "\n");
                 n_val++;
             }
             WriteBuffer("M29\n");
             WriteBuffer("M23 0.nc\n");
             WriteBuffer("M24\n");
         }
+        else //We are currently in a feedhold
+        {
+            WriteBuffer("M24\n");
+        }
     }
     public void FeedHold()
     {
-        //WriteBuffer("!\n");
+        WriteBuffer("M25\n");
     }
     public void Abort()
     {
-        ResetOnIdle();
         GlobalData.GcodeFileCurrentLine = 0;
         GlobalData.GcodeFileLines = null;
+        WriteBuffer("M25\nM26 S0\n");
     }
     public void ResetOnIdle()
     {
@@ -556,104 +569,11 @@ public class MotionController {
         try {
             String buffer = GlobalData.readFile(GlobalData.GcodeFile);
             String[] lines = buffer.split("\n");
-
-            ArrayList<String> gcode = new ArrayList();
-            for (int x = 0; x < lines.length; x++)
+            GlobalData.GcodeFileLines = lines;
+            for (int x = 0; x < GlobalData.GcodeFileLines.length; x++)
             {
-                if (lines[x].toLowerCase().contains("m"))
-                {
-                    gcode.add(lines[x]);
-                }
-                else
-                {
-                    updateGcodeRegisters(lines[x].toLowerCase(), 'g');
-                    updateGcodeRegisters(lines[x].toLowerCase(), 'x');
-                    updateGcodeRegisters(lines[x].toLowerCase(), 'y');
-                    updateGcodeRegisters(lines[x].toLowerCase(), 'z');
-                    updateGcodeRegisters(lines[x].toLowerCase(), 'i');
-                    updateGcodeRegisters(lines[x].toLowerCase(), 'j');
-                    updateGcodeRegisters(lines[x].toLowerCase(), 'f');
-                    if (lines[x].toLowerCase().contains("g64"))
-                    {
-                        //Just filter out G64 to avoid error
-                    }
-                    /*else if (lines[x].toLowerCase().contains("o<touchoff>"))
-                    {
-                        String touchoff = lines[x].toLowerCase().substring(lines[x].toLowerCase().indexOf("o<touchoff> ") + 12);
-                        //System.out.println("Touchoff String: " + touchoff);
-                        String[] touchoff_split = touchoff.split("\\s+");
-                        if (touchoff_split.length > 2)
-                        {
-                            String pierce_height = touchoff_split[1].substring(1, (touchoff_split[1].length() - 1));
-                            String pierce_delay = touchoff_split[2].substring(1, (touchoff_split[2].length() - 1));
-                            String cut_height = touchoff_split[3].substring(1, (touchoff_split[3].length() - 1));
-                            gcode.add("F30");
-                            gcode.add("M9"); //Turn of ATHC
-                            //gcode.add("G38.3 Z-10"); //Probe Until Touch
-                            //gcode.add("G91 G0 Z0.1875"); //Takeup slack in floating head
-                            gcode.add("G90"); //Switch to absolute
-                            //gcode.add("G10 L20 P1 Z0"); //Set Z0 as top of sheet
-                            gcode.add("G1 Z" + pierce_height); //Raise to pierce height
-                            gcode.add("M3 S5000"); //Turn on plasma
-                            gcode.add("G4 P" + pierce_delay); //Pierce Delay
-                            gcode.add("G1 Z" + cut_height); //Traverse to Cut Height
-                            gcode.add("G90"); //Switch to absolute
-                            gcode.add("M8"); //Turn on ATHC
-                        }
-                    }*/
-                    /*else if (Gword == 2) //Clockwise arc - Convert to line segments
-                    {
-                        if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
-                        {
-                            float[] center = new float[]{lastXword + Iword, lastYword + Jword};
-                            float radius = new Float(Math.hypot(Xword-center[0], Yword-center[1]));
-                            ArrayList<float[]> arc_points = getPointsOfArc(new float[]{lastXword, lastYword}, new float[]{Xword, Yword}, center, radius, "CW");
-                            for (int y = 0; y < arc_points.size(); y+= 30)
-                            {
-                                gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1] + " F" + Fword);
-                            }
-                            gcode.add("G1 X" + Xword + " Y" + Yword + " F" + Fword);
-                        }
-                    }
-                    else if (Gword == 3) //Counter-Clockwise arc - Convert to line segments
-                    {
-                        if (lastXword != Xword || lastYword != Yword || lastIword != Iword || lastJword != Jword)
-                        {
-                            float[] center = new float[]{lastXword + Iword, lastYword + Jword};
-                            float radius = new Float(Math.hypot(Xword-center[0], Yword-center[1]));
-                            ArrayList<float[]> arc_points = getPointsOfArc(new float[]{lastXword, lastYword}, new float[]{Xword, Yword}, center, radius, "CCW");
-                            for (int y = 0; y < arc_points.size(); y+= 30)
-                            {
-                                gcode.add("G1 X" + arc_points.get(y)[0] + " Y" + arc_points.get(y)[1] + " F" + Fword);
-                            }
-                            gcode.add("G1 X" + Xword + " Y" + Yword + " F" + Fword);
-                        }
-                    }*/
-                /*else if (Gword == 0 || Gword == 1 || Gword == 2 || Gword == 3)
-                {
-
-                }*/
-                    else
-                    {
-                        gcode.add(lines[x]);
-                    }
-                    updateLastGcodeRegisters(lines[x].toLowerCase(), 'g');
-                    updateLastGcodeRegisters(lines[x].toLowerCase(), 'x');
-                    updateLastGcodeRegisters(lines[x].toLowerCase(), 'y');
-                    updateLastGcodeRegisters(lines[x].toLowerCase(), 'z');
-                    updateLastGcodeRegisters(lines[x].toLowerCase(), 'i');
-                    updateLastGcodeRegisters(lines[x].toLowerCase(), 'j');
-                    updateLastGcodeRegisters(lines[x].toLowerCase(), 'f');
-                }
+                GlobalData.GcodeFileLines[x].replaceAll("(?:\\n|\\r)", "");
             }
-            GlobalData.GcodeFileLines = new String[gcode.size()];
-            for (int x = 0; x < gcode.size(); x++)
-            {
-                GlobalData.GcodeFileLines[x] = gcode.get(x);
-                System.out.println(gcode.get(x));
-            }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
