@@ -420,12 +420,9 @@ public class ToolpathViewer {
             return;
         }
         ArrayList<String> GcodeStack = new ArrayList();
-        //Post Gcode Header (Gen 3 Control)
-        //GcodeStack.add("G20 M5 M9");
-        //GcodeStack.add("G53 G0 Z0"); //Rapid to Z Clearance plane
-
-        //Post Gcode Header (Gen 1 Control)
-        GcodeStack.add("G20 G54 G64 P0.001");
+        GcodeStack.add("G20 G54");
+        GcodeStack.add("M2000 V" + jet_param.ATHCVoltage);
+        GcodeStack.add("M2001");
         getPaths(jet_param); //Create toolpaths from contours in each part
         for(int i = 0; i< ViewerPartStack.size(); i++)
         {
@@ -447,29 +444,15 @@ public class ToolpathViewer {
                         else
                         {
                             GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1])); //Rapid to entry point of contour
-
-                            //Post Gcode Header (Gen 3 Control)
-                            /*GcodeStack.add("G38.3 F30 Z-10"); //Probe for top of work piece
-                            GcodeStack.add("G91 G0 Z0.1875"); //Remove Slack in Floating Head
-                            GcodeStack.add("G91 G0 Z" + jet_param.PierceHeight); //Rapid to pierce height
-                            GcodeStack.add("M3S5000"); //Turn Torch on
-                            GcodeStack.add("G4 P" + jet_param.PierceDelay); //Pierce Delay
-                            GcodeStack.add("G91 G1 F30 Z" + (jet_param.PierceHeight - jet_param.CutHeight)); //Feed to Cut height
-                            GcodeStack.add("M8"); //Turn on ATHC
-                            GcodeStack.add("G90"); //Switch back to absolute mode*/
-                            //End Post Gcode Header (Gen 3 Control)
-
-                            //Post Gcode Header (Gen 1 Control)
-                            GcodeStack.add("o<touchoff> call [" + jet_param.PierceHeight + "] [" + jet_param.PierceDelay + "] [ " + jet_param.CutHeight + "]");
-                            //End Post Gcode Header (Gen 1 Control)
-
+                            GcodeStack.add("M2100 P" + jet_param.PierceHeight + " C" + jet_param.CutHeight + " D" + jet_param.PierceDelay);
+                            GcodeStack.add("M2001");
                             for(int z = 0; z < path.points.size(); z++)
                             {
                                 float[] go_point = path.points.get(z);
                                 GcodeStack.add("G1 F" + jet_param.Feedrate + " X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
                             }
-                            GcodeStack.add("M5"); //Turn Torch off
-                            GcodeStack.add("M9"); //Turn ATHC
+                            GcodeStack.add("M2002");
+                            GcodeStack.add("M2101"); //Turn Torch off
                             GcodeStack.add("G4 P" + jet_param.PostDelay); //Post Delay
                             GcodeStack.add("G0 Z1"); //Rapid to Z Clearance plane
                         }
@@ -479,29 +462,15 @@ public class ToolpathViewer {
                 {
                     PathObject path = part.tool_paths.get(outside_contour_index);
                     GcodeStack.add("G0 X" + (path.points.get(0)[0] + part.offset[0]) + " Y" + (path.points.get(0)[1] + part.offset[1])); //Rapid to entry point of contour
-
-                    //Post Gcode Header (Gen 3 Control)
-                            /*GcodeStack.add("G38.3 F30 Z-10"); //Probe for top of work piece
-                            GcodeStack.add("G91 G0 Z0.1875"); //Remove Slack in Floating Head
-                            GcodeStack.add("G91 G0 Z" + jet_param.PierceHeight); //Rapid to pierce height
-                            GcodeStack.add("M3S5000"); //Turn Torch on
-                            GcodeStack.add("G4 P" + jet_param.PierceDelay); //Pierce Delay
-                            GcodeStack.add("G91 G1 F30 Z" + (jet_param.PierceHeight - jet_param.CutHeight)); //Feed to Cut height
-                            GcodeStack.add("M8"); //Turn on ATHC
-                            GcodeStack.add("G90"); //Switch back to absolute mode*/
-                    //End Post Gcode Header (Gen 3 Control)
-
-                    //Post Gcode Header (Gen 1 Control)
-                    GcodeStack.add("o<touchoff> call [" + jet_param.PierceHeight + "] [" + jet_param.PierceDelay + "] [ " + jet_param.CutHeight + "]");
-                    //End Post Gcode Header (Gen 1 Control)
-
+                    GcodeStack.add("M2100 P" + jet_param.PierceHeight + " C" + jet_param.CutHeight + " D" + jet_param.PierceDelay);
+                    GcodeStack.add("M2001");
                     for(int z = 0; z < path.points.size(); z++)
                     {
                         float[] go_point = path.points.get(z);
                         GcodeStack.add("G1 F" + jet_param.Feedrate + " X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
                     }
-                    GcodeStack.add("M5"); //Turn Torch off
-                    GcodeStack.add("M9"); //Turn ATHC
+                    GcodeStack.add("M2002");
+                    GcodeStack.add("M2101"); //Turn Torch off
                     GcodeStack.add("G4 P" + jet_param.PostDelay); //Post Delay
                     GcodeStack.add("G0 Z1"); //Rapid to Z Clearance plane
                 }

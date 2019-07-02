@@ -279,7 +279,7 @@ public class MotionController {
             for (int x = 0; x < GlobalData.GcodeFileLines.length; x++) {
                 String line = "N" + n_val + " " + GlobalData.GcodeFileLines[x];
                 int sum = checksum(line.getBytes(), line.length());
-                System.out.println("Writing line: " + line + "*" + sum);
+                //System.out.println("Writing line: " + line + "*" + sum);
                 WriteBuffer(line + "*" + sum + "\n");
                 n_val++;
             }

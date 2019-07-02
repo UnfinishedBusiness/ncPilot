@@ -279,7 +279,7 @@ public class MachineControl extends JFrame {
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_TAB)
                                 {
-                                    GcodeInterpreter g = new GcodeInterpreter("/users/admin/Documents/Projects/ncPilot/test/gcode/0.ngc");
+                                    /*GcodeInterpreter g = new GcodeInterpreter("/users/admin/Documents/Projects/ncPilot/test/gcode/0.ngc");
                                     GlobalData.GcodeFile = "/users/admin/Documents/Projects/ncPilot/test/gcode/0.ngc";
                                     ArrayList<GcodeInterpreter.GcodeMove> moves = g.GetMoves();
                                     gcode_viewer.ClearStack();
@@ -301,7 +301,7 @@ public class MachineControl extends JFrame {
                                             float radius = new Float(Math.hypot(moves.get(x).Xword-center[0], moves.get(x).Yword-center[1]));
                                             gcode_viewer.addArc(new float[]{moves.get(x-1).Xword, moves.get(x-1).Yword}, new float[]{moves.get(x).Xword, moves.get(x).Yword}, center, radius, "CCW");
                                         }
-                                    }
+                                    }*/
                                 }
                                 if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
                                     motion_controller.FeedHold();
@@ -396,7 +396,7 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File("/root/Share/Post"));
+                fileChooser.setCurrentDirectory(new File("."));
                 int result = fileChooser.showOpenDialog(getParent());
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();

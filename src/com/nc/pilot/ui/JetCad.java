@@ -148,6 +148,10 @@ public class JetCad extends JFrame {
                                     {
                                         drawing_tools.CheckKeyPress("Escape");
                                     }
+                                    else if (ke.getKeyCode() == 127)
+                                    {
+                                        drawing_tools.CheckKeyPress("ctrl-d");
+                                    }
                                     else if (ke.getKeyCode() == 9)
                                     {
                                         drawing_tools.CheckKeyPress("Tab");
