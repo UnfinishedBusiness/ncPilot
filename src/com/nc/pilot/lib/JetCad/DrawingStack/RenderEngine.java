@@ -189,6 +189,7 @@ public class RenderEngine {
     {
         //System.out.println("Begin render!");
         g2d = graphics;
+        g2d.setStroke(new BasicStroke(2));
          /* Begin stock boundry outline */
         g2d.setColor(Color.red);
         g2d.draw(new Line2D.Float(0 + GlobalData.ViewerPan[0], 0 + GlobalData.ViewerPan[1], GlobalData.ViewerPan[0] + 10, GlobalData.ViewerPan[1] + 0));

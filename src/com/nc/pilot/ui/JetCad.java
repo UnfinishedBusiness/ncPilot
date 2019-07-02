@@ -355,7 +355,7 @@ public class JetCad extends JFrame {
             GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
             Graphics2D g2d = (Graphics2D) g;
             /* Begin Wallpaper */
-            g.setColor(Color.WHITE);
+            g.setColor(new Color(230, 230, 230));
             g.fillRect(0,0,Frame_Bounds.width,Frame_Bounds.height);
             /* End Wallpaper */
             render_engine.RenderStack(g2d);
