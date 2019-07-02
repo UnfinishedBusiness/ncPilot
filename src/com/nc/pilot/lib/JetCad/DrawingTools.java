@@ -180,7 +180,31 @@ public class DrawingTools {
     }
     private void Tab()
     {
-
+        String SearchBoxVal = ui_widgets.getInputBoxValue("Tool");
+        int score = 0;
+        for (int x = 0; x < ToolStack.size(); x++)
+        {
+            score = 0;
+            for (int y = 0; y < ToolStack.get(x).name.length(); y++)
+            {
+                if (y < SearchBoxVal.length())
+                {
+                    if (SearchBoxVal.charAt(y) == ToolStack.get(x).name.charAt(y)) score++;
+                }
+            }
+            ToolStack.get(x).score = score;
+        }
+        String winner = "";
+        int bar = 0;
+        for (int i = 0; i < ToolStack.size(); i++)
+        {
+            if (ToolStack.get(i).score > bar)
+            {
+                bar = ToolStack.get(i).score;
+                winner = ToolStack.get(i).name;
+            }
+        }
+        ui_widgets.setInputBoxValue("Tool", winner);
     }
     public DrawingTools(RenderEngine r, UIWidgets u)
     {
