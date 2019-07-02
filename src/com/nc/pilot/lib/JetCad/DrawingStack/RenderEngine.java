@@ -195,13 +195,20 @@ public class RenderEngine {
         g2d.draw(new Line2D.Float(0 + GlobalData.ViewerPan[0], 0 + GlobalData.ViewerPan[1], GlobalData.ViewerPan[0] + 0, GlobalData.ViewerPan[1] + 10));
         g2d.draw(new Line2D.Float(0 + GlobalData.ViewerPan[0], 0 + GlobalData.ViewerPan[1], GlobalData.ViewerPan[0] - 10, GlobalData.ViewerPan[1] + 0));
         g2d.draw(new Line2D.Float(0 + GlobalData.ViewerPan[0], 0 + GlobalData.ViewerPan[1], GlobalData.ViewerPan[0] + 0, GlobalData.ViewerPan[1] - 10));
-        g2d.setColor(Color.green);
         /* End stock boundry outline */
 
 
         for(int i = 0; i< DrawingStack.size(); i++) {
             //System.out.println("Rendering part " + i);
             DrawingEntity entity = DrawingStack.get(i);
+            if (entity.isSelected == true)
+            {
+                g2d.setColor(Color.green);
+            }
+            else
+            {
+                g2d.setColor(Color.black);
+            }
             if (entity.type.contentEquals("line"))
             {
                 //System.out.println("Rendering line -> " + new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]} + " - " + new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]});

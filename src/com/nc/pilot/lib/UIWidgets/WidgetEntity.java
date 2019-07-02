@@ -17,6 +17,7 @@ class WidgetEntity {
     public int max;
     public int position;
     public String unit_name;
+    public String value;
 
     public Runnable action;
 

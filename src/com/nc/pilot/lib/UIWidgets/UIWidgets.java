@@ -136,15 +136,22 @@ public class UIWidgets {
         }
         g.drawRect( slider_leftmost + slider_offset, real_posy + 35, 15, 15); //Slider
     }
-    public void DrawInputBox(String text, boolean engaged, boolean visable, int width, int height, int posx, int posy) {
+    public void DrawInputBox(String text, String value, boolean engaged, boolean visable, int width, int height, int posx, int posy) {
         if (visable)
         {
-            int button_font_size = 15;
+            g.setColor(Color.black);
+            int button_font_size = 12;
             g.setFont(new Font("Arial", Font.PLAIN, button_font_size));
-            int text_posx = (width / 2) - (calculateTextWidth(text) / 2) + posx;
-            int text_posy = posy + (height / 2) + (button_font_size/2);
-            g.drawString(text, text_posx, text_posy);
+            //int label_text_posx = (width / 2) - (calculateTextWidth(text) / 2) + posx;
+            int label_text_posx = posx + 7;
+            int label_text_posy = posy + (height / 2) + (button_font_size/2);
+            g.drawString(text, label_text_posx, label_text_posy);
             g.drawRect(posx, posy, width, height);
+            g.drawRect(posx + calculateTextWidth(text) + 10, posy + 4, width - 44, height - 8);
+            g.drawRect(posx + 4, posy + 4, calculateTextWidth(text) + 4, height - 8);
+            int input_text_posx = posx + calculateTextWidth(text) + 15;
+            int input_text_posy = posy + (height / 2) + (button_font_size/2);
+            g.drawString(value, input_text_posx, input_text_posy);
         }
     }
     public void AddDRO(){
@@ -204,13 +211,14 @@ public class UIWidgets {
         WidgetStack.add(w);
         action.run();
     }
-    public int AddInputBox(String text, String anchor, boolean visable, int width, int height, int posx, int posy, Runnable action){
+    public int AddInputBox(String text, String default_value, String anchor, boolean visable, boolean engaged, int width, int height, int posx, int posy, Runnable action){
         //System.out.println("Adding: " + text);
         WidgetEntity w = new WidgetEntity();
         w.type = "input_box";
         w.anchor = anchor;
         w.text = text;
-        w.engaged = false;
+        w.value = default_value;
+        w.engaged = engaged;
         w.visable = visable;
         w.width = width;
         w.height = height;
@@ -233,6 +241,40 @@ public class UIWidgets {
             }
         }
         return -1;
+    }
+    public String getInputBoxValue(String text)
+    {
+        for (int x = 0; x < WidgetStack.size(); x++)
+        {
+            if (WidgetStack.get(x).text.equals(text)){
+                return WidgetStack.get(x).value;
+            }
+        }
+        return "";
+    }
+    public void setInputBoxValue(String id_text, String text)
+    {
+        for (int x = 0; x < WidgetStack.size(); x++) {
+            if (WidgetStack.get(x).text.equals(id_text)) {
+                WidgetStack.get(x).value = text;
+            }
+        }
+    }
+    public void setInputBoxVisability(String id_text, boolean visable)
+    {
+        for (int x = 0; x < WidgetStack.size(); x++) {
+            if (WidgetStack.get(x).text.equals(id_text)) {
+                WidgetStack.get(x).visable = visable;
+            }
+        }
+    }
+    public void setInputBoxEngaged(String id_text, boolean engaged)
+    {
+        for (int x = 0; x < WidgetStack.size(); x++) {
+            if (WidgetStack.get(x).text.equals(id_text)) {
+                WidgetStack.get(x).engaged = engaged;
+            }
+        }
     }
     public void RenderStack(Graphics2D graphics, Rectangle f){
         g = graphics;
@@ -264,12 +306,15 @@ public class UIWidgets {
                 else if (WidgetStack.get(x).anchor.equals("bottom-right")){
                     WidgetStack.get(x).real_posx = Frame_Bounds.width - WidgetStack.get(x).posx - WidgetStack.get(x).width;
                     WidgetStack.get(x).real_posy = Frame_Bounds.height - WidgetStack.get(x).posy - WidgetStack.get(x).height;
+                }else if (WidgetStack.get(x).anchor.equals("bottom-left")){
+                    WidgetStack.get(x).real_posx = WidgetStack.get(x).posx;
+                    WidgetStack.get(x).real_posy = Frame_Bounds.height - WidgetStack.get(x).posy - WidgetStack.get(x).height;
                 }
                 else {
                     WidgetStack.get(x).real_posx = WidgetStack.get(x).posx;
                     WidgetStack.get(x).real_posy = WidgetStack.get(x).posy;
                 }
-                DrawInputBox(WidgetStack.get(x).text, WidgetStack.get(x).engaged, WidgetStack.get(x).visable, WidgetStack.get(x).width, WidgetStack.get(x).height, WidgetStack.get(x).real_posx, WidgetStack.get(x).real_posy);
+                DrawInputBox(WidgetStack.get(x).text, WidgetStack.get(x).value, WidgetStack.get(x).engaged, WidgetStack.get(x).visable, WidgetStack.get(x).width, WidgetStack.get(x).height, WidgetStack.get(x).real_posx, WidgetStack.get(x).real_posy);
             }
             if (WidgetStack.get(x).type.equals("select_button")){
                 if (WidgetStack.get(x).anchor.equals("top-right")){
@@ -365,6 +410,37 @@ public class UIWidgets {
                 }
             }
         }
+    }
+    public boolean KeypressStack(String key, int code)
+    {
+        for (int x = 0; x < WidgetStack.size(); x++)
+        {
+            if (WidgetStack.get(x).engaged == true)
+            {
+                if (code == 8)
+                {
+                    WidgetStack.get(x).value = WidgetStack.get(x).value.substring(0, WidgetStack.get(x).value.length() - 1);
+                }
+                else if (code == 32)
+                {
+                    WidgetStack.get(x).value += " ";
+                }
+                else if (code == 10)
+                {
+                    WidgetStack.get(x).action.run();
+                }
+                else if (code == 16)
+                {
+                    //Ignore shifts
+                }
+                else
+                {
+                    WidgetStack.get(x).value += key;
+                }
+                return true;
+            }
+        }
+        return false;
     }
     public void MouseMotionStack(int mousex, int mousey){
         if (isMousePressed == true)

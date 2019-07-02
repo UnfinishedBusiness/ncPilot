@@ -19,6 +19,7 @@ public class JetCad extends JFrame {
     DrawingTools drawing_tools;
 
     boolean ControlKeyState = false;
+    boolean ShiftKeyState = false;
 
 
     public JetCad() {
@@ -32,7 +33,7 @@ public class JetCad extends JFrame {
 
         ui_widgets = new UIWidgets();
         render_engine = new RenderEngine();
-        drawing_tools = new DrawingTools(render_engine);
+        drawing_tools = new DrawingTools(render_engine, ui_widgets);
 
         
         Layout_UI();
@@ -120,18 +121,26 @@ public class JetCad extends JFrame {
                         if (!GlobalData.configData.CurrentWorkbench.contentEquals("JetCad")) return false;
                         switch (ke.getID()) {
                             case KeyEvent.KEY_PRESSED:
-                                System.out.println("(JetCad) Key: " + ke.getKeyCode());
+                                //System.out.println("(JetCad) Key: " + ke.getKeyCode());
                                 String c = ke.getKeyText(ke.getKeyCode()).toLowerCase();
                                 //System.out.println("(JetCad) KeyText: " + c);
                                 if (ke.getKeyCode() == 17)
                                 {
                                     ControlKeyState = true;
                                 }
+                                if (ke.getKeyCode() == 16)
+                                {
+                                    ShiftKeyState = true;
+                                }
                                 if (ControlKeyState == true)
                                 {
                                     //System.out.println("Ctrl-" + c);
                                     drawing_tools.CheckKeyPress("ctrl-" + c);
                                     break;
+                                }
+                                else if (ShiftKeyState == true && c == "-")
+                                {
+                                    ui_widgets.KeypressStack("_", ke.getKeyCode());
                                 }
                                 else
                                 {
@@ -142,6 +151,10 @@ public class JetCad extends JFrame {
                                     else if (ke.getKeyCode() == 9)
                                     {
                                         drawing_tools.CheckKeyPress("Tab");
+                                    }
+                                    else if (ui_widgets.KeypressStack(c, ke.getKeyCode()) == true)
+                                    {
+                                        break; //Don't pass on to hotkeys if UI widgets has input focus!
                                     }
                                     else
                                     {
@@ -157,6 +170,7 @@ public class JetCad extends JFrame {
                                 }
                                 break;
                         }
+                        repaint();
                         return false;
                     }
                 });
@@ -318,10 +332,14 @@ public class JetCad extends JFrame {
     }
     private void Layout_UI()
     {
-        ui_widgets.AddInputBox("Search", "bottom-left", true,110, 60, 10, 10, new Runnable() {
+        ui_widgets.AddInputBox("Tool", "", "bottom-left", false, false, 220, 25, 10, 10, new Runnable() {
             @Override
             public void run() {
-
+                String value =  ui_widgets.getInputBoxValue("Tool");
+                drawing_tools.CheckToolSeachInput(value);
+                ui_widgets.setInputBoxValue("Tool", "");
+                ui_widgets.setInputBoxVisability("Tool", false);
+                ui_widgets.setInputBoxEngaged("Tool", false);
             }
         });
     }
@@ -333,7 +351,7 @@ public class JetCad extends JFrame {
             GlobalData.MousePositionY_MCS = ((GlobalData.MousePositionY - GlobalData.ViewerPan[1]) / GlobalData.ViewerZoom) * -1;
             Graphics2D g2d = (Graphics2D) g;
             /* Begin Wallpaper */
-            g.setColor(Color.DARK_GRAY);
+            g.setColor(Color.WHITE);
             g.fillRect(0,0,Frame_Bounds.width,Frame_Bounds.height);
             /* End Wallpaper */
             render_engine.RenderStack(g2d);

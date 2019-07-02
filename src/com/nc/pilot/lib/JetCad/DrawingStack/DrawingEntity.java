@@ -9,4 +9,7 @@ public class DrawingEntity {
     public float[] end;
     public float[] center;
     public float radius;
+
+    //Meta Data
+    public boolean isSelected;
 }

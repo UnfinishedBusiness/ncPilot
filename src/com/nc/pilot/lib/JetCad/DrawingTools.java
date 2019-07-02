@@ -2,12 +2,14 @@ package com.nc.pilot.lib.JetCad;
 
 import com.nc.pilot.lib.JetCad.DrawingStack.DrawingEntity;
 import com.nc.pilot.lib.JetCad.DrawingStack.RenderEngine;
+import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
 import java.util.ArrayList;
 
 public class DrawingTools {
     private ArrayList<DrawingToolStruct> ToolStack = new ArrayList();
     private RenderEngine render_engine;
+    private UIWidgets ui_widgets;
 
     private void AddTool(String name, String hotkey, Runnable action)
     {
@@ -19,7 +21,17 @@ public class DrawingTools {
     }
     private void SelectAll()
     {
-
+        for (int x = 0; x < render_engine.DrawingStack.size(); x++)
+        {
+            render_engine.DrawingStack.get(x).isSelected = true;
+        }
+    }
+    private void UnSelectAll()
+    {
+        for (int x = 0; x < render_engine.DrawingStack.size(); x++)
+        {
+            render_engine.DrawingStack.get(x).isSelected = false;
+        }
     }
     private void SaveDrawing()
     {
@@ -39,11 +51,24 @@ public class DrawingTools {
     }
     private void DeleteSelected()
     {
-
+        System.out.println("Deleting selected!");
+        ArrayList<DrawingEntity> temp_stack = new ArrayList();
+        for (int x = 0; x < render_engine.DrawingStack.size(); x++)
+        {
+            if (render_engine.DrawingStack.get(x).isSelected == false)
+            {
+                temp_stack.add(render_engine.DrawingStack.get(x));
+            }
+        }
+        render_engine.DrawingStack.clear();
+        for (int x = 0; x < temp_stack.size(); x++)
+        {
+            render_engine.DrawingStack.add(temp_stack.get(x));
+        }
     }
     private void DrawLine()
     {
-
+        System.out.println("Drawing line!");
     }
     private void DrawRectangle()
     {
@@ -75,7 +100,8 @@ public class DrawingTools {
     }
     private void SearchToolBox()
     {
-
+        ui_widgets.setInputBoxVisability("Tool", true);
+        ui_widgets.setInputBoxEngaged("Tool", true);
     }
     private void ParallelLine()
     {
@@ -83,7 +109,10 @@ public class DrawingTools {
     }
     private void Escape()
     {
-
+        ui_widgets.setInputBoxVisability("Tool", false);
+        ui_widgets.setInputBoxEngaged("Tool", false);
+        ui_widgets.setInputBoxValue("Tool", "");
+        UnSelectAll();
     }
     private void ChainSelect()
     {
@@ -153,9 +182,10 @@ public class DrawingTools {
     {
 
     }
-    public DrawingTools(RenderEngine r)
+    public DrawingTools(RenderEngine r, UIWidgets u)
     {
         render_engine = r;
+        ui_widgets = u;
         //Add a few enties to test rendering engine
         DrawingEntity e;
 
@@ -388,6 +418,18 @@ public class DrawingTools {
         {
             DrawingToolStruct tool = ToolStack.get(x);
             if (tool.hotkey.contentEquals(key))
+            {
+                tool.action.run();
+                return;
+            }
+        }
+    }
+    public void CheckToolSeachInput(String input)
+    {
+        for (int x = 0; x < ToolStack.size(); x++)
+        {
+            DrawingToolStruct tool = ToolStack.get(x);
+            if (tool.name.contentEquals(input))
             {
                 tool.action.run();
                 return;
