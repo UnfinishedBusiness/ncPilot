@@ -324,7 +324,7 @@ public class MotionController {
         GlobalData.GcodeFileCurrentLine = 0;
         GlobalData.GcodeFileLines = null;
         WriteBuffer("M25\nM26 S0\n");
-        WriteBuffer("M2101");
+        //WriteBuffer("M2101");
     }
     public void ResetOnIdle()
     {

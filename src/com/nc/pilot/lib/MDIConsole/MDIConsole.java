@@ -33,6 +33,12 @@ public class MDIConsole {
                 motion_controller.ResetNow();
             }
         });
+        AddCommand("clear", new Runnable() {
+            @Override
+            public void run() {
+                RecievedLines.clear();
+            }
+        });
     }
     public void inherit_MotionController(MotionController m)
     {
