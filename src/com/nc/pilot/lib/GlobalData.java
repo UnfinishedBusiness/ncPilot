@@ -29,6 +29,8 @@ public class GlobalData {
     public static float[] machine_cordinates = {0, 0, 0};
     public static String MachineState = "";
     public static float CurrentVelocity;
+    public static float CurrentArcVoltage;
+    public static float SetArcVoltage;
     public static float ProgrammedFeedrate;
     public static String CurrentUnits = "Inch";
     public static boolean IsHomed = false;

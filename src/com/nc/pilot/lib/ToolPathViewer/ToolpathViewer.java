@@ -452,9 +452,7 @@ public class ToolpathViewer {
                                 GcodeStack.add("G1 F" + jet_param.Feedrate + " X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
                             }
                             GcodeStack.add("M2002");
-                            GcodeStack.add("M2101"); //Turn Torch off
-                            GcodeStack.add("G4 P" + jet_param.PostDelay); //Post Delay
-                            GcodeStack.add("G0 Z1"); //Rapid to Z Clearance plane
+                            GcodeStack.add("M2101 P" + jet_param.PostDelay); //Turn Torch off & retract
                         }
                     }
                 }
@@ -470,9 +468,7 @@ public class ToolpathViewer {
                         GcodeStack.add("G1 F" + jet_param.Feedrate + " X" + (go_point[0] + part.offset[0]) + " Y" + (go_point[1] + part.offset[1]));
                     }
                     GcodeStack.add("M2002");
-                    GcodeStack.add("M2101"); //Turn Torch off
-                    GcodeStack.add("G4 P" + jet_param.PostDelay); //Post Delay
-                    GcodeStack.add("G0 Z1"); //Rapid to Z Clearance plane
+                    GcodeStack.add("M2101 P" + jet_param.PostDelay); //Turn Torch off & retract
                 }
                 //Post Program Footer
                 GcodeStack.add("M30");

@@ -116,7 +116,7 @@ public class MotionController {
         {
             System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getDescriptivePortName());
             //if (ports[x].getSystemPortName().contentEquals("COM11") && ports[x].getDescriptivePortName().contentEquals("USBSER001"))
-            if (ports[x].getSystemPortName().contentEquals("COM9"))
+            if (ports[x].getSystemPortName().contentEquals("COM3"))
             {
                 comPort = ports[x];
                 //comPort.setBaudRate(115200);
@@ -262,6 +262,7 @@ public class MotionController {
         WriteBuffer("?\n");
     }
     public void WriteBuffer(String data){
+        //System.out.println("WriteBuffer: " + data);
         comPort.writeBytes(data.getBytes(), data.length());
     }
     public void SetJogSpeed(float jog)
@@ -304,6 +305,8 @@ public class MotionController {
         //WriteBuffer("M28 0.nc\n");
         if (GlobalData.GcodeFileLines == null)
         {
+            WriteBuffer("M110 N0\n");
+            WriteBuffer("M28 0.nc\n");
             GlobalData.GcodeFileCurrentLine = 0;
             LoadGcodeFile();
         }
@@ -321,6 +324,7 @@ public class MotionController {
         GlobalData.GcodeFileCurrentLine = 0;
         GlobalData.GcodeFileLines = null;
         WriteBuffer("M25\nM26 S0\n");
+        WriteBuffer("M2101");
     }
     public void ResetOnIdle()
     {
@@ -393,15 +397,15 @@ public class MotionController {
     }
     public void SetXzero()
     {
-        WriteBuffer("G10 L20 P1 X0\n");
+        WriteBuffer("G92 X0\n");
     }
     public void SetYzero()
     {
-        WriteBuffer("G10 L20 P1 Y0\n");
+        WriteBuffer("G92 Y0\n");
     }
     public void SetZzero()
     {
-        WriteBuffer("G10 L20 P1 Z0\n");
+        WriteBuffer("G92 Z0\n");
     }
     public void Home()
     {
@@ -583,7 +587,7 @@ public class MotionController {
             GlobalData.GcodeFileLines = lines;
             for (int x = 0; x < GlobalData.GcodeFileLines.length; x++)
             {
-                String line = "N" + x + " " + GlobalData.GcodeFileLines[x];
+                String line = "N" + (x +1) + " " + GlobalData.GcodeFileLines[x];
                 char[] new_line = line.toCharArray();
                 String new_string = "";
                 for (int y = 0; y < new_line.length; y++)
@@ -652,6 +656,14 @@ public class MotionController {
                 if (axis_pairs[x].contains("STATUS"))
                 {
                     GlobalData.MachineState = axis_pairs[x].split("\\=")[1];
+                }
+                if (axis_pairs[x].contains("THC_ARC_VOLTAGE"))
+                {
+                    GlobalData.CurrentArcVoltage = new Float(axis_pairs[x].split("\\=")[1]);
+                }
+                if (axis_pairs[x].contains("THC_SET_VOLTAGE"))
+                {
+                    GlobalData.SetArcVoltage = new Float(axis_pairs[x].split("\\=")[1]);
                 }
             }
         }
@@ -761,7 +773,8 @@ public class MotionController {
             if  (GlobalData.GcodeFileCurrentLine < GlobalData.GcodeFileLines.length)
             {
                 WriteBuffer(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
-                //System.out.println(GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine]);
+                mdi_console.RecieveBufferLine("Wrote: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
+                //System.out.println("Wrote: " + GlobalData.GcodeFileLines[GlobalData.GcodeFileCurrentLine] + "\n");
                 GlobalData.GcodeFileCurrentLine++;
             }
             else //End of file reached. Null it and send the finishing block to the controller

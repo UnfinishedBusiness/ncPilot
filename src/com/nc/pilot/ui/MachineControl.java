@@ -453,7 +453,7 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 //System.out.println("Torch Off!");
-                motion_controller.WriteBuffer("M5\n");
+                motion_controller.WriteBuffer("M2101\n");
             }
         });
         ui_widgets.AddSelectButton("Torch On", "torch", false,"bottom-right", 170, 60, 190, 80, new Runnable() {
@@ -461,15 +461,13 @@ public class MachineControl extends JFrame {
             public void run() {
                 //
                 // System.out.println("Torch On!");
-                motion_controller.WriteBuffer("M3 S5000\n");
+                motion_controller.WriteBuffer("M2100\n");
             }
         });
         ui_widgets.AddMomentaryButton("Go Home", "bottom-right", 120, 60, 10, 150, new Runnable() {
             @Override
             public void run() {
-                //System.out.println("Go Home!");
-                motion_controller.WriteBuffer("G90 G53 G0 Z0\n");
-                motion_controller.WriteBuffer("G90 G53 G0 X0 Y0\n");
+
             }
         });
         ui_widgets.AddMomentaryButton("Probe Z", "bottom-right", 120, 60, 140, 150, new Runnable() {

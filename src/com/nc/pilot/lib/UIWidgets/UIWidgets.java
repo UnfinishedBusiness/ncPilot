@@ -76,6 +76,12 @@ public class UIWidgets {
         g.drawString("UNITS", Frame_Bounds.width - 110 - DRO_X_Offset, 240);
         g.drawString(GlobalData.CurrentUnits, Frame_Bounds.width - 70 - DRO_X_Offset, 240);
 
+        g.drawString("ARC", Frame_Bounds.width - 375 - DRO_X_Offset, 20);
+        g.drawString(String.format("%.1fV", GlobalData.CurrentArcVoltage), Frame_Bounds.width - 330 - DRO_X_Offset, 20);
+
+        g.drawString("SET", Frame_Bounds.width - 280 - DRO_X_Offset, 20);
+        g.drawString(String.format("%.1fV", GlobalData.SetArcVoltage), Frame_Bounds.width - 250 - DRO_X_Offset, 20);
+
         g.drawRect(Frame_Bounds.width - 360, 10, 350, 240);
     }
     public void engageButton(String text, boolean engaged)
