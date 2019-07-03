@@ -27,12 +27,6 @@ public class MDIConsole {
                 hide();
             }
         });
-        AddCommand("reset", new Runnable() {
-            @Override
-            public void run() {
-                motion_controller.ResetNow();
-            }
-        });
         AddCommand("clear", new Runnable() {
             @Override
             public void run() {

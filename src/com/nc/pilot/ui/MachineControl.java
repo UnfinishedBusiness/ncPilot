@@ -114,12 +114,21 @@ public class MachineControl extends JFrame {
                 repaint();
             }
         }, 0, 50);
-        poll_timer.schedule(new TimerTask() {
+        /*poll_timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 motion_controller.Poll();
             }
-        }, 0, 1);
+        }, 0, 1);*/
+        Thread t1 = new Thread(new Runnable() {
+            public void run()
+            {
+                while(true)
+                {
+                    motion_controller.Poll();
+                }
+            }});
+        t1.start();
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -543,11 +552,17 @@ public class MachineControl extends JFrame {
                 System.out.println("New position: " + ui_widgets.getSliderPosition("Jog Speed"));
             }
         });*/
-        ui_widgets.AddSlider("Jog Speed", "bottom-right", 350, 60, 10, 360, 0, (int)GlobalData.Max_linear_Vel, 300, "Inch/Min", new Runnable(){
+        ui_widgets.AddSlider("Jog Speed", true, "bottom-right", 350, 60, 10, 360, 0, (int)GlobalData.Max_linear_Vel, 300, "Inch/Min", new Runnable(){
             @Override
             public void run() {
                 System.out.println("New position: " + ui_widgets.getSliderPosition("Jog Speed"));
                 motion_controller.SetJogSpeed(ui_widgets.getSliderPosition("Jog Speed"));
+            }
+        });
+        ui_widgets.AddSlider("Gcode Upload", false, "bottom-left", 600, 60, 10, 10, 0, 100, 0, "%", new Runnable(){
+            @Override
+            public void run() {
+
             }
         });
     }

@@ -339,11 +339,11 @@ public class JetCad extends JFrame {
         ui_widgets.AddInputBox("Tool", "", "bottom-left", false, false, 220, 25, 10, 10, new Runnable() {
             @Override
             public void run() {
-                String value =  ui_widgets.getInputBoxValue("Tool");
+                String value =  ui_widgets.getValue("Tool");
                 drawing_tools.CheckToolSeachInput(value);
-                ui_widgets.setInputBoxValue("Tool", "");
-                ui_widgets.setInputBoxVisability("Tool", false);
-                ui_widgets.setInputBoxEngaged("Tool", false);
+                ui_widgets.setValue("Tool", "");
+                ui_widgets.setVisability("Tool", false);
+                ui_widgets.setEngaged("Tool", false);
             }
         });
     }

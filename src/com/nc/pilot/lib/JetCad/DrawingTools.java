@@ -101,8 +101,8 @@ public class DrawingTools {
     }
     private void SearchToolBox()
     {
-        ui_widgets.setInputBoxVisability("Tool", true);
-        ui_widgets.setInputBoxEngaged("Tool", true);
+        ui_widgets.setVisability("Tool", true);
+        ui_widgets.setEngaged("Tool", true);
     }
     private void ParallelLine()
     {
@@ -110,9 +110,9 @@ public class DrawingTools {
     }
     private void Escape()
     {
-        ui_widgets.setInputBoxVisability("Tool", false);
-        ui_widgets.setInputBoxEngaged("Tool", false);
-        ui_widgets.setInputBoxValue("Tool", "");
+        ui_widgets.setVisability("Tool", false);
+        ui_widgets.setEngaged("Tool", false);
+        ui_widgets.setValue("Tool", "");
         UnSelectAll();
     }
     private void ChainSelect()
@@ -181,7 +181,7 @@ public class DrawingTools {
     }
     private void Tab()
     {
-        String SearchBoxVal = ui_widgets.getInputBoxValue("Tool");
+        String SearchBoxVal = ui_widgets.getValue("Tool");
         int score = 0;
         for (int x = 0; x < ToolStack.size(); x++)
         {
@@ -205,7 +205,7 @@ public class DrawingTools {
                 winner = ToolStack.get(i).name;
             }
         }
-        ui_widgets.setInputBoxValue("Tool", winner);
+        ui_widgets.setValue("Tool", winner);
     }
     public DrawingTools(RenderEngine r, UIWidgets u)
     {

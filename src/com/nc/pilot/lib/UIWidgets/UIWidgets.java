@@ -112,7 +112,8 @@ public class UIWidgets {
         g.drawRect(posx, posy, width, height);
     }
 
-    public void DrawSlider(String text, boolean engaged, int width, int height, int real_posx, int real_posy, int position, int min, int max, String unit_name){
+    public void DrawSlider(String text, boolean visable, boolean engaged, int width, int height, int real_posx, int real_posy, int position, int min, int max, String unit_name){
+        if (visable == false) return;
         g.setColor(Color.red);
         int button_font_size = 15;
         g.setFont(new Font("Arial", Font.PLAIN, button_font_size));
@@ -197,11 +198,12 @@ public class UIWidgets {
         if (isDefault) w.engaged = true;
         WidgetStack.add(w);
     }
-    public void AddSlider(String text, String anchor, int width, int height, int posx, int posy, int min, int max, int defaultPosition, String unit_name, Runnable action){
+    public void AddSlider(String text, boolean visable, String anchor, int width, int height, int posx, int posy, int min, int max, int defaultPosition, String unit_name, Runnable action){
         //System.out.println("Adding: " + text);
         WidgetEntity w = new WidgetEntity();
         w.type = "slider";
         w.anchor = anchor;
+        w.visable = visable;
         w.text = text;
         w.engaged = false;
         w.width = width;
@@ -239,16 +241,21 @@ public class UIWidgets {
         for (int x = 0; x < WidgetStack.size(); x++)
         {
             if (WidgetStack.get(x).text.equals(text)){
-                //System.out.println("position in normal units: " + WidgetStack.get(x).position);
-                //System.out.println("width: " + WidgetStack.get(x).width);
-                //System.out.println("min: " + WidgetStack.get(x).min);
-                //System.out.println("max: " + WidgetStack.get(x).max);
                 return map(WidgetStack.get(x).position, 0, WidgetStack.get(x).width, WidgetStack.get(x).min, WidgetStack.get(x).max);
             }
         }
         return -1;
     }
-    public String getInputBoxValue(String text)
+    public void setSliderPosition(String text, float position)
+    {
+        for (int x = 0; x < WidgetStack.size(); x++)
+        {
+            if (WidgetStack.get(x).text.equals(text)){
+                WidgetStack.get(x).position =  map((int)position, WidgetStack.get(x).min, WidgetStack.get(x).max, 0, WidgetStack.get(x).width);
+            }
+        }
+    }
+    public String getValue(String text)
     {
         for (int x = 0; x < WidgetStack.size(); x++)
         {
@@ -258,7 +265,7 @@ public class UIWidgets {
         }
         return "";
     }
-    public void setInputBoxValue(String id_text, String text)
+    public void setValue(String id_text, String text)
     {
         for (int x = 0; x < WidgetStack.size(); x++) {
             if (WidgetStack.get(x).text.equals(id_text)) {
@@ -266,7 +273,7 @@ public class UIWidgets {
             }
         }
     }
-    public void setInputBoxVisability(String id_text, boolean visable)
+    public void setVisability(String id_text, boolean visable)
     {
         for (int x = 0; x < WidgetStack.size(); x++) {
             if (WidgetStack.get(x).text.equals(id_text)) {
@@ -274,7 +281,7 @@ public class UIWidgets {
             }
         }
     }
-    public void setInputBoxEngaged(String id_text, boolean engaged)
+    public void setEngaged(String id_text, boolean engaged)
     {
         for (int x = 0; x < WidgetStack.size(); x++) {
             if (WidgetStack.get(x).text.equals(id_text)) {
@@ -345,12 +352,15 @@ public class UIWidgets {
                 else if (WidgetStack.get(x).anchor.equals("bottom-right")){
                     WidgetStack.get(x).real_posx = Frame_Bounds.width - WidgetStack.get(x).posx - WidgetStack.get(x).width;
                     WidgetStack.get(x).real_posy = Frame_Bounds.height - WidgetStack.get(x).posy - WidgetStack.get(x).height;
+                }else if (WidgetStack.get(x).anchor.equals("bottom-left")){
+                    WidgetStack.get(x).real_posx = WidgetStack.get(x).posx;
+                    WidgetStack.get(x).real_posy = Frame_Bounds.height - WidgetStack.get(x).posy - WidgetStack.get(x).height;
                 }
                 else {
                     WidgetStack.get(x).real_posx = WidgetStack.get(x).posx;
                     WidgetStack.get(x).real_posy = WidgetStack.get(x).posy;
                 }
-                DrawSlider(WidgetStack.get(x).text, WidgetStack.get(x).engaged, WidgetStack.get(x).width, WidgetStack.get(x).height, WidgetStack.get(x).real_posx, WidgetStack.get(x).real_posy, WidgetStack.get(x).position, WidgetStack.get(x).min, WidgetStack.get(x).max, WidgetStack.get(x).unit_name);
+                DrawSlider(WidgetStack.get(x).text, WidgetStack.get(x).visable, WidgetStack.get(x).engaged, WidgetStack.get(x).width, WidgetStack.get(x).height, WidgetStack.get(x).real_posx, WidgetStack.get(x).real_posy, WidgetStack.get(x).position, WidgetStack.get(x).min, WidgetStack.get(x).max, WidgetStack.get(x).unit_name);
             }
             if (WidgetStack.get(x).type.equals("DRO")){
                 DrawDRO();
