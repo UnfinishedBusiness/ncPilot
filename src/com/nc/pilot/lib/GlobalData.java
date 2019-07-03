@@ -30,6 +30,7 @@ public class GlobalData {
     public static String MachineState = "";
     public static float CurrentVelocity;
     public static float CurrentArcVoltage;
+    public static String THCStatus = "";
     public static float SetArcVoltage;
     public static float ProgrammedFeedrate;
     public static String CurrentUnits = "Inch";

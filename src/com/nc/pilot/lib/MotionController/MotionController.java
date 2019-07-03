@@ -10,6 +10,7 @@ import com.nc.pilot.lib.MDIConsole.MDIConsole;
 import com.nc.pilot.lib.UIWidgets.UIWidgets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.fazecast.jSerialComm.*;
 
@@ -32,7 +33,9 @@ public class MotionController {
     public boolean JogYdir = false;
     public boolean JogZ = false;
     public boolean JogZdir = false;
-    private boolean OkayToSend = false;
+    private boolean OkayToSend = false; //Waits for checksum ok for uploading files
+
+    private ArrayList<String> BufferedWriteStack = new ArrayList(); //This stack will be sent seqencually after an ok is recieved until stack is empty
 
 
     public void inherit_ui_widgets(UIWidgets u)
@@ -67,6 +70,7 @@ public class MotionController {
                 rx_buffer_line = "";
 
                 WriteBuffer("G20\n");
+                WriteBuffer("M114\n");
             }
         }
     }
@@ -165,20 +169,35 @@ public class MotionController {
     public void SetXzero()
     {
         WriteBuffer("G92 X0\n");
+        BufferedWriteStack.add("M114\n");
     }
     public void SetYzero()
     {
         WriteBuffer("G92 Y0\n");
+        BufferedWriteStack.add("M114\n");
     }
     public void SetZzero()
     {
         WriteBuffer("G92 Z0\n");
+        BufferedWriteStack.add("M114\n");
+    }
+    public void GoHome()
+    {
+        WriteBuffer("M2101 P0 R2\n"); //Retract torch 3 inches and will turn off torch if it's on
+        BufferedWriteStack.add("G0 X" + GlobalData.work_offset[0] + " Y" + GlobalData.work_offset[1] + "\n");
     }
     public void Home()
     {
 
     }
+    public void TorchOn()
+    {
 
+    }
+    public void TorchOff()
+    {
+        WriteBuffer("M2101 P0 R0"); //Turn off torch right away and don't retract
+    }
 
     public void LoadGcodeFile()
     {
@@ -213,6 +232,29 @@ public class MotionController {
             //mdi_console.RecieveBufferLine("(MotionController) Recieved Checksum OK! Okay to send next line!");
             OkayToSend = true;
         }
+        else if (inputLine.contains("ok"))
+        {
+            if (BufferedWriteStack.size() > 0)
+            {
+                mdi_console.RecieveBufferLine("(ReadBuffer<->BufferedStack) Writing: " + BufferedWriteStack.get(0));
+                WriteBuffer(BufferedWriteStack.get(0));
+                ArrayList<String> tmp = new ArrayList<>();
+                //Eat top element of stack
+                for (int x = 1; x < BufferedWriteStack.size(); x++)
+                {
+                    tmp.add(BufferedWriteStack.get(x));
+                }
+                BufferedWriteStack = tmp;
+            }
+        }
+        else if (inputLine.contains("THC Enabled"))
+        {
+            GlobalData.THCStatus = "ENABLED";
+        }
+        else if (inputLine.contains("THC Disabled"))
+        {
+            GlobalData.THCStatus = "DISABLED";
+        }
         else if (inputLine.contains("DRO"))
         {
             String dro_line = inputLine.split("DRO:\\ ")[1];
@@ -223,14 +265,17 @@ public class MotionController {
                 if (axis_pairs[x].contains("X_WO"))
                 {
                     GlobalData.work_offset[0] = new Float(axis_pairs[x].split("\\=")[1]);
+                    GlobalData.dro[0] = GlobalData.machine_cordinates[0] + GlobalData.work_offset[0];
                 }
                 if (axis_pairs[x].contains("Y_WO"))
                 {
                     GlobalData.work_offset[1] = new Float(axis_pairs[x].split("\\=")[1]);
+                    GlobalData.dro[1] = GlobalData.machine_cordinates[1] + GlobalData.work_offset[1];
                 }
                 if (axis_pairs[x].contains("Z_WO"))
                 {
                     GlobalData.work_offset[2] = new Float(axis_pairs[x].split("\\=")[1]);
+                    GlobalData.dro[2] = GlobalData.machine_cordinates[2] + GlobalData.work_offset[2];
                 }
                 if (axis_pairs[x].contains("X_MCS"))
                 {

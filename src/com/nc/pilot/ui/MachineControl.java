@@ -114,21 +114,12 @@ public class MachineControl extends JFrame {
                 repaint();
             }
         }, 0, 50);
-        /*poll_timer.schedule(new TimerTask() {
+        poll_timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 motion_controller.Poll();
             }
-        }, 0, 1);*/
-        Thread t1 = new Thread(new Runnable() {
-            public void run()
-            {
-                while(true)
-                {
-                    motion_controller.Poll();
-                }
-            }});
-        t1.start();
+        }, 0, 1);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -462,7 +453,7 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 //System.out.println("Torch Off!");
-                motion_controller.WriteBuffer("M2101\n");
+                motion_controller.TorchOff();
             }
         });
         ui_widgets.AddSelectButton("Torch On", "torch", false,"bottom-right", 170, 60, 190, 80, new Runnable() {
@@ -470,13 +461,13 @@ public class MachineControl extends JFrame {
             public void run() {
                 //
                 // System.out.println("Torch On!");
-                motion_controller.WriteBuffer("M2100\n");
+                motion_controller.TorchOn();
             }
         });
         ui_widgets.AddMomentaryButton("Go Home", "bottom-right", 120, 60, 10, 150, new Runnable() {
             @Override
             public void run() {
-
+                motion_controller.GoHome();
             }
         });
         ui_widgets.AddMomentaryButton("Probe Z", "bottom-right", 120, 60, 140, 150, new Runnable() {

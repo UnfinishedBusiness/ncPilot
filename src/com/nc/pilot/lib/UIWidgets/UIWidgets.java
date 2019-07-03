@@ -49,20 +49,20 @@ public class UIWidgets {
         int DRO_X_Offset = -30;
         g.drawString("X", Frame_Bounds.width - 350 - DRO_X_Offset, 70);
         g.drawString("Y", Frame_Bounds.width - 350 - DRO_X_Offset, 140);
-        g.drawString("Z", Frame_Bounds.width - 350 - DRO_X_Offset, 210);
+        //g.drawString("Z", Frame_Bounds.width - 350 - DRO_X_Offset, 210);
 
         g.drawString(String.format("%.4f", GlobalData.dro[0]), Frame_Bounds.width - 250 - DRO_X_Offset, 70);
         g.drawString(String.format("%.4f", GlobalData.dro[1]), Frame_Bounds.width - 250 - DRO_X_Offset, 140);
-        g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 250 - DRO_X_Offset, 210);
+        //g.drawString(String.format("%.4f", GlobalData.dro[2]), Frame_Bounds.width - 250 - DRO_X_Offset, 210);
 
         g.setFont(new Font("Arial", Font.BOLD, 10));
         g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 55);
         g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 125);
-        g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 195);
+        //g.drawString("ABS", Frame_Bounds.width - 300 - DRO_X_Offset, 195);
 
         g.drawString(String.format("%.4f", GlobalData.machine_cordinates[0]), Frame_Bounds.width - 300 - DRO_X_Offset, 70);
         g.drawString(String.format("%.4f", GlobalData.machine_cordinates[1]), Frame_Bounds.width - 300 - DRO_X_Offset, 140);
-        g.drawString(String.format("%.4f", GlobalData.machine_cordinates[2]), Frame_Bounds.width - 300 - DRO_X_Offset, 210);
+        //g.drawString(String.format("%.4f", GlobalData.machine_cordinates[2]), Frame_Bounds.width - 300 - DRO_X_Offset, 210);
 
         g.drawString("FEED", Frame_Bounds.width - 375 - DRO_X_Offset, 240);
         g.drawString(String.format("%.4f", GlobalData.ProgrammedFeedrate), Frame_Bounds.width - 330 - DRO_X_Offset, 240);
@@ -81,6 +81,9 @@ public class UIWidgets {
 
         g.drawString("SET", Frame_Bounds.width - 280 - DRO_X_Offset, 20);
         g.drawString(String.format("%.1fV", GlobalData.SetArcVoltage), Frame_Bounds.width - 250 - DRO_X_Offset, 20);
+
+        g.drawString("STATUS", Frame_Bounds.width - 200 - DRO_X_Offset, 20);
+        g.drawString(GlobalData.THCStatus, Frame_Bounds.width - 150 - DRO_X_Offset, 20);
 
         g.drawRect(Frame_Bounds.width - 360, 10, 350, 240);
     }
