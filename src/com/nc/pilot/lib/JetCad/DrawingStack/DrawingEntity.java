@@ -1,5 +1,7 @@
 package com.nc.pilot.lib.JetCad.DrawingStack;
 
+import java.awt.*;
+
 /**
  * Created by Travis on 2/9/19.
  */
@@ -12,4 +14,5 @@ public class DrawingEntity {
 
     //Meta Data
     public boolean isSelected;
+    public Color color = Color.BLACK;
 }

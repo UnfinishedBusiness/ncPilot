@@ -10,6 +10,7 @@ public class DrawingTools {
     private ArrayList<DrawingToolStruct> ToolStack = new ArrayList();
     private RenderEngine render_engine;
     private UIWidgets ui_widgets;
+    private Geometry geometry;
 
     private void AddTool(String name, String hotkey, Runnable action)
     {
@@ -210,6 +211,7 @@ public class DrawingTools {
     {
         render_engine = r;
         ui_widgets = u;
+        geometry = new Geometry(render_engine);
         //Add a few enties to test rendering engine
         DrawingEntity e;
 
@@ -229,6 +231,26 @@ public class DrawingTools {
         e.type = "line";
         e.start = new float[]{20, 5};
         e.end = new float[]{5, 5};
+        render_engine.DrawingStack.add(e);
+
+        e = new DrawingEntity();
+        e.type = "line";
+        e.start = new float[]{1, 1};
+        e.end = new float[]{30, 15};
+        render_engine.DrawingStack.add(e);
+
+        e = new DrawingEntity();
+        e.type = "line";
+        e.start = new float[]{20, 20};
+        e.end = new float[]{20, 10};
+        render_engine.DrawingStack.add(e);
+
+        e = new DrawingEntity();
+        e.type = "cw_arc";
+        e.center = new float[]{10, 10};
+        e.radius = 10;
+        e.start = new float[]{e.center[0] + 10, e.center[1]};
+        e.end = new float[]{e.center[0] + 10, e.center[1]};
         render_engine.DrawingStack.add(e);
 
         AddTool("select_all", "ctrl-a", new Runnable() {
@@ -433,6 +455,31 @@ public class DrawingTools {
             @Override
             public void run() {
                 Tab();
+            }
+        });
+        //Testing functions
+        AddTool("get_intersections", "", new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<float[]> intersections = geometry.getIntersectionPoints(render_engine.DrawingStack);
+                if (intersections.size() == 0)
+                {
+                    System.out.println("There are no intersection points!");
+                }
+                else
+                {
+                    System.out.println("Number of intersections: " + intersections.size());
+                    for (int x = 0; x < intersections.size(); x++)
+                    {
+                        DrawingEntity e = new DrawingEntity();
+                        e.type = "cw_arc";
+                        e.radius = 0.1f;
+                        e.center = intersections.get(x);
+                        e.start = new float[]{ e.center[0] + e.radius, e.center[1]};
+                        e.end = new float[]{ e.center[0] + e.radius, e.center[1]};
+                        render_engine.DrawingStack.add(e);
+                    }
+                }
             }
         });
     }

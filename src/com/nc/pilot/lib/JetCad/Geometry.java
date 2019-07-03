@@ -1,25 +1,15 @@
-package com.nc.pilot.lib.JetCad.DrawingStack;
-import com.nc.pilot.lib.GlobalData;
-import com.nc.pilot.lib.JetCad.Geometry;
+package com.nc.pilot.lib.JetCad;
+import com.nc.pilot.lib.JetCad.DrawingStack.DrawingEntity;
+import com.nc.pilot.lib.JetCad.DrawingStack.RenderEngine;
+
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
-/**
- * Created by travis on 2/1/19.
- */
-
-public class RenderEngine {
-
-    private Graphics2D g2d;
-    public ArrayList<DrawingEntity> DrawingStack = new ArrayList();
-    private boolean isMousePressed = false;
-    private float[] mouseLastDragPosition;
-    private Geometry geometry;
-
-    // constructor
-    public RenderEngine() {
-        geometry = new Geometry(this);
+public class Geometry {
+    RenderEngine render_engine;
+    public Geometry(RenderEngine r)
+    {
+        render_engine = r;
     }
     public float getAngle(float[] start_point, float[] end_point) {
         float angle = (float) Math.toDegrees(Math.atan2(start_point[1] - end_point[1], start_point[0] - end_point[0]));
@@ -110,12 +100,9 @@ public class RenderEngine {
         return difference;
 
     }
-    public void RenderLine(float[] start, float end[])
+    public ArrayList<float[]> getArcPoints(float[] start, float[] end, float[] center, float radius, String direction)
     {
-        g2d.draw(new Line2D.Float(((start[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((start[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1], ((end[0]) * GlobalData.ViewerZoom) + GlobalData.ViewerPan[0], (((end[1]) * GlobalData.ViewerZoom) * -1) + GlobalData.ViewerPan[1]));
-    }
-    public void RenderArc(float[] start, float[] end, float[] center, float radius, String direction)
-    {
+        ArrayList<float[]> points = new ArrayList();
         float start_angle = getAngle(center, start);
         float end_angle = getAngle(center, end);
         float number_of_segments = 200 * radius; //Scale number of segments by radius
@@ -137,7 +124,7 @@ public class RenderEngine {
                     start_angle += angle_inc;
                 }
                 float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
-                RenderLine(last_point, new_point);
+                points.add(new_point);
                 last_point = new_point;
             }
         }
@@ -151,7 +138,7 @@ public class RenderEngine {
                 {
                     start_angle -= angle_inc;
                     float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
-                    RenderLine(last_point, new_point);
+                    points.add(new_point);
                     last_point = new_point;
                 }
             }
@@ -163,81 +150,73 @@ public class RenderEngine {
                 {
                     start_angle += angle_inc;
                     float [] new_point = getPolarLineEndpoint(center, radius, start_angle);
-                    RenderLine(last_point, new_point);
+                    points.add(new_point);
                     last_point = new_point;
                 }
             }
             float [] new_point = getPolarLineEndpoint(center, radius, end_angle);
-            RenderLine(last_point, new_point);
         }
+        return points;
     }
-    public void RenderStack(Graphics2D graphics)
+    public ArrayList<float[]> getIntersectionPoints(ArrayList<DrawingEntity> e)
     {
-        //System.out.println("Begin render!");
-        g2d = graphics;
-        g2d.setStroke(new BasicStroke(2));
-         /* Begin stock boundry outline */
-        g2d.setColor(Color.red);
-        g2d.draw(new Line2D.Float(0 + GlobalData.ViewerPan[0], 0 + GlobalData.ViewerPan[1], GlobalData.ViewerPan[0] + 10, GlobalData.ViewerPan[1] + 0));
-        g2d.draw(new Line2D.Float(0 + GlobalData.ViewerPan[0], 0 + GlobalData.ViewerPan[1], GlobalData.ViewerPan[0] + 0, GlobalData.ViewerPan[1] + 10));
-        g2d.draw(new Line2D.Float(0 + GlobalData.ViewerPan[0], 0 + GlobalData.ViewerPan[1], GlobalData.ViewerPan[0] - 10, GlobalData.ViewerPan[1] + 0));
-        g2d.draw(new Line2D.Float(0 + GlobalData.ViewerPan[0], 0 + GlobalData.ViewerPan[1], GlobalData.ViewerPan[0] + 0, GlobalData.ViewerPan[1] - 10));
-        /* End stock boundry outline */
-
-
-        for(int i = 0; i< DrawingStack.size(); i++) {
-            //System.out.println("Rendering part " + i);
-            DrawingEntity entity = DrawingStack.get(i);
-            if (entity.isSelected == true)
-            {
-                g2d.setColor(Color.green);
-            }
-            else
-            {
-                g2d.setColor(entity.color);
-            }
-            if (entity.type.contentEquals("line"))
-            {
-                //System.out.println("Rendering line -> " + new float[]{entity.start[0] + part.offset[0], entity.start[1] + part.offset[1]} + " - " + new float[]{entity.end[0] + part.offset[0], entity.end[1] + part.offset[1]});
-                RenderLine(new float[]{entity.start[0], entity.start[1]}, new float[]{entity.end[0], entity.end[1]});
-            }
-            if (entity.type.contentEquals("cw_arc"))
-            {
-                //g2d.setColor(Color.red);
-                RenderArc(new float[]{entity.start[0], entity.start[1]}, new float[]{entity.end[0], entity.end[1]}, new float[]{entity.center[0], entity.center[1]}, entity.radius, "CW");
-            }
-            if (entity.type.contentEquals("ccw_arc"))
-            {
-                //g2d.setColor(Color.blue);
-                RenderArc(new float[]{entity.start[0], entity.start[1]}, new float[]{entity.end[0], entity.end[1]}, new float[]{entity.center[0], entity.center[1]}, entity.radius, "CCW");
-            }
-        }
-    }
-    public void ClickPressStack(float mousex, float mousey){
-        isMousePressed = true;
-        for (int x = 0; x < DrawingStack.size(); x++)
+        ArrayList<float[]> ret = new ArrayList();
+        for (int x = 0; x < e.size(); x++)
         {
-
-        }
-    }
-    public void ClickReleaseStack(float mousex, float mousey){
-        if (isMousePressed == true)
-        {
-            isMousePressed = false;
-            for (int x = 0; x < DrawingStack.size(); x++)
+            for (int y = 0; y < e.size(); y++)
             {
-
+                if (e.get(x).type.contentEquals("line") && e.get(y).type.contentEquals("line"))
+                {
+                    System.out.println("Getting line<->line intersection!");
+                    DrawingEntity line1 = e.get(x);
+                    DrawingEntity line2 = e.get(y);
+                    float a1 = line1.end[1] - line1.start[1];
+                    float b1 = line1.start[0] - line1.end[0];
+                    float c1 = a1 * line1.start[0] + b1 * line1.start[1];
+                    float a2 = line2.end[1] - line2.start[1];
+                    float b2 = line2.start[0] - line2.end[0];
+                    float c2 = a2 * line2.start[0] + b2 * line2.start[1];
+                    float det = a1 * b2 - a2 * b1;
+                    if (det == 0) break; //No intersection point, lines are parallel!
+                    float x_int = (b2 * c1 - b1 * c2) / det;
+                    float y_int = (a1 * c2 - a2 * c1) / det;
+                    ret.add(new float[]{x_int, y_int});
+                }
+                if (e.get(x).type.contentEquals("line") && e.get(y).type.contentEquals("cw_arc"))
+                {
+                    System.out.println("Getting line<->arc intersection!");
+                    DrawingEntity line = e.get(x);
+                    DrawingEntity arc = e.get(y);
+                    ArrayList<float[]> arc_points = getArcPoints(arc.start, arc.end, arc.center, arc.radius, "CW");
+                    if (arc_points.size() > 0)
+                    {
+                        float[] last_point = arc_points.get(0);
+                        for (int z = 1; z < arc_points.size(); z++)
+                        {
+                            DrawingEntity line1 = line;
+                            DrawingEntity line2 = new DrawingEntity();
+                            line2.type = "line";
+                            line2.start = last_point;
+                            line2.end = arc_points.get(z);
+                            line2.color = Color.green;
+                            render_engine.DrawingStack.add(line2);
+                            last_point = arc_points.get(z);
+                            float a1 = line1.end[1] - line1.start[1];
+                            float b1 = line1.start[0] - line1.end[0];
+                            float c1 = a1 * line1.start[0] + b1 * line1.start[1];
+                            float a2 = line2.end[1] - line2.start[1];
+                            float b2 = line2.start[0] - line2.end[0];
+                            float c2 = a2 * line2.start[0] + b2 * line2.start[1];
+                            float det = a1 * b2 - a2 * b1;
+                            if (det == 0) break; //No intersection point, lines are parallel!
+                            float x_int = (b2 * c1 - b1 * c2) / det;
+                            float y_int = (a1 * c2 - a2 * c1) / det;
+                            ret.add(new float[]{x_int, y_int});
+                        }
+                    }
+                }
             }
         }
-    }
-    public void MouseMotionStack(float mousex, float mousey){
-        if (isMousePressed == true)
-        {
-            for (int x = 0; x < DrawingStack.size(); x++)
-            {
-
-            }
-        }
-        mouseLastDragPosition = new float[]{mousex, mousey};
+        return ret;
     }
 }
