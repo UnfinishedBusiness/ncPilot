@@ -63,7 +63,8 @@ public class MotionController {
         for (int x = 0; x < ports.length; x++) {
             System.out.println(x + "> Port Name: " + ports[x].getSystemPortName() + " Port Description: " + ports[x].getDescriptivePortName());
             //if (ports[x].getSystemPortName().contentEquals("COM11") && ports[x].getDescriptivePortName().contentEquals("USBSER001"))
-            if (ports[x].getSystemPortName().contentEquals("COM11")) {
+            //if (ports[x].getSystemPortName().contentEquals("COM11")) {
+            if (ports[x].getDescriptivePortName().contains("USB Serial")) {
                 comPort = ports[x];
                 comPort.setBaudRate(250000);
                 comPort.openPort();

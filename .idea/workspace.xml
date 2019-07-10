@@ -7,9 +7,154 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8907f65-b5b3-4349-933e-bf222ba0f9b3" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/DrawingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/DrawingEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/Geometry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/Geometry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/config/ConfigData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/config/ConfigData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/config/JetToolpathCutChartData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/config/JetToolpathCutChartData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathCutChart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathJobSetup$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathJobSetup$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathJobSetup.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/dialogs/JetToolpathJobSetup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GcodeInterpreter$GcodeMove.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GcodeInterpreter$GcodeMove.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GcodeInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GcodeInterpreter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GcodeViewer$ViewerEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GcodeViewer$ViewerEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GcodeViewer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GcodeViewer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GlobalData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/GlobalData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingStack/DrawingEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingStack/DrawingEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingStack/RenderEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingStack/RenderEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingToolStruct.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingToolStruct.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$17.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$18.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$19.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$20.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$20.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$21.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$21.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$22.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$22.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$23.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$23.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$24.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$24.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$25.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$25.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$26.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$26.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$27.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$27.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$28.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$28.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$29.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$29.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$30.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$30.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$31.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$31.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$32.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$32.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$33.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$33.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$34.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$34.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$35.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$35.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/DrawingTools.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/Geometry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/JetCad/Geometry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MDIConsole/MDICommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MDIConsole/MDICommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MDIConsole/MDIConsole$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MDIConsole/MDIConsole$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MDIConsole/MDIConsole$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MDIConsole/MDIConsole$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MDIConsole/MDIConsole.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MDIConsole/MDIConsole.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MotionController/MotionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/MotionController/MotionController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/BuildPaths.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/BuildPaths.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/PathObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/PathObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/ToolpathViewer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/ViewerEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/ViewerEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/ViewerPart.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/ToolPathViewer/ViewerPart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/UIWidgets/UIWidgets.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/UIWidgets/UIWidgets.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/UIWidgets/WidgetEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/lib/UIWidgets/WidgetEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/About$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/About$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/About.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/About.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$JetCadViewerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad$JetCadViewerPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetCad.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$8$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$8$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$9$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$9$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$ToolpathViewerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths$ToolpathViewerPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/JetToolpaths.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$17.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$18.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$19.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$20.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$20.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$21.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$21.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$22.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$22.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$23.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$23.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$24.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$24.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$25.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$25.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$26.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$26.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$27.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$27.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$GcodeViewerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl$GcodeViewerPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MachineControl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$ToolpathViewerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator$ToolpathViewerPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ncPilot/com/nc/pilot/ui/MotionSimulator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,38 +168,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="85" column="88" selection-start-line="85" selection-start-column="88" selection-end-line="85" selection-end-column="88" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5662">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/Geometry.java">
+        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="210" column="92" selection-start-line="210" selection-start-column="92" selection-end-line="210" selection-end-column="92" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/DrawingEntity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="42" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
+            <state relative-caret-position="187">
+              <caret line="66" column="75" lean-forward="true" selection-start-line="66" selection-start-column="75" selection-end-line="66" selection-end-column="75" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2623#2624#0" expanded="true" />
+                <element signature="e#3143#3144#0" expanded="true" />
+                <element signature="e#6471#6472#0" expanded="true" />
+                <element signature="e#6597#6598#0" expanded="true" />
+                <element signature="e#6723#6724#0" expanded="true" />
+                <element signature="e#7506#7507#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -162,9 +289,9 @@
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/GlobalData.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java" />
-        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/DrawingEntity.java" />
         <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/Geometry.java" />
+        <option value="$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java" />
       </list>
     </option>
   </component>
@@ -213,16 +340,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pilot" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="JetCad" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ncPilot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ncPilot" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pilot" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="JetCad" type="462c0819:PsiDirectoryNode" />
-              <item name="DrawingStack" type="462c0819:PsiDirectoryNode" />
+              <item name="MotionController" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -281,7 +399,6 @@
     </configuration>
     <configuration name="MachineControl" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.nc.pilot.ui.MachineControl" />
       <module name="ncPilot" />
       <extension name="coverage">
@@ -382,10 +499,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="737" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" id="Project" order="0" visible="true" weight="0.23021002" />
+      <window_info id="Project" order="0" visible="true" weight="0.23373677" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Nl-Palette" order="3" />
@@ -395,7 +512,7 @@
       <window_info id="UI Designer" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32875264" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2248062" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22422259" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -403,8 +520,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32248062" />
-      <window_info anchor="right" id="Maven" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32242227" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24947916" />
@@ -414,6 +530,7 @@
       <window_info anchor="right" id="Properties" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Maven Projects" order="8" />
+      <window_info anchor="right" id="Maven" order="9" />
     </layout>
     <layout-to-restore>
       <window_info id="Project" order="0" visible="true" weight="0.22734375" />
@@ -634,16 +751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/ui/MachineControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
@@ -677,31 +784,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="85" column="88" selection-start-line="85" selection-start-column="88" selection-end-line="85" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5662">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingStack/DrawingEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="42" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
+        <state relative-caret-position="272">
+          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/Geometry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="210" column="92" selection-start-line="210" selection-start-column="92" selection-end-line="210" selection-end-column="92" />
+        <state relative-caret-position="842">
+          <caret line="215" column="25" selection-start-line="215" selection-start-column="25" selection-end-line="215" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/JetCad/DrawingTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/UIWidgets/UIWidgets.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="85" column="88" selection-start-line="85" selection-start-column="88" selection-end-line="85" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nc/pilot/lib/MotionController/MotionController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="66" column="75" lean-forward="true" selection-start-line="66" selection-start-column="75" selection-end-line="66" selection-end-column="75" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2623#2624#0" expanded="true" />
+            <element signature="e#3143#3144#0" expanded="true" />
+            <element signature="e#6471#6472#0" expanded="true" />
+            <element signature="e#6597#6598#0" expanded="true" />
+            <element signature="e#6723#6724#0" expanded="true" />
+            <element signature="e#7506#7507#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
