@@ -189,7 +189,7 @@ public class MotionController {
     }
     public void ProbeZ()
     {
-        WriteBuffer("M2100 X0\n");
+        WriteBuffer("M2100 S0\n");
     }
     public void Home()
     {
