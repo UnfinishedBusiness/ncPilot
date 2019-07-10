@@ -142,17 +142,17 @@ public class MotionController {
 
     public void JogZ_Plus()
     {
-        if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z" + 0.1 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z" + 0.01 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z" + 0.001 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P2 S" + jog_speed + " D1\n");
+        //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z" + 0.1 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z" + 0.01 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z" + 0.001 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P2 S" + jog_speed + " D1\n");
     }
     public void JogZ_Minus()
     {
-        if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z-" + 0.1 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z-" + 0.01 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z-" + 0.001 + " F" + jog_speed + "\n");
-        if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P2 S" + jog_speed + " D-1\n");
+        //if (GlobalData.JogMode.contentEquals("0.1")) WriteBuffer("G91 G20 G1 Z-" + 0.1 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.01")) WriteBuffer("G91 G20 G1 Z-" + 0.01 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("0.001")) WriteBuffer("G91 G20 G1 Z-" + 0.001 + " F" + jog_speed + "\n");
+        //if (GlobalData.JogMode.contentEquals("Continuous"))  WriteBuffer("M3000 P2 S" + jog_speed + " D-1\n");
     }
 
     public void EndXJog()
@@ -186,6 +186,10 @@ public class MotionController {
     {
         WriteBuffer("M2101 P0 R2\n"); //Retract torch 3 inches and will turn off torch if it's on
         BufferedWriteStack.add("G0 X" + GlobalData.work_offset[0] + " Y" + GlobalData.work_offset[1] + "\n");
+    }
+    public void ProbeZ()
+    {
+        WriteBuffer("M2100 X0\n");
     }
     public void Home()
     {

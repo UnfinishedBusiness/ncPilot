@@ -106,6 +106,7 @@ public class MachineControl extends JFrame {
                 e.printStackTrace();
             }
             GlobalData.configData.CurrentWorkbench = "MachineControl";
+            GlobalData.configData.LastGcodeOpenDir = ".";
         }
 
         repaint_timer.schedule(new TimerTask() {
@@ -396,10 +397,19 @@ public class MachineControl extends JFrame {
             @Override
             public void run() {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File("."));
+                File f = new File(GlobalData.configData.LastGcodeOpenDir);
+                if (f.isDirectory() & f.exists())
+                {
+                    fileChooser.setCurrentDirectory(f);
+                }
+                else
+                {
+                    fileChooser.setCurrentDirectory(new File("."));
+                }
                 int result = fileChooser.showOpenDialog(getParent());
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
+                    GlobalData.configData.LastGcodeOpenDir = selectedFile.getParent();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                     GcodeInterpreter g = new GcodeInterpreter(selectedFile.getAbsolutePath());
                     GlobalData.GcodeFile = selectedFile.getAbsolutePath();
@@ -473,7 +483,8 @@ public class MachineControl extends JFrame {
         ui_widgets.AddMomentaryButton("Probe Z", "bottom-right", 120, 60, 140, 150, new Runnable() {
             @Override
             public void run() {
-                System.out.println("Probe Z!");
+
+                motion_controller.ProbeZ();
             }
         });
         ui_widgets.AddMomentaryButton("Home", "bottom-right", 90, 60, 270, 150, new Runnable() {

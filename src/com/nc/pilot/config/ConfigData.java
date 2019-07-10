@@ -16,4 +16,6 @@ public class ConfigData {
     public String JetToolpathJobFile;
 
     public String CurrentWorkbench = "";
+
+    public String LastGcodeOpenDir = "";
 }

@@ -1,8 +1,10 @@
 package com.nc.pilot.lib.MDIConsole;
+import com.nc.pilot.lib.GlobalData;
 import com.nc.pilot.lib.MotionController.MotionController;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -31,6 +33,17 @@ public class MDIConsole {
             @Override
             public void run() {
                 RecievedLines.clear();
+            }
+        });
+        AddCommand("edit", new Runnable() {
+            @Override
+            public void run() {
+                final Runtime rt = Runtime.getRuntime();
+                try {
+                    rt.exec("notepad " + GlobalData.GcodeFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
