@@ -158,6 +158,27 @@ public class Geometry {
         }
         return points;
     }
+    public DrawingEntity getIntersectionPoint(DrawingEntity line1, DrawingEntity line2)
+    {
+        DrawingEntity ret = new DrawingEntity();
+        float a1 = line1.end[1] - line1.start[1];
+        float b1 = line1.start[0] - line1.end[0];
+        float c1 = a1 * line1.start[0] + b1 * line1.start[1];
+        float a2 = line2.end[1] - line2.start[1];
+        float b2 = line2.start[0] - line2.end[0];
+        float c2 = a2 * line2.start[0] + b2 * line2.start[1];
+        float det = a1 * b2 - a2 * b1;
+        if (det != 0)
+        {
+            float x_int = (b2 * c1 - b1 * c2) / det;
+            float y_int = (a1 * c2 - a2 * c1) / det;
+            ret.intersection_point = new float[]{x_int, y_int};
+            ret.has_intersection_point = true;
+            return ret;
+        }
+        ret.has_intersection_point = false;
+        return ret;
+    }
     public ArrayList<float[]> getIntersectionPoints(ArrayList<DrawingEntity> e)
     {
         ArrayList<float[]> ret = new ArrayList();
@@ -168,50 +189,30 @@ public class Geometry {
                 if (e.get(x).type.contentEquals("line") && e.get(y).type.contentEquals("line"))
                 {
                     System.out.println("Getting line<->line intersection!");
-                    DrawingEntity line1 = e.get(x);
-                    DrawingEntity line2 = e.get(y);
-                    float a1 = line1.end[1] - line1.start[1];
-                    float b1 = line1.start[0] - line1.end[0];
-                    float c1 = a1 * line1.start[0] + b1 * line1.start[1];
-                    float a2 = line2.end[1] - line2.start[1];
-                    float b2 = line2.start[0] - line2.end[0];
-                    float c2 = a2 * line2.start[0] + b2 * line2.start[1];
-                    float det = a1 * b2 - a2 * b1;
-                    if (det == 0) break; //No intersection point, lines are parallel!
-                    float x_int = (b2 * c1 - b1 * c2) / det;
-                    float y_int = (a1 * c2 - a2 * c1) / det;
-                    ret.add(new float[]{x_int, y_int});
+                    DrawingEntity intersection = getIntersectionPoint(e.get(x), e.get(y));
+                    if (intersection.has_intersection_point)
+                    {
+                        ret.add(intersection.intersection_point);
+                    }
                 }
-                if (e.get(x).type.contentEquals("line") && e.get(y).type.contentEquals("cw_arc"))
+                else if (e.get(x).type.contentEquals("line") && e.get(y).type.contentEquals("cw_arc"))
                 {
                     System.out.println("Getting line<->arc intersection!");
                     DrawingEntity line = e.get(x);
                     DrawingEntity arc = e.get(y);
+                    DrawingEntity arc_line = new DrawingEntity();
                     ArrayList<float[]> arc_points = getArcPoints(arc.start, arc.end, arc.center, arc.radius, "CW");
                     if (arc_points.size() > 0)
                     {
-                        float[] last_point = arc_points.get(0);
-                        for (int z = 1; z < arc_points.size(); z++)
+                        for (int z = 0; z < arc_points.size() -1; z++)
                         {
-                            DrawingEntity line1 = line;
-                            DrawingEntity line2 = new DrawingEntity();
-                            line2.type = "line";
-                            line2.start = last_point;
-                            line2.end = arc_points.get(z);
-                            line2.color = Color.green;
-                            render_engine.DrawingStack.add(line2);
-                            last_point = arc_points.get(z);
-                            float a1 = line1.end[1] - line1.start[1];
-                            float b1 = line1.start[0] - line1.end[0];
-                            float c1 = a1 * line1.start[0] + b1 * line1.start[1];
-                            float a2 = line2.end[1] - line2.start[1];
-                            float b2 = line2.start[0] - line2.end[0];
-                            float c2 = a2 * line2.start[0] + b2 * line2.start[1];
-                            float det = a1 * b2 - a2 * b1;
-                            if (det == 0) break; //No intersection point, lines are parallel!
-                            float x_int = (b2 * c1 - b1 * c2) / det;
-                            float y_int = (a1 * c2 - a2 * c1) / det;
-                            ret.add(new float[]{x_int, y_int});
+                            arc_line.start = arc_points.get(x);
+                            arc_line.end = arc_points.get(x+1);
+                            DrawingEntity intersection = getIntersectionPoint(line, arc_line);
+                            if (intersection.has_intersection_point)
+                            {
+                                ret.add(intersection.intersection_point);
+                            }
                         }
                     }
                 }

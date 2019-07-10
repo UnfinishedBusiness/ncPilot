@@ -12,6 +12,10 @@ public class DrawingEntity {
     public float[] center;
     public float radius;
 
+    //Special Data
+    public float[] intersection_point;
+    public boolean has_intersection_point;
+
     //Meta Data
     public boolean isSelected;
     public Color color = Color.BLACK;
