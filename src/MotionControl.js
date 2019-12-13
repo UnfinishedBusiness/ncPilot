@@ -1,5 +1,5 @@
 var MotionControl = {};
-
+MotionControl.RealtimeWriteTimer = time.millis();
 MotionControl.ProgramHoldFlag = false;
 MotionControl.GStack = [];
 MotionControl.WaitingForOkay = false;
@@ -68,6 +68,7 @@ MotionControl.send = function(buff)
 	{
 		return;
 	}
+	buff = buff.replace(/^\s+|\s+$/g, '');
 	if (this.WaitingForOkay == true) //If we are waiting for an okay signal, push it to the send stack and send it after we recieve the okay signal
 	{
 		this.GStack.push(buff);
@@ -75,22 +76,37 @@ MotionControl.send = function(buff)
 	else
 	{
 		var send_line = this.WorkOffsetTransformation(buff);
+		//this.delay(300);
+		console.log("(send) " + send_line + "\n");
 		serial.write(send_line + "\n");
+		//this.delay(300);
 		this.WaitingForOkay = true;
 	}
     
 }
+MotionControl.delay = function(d)
+{
+	this.RealtimeWriteTimer = time.millis();
+	while((time.millis() - this.RealtimeWriteTimer) < d);
+}
+MotionControl.send_rt = function(buf)
+{
+	this.delay(150);
+	console.log("(send_rt) " + buf + "\n");
+	serial.write(buf + "\n");
+	this.delay(150);
+}
 MotionControl.on_connect = function()
 {
-	serial.write("invert_dir 0 " + this.machine_parameters.machine_axis_invert.x + "\n");
-	serial.write("invert_dir 1 " + this.machine_parameters.machine_axis_invert.y1 + "\n");
-	serial.write("invert_dir 2 " + this.machine_parameters.machine_axis_invert.y2 + "\n");
-	serial.write("invert_dir 3 " + this.machine_parameters.machine_axis_invert.z + "\n");
-	serial.write("set_scale 0 " + this.machine_parameters.machine_axis_scale.x + "\n");
-	serial.write("set_scale 1 " + this.machine_parameters.machine_axis_scale.y + "\n");
-	serial.write("set_scale 2 " + this.machine_parameters.machine_axis_scale.z + "\n");
-	serial.write("set_torch " + this.machine_parameters.machine_torch_config.z_rapid_feed + " " + this.machine_parameters.machine_torch_config.z_probe_feed + " " + this.machine_parameters.machine_torch_config.floating_head_takeup + " " + this.machine_parameters.machine_torch_config.clearance_height + "\n");
-	serial.write("set_thc_config " + this.machine_parameters.machine_thc_config.pin + " " + this.machine_parameters.machine_thc_config.filter + " " + this.machine_parameters.machine_thc_config.comp_vel + " " + this.machine_parameters.machine_thc_config.adc_at_zero + " " + this.machine_parameters.machine_thc_config.adc_at_one_hundred + "\n");
+	this.send_rt("invert_dir 0 " + this.machine_parameters.machine_axis_invert.x);
+	this.send_rt("invert_dir 1 " + this.machine_parameters.machine_axis_invert.y1);
+	this.send_rt("invert_dir 2 " + this.machine_parameters.machine_axis_invert.y2);
+	this.send_rt("invert_dir 3 " + this.machine_parameters.machine_axis_invert.z);
+	this.send_rt("set_scale 0 " + this.machine_parameters.machine_axis_scale.x);
+	this.send_rt("set_scale 1 " + this.machine_parameters.machine_axis_scale.y);
+	this.send_rt("set_scale 2 " + this.machine_parameters.machine_axis_scale.z);
+	this.send_rt("set_torch " + this.machine_parameters.machine_torch_config.z_rapid_feed + " " + this.machine_parameters.machine_torch_config.z_probe_feed + " " + this.machine_parameters.machine_torch_config.floating_head_takeup + " " + this.machine_parameters.machine_torch_config.clearance_height);
+	this.send_rt("set_thc_config " + this.machine_parameters.machine_thc_config.pin + " " + this.machine_parameters.machine_thc_config.filter + " " + this.machine_parameters.machine_thc_config.comp_vel + " " + this.machine_parameters.machine_thc_config.adc_at_zero + " " + this.machine_parameters.machine_thc_config.adc_at_one_hundred);
 }
 MotionControl.WorkOffsetTransformation = function(send_line)
 {
@@ -145,7 +161,7 @@ MotionControl.RecievedOK = function()
 }
 MotionControl.parse_serial_line = function (line)
 {
-	//console.log(line + "\n");
+	//console.log("(parse_serial_line) " + line + "\n");
 	if (line.includes("ok"))
 	{
 		MotionControl.RecievedOK();
