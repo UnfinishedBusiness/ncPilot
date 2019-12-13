@@ -27,7 +27,7 @@ GcodeViewer.parse_gcode = function (gcode_file)
 			}
 			if (block.g == 1)
 			{
-				render.add_entity({ type: "line", start: {x: last_pointer.x + MotionControl.machine_parameters.work_offset.x, y: last_pointer.y + MotionControl.machine_parameters.work_offset.y}, end: {x: pointer.x + MotionControl.machine_parameters.work_offset.x, y: pointer.y + + MotionControl.machine_parameters.work_offset.y}, color: { r: 1, g: 1, b: 1} });
+				render.add_entity({ type: "line", start: {x: last_pointer.x + MotionControl.machine_parameters.work_offset.x, y: last_pointer.y + MotionControl.machine_parameters.work_offset.y}, end: {x: pointer.x + MotionControl.machine_parameters.work_offset.x, y: pointer.y + MotionControl.machine_parameters.work_offset.y}, color: { r: 1, g: 1, b: 1} });
 				last_pointer = { x: pointer.x, y: pointer.y };
 			}
 		}
