@@ -42,6 +42,7 @@ GcodeViewer.init = function()
 	render.set_style({ background_color: { r: 0, g: 0, b: 0.2, a: 1 }});
 	render.show_crosshair({ visable: true });
 	GcodeViewer.clear();
+	render.zoom(40);
 }
 GcodeViewer.tick = function()
 {
@@ -49,8 +50,19 @@ GcodeViewer.tick = function()
 	var scroll = render.get_scroll();
 	if (scroll.horizontal != 0 || scroll.vertical != 0)
 	{
-		//console.log(JSON.stringify(scroll) + "\n");
-		render.pan((scroll.horizontal * 0.05) / render.get_zoom(), (scroll.vertical * -0.05) / render.get_zoom());
+		var old_zoom = render.get_zoom();
+		if (scroll.vertical > 0)
+		{
+			render.zoom(0.125 * render.get_zoom());
+		}
+		else
+		{
+			render.zoom(-0.125 * render.get_zoom());
+		}
+		var scalechange = old_zoom - render.get_zoom();
+		var pan_x = render.get_mouse().x * scalechange;
+		var pan_y = render.get_mouse().y * scalechange;
+		render.pan(pan_x, pan_y);
 	}
 	var key = gui.get_keyboard();
 	if (key.keycode > 0)
@@ -64,21 +76,21 @@ GcodeViewer.tick = function()
 		{
 			render.zoom(-(0.05 * render.get_zoom()));
 		}
-		if (key.keycode == 265) //Up
+		if (key.keycode == 87) //Up
 		{
-			render.pan(0, ((0.01 / render.get_zoom())));
+			render.pan(0, ((30 / render.get_zoom())));
 		}
-		if (key.keycode == 264) //Down
+		if (key.keycode == 83) //Down
 		{
-			render.pan(0, (-(0.01 / render.get_zoom())));
+			render.pan(0, (-(30 / render.get_zoom())));
 		}
-		if (key.keycode == 263) //Left
+		if (key.keycode == 65) //Left
 		{
-			render.pan((-(0.01 / render.get_zoom())), 0);
+			render.pan((-(30 / render.get_zoom())), 0);
 		}
-		if (key.keycode == 262) //Right
+		if (key.keycode == 68) //Right
 		{
-			render.pan(((0.01 / render.get_zoom())), 0);
+			render.pan(((30 / render.get_zoom())), 0);
 		}
 		if (key.keycode == 258 && GcodeViewer.OnePress == false) //Tab
 		{
