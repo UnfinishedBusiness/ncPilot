@@ -1,6 +1,7 @@
 include("src/MotionControl.js");
 include("src/UserInterface.js");
 include("src/GcodeViewer.js");
+include("src/MotionPlanner.js");
 function setup()
 {
 	MotionControl.init();

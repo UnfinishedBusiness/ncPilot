@@ -9,6 +9,9 @@ GcodeViewer.clear = function()
 }
 GcodeViewer.parse_gcode = function (gcode_file)
 {	
+	var contour_stack = [];
+	var contour = [];
+	
 	this.last_file = gcode_file;
 	GcodeViewer.clear();
 	var timestamp = time.millis();
@@ -24,16 +27,24 @@ GcodeViewer.parse_gcode = function (gcode_file)
 			if (block.g == 0)
 			{
 				last_pointer = { x: pointer.x, y: pointer.y };
+				contour_stack.push({feed: block.f, path: contour});
+				contour = [];
 			}
 			if (block.g == 1)
 			{
+				contour.push({ type: "line", start: {x: last_pointer.x + MotionControl.machine_parameters.work_offset.x, y: last_pointer.y + MotionControl.machine_parameters.work_offset.y}, end: {x: pointer.x + MotionControl.machine_parameters.work_offset.x, y: pointer.y + MotionControl.machine_parameters.work_offset.y}, color: { r: 1, g: 1, b: 1} });
 				render.add_entity({ type: "line", start: {x: last_pointer.x + MotionControl.machine_parameters.work_offset.x, y: last_pointer.y + MotionControl.machine_parameters.work_offset.y}, end: {x: pointer.x + MotionControl.machine_parameters.work_offset.x, y: pointer.y + MotionControl.machine_parameters.work_offset.y}, color: { r: 1, g: 1, b: 1} });
 				last_pointer = { x: pointer.x, y: pointer.y };
 			}
 		}
 	}
+	MotionPlanner.PlannedGcodeStack = [];
+	for (var x = 0; x < contour_stack.length; x++)
+	{
+		MotionPlanner.PlannedGcodeStack.push(MotionPlanner.plan(contour_stack[x].path, 150, 0.030, 15, 5, contour_stack[x].feed));
+	}
 	gcode.clear();
-	console.log("Parsed Gcode in " + (time.millis() - timestamp) + "ms\n");
+	console.log("Parsed & Planned Gcode in " + (time.millis() - timestamp) + "ms\n");
 }
 GcodeViewer.init = function()
 {

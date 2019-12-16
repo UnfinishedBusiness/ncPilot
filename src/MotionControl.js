@@ -155,6 +155,7 @@ MotionControl.RecievedOK = function()
 		else //Don't send M30 to controller
 		{
 			//SerialTransmissionLog.push("->" + send_line);
+			//console.log("(send_from_ok) " + send_line + "\n");
 			serial.write(send_line + "\n");
 		}
 	}

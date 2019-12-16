@@ -100,7 +100,7 @@ UserInterface.tick = function()
 	//console.log("Windowid: " + UserInterface.control_window.window + " widgetid: " + UserInterface.control_window.park + "\n");
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.run))
 	{
-		if (GcodeViewer.last_file != null)
+		/*if (GcodeViewer.last_file != null)
 		{
 			//console.log("Running!\n");
 			if (file.open(GcodeViewer.last_file, "r"))
@@ -117,6 +117,26 @@ UserInterface.tick = function()
 			else
 			{
 				//console.log("Could not read file!\n");
+			}
+		}*/
+		console.log("Number of contours: " + MotionPlanner.PlannedGcodeStack.length + "\n");
+		/*if (file.open("dump.log", "w"))
+		{
+			file.write(JSON.stringify(MotionPlanner.PlannedGcodeStack) + "\n");
+			file.close();
+		}*/
+		for (var x = 0; x < MotionPlanner.PlannedGcodeStack.length; x++)
+		{
+			if (MotionPlanner.PlannedGcodeStack[x] != null)
+			{
+				//console.log(JSON.stringify(MotionPlanner.PlannedGcodeStack[x]) + "\n");
+				MotionControl.send("G0 X" + MotionPlanner.PlannedGcodeStack[x][0].x + " Y" + MotionPlanner.PlannedGcodeStack[x][0].y); //Go to start point
+				//Fire torch
+				for (var i = 1; i < MotionPlanner.PlannedGcodeStack[x].length; i++)
+				{
+					MotionControl.send("G1 X" + MotionPlanner.PlannedGcodeStack[x][i].x + " Y" + MotionPlanner.PlannedGcodeStack[x][i].y + " F" + MotionPlanner.PlannedGcodeStack[x][i].current_feed.toFixed(2));
+				}
+				//Exstinguish torch
 			}
 		}
 	}
