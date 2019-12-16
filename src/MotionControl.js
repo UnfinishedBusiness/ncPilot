@@ -1,8 +1,10 @@
 var MotionControl = {};
 MotionControl.RealtimeWriteTimer = time.millis();
+MotionControl.StatusReportTimer = time.millis();
 MotionControl.ProgramHoldFlag = false;
 MotionControl.GStack = [];
 MotionControl.WaitingForOkay = false;
+MotionControl.WaitingForGrbl = false;
 MotionControl.machine_parameters = {
 	machine_extents: { x: 45.5, y: 45.5 },
 	machine_axis_invert: { x: 0, y1: 1, y2: 0, z: 0 },
@@ -59,7 +61,7 @@ MotionControl.init = function()
 {
     this.reconnect_timer = time.millis();
     this.port = ""; //Automatically finds port!
-	this.baud_rate = 9600;
+	this.baud_rate = 115200;
 	this.PullParameters();
 }
 MotionControl.send = function(buff)
@@ -69,7 +71,7 @@ MotionControl.send = function(buff)
 		return;
 	}
 	buff = buff.replace(/^\s+|\s+$/g, '');
-	if (this.WaitingForOkay == true) //If we are waiting for an okay signal, push it to the send stack and send it after we recieve the okay signal
+	if (this.WaitingForOkay == true || this.WaitingForGrbl == true) //If we are waiting for an okay signal, push it to the send stack and send it after we recieve the okay signal
 	{
 		this.GStack.push(buff);
 	}
@@ -91,22 +93,29 @@ MotionControl.delay = function(d)
 }
 MotionControl.send_rt = function(buf)
 {
-	this.delay(150);
+	//this.delay(50);
 	console.log("(send_rt) " + buf + "\n");
 	serial.write(buf + "\n");
-	this.delay(150);
+	//this.delay(50);
 }
 MotionControl.on_connect = function()
 {
-	this.send_rt("invert_dir 0 " + this.machine_parameters.machine_axis_invert.x);
-	this.send_rt("invert_dir 1 " + this.machine_parameters.machine_axis_invert.y1);
-	this.send_rt("invert_dir 2 " + this.machine_parameters.machine_axis_invert.y2);
-	this.send_rt("invert_dir 3 " + this.machine_parameters.machine_axis_invert.z);
-	this.send_rt("set_scale 0 " + this.machine_parameters.machine_axis_scale.x);
-	this.send_rt("set_scale 1 " + this.machine_parameters.machine_axis_scale.y);
-	this.send_rt("set_scale 2 " + this.machine_parameters.machine_axis_scale.z);
-	this.send_rt("set_torch " + this.machine_parameters.machine_torch_config.z_rapid_feed + " " + this.machine_parameters.machine_torch_config.z_probe_feed + " " + this.machine_parameters.machine_torch_config.floating_head_takeup + " " + this.machine_parameters.machine_torch_config.clearance_height);
-	this.send_rt("set_thc_config " + this.machine_parameters.machine_thc_config.pin + " " + this.machine_parameters.machine_thc_config.filter + " " + this.machine_parameters.machine_thc_config.comp_vel + " " + this.machine_parameters.machine_thc_config.adc_at_zero + " " + this.machine_parameters.machine_thc_config.adc_at_one_hundred);
+	this.WaitingForGrbl = true;
+	//Set Scale
+	this.send("$100=" + this.machine_parameters.machine_axis_scale.x);
+	this.send("$101=" + this.machine_parameters.machine_axis_scale.y);
+	this.send("$102=" + this.machine_parameters.machine_axis_scale.z);
+	//Set Axis Invert
+	this.send("$3=00000" + this.machine_parameters.machine_axis_invert.x + this.machine_parameters.machine_axis_invert.y1 + this.machine_parameters.machine_axis_invert.z);
+	//Set Max Vel
+	this.send("$110=600");
+	this.send("$111=600");
+	this.send("$112=30");
+	//Set Accel
+	this.send("$120=15");
+	this.send("$121=15");
+	this.send("$122=5");
+	this.send("$10=1");
 }
 MotionControl.WorkOffsetTransformation = function(send_line)
 {
@@ -162,52 +171,34 @@ MotionControl.RecievedOK = function()
 }
 MotionControl.parse_serial_line = function (line)
 {
-	//console.log("(parse_serial_line) " + line + "\n");
-	if (line.includes("ok"))
+	console.log("(parse_serial_line) " + line + "\n");
+	if (line.includes("Grbl"))
+	{
+		this.WaitingForGrbl = false;
+		MotionControl.RecievedOK();
+	}
+	else if (line.includes("ok"))
 	{
 		MotionControl.RecievedOK();
 	}
-	else if (line.includes("DRO:"))
+	else if (line.includes("<"))
 	{
-		var dro_line = line.split("DRO: ")[1];
-		var dro_pairs = dro_line.split(" ");
-		for (var x = 0; x < dro_pairs.length; x++)
+		var dro_line = line.substring(1, line.length-1);
+		if (dro_line.includes("Run"))
 		{
-			var pair = dro_pairs[x].split("=");
-			var key = pair[0];
-			var value = pair[1];
-			//console.log("key=" + pair[0] + " value=" + pair[1]);
-			if (key == "X_MCS")
-			{
-				this.dro_data.X_MCS = parseFloat(value);
-				this.dro_data.X_WCS = (this.dro_data.X_MCS - this.machine_parameters.work_offset.x);
-			}
-			if (key == "Y_MCS")
-			{
-				this.dro_data.Y_MCS = parseFloat(value);
-				this.dro_data.Y_WCS = (this.dro_data.Y_MCS - this.machine_parameters.work_offset.y);
-			}
-			if (key == "VELOCITY")
-			{
-				this.dro_data.VELOCITY = parseFloat(value);
-			}
-			if (key == "THC_SET_VOLTAGE")
-			{
-				this.dro_data.THC_SET_VOLTAGE = parseFloat(value);
-			}
-			if (key == "THC_ARC_VOLTAGE")
-			{
-				this.dro_data.THC_ARC_VOLTAGE = parseFloat(value);
-			}
-			if (key == "UNITS")
-			{
-                this.dro_data.UNITS = value;
-			}
-			if (key == "STATUS")
-			{
-				this.dro_data.STATUS = value;
-			}
+			this.dro_data.STATUS = "Run";
 		}
+		else
+		{
+			this.dro_data.STATUS = "Halt";
+		}
+		var dro_pairs = dro_line.split("MPos:")[1].split(",");
+
+		this.dro_data.X_MCS = parseFloat(dro_pairs[0]);
+		this.dro_data.X_WCS = (this.dro_data.X_MCS - this.machine_parameters.work_offset.x);
+
+		this.dro_data.Y_MCS = parseFloat(dro_pairs[1]);
+		this.dro_data.Y_WCS = (this.dro_data.Y_MCS - this.machine_parameters.work_offset.y);
 	}	
 }
 MotionControl.tick = function()
@@ -232,6 +223,11 @@ MotionControl.tick = function()
 				}
 			}
 		}
+		if ((time.millis() - this.StatusReportTimer) > 50) //Get status report
+		{
+			this.send_rt("?");
+			this.StatusReportTimer = time.millis();
+		}
 	}
 	else
 	{
@@ -246,7 +242,7 @@ MotionControl.tick = function()
             //console.log(JSON.stringify(available_ports));
             for (var x = 0; x < available_ports.length; x++)
             {
-                if (available_ports[x].description.includes("Teensyduino"))
+                if (available_ports[x].description.includes("Arduino"))
                 {
                     if (serial.open(available_ports[x].port, MotionControl.baud_rate))
                     {
