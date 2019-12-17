@@ -115,7 +115,7 @@ MotionControl.on_connect = function()
 	this.send("$120=15");
 	this.send("$121=15");
 	this.send("$122=5");
-	this.send("$10=1");
+	//this.send("$10=6");
 }
 MotionControl.WorkOffsetTransformation = function(send_line)
 {
@@ -181,24 +181,16 @@ MotionControl.parse_serial_line = function (line)
 	{
 		MotionControl.RecievedOK();
 	}
-	else if (line.includes("<"))
+	else if (line.includes("{"))
 	{
-		var dro_line = line.substring(1, line.length-1);
-		if (dro_line.includes("Run"))
-		{
-			this.dro_data.STATUS = "Run";
-		}
-		else
-		{
-			this.dro_data.STATUS = "Halt";
-		}
-		var dro_pairs = dro_line.split("MPos:")[1].split(",");
-
-		this.dro_data.X_MCS = parseFloat(dro_pairs[0]);
+		var dro = JSON.parse(line);
+		this.dro_data.STATUS = dro.STATUS;
+		this.dro_data.X_MCS = dro.MCS.x;
 		this.dro_data.X_WCS = (this.dro_data.X_MCS - this.machine_parameters.work_offset.x);
-
-		this.dro_data.Y_MCS = parseFloat(dro_pairs[1]);
+		this.dro_data.Y_MCS = dro.MCS.y;
 		this.dro_data.Y_WCS = (this.dro_data.Y_MCS - this.machine_parameters.work_offset.y);
+		this.dro_data.VELOCITY = dro.FEED;
+		this.dro_data.THC_ARC_VOLTAGE = dro.ADC;
 	}	
 }
 MotionControl.tick = function()
