@@ -106,7 +106,7 @@ MotionControl.on_connect = function()
 	this.send("$101=" + this.machine_parameters.machine_axis_scale.y);
 	this.send("$102=" + this.machine_parameters.machine_axis_scale.z);
 	//Set Axis Invert
-	this.send("$3=00000" + this.machine_parameters.machine_axis_invert.x + this.machine_parameters.machine_axis_invert.y1 + this.machine_parameters.machine_axis_invert.z);
+	this.send("$3=0000" + this.machine_parameters.machine_axis_invert.y2 + this.machine_parameters.machine_axis_invert.x + this.machine_parameters.machine_axis_invert.y1 + this.machine_parameters.machine_axis_invert.z);
 	//Set Max Vel
 	this.send("$110=600");
 	this.send("$111=600");
