@@ -1,5 +1,8 @@
 var GcodeViewer = {};
 
+GcodeViewer.JogCancle = {};
+GcodeViewer.JogCancle.z = false;
+
 GcodeViewer.last_file = null;
 
 GcodeViewer.clear = function()
@@ -79,6 +82,22 @@ GcodeViewer.tick = function()
 	if (key.keycode > 0)
 	{
 		//console.log(JSON.stringify(key) + "\n");
+		if (key.keycode == 266 && GcodeViewer.JogCancle.z == false) //Page Up
+		{
+			MotionControl.send_rt(">");
+			GcodeViewer.JogCancle.z = true;
+		}
+		if (key.keycode == 267 && GcodeViewer.JogCancle.z == false) //Page Down
+		{
+			MotionControl.send_rt("<");
+			GcodeViewer.JogCancle.z = true;
+		}
+		if (key.keycode == 32 && GcodeViewer.OnePress == false) //Space
+		{
+			this.parse_gcode("test.nc");
+			//MotionControl.send_rt("&");
+			GcodeViewer.OnePress = true;
+		}
 		if (key.char == "=")
 		{
 			render.zoom(0.05 * render.get_zoom());
@@ -120,6 +139,11 @@ GcodeViewer.tick = function()
 	else
 	{
 		GcodeViewer.OnePress = false;
+		if (GcodeViewer.JogCancle.z)
+		{
+			GcodeViewer.JogCancle.z = false;
+			MotionControl.send_rt("^");
+		}
 	}
 
 	var mouse = gui.get_mouse_click();

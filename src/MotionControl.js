@@ -5,6 +5,8 @@ MotionControl.ProgramHoldFlag = false;
 MotionControl.GStack = [];
 MotionControl.WaitingForOkay = false;
 MotionControl.WaitingForGrbl = false;
+MotionControl.WaitingForZprobe = false;
+MotionControl.WaitingToProbeZ = false;
 MotionControl.machine_parameters = {
 	machine_extents: { x: 45.5, y: 45.5 },
 	machine_axis_invert: { x: 0, y1: 1, y2: 0, z: 0 },
@@ -44,7 +46,8 @@ MotionControl.ProgramAbort = function()
 {
 	this.GStack = [];
 	this.WaitingForOkay = false;
-	serial.write("soft_abort\n");
+	//serial.write("soft_abort\n");
+	MotionControl.send_rt("$"); //Turn off torch
 }
 MotionControl.set_waypoint = function(p)
 {
@@ -71,6 +74,7 @@ MotionControl.send = function(buff)
 		return;
 	}
 	buff = buff.replace(/^\s+|\s+$/g, '');
+	this.dro_data.STATUS = "Run";
 	if (this.WaitingForOkay == true || this.WaitingForGrbl == true) //If we are waiting for an okay signal, push it to the send stack and send it after we recieve the okay signal
 	{
 		this.GStack.push(buff);
@@ -94,7 +98,7 @@ MotionControl.delay = function(d)
 MotionControl.send_rt = function(buf)
 {
 	//this.delay(50);
-	console.log("(send_rt) " + buf + "\n");
+	if (! buf.includes("?")) console.log("(send_rt) " + buf + "\n");
 	serial.write(buf + "\n");
 	//this.delay(50);
 }
@@ -102,19 +106,19 @@ MotionControl.on_connect = function()
 {
 	this.WaitingForGrbl = true;
 	//Set Scale
-	this.send("$100=" + this.machine_parameters.machine_axis_scale.x);
-	this.send("$101=" + this.machine_parameters.machine_axis_scale.y);
-	this.send("$102=" + this.machine_parameters.machine_axis_scale.z);
+	//this.send("$100=" + this.machine_parameters.machine_axis_scale.x);
+	//this.send("$101=" + this.machine_parameters.machine_axis_scale.y);
+	//this.send("$102=" + this.machine_parameters.machine_axis_scale.z);
 	//Set Axis Invert
-	this.send("$3=0000" + this.machine_parameters.machine_axis_invert.y2 + this.machine_parameters.machine_axis_invert.x + this.machine_parameters.machine_axis_invert.y1 + this.machine_parameters.machine_axis_invert.z);
+	//this.send("$3=0000" + this.machine_parameters.machine_axis_invert.y2 + this.machine_parameters.machine_axis_invert.x + this.machine_parameters.machine_axis_invert.y1 + this.machine_parameters.machine_axis_invert.z);
 	//Set Max Vel
-	this.send("$110=600");
-	this.send("$111=600");
-	this.send("$112=30");
+	//this.send("$110=800");
+	//this.send("$111=800");
+	//this.send("$112=30");
 	//Set Accel
-	this.send("$120=15");
-	this.send("$121=15");
-	this.send("$122=5");
+	//this.send("$120=8");
+	//this.send("$121=8");
+	//this.send("$122=5");
 	//this.send("$10=6");
 }
 MotionControl.WorkOffsetTransformation = function(send_line)
@@ -146,6 +150,7 @@ MotionControl.WorkOffsetTransformation = function(send_line)
 }
 MotionControl.RecievedOK = function()
 {
+	if (this.WaitingToProbeZ == true) return; //Dont send more lines if this flag is set
 	this.WaitingForOkay = false;
 	var send_line = this.GStack.shift();
 	if (send_line == "")
@@ -156,10 +161,24 @@ MotionControl.RecievedOK = function()
 	if (this.ProgramHoldFlag == false)
 	{
 		var send_line = this.WorkOffsetTransformation(send_line);
+		console.log("Send line = " + send_line + "\n");
 		//if (SerialTransmissionLog.length > SerialTransmissionLogSize) SerialTransmissionLog.shift(); //Remove the top element in the array so we don't keep creating a longer list
 		if (send_line.includes("M30"))
 		{
 			ProgramUploaded = false; //We can press start again after the program finishes!
+		}
+		else if (send_line.includes("fire_torch"))
+		{
+			this.WaitingToProbeZ = true;
+			//this.RecievedOK();
+		}
+		else if (send_line.includes("torch_off"))
+		{
+			MotionControl.send_rt("$"); //Torch off
+			MotionControl.send_rt(">"); //Jog torch up until delay ends
+			this.delay(300);
+			MotionControl.send_rt("^"); //Cancel torch jog
+			this.RecievedOK(); //RT commands don't return ok
 		}
 		else //Don't send M30 to controller
 		{
@@ -171,7 +190,7 @@ MotionControl.RecievedOK = function()
 }
 MotionControl.parse_serial_line = function (line)
 {
-	console.log("(parse_serial_line) " + line + "\n");
+	if (! line.includes("{")) console.log("(parse_serial_line) " + line + "\n"); //Don't verbose report
 	if (line.includes("Grbl"))
 	{
 		this.WaitingForGrbl = false;
@@ -180,6 +199,15 @@ MotionControl.parse_serial_line = function (line)
 	else if (line.includes("ok"))
 	{
 		MotionControl.RecievedOK();
+	}
+	else if (line.includes("Z_PROBE"))
+	{
+		if (this.WaitingForZprobe == true)
+		{
+			//Fire torch here and administer pierce delay
+			this.WaitingForZprobe = false;
+			this.RecievedOK();
+		}
 	}
 	else if (line.includes("{"))
 	{
@@ -195,6 +223,13 @@ MotionControl.parse_serial_line = function (line)
 }
 MotionControl.tick = function()
 {
+	if (this.GStack.length == 0 && this.WaitingToProbeZ == true && this.dro_data.STATUS == "Idle")
+	{
+		this.send_rt("&"); //Probe Torch
+		this.WaitingToProbeZ = false;
+
+		this.WaitingForZprobe = true;
+	}
     if (serial.is_open())
 	{
 		var avail = serial.available();

@@ -110,7 +110,7 @@ UserInterface.tick = function()
 				{
 					var line = file.read();
 					//console.log("Sending line: \"" + line + "\"\n");
-					if (line.includes("G0") || line.includes("G1"))
+					if (line.includes("G0") || line.includes("G1") || line.includes("torch"))
 					{
 						MotionControl.send(line);
 					}
@@ -133,7 +133,7 @@ UserInterface.tick = function()
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.park))
 	{
-		MotionControl.send("torch_off");
+		//MotionControl.send("torch_off");
 		MotionControl.send("G0 X-" + MotionControl.machine_parameters.work_offset.x + " Y-" + MotionControl.machine_parameters.work_offset.y);
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.x_origin))
