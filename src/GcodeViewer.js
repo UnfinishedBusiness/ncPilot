@@ -94,7 +94,7 @@ GcodeViewer.tick = function()
 		}
 		if (key.keycode == 32 && GcodeViewer.OnePress == false) //Space
 		{
-			this.parse_gcode("test.nc");
+			this.parse_gcode("indian.nc");
 			//MotionControl.send_rt("&");
 			GcodeViewer.OnePress = true;
 		}

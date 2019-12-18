@@ -5,9 +5,6 @@ MotionControl.ProgramHoldFlag = false;
 MotionControl.GStack = [];
 MotionControl.WaitingForOkay = false;
 MotionControl.WaitingForGrbl = false;
-MotionControl.WaitingForZprobe = false;
-MotionControl.WaitingToProbeZ = false;
-MotionControl.WaitingForHalt = false;
 MotionControl.RunOnHalt = null;
 MotionControl.machine_parameters = {
 	machine_extents: { x: 45.5, y: 45.5 },
@@ -86,7 +83,6 @@ MotionControl.send = function(buff)
 		var send_line = this.WorkOffsetTransformation(buff);
 		//this.delay(300);
 		console.log("(send) " + send_line + "\n");
-		this.WaitingForHalt = true;
 		this.WaitingForOkay = true;
 		serial.write(send_line + "\n");
 		//this.delay(300);
@@ -100,10 +96,10 @@ MotionControl.delay = function(d)
 }
 MotionControl.send_rt = function(buf)
 {
-	//this.delay(50);
+	this.delay(25);
 	if (! buf.includes("?")) console.log("(send_rt) " + buf + "\n");
 	serial.write(buf + "\n");
-	//this.delay(50);
+	this.delay(25);
 }
 MotionControl.on_connect = function()
 {
@@ -153,7 +149,7 @@ MotionControl.WorkOffsetTransformation = function(send_line)
 }
 MotionControl.RecievedOK = function()
 {
-	if (this.WaitingToProbeZ == true) return; //Dont send more lines if this flag is set
+	if (this.RunOnHalt != null) return;
 	this.WaitingForOkay = false;
 	var send_line = this.GStack.shift();
 	if (send_line == "")
@@ -172,8 +168,19 @@ MotionControl.RecievedOK = function()
 		}
 		else if (send_line.includes("fire_torch"))
 		{
-			this.WaitingToProbeZ = true;
-			//this.RecievedOK();
+			this.RunOnHalt = function()
+			{
+				console.log("Probing Z!\n");
+				this.send_rt("&"); //Torch Probe
+				this.RunOnHalt = function()
+				{
+					console.log("Fire Torch!\n");
+					this.send_rt("#"); //Fire Torch
+					this.delay(1000); //Pierce Delay
+					this.RunOnHalt = null;
+					this.RecievedOK(); //RT commands don't return ok
+				}
+			}
 		}
 		else if (send_line.includes("torch_off"))
 		{
@@ -184,9 +191,9 @@ MotionControl.RecievedOK = function()
 				this.send_rt(">"); //Jog torch up until delay ends
 				this.delay(3000);
 				this.send_rt("^"); //Cancel torch jog
+				this.RunOnHalt = null;
 				this.RecievedOK(); //RT commands don't return ok
 			}
-			this.WaitingForHalt = true;
 		}
 		else //Don't send M30 to controller
 		{
@@ -206,14 +213,9 @@ MotionControl.parse_serial_line = function (line)
 	}
 	else if (line.includes("HALT"))
 	{
-		if (this.WaitingForHalt == true)
+		if (this.RunOnHalt != null)
 		{
-			this.WaitingForHalt = false;
-			if (this.RunOnHalt != null)
-			{
-				this.RunOnHalt();
-				this.RunOnHalt = null;
-			}
+			this.RunOnHalt();
 		}
 	}
 	else if (line.includes("ok"))
@@ -222,22 +224,16 @@ MotionControl.parse_serial_line = function (line)
 	}
 	else if (line.includes("Z_PROBE"))
 	{
-		if (this.WaitingForZprobe == true)
+		if (this.RunOnHalt != null)
 		{
-			//Fire torch here and administer pierce delay
-			this.WaitingForZprobe = false;
-			this.RecievedOK();
+			this.RunOnHalt();
 		}
 	}
 	else if (line.includes("Z_MOVE_FINISHED"))
 	{
-		if (this.WaitingToProbeZ == true)
+		if (this.RunOnHalt != null)
 		{
-			//Fire torch here and administer pierce delay
-			console.log("Firing Torch!\n");
-			this.delay(1000);
-			this.WaitingToProbeZ = false;
-			this.RecievedOK();
+			this.RunOnHalt();
 		}
 	}
 	else if (line.includes("{"))
@@ -254,14 +250,6 @@ MotionControl.parse_serial_line = function (line)
 }
 MotionControl.tick = function()
 {
-	if (this.GStack.length == 0 && this.WaitingToProbeZ == true && this.WaitingForHalt == false)
-	{
-		console.log("Probing torch!\n");
-		this.send_rt("&"); //Probe Torch
-		this.WaitingToProbeZ = false;
-
-		this.WaitingForZprobe = true;
-	}
     if (serial.is_open())
 	{
 		var avail = serial.available();
