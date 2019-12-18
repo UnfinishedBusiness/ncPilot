@@ -7,6 +7,8 @@ MotionControl.WaitingForOkay = false;
 MotionControl.WaitingForGrbl = false;
 MotionControl.WaitingForZprobe = false;
 MotionControl.WaitingToProbeZ = false;
+MotionControl.WaitingForHalt = false;
+MotionControl.RunOnHalt = null;
 MotionControl.machine_parameters = {
 	machine_extents: { x: 45.5, y: 45.5 },
 	machine_axis_invert: { x: 0, y1: 1, y2: 0, z: 0 },
@@ -84,9 +86,10 @@ MotionControl.send = function(buff)
 		var send_line = this.WorkOffsetTransformation(buff);
 		//this.delay(300);
 		console.log("(send) " + send_line + "\n");
+		this.WaitingForHalt = true;
+		this.WaitingForOkay = true;
 		serial.write(send_line + "\n");
 		//this.delay(300);
-		this.WaitingForOkay = true;
 	}
     
 }
@@ -174,11 +177,16 @@ MotionControl.RecievedOK = function()
 		}
 		else if (send_line.includes("torch_off"))
 		{
-			MotionControl.send_rt("$"); //Torch off
-			MotionControl.send_rt(">"); //Jog torch up until delay ends
-			this.delay(300);
-			MotionControl.send_rt("^"); //Cancel torch jog
-			this.RecievedOK(); //RT commands don't return ok
+			this.RunOnHalt = function()
+			{
+				console.log("Shutting torch off!\n");
+				this.send_rt("$"); //Torch off
+				this.send_rt(">"); //Jog torch up until delay ends
+				this.delay(3000);
+				this.send_rt("^"); //Cancel torch jog
+				this.RecievedOK(); //RT commands don't return ok
+			}
+			this.WaitingForHalt = true;
 		}
 		else //Don't send M30 to controller
 		{
@@ -196,6 +204,18 @@ MotionControl.parse_serial_line = function (line)
 		this.WaitingForGrbl = false;
 		MotionControl.RecievedOK();
 	}
+	else if (line.includes("HALT"))
+	{
+		if (this.WaitingForHalt == true)
+		{
+			this.WaitingForHalt = false;
+			if (this.RunOnHalt != null)
+			{
+				this.RunOnHalt();
+				this.RunOnHalt = null;
+			}
+		}
+	}
 	else if (line.includes("ok"))
 	{
 		MotionControl.RecievedOK();
@@ -206,6 +226,17 @@ MotionControl.parse_serial_line = function (line)
 		{
 			//Fire torch here and administer pierce delay
 			this.WaitingForZprobe = false;
+			this.RecievedOK();
+		}
+	}
+	else if (line.includes("Z_MOVE_FINISHED"))
+	{
+		if (this.WaitingToProbeZ == true)
+		{
+			//Fire torch here and administer pierce delay
+			console.log("Firing Torch!\n");
+			this.delay(1000);
+			this.WaitingToProbeZ = false;
 			this.RecievedOK();
 		}
 	}
@@ -223,8 +254,9 @@ MotionControl.parse_serial_line = function (line)
 }
 MotionControl.tick = function()
 {
-	if (this.GStack.length == 0 && this.WaitingToProbeZ == true && this.dro_data.STATUS == "Idle")
+	if (this.GStack.length == 0 && this.WaitingToProbeZ == true && this.WaitingForHalt == false)
 	{
+		console.log("Probing torch!\n");
 		this.send_rt("&"); //Probe Torch
 		this.WaitingToProbeZ = false;
 
