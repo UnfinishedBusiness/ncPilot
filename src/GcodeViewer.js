@@ -84,17 +84,26 @@ GcodeViewer.tick = function()
 		//console.log(JSON.stringify(key) + "\n");
 		if (key.keycode == 266 && GcodeViewer.JogCancle.z == false) //Page Up
 		{
+			//MotionControl.send("M5");
+			//MotionControl.send("G53 G0 Z0");
 			MotionControl.send_rt(">");
 			GcodeViewer.JogCancle.z = true;
+			//MotionControl.send("M3 S1000");
 		}
 		if (key.keycode == 267 && GcodeViewer.JogCancle.z == false) //Page Down
 		{
+			//MotionControl.send("G38.2 Z-100 F50");
+			//MotionControl.send("G91 G0 Z0.200");
+			//MotionControl.send("G91 G0 Z0.5");
+			//MotionControl.send("G90");
+			//MotionControl.send("M5");
 			MotionControl.send_rt("<");
 			GcodeViewer.JogCancle.z = true;
 		}
 		if (key.keycode == 32 && GcodeViewer.OnePress == false) //Space
 		{
-			this.parse_gcode("indian.nc");
+			//this.parse_gcode("indian.nc");
+			//MotionControl.send_rt("$0=50");
 			//MotionControl.send_rt("&");
 			GcodeViewer.OnePress = true;
 		}

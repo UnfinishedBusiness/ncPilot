@@ -5,7 +5,6 @@ MotionControl.ProgramHoldFlag = false;
 MotionControl.GStack = [];
 MotionControl.WaitingForOkay = false;
 MotionControl.WaitingForGrbl = false;
-MotionControl.RunOnHalt = null;
 MotionControl.machine_parameters = {
 	machine_extents: { x: 45.5, y: 45.5 },
 	machine_axis_invert: { x: 0, y1: 1, y2: 0, z: 0 },
@@ -46,7 +45,7 @@ MotionControl.ProgramAbort = function()
 	this.GStack = [];
 	this.WaitingForOkay = false;
 	//serial.write("soft_abort\n");
-	MotionControl.send_rt("$"); //Turn off torch
+	//MotionControl.send_rt("$"); //Turn off torch
 }
 MotionControl.set_waypoint = function(p)
 {
@@ -149,7 +148,6 @@ MotionControl.WorkOffsetTransformation = function(send_line)
 }
 MotionControl.RecievedOK = function()
 {
-	if (this.RunOnHalt != null) return;
 	this.WaitingForOkay = false;
 	var send_line = this.GStack.shift();
 	if (send_line == "")
@@ -166,86 +164,41 @@ MotionControl.RecievedOK = function()
 		{
 			ProgramUploaded = false; //We can press start again after the program finishes!
 		}
-		else if (send_line.includes("fire_torch"))
-		{
-			this.RunOnHalt = function()
-			{
-				console.log("Probing Z!\n");
-				this.send_rt("&"); //Torch Probe
-				this.RunOnHalt = function()
-				{
-					console.log("Fire Torch!\n");
-					this.send_rt("#"); //Fire Torch
-					this.delay(1000); //Pierce Delay
-					this.RunOnHalt = null;
-					this.RecievedOK(); //RT commands don't return ok
-				}
-			}
-		}
-		else if (send_line.includes("torch_off"))
-		{
-			this.RunOnHalt = function()
-			{
-				console.log("Shutting torch off!\n");
-				this.send_rt("$"); //Torch off
-				this.send_rt(">"); //Jog torch up until delay ends
-				this.delay(3000);
-				this.send_rt("^"); //Cancel torch jog
-				this.RunOnHalt = null;
-				this.RecievedOK(); //RT commands don't return ok
-			}
-		}
 		else //Don't send M30 to controller
 		{
 			//SerialTransmissionLog.push("->" + send_line);
 			//console.log("(send_from_ok) " + send_line + "\n");
 			serial.write(send_line + "\n");
+			this.delay(10);
 		}
 	}
 }
 MotionControl.parse_serial_line = function (line)
 {
-	if (! line.includes("{")) console.log("(parse_serial_line) " + line + "\n"); //Don't verbose report
+	if (! line.includes("{") && !line.includes("ok")) console.log("(parse_serial_line) " + line + "\n"); //Don't verbose report
 	if (line.includes("Grbl"))
 	{
 		this.WaitingForGrbl = false;
 		MotionControl.RecievedOK();
 	}
-	else if (line.includes("HALT"))
-	{
-		if (this.RunOnHalt != null)
-		{
-			this.RunOnHalt();
-		}
-	}
 	else if (line.includes("ok"))
 	{
 		MotionControl.RecievedOK();
 	}
-	else if (line.includes("Z_PROBE"))
-	{
-		if (this.RunOnHalt != null)
-		{
-			this.RunOnHalt();
-		}
-	}
-	else if (line.includes("Z_MOVE_FINISHED"))
-	{
-		if (this.RunOnHalt != null)
-		{
-			this.RunOnHalt();
-		}
-	}
 	else if (line.includes("{"))
 	{
-		var dro = JSON.parse(line);
-		this.dro_data.STATUS = dro.STATUS;
-		this.dro_data.X_MCS = dro.MCS.x;
-		this.dro_data.X_WCS = (this.dro_data.X_MCS - this.machine_parameters.work_offset.x);
-		this.dro_data.Y_MCS = dro.MCS.y;
-		this.dro_data.Y_WCS = (this.dro_data.Y_MCS - this.machine_parameters.work_offset.y);
-		this.dro_data.VELOCITY = dro.FEED;
-		this.dro_data.THC_ARC_VOLTAGE = dro.ADC;
+		try {
+			var dro = JSON.parse(line);
+			this.dro_data.STATUS = dro.STATUS;
+			this.dro_data.X_MCS = dro.MCS.x;
+			this.dro_data.X_WCS = (this.dro_data.X_MCS - this.machine_parameters.work_offset.x);
+			this.dro_data.Y_MCS = dro.MCS.y;
+			this.dro_data.Y_WCS = (this.dro_data.Y_MCS - this.machine_parameters.work_offset.y);
+			this.dro_data.VELOCITY = dro.FEED;
+			this.dro_data.THC_ARC_VOLTAGE = dro.ADC;
+		} catch (e) {
+			console.log("Report Invalid=> \"" + line + "\"\n");
+		}
 	}	
 }
 MotionControl.tick = function()

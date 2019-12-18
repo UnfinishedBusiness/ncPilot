@@ -112,7 +112,26 @@ UserInterface.tick = function()
 					//console.log("Sending line: \"" + line + "\"\n");
 					if (line.includes("G0") || line.includes("G1") || line.includes("torch"))
 					{
-						MotionControl.send(line);
+						if (line.includes("fire_torch"))
+						{
+							MotionControl.send("G38.3 Z-10 F50");
+							MotionControl.send("G91 G0 Z0.200");
+							MotionControl.send("G91 G0 Z0.160");
+							MotionControl.send("M3 S1000");
+							MotionControl.send("G4 P1.2"); //Pierce Delay
+							MotionControl.send("G90"); //Back to absolute
+						}
+						else if (line.includes("torch_off"))
+						{
+							MotionControl.send("M5");
+							MotionControl.send("G4 P1"); //Post Delay
+							MotionControl.send("G91 G0 Z3"); //Retract
+							MotionControl.send("G90"); //Back to absolute
+						}
+						else
+						{
+							MotionControl.send(line);
+						}
 					}
 				}
 				file.close();
