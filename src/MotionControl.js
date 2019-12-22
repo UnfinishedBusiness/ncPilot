@@ -11,7 +11,9 @@ MotionControl.machine_parameters = {
 MotionControl.way_point = null;
 MotionControl.is_connected = false;
 MotionControl.dro_data = { X_MCS: 0.0000, Y_MCS: 0.0000, X_WCS: 0.0000, Y_WCS: 0.0000, VELOCITY: 0.0, THC_ARC_VOLTAGE: 0.0, THC_SET_VOLTAGE: 0.0, STATUS: "Halt" };
+
 MotionControl.on_idle = null;
+MotionControl.on_hold = null;
 
 MotionControl.SaveParameters = function()
 {
@@ -40,9 +42,7 @@ MotionControl.PullParameters = function()
 MotionControl.ProgramAbort = function()
 {
 	motion_control.clear_stack();
-	this.on_idle = function(){
-		console.log("Sending soft reset!\n");
-	};
+	motion_control.abort();
 }
 MotionControl.set_waypoint = function(p)
 {
@@ -54,7 +54,7 @@ MotionControl.go_to_waypoint = function()
 	{
 		if (this.way_point != null)
 		{
-			console.log("Going to waypoint!\n");
+			//console.log("Going to waypoint!\n");
 			this.send("G53 G0 X" + this.way_point.x.toFixed(4) + " Y" + this.way_point.y.toFixed(4));
 			//this.send("G54");
 		}
@@ -78,6 +78,14 @@ MotionControl.tick = function()
 {
 	this.is_connected = motion_control.is_connected();
 	var dro = motion_control.get_dro();
+	if (dro.STATUS == "Idle" && this.on_idle != null)
+	{
+		this.on_idle();
+	}
+	if (dro.STATUS == "Hold" && this.on_hold != null)
+	{
+		this.on_hold();
+	}
 	//console.log(JSON.stringify(dro) + "\n");
 	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: dro.ADC, THC_SET_VOLTAGE: 0.0, STATUS: dro.STATUS };
 }
