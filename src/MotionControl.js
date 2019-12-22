@@ -87,5 +87,6 @@ MotionControl.tick = function()
 		this.on_hold();
 	}
 	//console.log(JSON.stringify(dro) + "\n");
-	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: dro.ADC, THC_SET_VOLTAGE: 0.0, STATUS: dro.STATUS };
+	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: FastMath.map(dro.ADC, 0, 1024, 0, 10), THC_SET_VOLTAGE: 0.0, STATUS: dro.STATUS };
+	//Add AVTHC voltage control logic here!
 }
