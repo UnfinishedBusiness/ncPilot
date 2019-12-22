@@ -144,7 +144,10 @@ UserInterface.tick = function()
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.touch))
 	{
-		MotionControl.send("probe_z");
+		MotionControl.send("G38.3 Z-10 F50");
+		MotionControl.send("G91 G0 Z0.200");
+		MotionControl.send("G91 G0 Z0.5");
+		MotionControl.send("G90"); //Back to absolute
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.wpos))
 	{
@@ -153,12 +156,12 @@ UserInterface.tick = function()
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.park))
 	{
 		//MotionControl.send("torch_off");
-		MotionControl.send("G0 X-" + MotionControl.machine_parameters.work_offset.x + " Y-" + MotionControl.machine_parameters.work_offset.y);
+		MotionControl.send("G53 G0 X0 Y0 Z0");
+		//MotionControl.send("G54");
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.x_origin))
 	{
 		MotionControl.machine_parameters.work_offset.x = MotionControl.dro_data.X_MCS;
-		MotionControl.dro_data.X_WCS = (MotionControl.dro_data.X_MCS - MotionControl.machine_parameters.work_offset.x);
 		MotionControl.SaveParameters();
 		if (GcodeViewer.last_file != null)
 		{
@@ -168,7 +171,6 @@ UserInterface.tick = function()
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.y_origin))
 	{
 		MotionControl.machine_parameters.work_offset.y = MotionControl.dro_data.Y_MCS;
-		MotionControl.dro_data.Y_WCS = (MotionControl.dro_data.Y_MCS - MotionControl.machine_parameters.work_offset.y);
 		MotionControl.SaveParameters();
 		if (GcodeViewer.last_file != null)
 		{

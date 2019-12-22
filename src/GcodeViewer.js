@@ -41,13 +41,8 @@ GcodeViewer.parse_gcode = function (gcode_file)
 			}
 		}
 	}
-	MotionPlanner.PlannedGcodeStack = [];
-	for (var x = 0; x < contour_stack.length; x++)
-	{
-		MotionPlanner.PlannedGcodeStack.push(MotionPlanner.plan(contour_stack[x].path, 150, 0.030, 15, 5, contour_stack[x].feed));
-	}
 	gcode.clear();
-	console.log("Parsed & Planned Gcode in " + (time.millis() - timestamp) + "ms\n");
+	console.log("Parsed Gcode in " + (time.millis() - timestamp) + "ms\n");
 }
 GcodeViewer.init = function()
 {
@@ -86,7 +81,7 @@ GcodeViewer.tick = function()
 		{
 			//MotionControl.send("M5");
 			//MotionControl.send("G53 G0 Z0");
-			MotionControl.send_rt(">");
+			motion_control.torch_up();
 			GcodeViewer.JogCancle.z = true;
 			//MotionControl.send("M3 S1000");
 		}
@@ -97,7 +92,7 @@ GcodeViewer.tick = function()
 			//MotionControl.send("G91 G0 Z0.5");
 			//MotionControl.send("G90");
 			//MotionControl.send("M5");
-			MotionControl.send_rt("<");
+			motion_control.torch_down();
 			GcodeViewer.JogCancle.z = true;
 		}
 		if (key.keycode == 32 && GcodeViewer.OnePress == false) //Space
@@ -151,7 +146,7 @@ GcodeViewer.tick = function()
 		if (GcodeViewer.JogCancle.z)
 		{
 			GcodeViewer.JogCancle.z = false;
-			MotionControl.send_rt("^");
+			motion_control.torch_cancel();
 		}
 	}
 
@@ -168,8 +163,6 @@ GcodeViewer.tick = function()
 				{
 					//console.log("Clicked inside machine boundry!\n");
 					var WayPoint = mouse_p;
-					WayPoint.x -= MotionControl.machine_parameters.work_offset.x;
-					WayPoint.y -= MotionControl.machine_parameters.work_offset.y;
 					MotionControl.set_waypoint(mouse_p);
 				}
 				ClickOnce = true;
