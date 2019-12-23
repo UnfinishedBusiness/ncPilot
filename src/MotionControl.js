@@ -121,7 +121,7 @@ MotionControl.send_gcode_from_viewer = function()
 		else
 		{
 			//console.log("Could not read file!\n");
-		}
+		}		//MotionControl.send("G53 G
 	}
 }
 MotionControl.send = function(buff)
@@ -149,7 +149,7 @@ MotionControl.tick = function()
 	if (this.is_connected == true && MotionControl.dro_data.STATUS == "Run")
 	{
 		render.set_loop_delay(30); //Make sure motion_control has priority
-		if (MotionControl.dro_data.THC_SET_VOLTAGE > 0) //THC is on
+		if (MotionControl.dro_data.THC_SET_VOLTAGE > 0 && MotionControl.dro_data.THC_ARC_VOLTAGE > 30) //THC is on
 		{
 			if (MotionControl.dro_data.THC_ARC_VOLTAGE < (MotionControl.dro_data.THC_SET_VOLTAGE - 3))
 			{
@@ -180,5 +180,10 @@ MotionControl.tick = function()
 	else if (MotionControl.dro_data.STATUS == "Idle")
 	{
 		render.set_loop_delay(0);
+		if (MotionControl.thc_command != "Idle")
+		{
+			MotionControl.thc_command = "Idle";
+			motion_control.torch_cancel();
+		}
 	}
 }

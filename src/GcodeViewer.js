@@ -79,7 +79,7 @@ GcodeViewer.tick = function()
 		{
 			//MotionControl.send("M5");
 			//MotionControl.send("G53 G0 Z0");
-			motion_control.torch_up();
+			motion_control.torch_plus();
 			GcodeViewer.JogCancle.z = true;
 			//MotionControl.send("M3 S1000");
 		}
@@ -90,7 +90,7 @@ GcodeViewer.tick = function()
 			//MotionControl.send("G91 G0 Z0.5");
 			//MotionControl.send("G90");
 			//MotionControl.send("M5");
-			motion_control.torch_down();
+			motion_control.torch_minus();
 			GcodeViewer.JogCancle.z = true;
 		}
 		if (key.keycode == 32 && GcodeViewer.OnePress == false) //Space
