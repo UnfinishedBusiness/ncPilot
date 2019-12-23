@@ -120,8 +120,8 @@ UserInterface.tick = function()
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.park))
 	{
-		//MotionControl.send("torch_off");
-		MotionControl.send("G53 G0 X0 Y0 Z0");
+		MotionControl.send("G0 Z0");
+		MotionControl.send("G53 G0 X0 Y0");
 		//MotionControl.send("G54");
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.x_origin))

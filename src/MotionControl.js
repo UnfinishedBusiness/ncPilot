@@ -62,9 +62,10 @@ MotionControl.go_to_waypoint = function()
 }
 MotionControl.init = function()
 {
+	this.PullParameters();
+	motion_control.set_parameters(this.machine_parameters);
 	motion_control.set_port("Arduino");
 	motion_control.set_dro_interval(75);
-	this.PullParameters();
 }
 MotionControl.send_gcode_from_viewer = function()
 {
