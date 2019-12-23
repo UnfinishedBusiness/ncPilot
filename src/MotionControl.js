@@ -63,6 +63,7 @@ MotionControl.init = function()
 {
 	this.PullParameters();
 	motion_control.set_parameters(this.machine_parameters);
+	motion_control.set_baud(115200);
 	motion_control.set_port("Arduino");
 	motion_control.set_dro_interval(75);
 }
