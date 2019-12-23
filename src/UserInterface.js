@@ -3,6 +3,7 @@ var UserInterface = {};
 UserInterface.file_menu = {};
 UserInterface.control_window = {};
 UserInterface.dro_window = {};
+UserInterface.machine_parameters = {};
 
 UserInterface.init = function()
 {
@@ -83,6 +84,25 @@ UserInterface.init = function()
 	UserInterface.dro_window.thc_text = gui.add_text(UserInterface.dro_window.window, "Halt");
 	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, { size: 0.6, color: {r: 0, g: 1, b: 0 }});
 
+	UserInterface.machine_parameters.window = gui.new_window("Machine Parameters");
+	UserInterface.machine_parameters.x_extent = gui.add_input_double(UserInterface.machine_parameters.window, "X Extent", MotionControl.machine_parameters.machine_extents.x);
+	UserInterface.machine_parameters.y_extent = gui.add_input_double(UserInterface.machine_parameters.window, "Y Extent", MotionControl.machine_parameters.machine_extents.y);
+	UserInterface.machine_parameters.x_scale = gui.add_input_double(UserInterface.machine_parameters.window, "X Scale", MotionControl.machine_parameters.machine_axis_scale.x);
+	UserInterface.machine_parameters.y_scale = gui.add_input_double(UserInterface.machine_parameters.window, "Y Scale", MotionControl.machine_parameters.machine_axis_scale.y);
+	UserInterface.machine_parameters.z_scale = gui.add_input_double(UserInterface.machine_parameters.window, "Z Scale", MotionControl.machine_parameters.machine_axis_scale.z);
+	UserInterface.machine_parameters.x_invert = gui.add_checkbox(UserInterface.machine_parameters.window, "Invert X", MotionControl.machine_parameters.machine_axis_invert.x);
+	gui.sameline(UserInterface.machine_parameters.window);
+	UserInterface.machine_parameters.y1_invert = gui.add_checkbox(UserInterface.machine_parameters.window, "Invert Y1", MotionControl.machine_parameters.machine_axis_invert.y1);
+	gui.sameline(UserInterface.machine_parameters.window);
+	UserInterface.machine_parameters.y2_invert = gui.add_checkbox(UserInterface.machine_parameters.window, "Invert Y2", MotionControl.machine_parameters.machine_axis_invert.y2);
+	gui.sameline(UserInterface.machine_parameters.window);
+	UserInterface.machine_parameters.z_invert = gui.add_checkbox(UserInterface.machine_parameters.window, "Invert Z", MotionControl.machine_parameters.machine_axis_invert.z);
+	UserInterface.machine_parameters.z_probe_feed = gui.add_input_double(UserInterface.machine_parameters.window, "Probe Feed", MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
+	UserInterface.machine_parameters.retract_clearance = gui.add_input_double(UserInterface.machine_parameters.window, "Retract Clearance", MotionControl.machine_parameters.machine_torch_config.clearance_height);
+	UserInterface.machine_parameters.floating_head_takeup = gui.add_input_double(UserInterface.machine_parameters.window, "Floating Head Takeup",MotionControl.machine_parameters.machine_torch_config.floating_head_takeup);
+	UserInterface.machine_parameters.ok_button = gui.add_button(UserInterface.machine_parameters.window, "OK");
+	gui.show(UserInterface.machine_parameters.window, false);
+
 	UserInterface.file_menu.file = {};
 	UserInterface.file_menu.file.menu = window_menu.create("File");
 	UserInterface.file_menu.file.open = window_menu.add_button(UserInterface.file_menu.file.menu, "Open");
@@ -91,6 +111,9 @@ UserInterface.init = function()
 	UserInterface.file_menu.view.menu = window_menu.create("View");
 	UserInterface.file_menu.view.cnc_controls = window_menu.add_checkbox(UserInterface.file_menu.view.menu, "CNC Controls", true);
 	UserInterface.file_menu.view.cnc_dro = window_menu.add_checkbox(UserInterface.file_menu.view.menu, "CNC DRO", true);
+	UserInterface.file_menu.edit = {};
+	UserInterface.file_menu.edit.menu = window_menu.create("Edit");
+	UserInterface.file_menu.edit.machine_parameters = window_menu.add_button(UserInterface.file_menu.edit.menu, "Machine Parameters");
 }
 UserInterface.tick = function()
 {
@@ -101,6 +124,10 @@ UserInterface.tick = function()
 	if (window_menu.get_button(UserInterface.file_menu.file.menu, UserInterface.file_menu.file.close))
 	{
 		exit(0);
+	}
+	if (window_menu.get_button(UserInterface.file_menu.edit.menu, UserInterface.file_menu.edit.machine_parameters))
+	{
+		gui.show(UserInterface.machine_parameters.window, true);
 	}
 	//console.log("Windowid: " + UserInterface.control_window.window + " widgetid: " + UserInterface.control_window.park + "\n");
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.run))
@@ -141,6 +168,26 @@ UserInterface.tick = function()
 		{
 			GcodeViewer.parse_gcode(GcodeViewer.last_file);
 		}
+	}
+
+	if (gui.get_button(UserInterface.machine_parameters.window, UserInterface.machine_parameters.ok_button))
+	{
+		//console.log("OK BUtton!\n");
+		MotionControl.machine_parameters.machine_extents.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_extent);
+		MotionControl.machine_parameters.machine_extents.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_extent);
+		MotionControl.machine_parameters.machine_axis_scale.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_scale);
+		MotionControl.machine_parameters.machine_axis_scale.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_scale);
+		MotionControl.machine_parameters.machine_axis_scale.z = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_scale);
+		MotionControl.machine_parameters.machine_axis_invert.x = gui.get_checkbox(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_invert);
+		MotionControl.machine_parameters.machine_axis_invert.y1 = gui.get_checkbox(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y1_invert);
+		MotionControl.machine_parameters.machine_axis_invert.y2 = gui.get_checkbox(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y2_invert);
+		MotionControl.machine_parameters.machine_axis_invert.z = gui.get_checkbox(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_invert);
+		MotionControl.machine_parameters.machine_torch_config.z_probe_feed = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_probe_feed);
+		MotionControl.machine_parameters.machine_torch_config.clearance_height = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.retract_clearance);
+		MotionControl.machine_parameters.machine_torch_config.floating_head_takeup = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.floating_head_takeup);
+		MotionControl.SaveParameters();
+		motion_control.set_parameters(MotionControl.machine_parameters);
+		gui.show(UserInterface.machine_parameters.window, false);
 	}
 
 	gui.show(UserInterface.control_window.window, window_menu.get_checkbox(UserInterface.file_menu.view.menu, UserInterface.file_menu.view.cnc_controls));
