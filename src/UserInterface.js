@@ -105,47 +105,7 @@ UserInterface.tick = function()
 	//console.log("Windowid: " + UserInterface.control_window.window + " widgetid: " + UserInterface.control_window.park + "\n");
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.run))
 	{
-		if (GcodeViewer.last_file != null)
-		{
-			//console.log("Running!\n");
-			if (file.open(GcodeViewer.last_file, "r"))
-			{
-				//console.log("Opened: " + GcodeViewer.last_file + "\n");
-				while(file.lines_available())
-				{
-					var line = file.read();
-					//console.log("Sending line: \"" + line + "\"\n");
-					if (line.includes("G0") || line.includes("G1") || line.includes("torch"))
-					{
-						if (line.includes("fire_torch"))
-						{
-							MotionControl.send("G38.3 Z-10 F50");
-							MotionControl.send("G91 G0 Z0.200");
-							MotionControl.send("G91 G0 Z0.160");
-							MotionControl.send("M3 S1000");
-							MotionControl.send("G4 P1.2"); //Pierce Delay
-							MotionControl.send("G90"); //Back to absolute
-						}
-						else if (line.includes("torch_off"))
-						{
-							MotionControl.send("M5");
-							MotionControl.send("G4 P1"); //Post Delay
-							MotionControl.send("G91 G0 Z3"); //Retract
-							MotionControl.send("G90"); //Back to absolute
-						}
-						else
-						{
-							MotionControl.send(line);
-						}
-					}
-				}
-				file.close();
-			}
-			else
-			{
-				//console.log("Could not read file!\n");
-			}
-		}
+		MotionControl.send_gcode_from_viewer();
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.touch))
 	{
