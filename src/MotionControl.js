@@ -11,7 +11,7 @@ MotionControl.machine_parameters = {
 MotionControl.way_point = null;
 MotionControl.is_connected = false;
 MotionControl.dro_data = { X_MCS: 0.0000, Y_MCS: 0.0000, X_WCS: 0.0000, Y_WCS: 0.0000, VELOCITY: 0.0, THC_ARC_VOLTAGE: 0.0, THC_SET_VOLTAGE: 0.0, STATUS: "Halt" };
-
+MotionControl.thc_command = "CANCEL";
 MotionControl.on_idle = null;
 MotionControl.on_hold = null;
 
@@ -87,6 +87,35 @@ MotionControl.tick = function()
 		this.on_hold();
 	}
 	//console.log(JSON.stringify(dro) + "\n");
-	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: FastMath.map(dro.ADC, 0, 1024, 0, 10), THC_SET_VOLTAGE: 0.0, STATUS: dro.STATUS };
-	//Add AVTHC voltage control logic here!
+	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: FastMath.map(dro.ADC, 0, 1024, 0, 10) * 50.0, THC_SET_VOLTAGE: gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.thc_set_voltage).toFixed(2), STATUS: dro.STATUS };
+	if (this.is_connected == true && MotionControl.dro_data.STATUS == "Run")
+	{
+		if (MotionControl.dro_data.THC_SET_VOLTAGE > 0) //THC is on
+		{
+			if (MotionControl.dro_data.THC_ARC_VOLTAGE < (MotionControl.dro_data.THC_SET_VOLTAGE - 3))
+			{
+				if (MotionControl.thc_command != "Up")
+				{
+					MotionControl.thc_command = "Up";
+					motion_control.torch_plus();
+				}
+			}
+			else if (MotionControl.dro_data.THC_ARC_VOLTAGE > (MotionControl.dro_data.THC_SET_VOLTAGE + 3))
+			{
+				if (MotionControl.thc_command != "Down")
+				{
+					MotionControl.thc_command = "Down";
+					motion_control.torch_minus();
+				}
+			}
+			else
+			{
+				if (MotionControl.thc_command != "Idle")
+				{
+					MotionControl.thc_command = "Idle";
+					motion_control.torch_cancel();
+				}
+			}
+		}
+	}
 }

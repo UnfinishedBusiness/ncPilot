@@ -77,6 +77,11 @@ UserInterface.init = function()
 	gui.sameline(UserInterface.dro_window.window);
 	UserInterface.dro_window.feed_text = gui.add_text(UserInterface.dro_window.window, "0.0");
 	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.feed_text, { size: 0.350, color: {r: 0.74, g: 0.458, b: 0.03 }});
+	UserInterface.dro_window.thc_label = gui.add_text(UserInterface.dro_window.window, "THC: ");
+	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.thc_label, { size: 0.6, color: {r: 0, g: 1, b: 1 }});
+	gui.sameline(UserInterface.dro_window.window);
+	UserInterface.dro_window.thc_text = gui.add_text(UserInterface.dro_window.window, "Halt");
+	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, { size: 0.6, color: {r: 0, g: 1, b: 0 }});
 
 	UserInterface.file_menu.file = {};
 	UserInterface.file_menu.file.menu = window_menu.create("File");
@@ -188,5 +193,6 @@ UserInterface.tick = function()
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.arc_dro, MotionControl.dro_data.THC_ARC_VOLTAGE.toFixed(2));
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.feed_text, MotionControl.dro_data.VELOCITY.toFixed(2));
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.status_text, MotionControl.dro_data.STATUS);
-	//gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.arc_set_dro, gui.get_slider(control_window.window, control_window.thc_set_voltage).toFixed(2));
+	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, MotionControl.thc_command);
+	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.arc_set_dro, MotionControl.dro_data.THC_SET_VOLTAGE);
 }
