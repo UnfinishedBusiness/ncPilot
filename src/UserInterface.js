@@ -109,6 +109,7 @@ UserInterface.init = function()
 	UserInterface.machine_parameters.floating_head_takeup = gui.add_input_double(UserInterface.machine_parameters.window, "Floating Head Takeup",MotionControl.machine_parameters.machine_torch_config.floating_head_takeup);
 	UserInterface.machine_parameters.ok_button = gui.add_button(UserInterface.machine_parameters.window, "OK");
 	gui.show(UserInterface.machine_parameters.window, false);
+
 	UserInterface.file_menu.file = {};
 	UserInterface.file_menu.file.menu = window_menu.create("File");
 	UserInterface.file_menu.file.open = window_menu.add_button(UserInterface.file_menu.file.menu, "Open");
@@ -120,6 +121,10 @@ UserInterface.init = function()
 	UserInterface.file_menu.edit = {};
 	UserInterface.file_menu.edit.menu = window_menu.create("Edit");
 	UserInterface.file_menu.edit.machine_parameters = window_menu.add_button(UserInterface.file_menu.edit.menu, "Machine Parameters");
+
+	UserInterface.file_menu.tools = {};
+	UserInterface.file_menu.tools.menu = window_menu.create("Tools");
+	UserInterface.file_menu.tools.notch_master = window_menu.add_button(UserInterface.file_menu.tools.menu, "Notch Master");
 }
 UserInterface.tick = function()
 {
@@ -134,6 +139,10 @@ UserInterface.tick = function()
 	if (window_menu.get_button(UserInterface.file_menu.edit.menu, UserInterface.file_menu.edit.machine_parameters))
 	{
 		gui.show(UserInterface.machine_parameters.window, true);
+	}
+	if (window_menu.get_button(UserInterface.file_menu.tools.menu, UserInterface.file_menu.tools.notch_master))
+	{
+		NotchMaster.show();
 	}
 	//console.log("Windowid: " + UserInterface.control_window.window + " widgetid: " + UserInterface.control_window.park + "\n");
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.run))
