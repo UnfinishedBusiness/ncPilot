@@ -132,6 +132,7 @@ UserInterface.tick = function()
 	//console.log("Windowid: " + UserInterface.control_window.window + " widgetid: " + UserInterface.control_window.park + "\n");
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.run))
 	{
+		//MotionControl.send_rt("~");
 		MotionControl.send_gcode_from_viewer();
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.touch))
@@ -149,7 +150,7 @@ UserInterface.tick = function()
 	{
 		MotionControl.send("G0 Z0");
 		MotionControl.send("G53 G0 X0 Y0");
-		//MotionControl.send("G54");
+		MotionControl.send_rt("~");
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.x_origin))
 	{

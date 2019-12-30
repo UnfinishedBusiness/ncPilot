@@ -65,7 +65,7 @@ MotionControl.init = function()
 	motion_control.set_parameters(this.machine_parameters);
 	motion_control.set_baud(115200);
 	motion_control.set_port("Arduino");
-	motion_control.set_dro_interval(75);
+	motion_control.set_dro_interval(125);
 }
 MotionControl.send_gcode_from_viewer = function()
 {
@@ -149,7 +149,7 @@ MotionControl.tick = function()
 	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: FastMath.map(dro.ADC, 0, 1024, 0, 10) * 50.0, THC_SET_VOLTAGE: gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.thc_set_voltage).toFixed(2), STATUS: dro.STATUS };
 	if (this.is_connected == true && MotionControl.dro_data.STATUS == "Run")
 	{
-		render.set_loop_delay(30); //Make sure motion_control has priority
+		render.set_loop_delay(60); //Make sure motion_control has priority
 		if (MotionControl.dro_data.THC_SET_VOLTAGE > 0 && MotionControl.dro_data.THC_ARC_VOLTAGE > 30) //THC is on
 		{
 			if (MotionControl.dro_data.THC_ARC_VOLTAGE < (MotionControl.dro_data.THC_SET_VOLTAGE - 3))
