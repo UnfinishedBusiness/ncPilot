@@ -3,7 +3,10 @@ MotionControl.GStack = [];
 MotionControl.machine_parameters = {
 	machine_extents: { x: 45.5, y: 45.5 },
 	machine_axis_invert: { x: false, y1: false, y2: false, z: false },
-	machine_axis_scale: { x: 1034.5, y: 1034.5, z: 1000 },
+	machine_axis_scale: { x: 518, y: 518, z: 2540 },
+	machine_max_vel: { x: 800, y: 800, z: 60 },
+	machine_max_accel: { x: 10, y: 10, z: 30 },
+	machine_junction_deviation: 0.010,
 	machine_torch_config: { z_probe_feed: 60, floating_head_takeup: 0.200, clearance_height: 3 },
 	work_offset: {x: 0, y: 0},
   };

@@ -90,6 +90,13 @@ UserInterface.init = function()
 	UserInterface.machine_parameters.x_scale = gui.add_input_double(UserInterface.machine_parameters.window, "X Scale", MotionControl.machine_parameters.machine_axis_scale.x);
 	UserInterface.machine_parameters.y_scale = gui.add_input_double(UserInterface.machine_parameters.window, "Y Scale", MotionControl.machine_parameters.machine_axis_scale.y);
 	UserInterface.machine_parameters.z_scale = gui.add_input_double(UserInterface.machine_parameters.window, "Z Scale", MotionControl.machine_parameters.machine_axis_scale.z);
+	UserInterface.machine_parameters.x_vel = gui.add_input_double(UserInterface.machine_parameters.window, "X Max Vel", MotionControl.machine_parameters.machine_max_vel.x);
+	UserInterface.machine_parameters.y_vel = gui.add_input_double(UserInterface.machine_parameters.window, "Y Max Vel", MotionControl.machine_parameters.machine_max_vel.y);
+	UserInterface.machine_parameters.z_vel = gui.add_input_double(UserInterface.machine_parameters.window, "Z Max Vel", MotionControl.machine_parameters.machine_max_vel.z);
+	UserInterface.machine_parameters.x_accel = gui.add_input_double(UserInterface.machine_parameters.window, "X Max Accel", MotionControl.machine_parameters.machine_max_accel.x);
+	UserInterface.machine_parameters.y_accel = gui.add_input_double(UserInterface.machine_parameters.window, "Y Max Accel", MotionControl.machine_parameters.machine_max_accel.y);
+	UserInterface.machine_parameters.z_accel = gui.add_input_double(UserInterface.machine_parameters.window, "Z Max Accel", MotionControl.machine_parameters.machine_max_accel.z);
+	UserInterface.machine_parameters.junction_deviation = gui.add_input_double(UserInterface.machine_parameters.window, "Junction Deviation", MotionControl.machine_parameters.machine_junction_deviation);
 	UserInterface.machine_parameters.x_invert = gui.add_checkbox(UserInterface.machine_parameters.window, "Invert X", MotionControl.machine_parameters.machine_axis_invert.x);
 	gui.sameline(UserInterface.machine_parameters.window);
 	UserInterface.machine_parameters.y1_invert = gui.add_checkbox(UserInterface.machine_parameters.window, "Invert Y1", MotionControl.machine_parameters.machine_axis_invert.y1);
@@ -102,7 +109,6 @@ UserInterface.init = function()
 	UserInterface.machine_parameters.floating_head_takeup = gui.add_input_double(UserInterface.machine_parameters.window, "Floating Head Takeup",MotionControl.machine_parameters.machine_torch_config.floating_head_takeup);
 	UserInterface.machine_parameters.ok_button = gui.add_button(UserInterface.machine_parameters.window, "OK");
 	gui.show(UserInterface.machine_parameters.window, false);
-
 	UserInterface.file_menu.file = {};
 	UserInterface.file_menu.file.menu = window_menu.create("File");
 	UserInterface.file_menu.file.open = window_menu.add_button(UserInterface.file_menu.file.menu, "Open");
@@ -150,7 +156,7 @@ UserInterface.tick = function()
 	{
 		MotionControl.send("G0 Z0");
 		MotionControl.send("G53 G0 X0 Y0");
-		MotionControl.send_rt("~");
+		MotionControl.cycle_start();
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.x_origin))
 	{
@@ -179,6 +185,13 @@ UserInterface.tick = function()
 		MotionControl.machine_parameters.machine_axis_scale.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_scale);
 		MotionControl.machine_parameters.machine_axis_scale.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_scale);
 		MotionControl.machine_parameters.machine_axis_scale.z = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_scale);
+		MotionControl.machine_parameters.machine_max_vel.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_vel);
+		MotionControl.machine_parameters.machine_max_vel.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_vel);
+		MotionControl.machine_parameters.machine_max_vel.z = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_vel);
+		MotionControl.machine_parameters.machine_max_accel.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_accel);
+		MotionControl.machine_parameters.machine_max_accel.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_accel);
+		MotionControl.machine_parameters.machine_max_accel.z = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_accel);
+		MotionControl.machine_parameters.machine_junction_deviation = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.junction_deviation);
 		MotionControl.machine_parameters.machine_axis_invert.x = gui.get_checkbox(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_invert);
 		MotionControl.machine_parameters.machine_axis_invert.y1 = gui.get_checkbox(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y1_invert);
 		MotionControl.machine_parameters.machine_axis_invert.y2 = gui.get_checkbox(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y2_invert);
