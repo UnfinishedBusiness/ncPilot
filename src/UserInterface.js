@@ -108,6 +108,7 @@ UserInterface.init = function()
 	UserInterface.machine_parameters.retract_clearance = gui.add_input_double(UserInterface.machine_parameters.window, "Retract Clearance", MotionControl.machine_parameters.machine_torch_config.clearance_height);
 	UserInterface.machine_parameters.floating_head_takeup = gui.add_input_double(UserInterface.machine_parameters.window, "Floating Head Takeup",MotionControl.machine_parameters.machine_torch_config.floating_head_takeup);
 	UserInterface.machine_parameters.adc_filter = gui.add_input_double(UserInterface.machine_parameters.window, "ADC Filter",MotionControl.machine_parameters.machine_thc.adc_filter);
+	UserInterface.machine_parameters.tolerance = gui.add_input_double(UserInterface.machine_parameters.window, "THC Tolerance",MotionControl.machine_parameters.machine_thc.tolerance);
 	UserInterface.machine_parameters.ok_button = gui.add_button(UserInterface.machine_parameters.window, "OK");
 	gui.show(UserInterface.machine_parameters.window, false);
 
@@ -210,6 +211,7 @@ UserInterface.tick = function()
 		MotionControl.machine_parameters.machine_torch_config.clearance_height = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.retract_clearance);
 		MotionControl.machine_parameters.machine_torch_config.floating_head_takeup = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.floating_head_takeup);
 		MotionControl.machine_parameters.machine_thc.adc_filter = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.adc_filter);
+		MotionControl.machine_parameters.machine_thc.tolerance = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.tolerance);
 		MotionControl.adc_readings = [];
 		MotionControl.SaveParameters();
 		motion_control.set_parameters(MotionControl.machine_parameters);
