@@ -165,7 +165,7 @@ UserInterface.tick = function()
 	{
 		MotionControl.send("G0 Z0");
 		MotionControl.send("G53 G0 X0 Y0");
-		MotionControl.cycle_start();
+		motion_control.cycle_start();
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.x_origin))
 	{
