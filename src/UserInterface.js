@@ -228,4 +228,13 @@ UserInterface.tick = function()
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.status_text, MotionControl.dro_data.STATUS);
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, MotionControl.thc_command);
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.arc_set_dro, MotionControl.dro_data.THC_SET_VOLTAGE);
+
+	if (MotionControl.arc_ok == true)
+	{
+		gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.arc_dro, { size: 0.6, color: {r: 1, g: 0.750, b: 0 }});
+	}
+	else
+	{
+		gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.arc_dro, { size: 0.6, color: {r: 0, g: 1, b: 0 }});
+	}
 }
