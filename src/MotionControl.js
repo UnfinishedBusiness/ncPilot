@@ -4,8 +4,9 @@ MotionControl.machine_parameters = {
 	machine_extents: { x: 45.5, y: 45.5 },
 	machine_axis_invert: { x: false, y1: false, y2: false, z: false },
 	machine_axis_scale: { x: 518, y: 518, z: 2540 },
-	machine_max_vel: { x: 800, y: 800, z: 60 },
-	machine_max_accel: { x: 10, y: 10, z: 30 },
+	machine_max_vel: { x: 1500, y: 1500, z: 80 },
+	machine_max_accel: { x: 60, y: 60, z: 60 },
+	machine_thc: { adc_filter: 20, tolerance: 3 },
 	machine_junction_deviation: 0.010,
 	machine_torch_config: { z_probe_feed: 60, floating_head_takeup: 0.200, clearance_height: 3 },
 	work_offset: {x: 0, y: 0},
@@ -16,6 +17,22 @@ MotionControl.dro_data = { X_MCS: 0.0000, Y_MCS: 0.0000, X_WCS: 0.0000, Y_WCS: 0
 MotionControl.thc_command = "Idle";
 MotionControl.on_idle = null;
 MotionControl.on_hold = null;
+MotionControl.arc_ok = false;
+MotionControl.adc_readings = [];
+MotionControl.average_adc = function(val)
+{
+	this.adc_readings.push(val);
+	if (this.adc_readings.length > this.machine_parameters.machine_thc.adc_filter)
+	{
+		this.adc_readings.shift();
+	}
+	var sum_total = 0;
+	for (var x = 0; x < this.adc_readings.length; x++)
+	{
+		sum_total += this.adc_readings[x];
+	}
+	return (sum_total / this.adc_readings.length)
+}
 
 MotionControl.SaveParameters = function()
 {
@@ -99,7 +116,7 @@ MotionControl.send_gcode_from_viewer = function()
 							if (x == 2) fire_torch_parameters.pierce_delay = fire_torch[x];
 							if (x == 3) fire_torch_parameters.cut_height = fire_torch[x];
 						}
-						MotionControl.send("G38.3 Z-10 F50");
+						MotionControl.send("G38.3 Z-10 F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
 						MotionControl.send("G91 G0 Z" + this.machine_parameters.machine_torch_config.floating_head_takeup);
 						MotionControl.send("G91 G0 Z" + fire_torch_parameters.pierce_height);
 						MotionControl.send("M3 S1000");
@@ -149,35 +166,48 @@ MotionControl.tick = function()
 		this.on_hold();
 	}
 	//console.log(JSON.stringify(dro) + "\n");
-	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: FastMath.map(dro.ADC, 0, 1024, 0, 10) * 50.0, THC_SET_VOLTAGE: gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.thc_set_voltage).toFixed(2), STATUS: dro.STATUS };
+	MotionControl.arc_ok = !dro.ARC_OK ; //Logic is inverted because arc_ok is active low
+	//console.log(MotionControl.arc_ok + "\n");
+	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: FastMath.map(this.average_adc(dro.ADC), 0, 1024, 0, 10) * 50.0, THC_SET_VOLTAGE: gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.thc_set_voltage).toFixed(2), STATUS: dro.STATUS };
 	if (this.is_connected == true && MotionControl.dro_data.STATUS == "Run")
 	{
 		render.set_loop_delay(60); //Make sure motion_control has priority
-		if (MotionControl.dro_data.THC_SET_VOLTAGE > 0 && MotionControl.dro_data.THC_ARC_VOLTAGE > 30) //THC is on
+		if (MotionControl.arc_ok == true)
 		{
-			if (MotionControl.dro_data.THC_ARC_VOLTAGE < (MotionControl.dro_data.THC_SET_VOLTAGE - 3))
+			if (MotionControl.dro_data.THC_SET_VOLTAGE > 0 && MotionControl.dro_data.THC_ARC_VOLTAGE > 30) //THC is on
 			{
-				if (MotionControl.thc_command != "Up")
+				if (MotionControl.dro_data.THC_ARC_VOLTAGE < (MotionControl.dro_data.THC_SET_VOLTAGE - this.machine_parameters.machine_thc.tolerance))
 				{
-					MotionControl.thc_command = "Up";
-					motion_control.torch_plus();
+					if (MotionControl.thc_command != "Up")
+					{
+						MotionControl.thc_command = "Up";
+						motion_control.torch_plus();
+					}
+				}
+				else if (MotionControl.dro_data.THC_ARC_VOLTAGE > (MotionControl.dro_data.THC_SET_VOLTAGE + this.machine_parameters.machine_thc.tolerance))
+				{
+					if (MotionControl.thc_command != "Down")
+					{
+						MotionControl.thc_command = "Down";
+						motion_control.torch_minus();
+					}
+				}
+				else
+				{
+					if (MotionControl.thc_command != "Idle")
+					{
+						MotionControl.thc_command = "Idle";
+						motion_control.torch_cancel();
+					}
 				}
 			}
-			else if (MotionControl.dro_data.THC_ARC_VOLTAGE > (MotionControl.dro_data.THC_SET_VOLTAGE + 3))
+		}
+		else
+		{
+			if (MotionControl.thc_command != "Idle")
 			{
-				if (MotionControl.thc_command != "Down")
-				{
-					MotionControl.thc_command = "Down";
-					motion_control.torch_minus();
-				}
-			}
-			else
-			{
-				if (MotionControl.thc_command != "Idle")
-				{
-					MotionControl.thc_command = "Idle";
-					motion_control.torch_cancel();
-				}
+				MotionControl.thc_command = "Idle";
+				motion_control.torch_cancel();
 			}
 		}
 	}
