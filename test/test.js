@@ -1,22 +1,20 @@
 var ran_once = false;
 function setup()
 {
-    motion_control.set_port("Arduino");
+    if (serial.open("COM3", 115200))
+    {
+        console.log("Opened serial!\n");
+    }
+    else
+    {
+        console.log("Could not open port!\n");
+        exit(1);
+    }
 }
 function loop()
 {
-    //console.log(JSON.stringify(motion_control.get_dro()) + "\n");
-    if (motion_control.is_connected() && ran_once == false)
+    if (serial.is_open())
     {
-        if (file.open("notch.nc", "r"))
-        {
-            while(file.lines_available())
-            {
-                console.log("Sending Line: " + file.read().trim() + "\n");
-                motion_control.send(file.read().trim());
-            }
-            file.close();
-            ran_once = true;
-        }
+        serial.write("?");
     }
 }
