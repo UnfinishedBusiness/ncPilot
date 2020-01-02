@@ -47,8 +47,11 @@ MotionControl.PullParameters = function()
 {
 	var contents = file.get_contents("machine_parameters.json");
 	//console.log("<" + contents + ">\n");
-	this.machine_parameters = JSON.parse(contents);
-	motion_control.set_work_offset({x: this.machine_parameters.work_offset.x, y:  this.machine_parameters.work_offset.y});
+	if (contents != undefined)
+	{
+		this.machine_parameters = JSON.parse(contents);
+		motion_control.set_work_offset({x: this.machine_parameters.work_offset.x, y:  this.machine_parameters.work_offset.y});
+	}
 }
 MotionControl.ProgramAbort = function()
 {
@@ -73,17 +76,19 @@ MotionControl.go_to_waypoint = function()
 }
 MotionControl.init = function()
 {
-	//console.log(JSON.stringify(serial.list_ports()) + "\n");
+	console.log(JSON.stringify(serial.list_ports()) + "\n");
 	this.PullParameters();
 	motion_control.set_parameters(this.machine_parameters);
 	motion_control.set_baud(115200);
 	if (system.os() == "WINDOWS")
 	{
 		motion_control.set_port("USB");
+		console.log("Setting connect port description query to: USB\n");
 	}
 	else
 	{
 		motion_control.set_port("Arduino");
+		console.log("Setting connect port description query to: Arduino\n");
 	}
 	motion_control.set_dro_interval(125);
 }
