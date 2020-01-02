@@ -11,8 +11,8 @@ function setup()
 }
 function loop()
 {
-	//MotionControl.tick();
-	//UserInterface.tick();
-	//GcodeViewer.tick();
-	//sNotchMaster.tick();
+	MotionControl.tick();
+	UserInterface.tick();
+	GcodeViewer.tick();
+	NotchMaster.tick();
 }
