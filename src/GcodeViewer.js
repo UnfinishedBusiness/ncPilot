@@ -100,11 +100,13 @@ GcodeViewer.tick = function()
 		{
 			GcodeViewer.JogCancle.axis = true;
 			MotionControl.send("G53 G1 Z0" + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
+			//console.log("Jog Z+\n");
 		}
 		if (key.keycode == 267 && GcodeViewer.JogCancle.axis == false && MotionControl.dro_data.STATUS == "Idle") //Page Down when machine is not running
 		{
 			GcodeViewer.JogCancle.axis = true;
 			MotionControl.send("G53 G1 Z-5" + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
+			//console.log("Jog Z-\n");
 		}
 		if (key.keycode == 266 && GcodeViewer.JogCancle.z == false && MotionControl.dro_data.STATUS == "Run") //Page Up when machine is running
 		{
@@ -161,15 +163,15 @@ GcodeViewer.tick = function()
 	else
 	{
 		GcodeViewer.OnePress = false;
-		if (GcodeViewer.JogCancle.z)
-		{
-			GcodeViewer.JogCancle.z = false;
-			motion_control.torch_cancel();
-		}
 		if (GcodeViewer.JogCancle.axis == true)
 		{
 			GcodeViewer.JogCancle.axis = false;
 			MotionControl.ProgramAbort();
+		}
+		else if (GcodeViewer.JogCancle.z)
+		{
+			GcodeViewer.JogCancle.z = false;
+			motion_control.torch_cancel();
 		}
 	}
 
