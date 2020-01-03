@@ -9,7 +9,12 @@ UserInterface.init = function()
 {
 	create_window(1024, 600, "ncPilot");
 
+	var max_jog_vel = MotionControl.machine_parameters.machine_max_vel.x;
+	if (MotionControl.machine_parameters.machine_max_vel.y > max_jog_vel) max_jog_vel = MotionControl.machine_parameters.machine_max_vel.y;
+	if (MotionControl.machine_parameters.machine_max_vel.z > max_jog_vel) max_jog_vel = MotionControl.machine_parameters.machine_max_vel.z;
+
 	UserInterface.control_window.window = gui.new_window("Controls");
+	UserInterface.control_window.jog_speed = gui.add_slider(UserInterface.control_window.window, "Jog", max_jog_vel / 2, 0, max_jog_vel);
 	UserInterface.control_window.thc_set_voltage = gui.add_slider(UserInterface.control_window.window, "THC", 0, 0, 200);
 	gui.separator(UserInterface.control_window.window);
 	UserInterface.control_window.arc_ok_enable = gui.add_checkbox(UserInterface.control_window.window, "Arc OK", true);

@@ -2,13 +2,14 @@ var GcodeViewer = {};
 
 GcodeViewer.JogCancle = {};
 GcodeViewer.JogCancle.z = false;
+GcodeViewer.JogCancle.axis = false;
 
 GcodeViewer.last_file = null;
 
 GcodeViewer.clear = function()
 {
 	render.clear();
-	render.add_entity({ type: "rectangle", size: {x: MotionControl.machine_parameters.machine_extents.x, y: MotionControl.machine_parameters.machine_extents.x}, color: {r: 0.3, g: 0.01, b: 0.01} });
+	render.add_entity({ type: "rectangle", size: {x: MotionControl.machine_parameters.machine_extents.x, y: MotionControl.machine_parameters.machine_extents.y}, color: {r: 0.3, g: 0.01, b: 0.01} });
 	render.add_entity({ type: "line", start: {x: 0, y: 0}, end: {x: MotionControl.machine_parameters.machine_extents.x, y: 0}, color: { r: 0, g: 0, b: 1} });
 	render.add_entity({ type: "line", start: {x: MotionControl.machine_parameters.machine_extents.x, y: 0}, end: {x: MotionControl.machine_parameters.machine_extents.x, y: MotionControl.machine_parameters.machine_extents.y}, color: { r: 0, g: 0, b: 1} });
 	render.add_entity({ type: "line", start: {x: MotionControl.machine_parameters.machine_extents.x, y: MotionControl.machine_parameters.machine_extents.y}, end: {x: 0, y: MotionControl.machine_parameters.machine_extents.y}, color: { r: 0, g: 0, b: 1} });
@@ -75,29 +76,48 @@ GcodeViewer.tick = function()
 	if (key.keycode > 0)
 	{
 		//console.log(JSON.stringify(key) + "\n");
-		if (key.keycode == 266 && GcodeViewer.JogCancle.z == false) //Page Up
+		if (key.keycode == 265 && GcodeViewer.JogCancle.axis == false && MotionControl.dro_data.STATUS == "Idle") //Up Arrow
 		{
-			//MotionControl.send("M5");
-			//MotionControl.send("G53 G0 Z0");
+			GcodeViewer.JogCancle.axis = true;
+			MotionControl.send("G53 G1 Y" + MotionControl.machine_parameters.machine_extents.y + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
+		}
+		if (key.keycode == 264 && GcodeViewer.JogCancle.axis == false && MotionControl.dro_data.STATUS == "Idle") //Down Arrow
+		{
+			GcodeViewer.JogCancle.axis = true;
+			MotionControl.send("G53 G1 Y0" + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
+		}
+		if (key.keycode == 263 && GcodeViewer.JogCancle.axis == false && MotionControl.dro_data.STATUS == "Idle") //Left Arrow
+		{
+			GcodeViewer.JogCancle.axis = true;
+			MotionControl.send("G53 G1 X0" + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
+		}
+		if (key.keycode == 262 && GcodeViewer.JogCancle.axis == false && MotionControl.dro_data.STATUS == "Idle") //Right Arrow
+		{
+			GcodeViewer.JogCancle.axis = true;
+			MotionControl.send("G53 G1 X" + MotionControl.machine_parameters.machine_extents.x + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
+		}
+		if (key.keycode == 266 && GcodeViewer.JogCancle.axis == false && MotionControl.dro_data.STATUS == "Idle") //Page Up when machine is not running
+		{
+			GcodeViewer.JogCancle.axis = true;
+			MotionControl.send("G53 G1 Z0" + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
+		}
+		if (key.keycode == 267 && GcodeViewer.JogCancle.axis == false && MotionControl.dro_data.STATUS == "Idle") //Page Down when machine is not running
+		{
+			GcodeViewer.JogCancle.axis = true;
+			MotionControl.send("G53 G1 Z-5" + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
+		}
+		if (key.keycode == 266 && GcodeViewer.JogCancle.z == false && MotionControl.dro_data.STATUS == "Run") //Page Up when machine is running
+		{
 			motion_control.torch_plus();
 			GcodeViewer.JogCancle.z = true;
-			//MotionControl.send("M3 S1000");
 		}
-		if (key.keycode == 267 && GcodeViewer.JogCancle.z == false) //Page Down
+		if (key.keycode == 267 && GcodeViewer.JogCancle.z == false && MotionControl.dro_data.STATUS == "Run") //Page Down when machine is running
 		{
-			//MotionControl.send("G38.2 Z-100 F50");
-			//MotionControl.send("G91 G0 Z0.200");
-			//MotionControl.send("G91 G0 Z0.5");
-			//MotionControl.send("G90");
-			//MotionControl.send("M5");
 			motion_control.torch_minus();
 			GcodeViewer.JogCancle.z = true;
 		}
 		if (key.keycode == 32 && GcodeViewer.OnePress == false) //Space
 		{
-			//this.parse_gcode("indian.nc");
-			//MotionControl.send_rt("$0=50");
-			//MotionControl.send_rt("&");
 			GcodeViewer.OnePress = true;
 		}
 		if (key.char == "=")
@@ -145,6 +165,11 @@ GcodeViewer.tick = function()
 		{
 			GcodeViewer.JogCancle.z = false;
 			motion_control.torch_cancel();
+		}
+		if (GcodeViewer.JogCancle.axis == true)
+		{
+			GcodeViewer.JogCancle.axis = false;
+			MotionControl.ProgramAbort();
 		}
 	}
 
