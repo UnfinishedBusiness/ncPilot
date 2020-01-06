@@ -3,9 +3,9 @@ MotionControl.GStack = [];
 MotionControl.machine_parameters = {
 	machine_extents: { x: 45.5, y: 45.5 },
 	machine_axis_invert: { x: false, y1: false, y2: false, z: false },
-	machine_axis_scale: { x: 518, y: 518, z: 2540 },
-	machine_max_vel: { x: 1500, y: 1500, z: 80 },
-	machine_max_accel: { x: 60, y: 60, z: 60 },
+	machine_axis_scale: { x: 518, y: 518, z: 2540, a: 21.85 },
+	machine_max_vel: { x: 1500, y: 1500, z: 80, a: 30000 },
+	machine_max_accel: { x: 60, y: 60, z: 60, a: 600 },
 	machine_thc: { adc_filter: 20, tolerance: 3 },
 	machine_junction_deviation: 0.010,
 	machine_torch_config: { z_probe_feed: 60, floating_head_takeup: 0.200, clearance_height: 3 },
@@ -148,6 +148,51 @@ MotionControl.send_gcode_from_viewer = function()
 		{
 			//console.log("Could not read file!\n");
 		}		//MotionControl.send("G53 G
+	}
+}
+MotionControl.send_gcode_from_list = function(list)
+{
+	for (var z = 0; z < list.length; z++)
+	{
+		var line = list[z];
+		//console.log("Sending line: " + line + "\n");
+		if (line.includes("#"))
+		{
+			//Comment, don't do anything
+		}
+		else if (line.includes("G0") || line.includes("G1") || line.includes("torch"))
+		{
+			if (line.includes("fire_torch"))
+			{
+				//fire_torch 0.1200 1.2 0.0750
+				var fire_torch_parameters = { pierce_height: 0.120, pierce_delay: 1.2, cut_height: 0.075 };
+				var fire_torch = line.split(" ");
+				for (var x = 0; x < fire_torch.length; x++)
+				{
+					if (x == 1) fire_torch_parameters.pierce_height = fire_torch[x];
+					if (x == 2) fire_torch_parameters.pierce_delay = fire_torch[x];
+					if (x == 3) fire_torch_parameters.cut_height = fire_torch[x];
+				}
+				MotionControl.send("G38.3 Z-10 F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
+				MotionControl.send("G91 G0 Z" + this.machine_parameters.machine_torch_config.floating_head_takeup);
+				MotionControl.send("G91 G0 Z" + fire_torch_parameters.pierce_height);
+				MotionControl.send("M3 S1000");
+				MotionControl.send("G4 P" + fire_torch_parameters.pierce_delay); //Pierce Delay
+				MotionControl.send("G91 G0 Z" + (fire_torch_parameters.cut_height - fire_torch_parameters.pierce_height));
+				MotionControl.send("G90"); //Back to absolute
+			}
+			else if (line.includes("torch_off"))
+			{
+				MotionControl.send("M5");
+				MotionControl.send("G4 P1"); //Post Delay
+				MotionControl.send("G91 G0 Z" + this.machine_parameters.machine_torch_config.clearance_height); //Retract
+				MotionControl.send("G90"); //Back to absolute
+			}
+			else
+			{
+				MotionControl.send(line);
+			}
+		}
 	}
 }
 MotionControl.send = function(buff)

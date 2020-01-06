@@ -95,12 +95,15 @@ UserInterface.init = function()
 	UserInterface.machine_parameters.x_scale = gui.add_input_double(UserInterface.machine_parameters.window, "X Scale", MotionControl.machine_parameters.machine_axis_scale.x);
 	UserInterface.machine_parameters.y_scale = gui.add_input_double(UserInterface.machine_parameters.window, "Y Scale", MotionControl.machine_parameters.machine_axis_scale.y);
 	UserInterface.machine_parameters.z_scale = gui.add_input_double(UserInterface.machine_parameters.window, "Z Scale", MotionControl.machine_parameters.machine_axis_scale.z);
+	UserInterface.machine_parameters.a_scale = gui.add_input_double(UserInterface.machine_parameters.window, "A Scale", MotionControl.machine_parameters.machine_axis_scale.a);
 	UserInterface.machine_parameters.x_vel = gui.add_input_double(UserInterface.machine_parameters.window, "X Max Vel", MotionControl.machine_parameters.machine_max_vel.x);
 	UserInterface.machine_parameters.y_vel = gui.add_input_double(UserInterface.machine_parameters.window, "Y Max Vel", MotionControl.machine_parameters.machine_max_vel.y);
 	UserInterface.machine_parameters.z_vel = gui.add_input_double(UserInterface.machine_parameters.window, "Z Max Vel", MotionControl.machine_parameters.machine_max_vel.z);
+	UserInterface.machine_parameters.a_vel = gui.add_input_double(UserInterface.machine_parameters.window, "A Max Vel", MotionControl.machine_parameters.machine_max_vel.a);
 	UserInterface.machine_parameters.x_accel = gui.add_input_double(UserInterface.machine_parameters.window, "X Max Accel", MotionControl.machine_parameters.machine_max_accel.x);
 	UserInterface.machine_parameters.y_accel = gui.add_input_double(UserInterface.machine_parameters.window, "Y Max Accel", MotionControl.machine_parameters.machine_max_accel.y);
 	UserInterface.machine_parameters.z_accel = gui.add_input_double(UserInterface.machine_parameters.window, "Z Max Accel", MotionControl.machine_parameters.machine_max_accel.z);
+	UserInterface.machine_parameters.a_accel = gui.add_input_double(UserInterface.machine_parameters.window, "A Max Accel", MotionControl.machine_parameters.machine_max_accel.a);
 	UserInterface.machine_parameters.junction_deviation = gui.add_input_double(UserInterface.machine_parameters.window, "Junction Deviation", MotionControl.machine_parameters.machine_junction_deviation);
 	UserInterface.machine_parameters.x_invert = gui.add_checkbox(UserInterface.machine_parameters.window, "Invert X", MotionControl.machine_parameters.machine_axis_invert.x);
 	gui.sameline(UserInterface.machine_parameters.window);
@@ -111,9 +114,9 @@ UserInterface.init = function()
 	UserInterface.machine_parameters.z_invert = gui.add_checkbox(UserInterface.machine_parameters.window, "Invert Z", MotionControl.machine_parameters.machine_axis_invert.z);
 	UserInterface.machine_parameters.z_probe_feed = gui.add_input_double(UserInterface.machine_parameters.window, "Probe Feed", MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
 	UserInterface.machine_parameters.retract_clearance = gui.add_input_double(UserInterface.machine_parameters.window, "Retract Clearance", MotionControl.machine_parameters.machine_torch_config.clearance_height);
-	UserInterface.machine_parameters.floating_head_takeup = gui.add_input_double(UserInterface.machine_parameters.window, "Floating Head Takeup",MotionControl.machine_parameters.machine_torch_config.floating_head_takeup);
-	UserInterface.machine_parameters.adc_filter = gui.add_input_double(UserInterface.machine_parameters.window, "ADC Filter",MotionControl.machine_parameters.machine_thc.adc_filter);
-	UserInterface.machine_parameters.tolerance = gui.add_input_double(UserInterface.machine_parameters.window, "THC Tolerance",MotionControl.machine_parameters.machine_thc.tolerance);
+	UserInterface.machine_parameters.floating_head_takeup = gui.add_input_double(UserInterface.machine_parameters.window, "Floating Head Takeup", MotionControl.machine_parameters.machine_torch_config.floating_head_takeup);
+	UserInterface.machine_parameters.adc_filter = gui.add_input_double(UserInterface.machine_parameters.window, "ADC Filter", MotionControl.machine_parameters.machine_thc.adc_filter);
+	UserInterface.machine_parameters.tolerance = gui.add_input_double(UserInterface.machine_parameters.window, "THC Tolerance", MotionControl.machine_parameters.machine_thc.tolerance);
 	UserInterface.machine_parameters.ok_button = gui.add_button(UserInterface.machine_parameters.window, "OK");
 	gui.show(UserInterface.machine_parameters.window, false);
 
@@ -128,6 +131,10 @@ UserInterface.init = function()
 	UserInterface.file_menu.edit = {};
 	UserInterface.file_menu.edit.menu = window_menu.create("Edit");
 	UserInterface.file_menu.edit.machine_parameters = window_menu.add_button(UserInterface.file_menu.edit.menu, "Machine Parameters");
+	UserInterface.file_menu.mode = {};
+	UserInterface.file_menu.mode.menu = window_menu.create("Mode");
+	UserInterface.file_menu.mode.xy = window_menu.add_button(UserInterface.file_menu.mode.menu, "XY");
+	UserInterface.file_menu.mode.ay = window_menu.add_button(UserInterface.file_menu.mode.menu, "AY");
 
 	UserInterface.file_menu.tools = {};
 	UserInterface.file_menu.tools.menu = window_menu.create("Tools");
@@ -201,12 +208,15 @@ UserInterface.tick = function()
 		MotionControl.machine_parameters.machine_axis_scale.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_scale);
 		MotionControl.machine_parameters.machine_axis_scale.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_scale);
 		MotionControl.machine_parameters.machine_axis_scale.z = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_scale);
+		MotionControl.machine_parameters.machine_axis_scale.a = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.a_scale);
 		MotionControl.machine_parameters.machine_max_vel.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_vel);
 		MotionControl.machine_parameters.machine_max_vel.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_vel);
 		MotionControl.machine_parameters.machine_max_vel.z = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_vel);
+		MotionControl.machine_parameters.machine_max_vel.a = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.a_vel);
 		MotionControl.machine_parameters.machine_max_accel.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_accel);
 		MotionControl.machine_parameters.machine_max_accel.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_accel);
 		MotionControl.machine_parameters.machine_max_accel.z = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_accel);
+		MotionControl.machine_parameters.machine_max_accel.a = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.a_accel);
 		MotionControl.machine_parameters.machine_junction_deviation = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.junction_deviation);
 		MotionControl.machine_parameters.machine_axis_invert.x = gui.get_checkbox(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_invert);
 		MotionControl.machine_parameters.machine_axis_invert.y1 = gui.get_checkbox(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y1_invert);
@@ -243,5 +253,22 @@ UserInterface.tick = function()
 	else
 	{
 		gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.arc_dro, { size: 0.6, color: {r: 0, g: 1, b: 0 }});
+	}
+
+	//Setup machine mode
+	if (window_menu.get_button(UserInterface.file_menu.mode.menu, UserInterface.file_menu.mode.xy))
+	{
+		//Set XY parameters
+		motion_control.set_parameters(MotionControl.machine_parameters);
+	}
+	if (window_menu.get_button(UserInterface.file_menu.mode.menu, UserInterface.file_menu.mode.ay))
+	{
+		//Set AY parameters
+		var a_parameter = JSON.parse(JSON.stringify(MotionControl.machine_parameters)); //Break object association
+		a_parameter.machine_axis_scale.x = a_parameter.machine_axis_scale.a;
+		a_parameter.machine_max_vel.x = a_parameter.machine_max_vel.a;
+		a_parameter.machine_max_accel.x = a_parameter.machine_max_accel.a;
+		console.log(JSON.stringify(a_parameter) + "\n");
+		motion_control.set_parameters(a_parameter);
 	}
 }
