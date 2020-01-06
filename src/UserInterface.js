@@ -88,6 +88,12 @@ UserInterface.init = function()
 	gui.sameline(UserInterface.dro_window.window);
 	UserInterface.dro_window.thc_text = gui.add_text(UserInterface.dro_window.window, "Halt");
 	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, { size: 0.6, color: {r: 0, g: 1, b: 0 }});
+	UserInterface.dro_window.mode_label = gui.add_text(UserInterface.dro_window.window, "MODE: ");
+	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.mode_label, { size: 0.6, color: {r: 0, g: 1, b: 1 }});
+	gui.sameline(UserInterface.dro_window.window);
+	UserInterface.dro_window.mode_text = gui.add_text(UserInterface.dro_window.window, MotionControl.mode);
+	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.mode_text, { size: 0.6, color: {r: 0, g: 1, b: 0 }});
+	
 
 	UserInterface.machine_parameters.window = gui.new_window("Machine Parameters");
 	UserInterface.machine_parameters.x_extent = gui.add_input_double(UserInterface.machine_parameters.window, "X Extent", MotionControl.machine_parameters.machine_extents.x);
@@ -245,6 +251,7 @@ UserInterface.tick = function()
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.status_text, MotionControl.dro_data.STATUS);
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, MotionControl.thc_command);
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.arc_set_dro, MotionControl.dro_data.THC_SET_VOLTAGE);
+	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.mode_text, MotionControl.mode);
 
 	if (MotionControl.arc_ok == true)
 	{
@@ -260,6 +267,7 @@ UserInterface.tick = function()
 	{
 		//Set XY parameters
 		motion_control.set_parameters(MotionControl.machine_parameters);
+		MotionControl.mode = "XY";
 	}
 	if (window_menu.get_button(UserInterface.file_menu.mode.menu, UserInterface.file_menu.mode.ay))
 	{
@@ -268,7 +276,8 @@ UserInterface.tick = function()
 		a_parameter.machine_axis_scale.x = a_parameter.machine_axis_scale.a;
 		a_parameter.machine_max_vel.x = a_parameter.machine_max_vel.a;
 		a_parameter.machine_max_accel.x = a_parameter.machine_max_accel.a;
-		console.log(JSON.stringify(a_parameter) + "\n");
+		//console.log(JSON.stringify(a_parameter) + "\n");
 		motion_control.set_parameters(a_parameter);
+		MotionControl.mode = "AY";
 	}
 }

@@ -13,11 +13,12 @@ MotionControl.machine_parameters = {
   };
 MotionControl.way_point = null;
 MotionControl.is_connected = false;
-MotionControl.dro_data = { X_MCS: 0.0000, Y_MCS: 0.0000, X_WCS: 0.0000, Y_WCS: 0.0000, VELOCITY: 0.0, THC_ARC_VOLTAGE: 0.0, THC_SET_VOLTAGE: 0.0, STATUS: "Halt" };
+MotionControl.dro_data = { X_MCS: 0.0000, Y_MCS: 0.0000, X_WCS: 0.0000, Y_WCS: 0.0000, VELOCITY: 0.0, THC_ARC_VOLTAGE: 0.0, THC_SET_VOLTAGE: 0.0, STATUS: "Halt"};
 MotionControl.thc_command = "Idle";
 MotionControl.on_idle = null;
 MotionControl.on_hold = null;
 MotionControl.arc_ok = false;
+MotionControl.mode = "XY";
 MotionControl.adc_readings = [];
 MotionControl.average_adc = function(val)
 {
