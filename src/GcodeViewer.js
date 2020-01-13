@@ -108,12 +108,12 @@ GcodeViewer.tick = function()
 			MotionControl.send("G53 G1 Z-5" + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
 			//console.log("Jog Z-\n");
 		}
-		if (key.keycode == 266 && GcodeViewer.JogCancle.z == false && MotionControl.dro_data.STATUS == "Run") //Page Up when machine is running
+		if (key.keycode == 87 && GcodeViewer.JogCancle.z == false && MotionControl.dro_data.STATUS == "Run") //W when machine is running
 		{
 			motion_control.torch_plus();
 			GcodeViewer.JogCancle.z = true;
 		}
-		if (key.keycode == 267 && GcodeViewer.JogCancle.z == false && MotionControl.dro_data.STATUS == "Run") //Page Down when machine is running
+		if (key.keycode == 83 && GcodeViewer.JogCancle.z == false && MotionControl.dro_data.STATUS == "Run") //S Down when machine is running
 		{
 			motion_control.torch_minus();
 			GcodeViewer.JogCancle.z = true;
@@ -121,6 +121,11 @@ GcodeViewer.tick = function()
 		if (key.keycode == 32 && GcodeViewer.OnePress == false) //Space
 		{
 			GcodeViewer.OnePress = true;
+		}
+		if (key.keycode == 290 && GcodeViewer.OnePress == false) //F1
+		{
+			GcodeViewer.OnePress = true;
+			motion_control.cycle_start();
 		}
 		if (key.char == "=")
 		{
