@@ -255,11 +255,8 @@ MotionControl.tick = function()
 		}
 		else
 		{
-			if (MotionControl.thc_command != "Idle")
-			{
-				MotionControl.thc_command = "Idle";
-				motion_control.torch_cancel();
-			}
+			MotionControl.thc_command = "Idle";
+			motion_control.torch_cancel();
 		}
 	}
 	else if (MotionControl.dro_data.STATUS == "Idle")
