@@ -87,6 +87,20 @@ NotchMaster.deg2rad = function(degrees)
 {
 	return degrees * (3.1415926535897932384 / 180);
 }
+NotchMaster.CalculateNotchExtent = function(points)
+{
+	var biggestY = -1000000;
+	for (var x = 0; x < points.length; x++)
+	{
+		if (points[x].y > biggestY) biggestY = points[x].y;
+	}
+	var smallestY = 1000000;
+	for (var x = 0; x < points.length; x++)
+	{
+		if (points[x].y < smallestY) smallestY = points[x].y;
+	}
+	return (biggestY - smallestY);
+}
 NotchMaster.CalculateNotch = function(tube_diameter, header_diameter, wall_thickness, angle, invert)
 {
 	//console.log("tube_diameter: " + tube_diameter + "\n");
@@ -164,6 +178,8 @@ NotchMaster.ProcessNotches = function()
 	var tube_length = gui.get_input_double(this.dialog.id, this.dialog.tube_length);
 	var relative_angle = gui.get_input_double(this.dialog.id, this.dialog.relative_angle);
 	var feed_deg_min = (gui.get_input_double(this.dialog.id, this.dialog.feed_ipm) * 360) / (tube_diameter * 3.14);
+	var notch_one_extent = 0;
+	var notch_two_extent = 0;
 
 	var fire_torch = "fire_torch " + gui.get_input_double(this.dialog.id, this.dialog.pierce_height) + " " + gui.get_input_double(this.dialog.id, this.dialog.pierce_delay) + " " + gui.get_input_double(this.dialog.id, this.dialog.cut_height);
 
@@ -172,6 +188,7 @@ NotchMaster.ProcessNotches = function()
 	{
 		//Draw side one notch
 		var notch_one = this.CalculateNotch(gui.get_input_double(this.dialog.id, this.dialog.tube_diameter), gui.get_input_double(this.dialog.id, this.dialog.side_one_header_diameter), gui.get_input_double(this.dialog.id, this.dialog.wall_thickness), gui.get_input_double(this.dialog.id, this.dialog.side_one_mate_angle), true);
+		notch_one_extent = this.CalculateNotchExtent(notch_one);
 		var last_pointer = { x: notch_one[0].x, y: notch_one[0].y };
 		this.GcodeLines.push("G0 X" + Math.round(FastMath.map(last_pointer.x.toFixed(4), 0, tube_diameter * 3.14, 0, 360))+ " Y" + last_pointer.y.toFixed(4));
 		this.GcodeLines.push(fire_torch);
@@ -200,6 +217,9 @@ NotchMaster.ProcessNotches = function()
 	{
 		//Draw side two notch
 		var notch_two = this.CalculateNotch(gui.get_input_double(this.dialog.id, this.dialog.tube_diameter), gui.get_input_double(this.dialog.id, this.dialog.side_two_header_diameter), gui.get_input_double(this.dialog.id, this.dialog.wall_thickness), gui.get_input_double(this.dialog.id, this.dialog.side_two_mate_angle), false);
+		notch_two_extent = this.CalculateNotchExtent(notch_two);
+		tube_length += notch_one_extent;
+		tube_length += notch_two_extent;
 		for (var x = 0; x < notch_two.length; x++)
 		{
 			notch_two[x].y -= tube_length;
