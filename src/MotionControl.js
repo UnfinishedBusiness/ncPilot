@@ -219,45 +219,10 @@ MotionControl.tick = function()
 	//console.log(JSON.stringify(dro) + "\n");
 	MotionControl.arc_ok = !dro.ARC_OK ; //Logic is inverted because arc_ok is active low
 	//console.log(MotionControl.arc_ok + "\n");
-	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: FastMath.map(this.average_adc(dro.ADC), 0, 1024, 0, 10) * 50.0, THC_SET_VOLTAGE: gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.thc_set_voltage).toFixed(2), STATUS: dro.STATUS };
+	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: FastMath.map(this.average_adc(dro.ADC), 0, 1024, 0, 10) * 50.0, THC_SET_VOLTAGE: UserInterface.thc_set_voltage.toFixed(2), STATUS: dro.STATUS };
 	if (this.is_connected == true && MotionControl.dro_data.STATUS == "Run")
 	{
 		render.set_loop_delay(60); //Make sure motion_control has priority
-		if (MotionControl.arc_ok == true)
-		{
-			if (MotionControl.dro_data.THC_SET_VOLTAGE > 0 && MotionControl.dro_data.THC_ARC_VOLTAGE > 30) //THC is on
-			{
-				if (MotionControl.dro_data.THC_ARC_VOLTAGE < (MotionControl.dro_data.THC_SET_VOLTAGE - this.machine_parameters.machine_thc.tolerance))
-				{
-					if (MotionControl.thc_command != "Up")
-					{
-						MotionControl.thc_command = "Up";
-						motion_control.torch_plus();
-					}
-				}
-				else if (MotionControl.dro_data.THC_ARC_VOLTAGE > (MotionControl.dro_data.THC_SET_VOLTAGE + this.machine_parameters.machine_thc.tolerance))
-				{
-					if (MotionControl.thc_command != "Down")
-					{
-						MotionControl.thc_command = "Down";
-						motion_control.torch_minus();
-					}
-				}
-				else
-				{
-					if (MotionControl.thc_command != "Idle")
-					{
-						MotionControl.thc_command = "Idle";
-						motion_control.torch_cancel();
-					}
-				}
-			}
-		}
-		else
-		{
-			MotionControl.thc_command = "Idle";
-			motion_control.torch_cancel();
-		}
 	}
 	else if (MotionControl.dro_data.STATUS == "Idle")
 	{

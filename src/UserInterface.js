@@ -4,6 +4,7 @@ UserInterface.file_menu = {};
 UserInterface.control_window = {};
 UserInterface.dro_window = {};
 UserInterface.machine_parameters = {};
+UserInterface.thc_set_voltage = 0;
 
 UserInterface.init = function()
 {
@@ -15,9 +16,22 @@ UserInterface.init = function()
 
 	UserInterface.control_window.window = gui.new_window("Controls");
 	UserInterface.control_window.jog_speed = gui.add_slider(UserInterface.control_window.window, "Jog", max_jog_vel / 2, 0, max_jog_vel);
-	UserInterface.control_window.thc_set_voltage = gui.add_slider(UserInterface.control_window.window, "THC", 0, 0, 200);
 	gui.separator(UserInterface.control_window.window);
-	UserInterface.control_window.arc_ok_enable = gui.add_checkbox(UserInterface.control_window.window, "Arc OK", true);
+	UserInterface.control_window.thc_zero = gui.add_button(UserInterface.control_window.window, "0");
+	gui.sameline(UserInterface.control_window.window);
+	UserInterface.control_window.thc_seventy_five = gui.add_button(UserInterface.control_window.window, "75");
+	gui.sameline(UserInterface.control_window.window);
+	UserInterface.control_window.thc_minus = gui.add_button(UserInterface.control_window.window, "-");
+	gui.sameline(UserInterface.control_window.window);
+	UserInterface.control_window.thc_plus = gui.add_button(UserInterface.control_window.window, "+");
+	gui.sameline(UserInterface.control_window.window);
+	UserInterface.control_window.thc_auto_set = gui.add_button(UserInterface.control_window.window, "%");
+	gui.sameline(UserInterface.control_window.window);
+	UserInterface.control_window.thc_label = gui.add_text(UserInterface.control_window.window, "THC");
+	//UserInterface.control_window.thc_set_voltage = gui.add_slider(UserInterface.control_window.window, "THC", 0, 0, 200);
+	
+	//gui.separator(UserInterface.control_window.window);
+	//UserInterface.control_window.arc_ok_enable = gui.add_checkbox(UserInterface.control_window.window, "Arc OK", true);
 	gui.separator(UserInterface.control_window.window);
 	UserInterface.control_window.x_origin = gui.add_button(UserInterface.control_window.window, "X=0");
 	gui.sameline(UserInterface.control_window.window);
@@ -205,7 +219,30 @@ UserInterface.tick = function()
 			GcodeViewer.parse_gcode(GcodeViewer.last_file);
 		}
 	}
-
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_zero))
+	{
+		this.thc_set_voltage = 0;
+		MotionControl.send_rt("$T=" + this.thc_set_voltage + "\n");
+	}
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_seventy_five))
+	{
+		this.thc_set_voltage = 75;
+		MotionControl.send_rt("$T=" + this.thc_set_voltage + "\n");
+	}
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_plus))
+	{
+		this.thc_set_voltage += 5;
+		MotionControl.send_rt("$T=" + this.thc_set_voltage + "\n");
+	}
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_minus))
+	{
+		this.thc_set_voltage -= 5;
+		MotionControl.send_rt("$T=" + this.thc_set_voltage + "\n");
+	}
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_auto_set))
+	{
+		this.thc_set_voltage = MotionControl.dro_data.THC_ARC_VOLTAGE;
+	}
 	if (gui.get_button(UserInterface.machine_parameters.window, UserInterface.machine_parameters.ok_button))
 	{
 		//console.log("OK BUtton!\n");
