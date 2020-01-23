@@ -222,22 +222,26 @@ UserInterface.tick = function()
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_zero))
 	{
 		this.thc_set_voltage = 0;
-		MotionControl.send_rt("$T=" + this.thc_set_voltage + "\n");
+		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
+		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_seventy_five))
 	{
 		this.thc_set_voltage = 75;
-		MotionControl.send_rt("$T=" + this.thc_set_voltage + "\n");
+		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
+		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_plus))
 	{
 		this.thc_set_voltage += 5;
-		MotionControl.send_rt("$T=" + this.thc_set_voltage + "\n");
+		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
+		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_minus))
 	{
 		this.thc_set_voltage -= 5;
-		MotionControl.send_rt("$T=" + this.thc_set_voltage + "\n");
+		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
+		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_auto_set))
 	{
