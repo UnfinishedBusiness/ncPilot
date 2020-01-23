@@ -19,7 +19,7 @@ UserInterface.init = function()
 	gui.separator(UserInterface.control_window.window);
 	UserInterface.control_window.thc_zero = gui.add_button(UserInterface.control_window.window, "0");
 	gui.sameline(UserInterface.control_window.window);
-	UserInterface.control_window.thc_seventy_five = gui.add_button(UserInterface.control_window.window, "75");
+	UserInterface.control_window.thc_eighty_five = gui.add_button(UserInterface.control_window.window, "85");
 	gui.sameline(UserInterface.control_window.window);
 	UserInterface.control_window.thc_minus = gui.add_button(UserInterface.control_window.window, "-");
 	gui.sameline(UserInterface.control_window.window);
@@ -225,21 +225,21 @@ UserInterface.tick = function()
 		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
-	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_seventy_five))
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_eighty_five))
 	{
-		this.thc_set_voltage = 75;
+		this.thc_set_voltage = 85;
 		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_plus))
 	{
-		this.thc_set_voltage += 5;
+		this.thc_set_voltage += 2;
 		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_minus))
 	{
-		this.thc_set_voltage -= 5;
+		this.thc_set_voltage -= 2;
 		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
