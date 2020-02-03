@@ -9,7 +9,7 @@ UserInterface.thc_set_voltage = 0;
 UserInterface.init = function()
 {
 	create_window(1024, 600, "ncPilot");
-
+	maximize_window();
 	var max_jog_vel = MotionControl.machine_parameters.machine_max_vel.x;
 	if (MotionControl.machine_parameters.machine_max_vel.y > max_jog_vel) max_jog_vel = MotionControl.machine_parameters.machine_max_vel.y;
 	if (MotionControl.machine_parameters.machine_max_vel.z > max_jog_vel) max_jog_vel = MotionControl.machine_parameters.machine_max_vel.z;

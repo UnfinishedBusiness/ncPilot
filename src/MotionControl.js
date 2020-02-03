@@ -81,7 +81,9 @@ MotionControl.init = function()
 	this.PullParameters();
 	motion_control.set_parameters(this.machine_parameters);
 	motion_control.set_baud(115200);
-	if (system.os() == "WINDOWS")
+	motion_control.set_port("Arduino");
+	//Old 16U2 firmware didn't report "Arduino" on windows driver but updated firmware does
+	/*if (system.os() == "WINDOWS")
 	{
 		motion_control.set_port("USB");
 		console.log("Setting connect port description query to: USB\n");
@@ -90,7 +92,7 @@ MotionControl.init = function()
 	{
 		motion_control.set_port("Arduino");
 		console.log("Setting connect port description query to: Arduino\n");
-	}
+	}*/
 	motion_control.set_dro_interval(125);
 }
 MotionControl.send_gcode_from_viewer = function()
