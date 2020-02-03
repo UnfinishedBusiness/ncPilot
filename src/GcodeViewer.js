@@ -76,18 +76,18 @@ GcodeViewer.jump_in_to_point = function(search_point)
 				{
 					//x = parseFloat(value.substr(1));
 					//console.log("\X: " + value.substr(1) + "\n");
-					point.x =  parseFloat(value.substr(1));
+					point.x = parseFloat(value.substr(1)) + MotionControl.machine_parameters.work_offset.x;
 				}
 				if (value.indexOf("Y") !== -1)
 				{
 					//y = parseFloat(value.substr(1));
 					//console.log("\Y: " + value.substr(1) + "\n");
-					point.y =  parseFloat(value.substr(1));
+					point.y = parseFloat(value.substr(1)) + MotionControl.machine_parameters.work_offset.y;
 				}
 			}
 			if (geometry.points_match(point, search_point))
 			{
-				//console.log("Found Jumpin line at " + x + "\n");
+				console.log("Found Jumpin line at " + x + "\n");
 				push_flag = true;
 			}
 		}
