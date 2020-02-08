@@ -20,6 +20,7 @@ MotionControl.on_hold = null;
 MotionControl.arc_ok = false;
 MotionControl.mode = "XY";
 MotionControl.adc_readings = [];
+MotionControl.last_absolute_position = {x: 0, y: 0};
 MotionControl.average_adc = function(val)
 {
 	this.adc_readings.push(val);
@@ -218,6 +219,11 @@ MotionControl.tick = function()
 	{
 		this.on_hold();
 	}
+	if (dro.STATUS == "Run" && dro.ARC_OK == false)
+	{
+		render.add_entity({ type: "line", start: MotionControl.last_absolute_position, end: {x: dro.MCS.x, y: dro.MCS.y }, color: {r: 0.62, g: 0.125, b: 0.96 }, width: 5 });
+	}
+	MotionControl.last_absolute_position = {x: dro.MCS.x, y: dro.MCS.y };
 	//console.log(JSON.stringify(dro) + "\n");
 	MotionControl.arc_ok = !dro.ARC_OK ; //Logic is inverted because arc_ok is active low
 	//console.log(MotionControl.arc_ok + "\n");
