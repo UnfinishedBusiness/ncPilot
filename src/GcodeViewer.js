@@ -22,8 +22,8 @@ GcodeViewer.parse_gcode = function (gcode_file)
 	this.last_file = gcode_file;
 	GcodeViewer.clear();
 	var timestamp = time.millis();
-	var last_pointer = { x: 0, y: 0 };
-	var pointer = { x: 0, y: 0 };
+	var last_pointer = { x: null, y: null };
+	//var pointer = { x: NAN, y: NAN };
 	var contours = [];
 	var contour = [];
 	console.log("Parsing Gcode: " + gcode_file + "\n");
@@ -33,19 +33,24 @@ GcodeViewer.parse_gcode = function (gcode_file)
 		{
 			var block = gcode.get(x);
 			//console.log("Block: " + JSON.stringify(block) + "\n");
-			pointer = {x: block.x, y: block.y};
+			//pointer = {x: block.x, y: block.y};
 			if (block.g == 0)
 			{
-				//last_pointer = { x: pointer.x, y: pointer.y };
+				
 				//contour.push({x: block.x, y: block.y });
+				if (last_pointer.x != null && last_pointer.y != null)
+				{
+					render.add_entity({ type: "line", style: "dashed", color: {r: 0.4, g: 0.4, b: 0.4}, start: {x: last_pointer.x, y: last_pointer.y}, end : {x: block.x + MotionControl.machine_parameters.work_offset.x, y: block.y + MotionControl.machine_parameters.work_offset.y} });
+				}
 				contours.push(contour);
 				contour = [];
+				last_pointer = {x: block.x + MotionControl.machine_parameters.work_offset.x, y: block.y + MotionControl.machine_parameters.work_offset.y};
 			}
 			if (block.g == 1)
 			{
 				//render.add_entity({ type: "line", start: {x: last_pointer.x + MotionControl.machine_parameters.work_offset.x, y: last_pointer.y + MotionControl.machine_parameters.work_offset.y}, end: {x: pointer.x + MotionControl.machine_parameters.work_offset.x, y: pointer.y + MotionControl.machine_parameters.work_offset.y}, color: { r: 1, g: 1, b: 1} });
-				//last_pointer = { x: pointer.x, y: pointer.y };
 				contour.push({x: block.x + MotionControl.machine_parameters.work_offset.x, y: block.y + MotionControl.machine_parameters.work_offset.y});
+				last_pointer = {x: block.x + MotionControl.machine_parameters.work_offset.x, y: block.y + MotionControl.machine_parameters.work_offset.y};
 			}
 		}
 		contours.push(contour);

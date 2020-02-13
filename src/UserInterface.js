@@ -36,7 +36,7 @@ UserInterface.init = function()
 	UserInterface.control_window.x_origin = gui.add_button(UserInterface.control_window.window, "X=0");
 	gui.sameline(UserInterface.control_window.window);
 	UserInterface.control_window.y_origin = gui.add_button(UserInterface.control_window.window, "Y=0");
-	UserInterface.control_window.edit = gui.add_button(UserInterface.control_window.window, "Edit");
+	UserInterface.control_window.clean = gui.add_button(UserInterface.control_window.window, "Clean");
 	gui.sameline(UserInterface.control_window.window);
 	UserInterface.control_window.mdi = gui.add_button(UserInterface.control_window.window, "MDI");
 	UserInterface.control_window.park = gui.add_button(UserInterface.control_window.window, "Park");
@@ -200,6 +200,14 @@ UserInterface.tick = function()
 		MotionControl.send("G0 Z0");
 		MotionControl.send("G53 G0 X0 Y0");
 		motion_control.cycle_start();
+	}
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.clean))
+	{
+		GcodeViewer.clear();
+		if (GcodeViewer.last_file != null)
+		{
+			GcodeViewer.parse_gcode(GcodeViewer.last_file);
+		}
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.x_origin))
 	{
