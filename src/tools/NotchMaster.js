@@ -6,11 +6,11 @@ NotchMaster.parameters.tube_diameter = 1.5;
 NotchMaster.parameters.wall_thickness = 0.125;
 NotchMaster.parameters.relative_angle = 0;
 NotchMaster.parameters.side_one = {};
-NotchMaster.parameters.side_one.operation_type = "Notch";
+NotchMaster.parameters.side_one.operation_type = 0;
 NotchMaster.parameters.side_one.header_diameter = 1.750;
 NotchMaster.parameters.side_one.mate_angle = 90;
 NotchMaster.parameters.side_two = {};
-NotchMaster.parameters.side_two.operation_type = "Disable";
+NotchMaster.parameters.side_two.operation_type = 2;
 NotchMaster.parameters.side_two.header_diameter = 1.750;
 NotchMaster.parameters.side_two.mate_angle = 90;
 
@@ -28,11 +28,11 @@ NotchMaster.init = function()
 	this.dialog.pierce_delay = gui.add_input_double(this.dialog.id, "Pierce Delay", 1.2);
 	this.dialog.cut_height = gui.add_input_double(this.dialog.id, "Cut Height", 0.155);
 	gui.separator(this.dialog.id);
-	this.dialog.side_one_operation = gui.add_radiogroup(this.dialog.id, ['Notch Side 1', 'Slice Side 1']);
+	this.dialog.side_one_operation = gui.add_radiogroup(this.dialog.id, ['Notch Side 1', 'Slice Side 1'], NotchMaster.parameters.side_one.operation_type);
 	this.dialog.side_one_header_diameter = gui.add_input_double(this.dialog.id, "Side 1 - Header Diameter", NotchMaster.parameters.side_one.header_diameter);
 	this.dialog.side_one_mate_angle = gui.add_input_double(this.dialog.id, "Side 1 - Mate Angle", NotchMaster.parameters.side_one.mate_angle);
 	gui.separator(this.dialog.id);
-	this.dialog.side_two_operation = gui.add_radiogroup(this.dialog.id, ['Notch Side 2', 'Slice Side 2', 'Disable']);
+	this.dialog.side_two_operation = gui.add_radiogroup(this.dialog.id, ['Notch Side 2', 'Slice Side 2', 'Disable'], NotchMaster.parameters.side_two.operation_type);
 	this.dialog.side_two_header_diameter = gui.add_input_double(this.dialog.id, "Side 2 - Header Diameter", NotchMaster.parameters.side_two.header_diameter);
 	this.dialog.side_two_mate_angle = gui.add_input_double(this.dialog.id, "Side 2 - Mate Angle", NotchMaster.parameters.side_two.mate_angle);
 	gui.separator(this.dialog.id);
@@ -41,10 +41,26 @@ NotchMaster.init = function()
 	this.dialog.view = gui.add_button(this.dialog.id, "View");
 	gui.sameline(this.dialog.id);
 	this.dialog.close_button = gui.add_button(this.dialog.id, "Close");
+	gui.sameline(this.dialog.id);
+	this.dialog.save_button = gui.add_button(this.dialog.id, "Save");
+	gui.sameline(this.dialog.id);
+	this.dialog.open_button = gui.add_button(this.dialog.id, "Open");
 	gui.show(this.dialog.id, false); //Default to hidden
 }
 NotchMaster.tick = function()
 {
+	if (gui.get_button(this.dialog.id, this.dialog.save_button))
+	{
+		file.put_contents(file_dialog.save({ filter: ["*.notch"]}), JSON.stringify(this.parameters));
+	}
+	if (gui.get_button(this.dialog.id, this.dialog.open_button))
+	{
+		this.parameters = JSON.parse(file.get_contents(file_dialog.open({ filter: ["*.notch"]})));
+		this.hide();
+		this.init();
+		this.show();
+	}
+
 	if (gui.get_button(this.dialog.id, this.dialog.close_button))
 	{
 		this.hide();
