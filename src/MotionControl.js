@@ -241,4 +241,27 @@ MotionControl.tick = function()
 			motion_control.torch_cancel();
 		}
 	}
+	var errors = motion_control.get_errors();
+	if (errors != null)
+	{
+		if (this.error_window != undefined)
+		{
+			gui.show(this.error_window.id, false);
+		}
+		this.error_window = {};
+		this.error_window.id = gui.new_window("Errors have Occured!");
+		for (var x = 0; x < errors.length; x++)
+		{
+			//console.log(x + "> " + JSON.stringify(errors[x]) + "\n");
+			gui.add_text(this.error_window.id, "Count: " + x + " | ENumber: " + errors[x].number + " | Meaning:  " + errors[x].meaning);
+		}
+		this.error_window.close_button = gui.add_button(this.error_window.id, "Close");
+	}
+	if (this.error_window != undefined)
+	{
+		if (gui.get_button(this.error_window.id, this.error_window.close_button))
+		{
+			gui.show(this.error_window.id, false);
+		}
+	}
 }
