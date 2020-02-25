@@ -125,19 +125,19 @@ MotionControl.send_gcode_from_viewer = function()
 							if (x == 2) fire_torch_parameters.pierce_delay = fire_torch[x];
 							if (x == 3) fire_torch_parameters.cut_height = fire_torch[x];
 						}
-						MotionControl.send("G38.3 Z-10 F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
-						MotionControl.send("G91 G0 Z" + this.machine_parameters.machine_torch_config.floating_head_takeup);
-						MotionControl.send("G91 G0 Z" + fire_torch_parameters.pierce_height);
-						MotionControl.send("M3 S1000");
-						MotionControl.send("G4 P" + fire_torch_parameters.pierce_delay); //Pierce Delay
-						MotionControl.send("G91 G0 Z" + (fire_torch_parameters.cut_height - fire_torch_parameters.pierce_height));
+						MotionControl.send("G38.3Z-10F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
+						MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.floating_head_takeup);
+						MotionControl.send("G91G0Z" + fire_torch_parameters.pierce_height);
+						MotionControl.send("M3S1000");
+						MotionControl.send("G4P" + fire_torch_parameters.pierce_delay); //Pierce Delay
+						MotionControl.send("G91G0Z" + (fire_torch_parameters.cut_height - fire_torch_parameters.pierce_height).toFixed(3));
 						MotionControl.send("G90"); //Back to absolute
 					}
 					else if (line.includes("torch_off"))
 					{
 						MotionControl.send("M5");
-						MotionControl.send("G4 P1"); //Post Delay
-						MotionControl.send("G91 G0 Z" + this.machine_parameters.machine_torch_config.clearance_height); //Retract
+						MotionControl.send("G4P1"); //Post Delay
+						MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.clearance_height); //Retract
 						MotionControl.send("G90"); //Back to absolute
 					}
 					else
@@ -177,19 +177,19 @@ MotionControl.send_gcode_from_list = function(list)
 					if (x == 2) fire_torch_parameters.pierce_delay = fire_torch[x];
 					if (x == 3) fire_torch_parameters.cut_height = fire_torch[x];
 				}
-				MotionControl.send("G38.3 Z-10 F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
-				MotionControl.send("G91 G0 Z" + this.machine_parameters.machine_torch_config.floating_head_takeup);
-				MotionControl.send("G91 G0 Z" + fire_torch_parameters.pierce_height);
-				MotionControl.send("M3 S1000");
-				MotionControl.send("G4 P" + fire_torch_parameters.pierce_delay); //Pierce Delay
-				MotionControl.send("G91 G0 Z" + (fire_torch_parameters.cut_height - fire_torch_parameters.pierce_height));
+				MotionControl.send("G38.3Z-10F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
+				MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.floating_head_takeup);
+				MotionControl.send("G91G0Z" + fire_torch_parameters.pierce_height);
+				MotionControl.send("M3S1000");
+				MotionControl.send("G4P" + fire_torch_parameters.pierce_delay); //Pierce Delay
+				MotionControl.send("G91G0Z" + (fire_torch_parameters.cut_height - fire_torch_parameters.pierce_height).toFixed(3));
 				MotionControl.send("G90"); //Back to absolute
 			}
 			else if (line.includes("torch_off"))
 			{
 				MotionControl.send("M5");
-				MotionControl.send("G4 P1"); //Post Delay
-				MotionControl.send("G91 G0 Z" + this.machine_parameters.machine_torch_config.clearance_height); //Retract
+				MotionControl.send("G4P1"); //Post Delay
+				MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.clearance_height); //Retract
 				MotionControl.send("G90"); //Back to absolute
 			}
 			else
@@ -252,7 +252,7 @@ MotionControl.tick = function()
 		this.error_window.id = gui.new_window("Errors have Occured!");
 		for (var x = 0; x < errors.length; x++)
 		{
-			//console.log(x + "> " + JSON.stringify(errors[x]) + "\n");
+			console.log(x + "> " + JSON.stringify(errors[x]) + "\n");
 			gui.add_text(this.error_window.id, "Count: " + x + " | ENumber: " + errors[x].number + " | Meaning:  " + errors[x].meaning);
 		}
 		this.error_window.close_button = gui.add_button(this.error_window.id, "Close");
