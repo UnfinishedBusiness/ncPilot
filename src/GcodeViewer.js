@@ -172,19 +172,19 @@ GcodeViewer.tick = function()
 			MotionControl.send("G53 G1 Z-5" + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
 			//console.log("Jog Z-\n");
 		}
-		if (key.keycode == 39 && GcodeViewer.JogCancle.z == false) //,
+		if (key.keycode == 44 && GcodeViewer.JogCancle.z == false) //,
 		{
 			motion_control.torch_plus();
 			GcodeViewer.JogCancle.z = true;
 			//MotionControl.thc_command = "MUp";
-			//console.log("Up!\n");
+			console.log("Up!\n");
 		}
-		if (key.keycode == 47 && GcodeViewer.JogCancle.z == false) //.
+		if (key.keycode == 46 && GcodeViewer.JogCancle.z == false) //.
 		{
 			motion_control.torch_minus();
 			GcodeViewer.JogCancle.z = true;
 			//MotionControl.thc_command = "MDown";
-			//console.log("Down!\n");
+			console.log("Down!\n");
 		}
 		if (key.keycode == 32 && GcodeViewer.OnePress == false) //Space
 		{
@@ -246,7 +246,6 @@ GcodeViewer.tick = function()
 		{
 			GcodeViewer.JogCancle.z = false;
 			motion_control.torch_cancel();
-			MotionControl.thc_command = "Idle";
 		}
 	}
 

@@ -74,6 +74,18 @@ UserInterface.init = function()
 	UserInterface.dro_window.y_abs_dro = gui.add_text(UserInterface.dro_window.window, "0.0000");
 	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.y_abs_dro, { size: 0.350, color: {r: 0.74, g: 0.458, b: 0.03 }});
 	gui.separator(UserInterface.dro_window.window);
+	UserInterface.dro_window.z_label = gui.add_text(UserInterface.dro_window.window, "Z:      ");
+	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.z_label, { size: 0.6, color: {r: 1, g: 0, b: 0 }});
+	gui.sameline(UserInterface.dro_window.window);
+	UserInterface.dro_window.z_dro = gui.add_text(UserInterface.dro_window.window, "0.0000");
+	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.z_dro, { size: 0.6, color: {r: 0, g: 1, b: 0 }});
+	gui.sameline(UserInterface.dro_window.window);
+	UserInterface.dro_window.z_dro_abs = gui.add_text(UserInterface.dro_window.window, "ABS: ");
+	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.z_dro_abs, { size: 0.350, color: {r: 0.3, g: 0.3, b: 0.3 }});
+	gui.sameline(UserInterface.dro_window.window);
+	UserInterface.dro_window.z_abs_dro = gui.add_text(UserInterface.dro_window.window, "0.0000");
+	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.z_abs_dro, { size: 0.350, color: {r: 0.74, g: 0.458, b: 0.03 }});
+	gui.separator(UserInterface.dro_window.window);
 	UserInterface.dro_window.arc_label = gui.add_text(UserInterface.dro_window.window, "ARC:    ");
 	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.arc_label, { size: 0.6, color: {r: 1, g: 1, b: 0 }});
 	gui.sameline(UserInterface.dro_window.window);
@@ -97,11 +109,12 @@ UserInterface.init = function()
 	gui.sameline(UserInterface.dro_window.window);
 	UserInterface.dro_window.feed_text = gui.add_text(UserInterface.dro_window.window, "0.0");
 	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.feed_text, { size: 0.350, color: {r: 0.74, g: 0.458, b: 0.03 }});
-	UserInterface.dro_window.thc_label = gui.add_text(UserInterface.dro_window.window, "THC: ");
-	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.thc_label, { size: 0.6, color: {r: 0, g: 1, b: 1 }});
-	gui.sameline(UserInterface.dro_window.window);
-	UserInterface.dro_window.thc_text = gui.add_text(UserInterface.dro_window.window, "Halt");
-	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, { size: 0.6, color: {r: 0, g: 1, b: 0 }});
+	//UserInterface.dro_window.thc_label = gui.add_text(UserInterface.dro_window.window, "THC: ");
+	//gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.thc_label, { size: 0.6, color: {r: 0, g: 1, b: 1 }});
+	//gui.sameline(UserInterface.dro_window.window);
+	//UserInterface.dro_window.thc_text = gui.add_text(UserInterface.dro_window.window, "Halt");
+	//gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, { size: 0.6, color: {r: 0, g: 1, b: 0 }});
+	gui.separator(UserInterface.dro_window.window);
 	UserInterface.dro_window.mode_label = gui.add_text(UserInterface.dro_window.window, "MODE: ");
 	gui.set_text_style(UserInterface.dro_window.window, UserInterface.dro_window.mode_label, { size: 0.6, color: {r: 0, g: 1, b: 1 }});
 	gui.sameline(UserInterface.dro_window.window);
@@ -293,12 +306,14 @@ UserInterface.tick = function()
 
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.x_dro, MotionControl.dro_data.X_WCS.toFixed(4));
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.y_dro, MotionControl.dro_data.Y_WCS.toFixed(4));
+	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.z_dro, MotionControl.dro_data.Z_WCS.toFixed(4));
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.x_abs_dro, MotionControl.dro_data.X_MCS.toFixed(4));
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.y_abs_dro, MotionControl.dro_data.Y_MCS.toFixed(4));
+	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.z_abs_dro, MotionControl.dro_data.Z_MCS.toFixed(4));
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.arc_dro, MotionControl.dro_data.THC_ARC_VOLTAGE.toFixed(2));
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.feed_text, MotionControl.dro_data.VELOCITY.toFixed(2));
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.status_text, MotionControl.dro_data.STATUS);
-	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, MotionControl.thc_command);
+	//gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.thc_text, MotionControl.thc_command);
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.arc_set_dro, MotionControl.dro_data.THC_SET_VOLTAGE);
 	gui.set_text(UserInterface.dro_window.window, UserInterface.dro_window.mode_text, MotionControl.mode);
 
