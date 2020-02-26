@@ -21,6 +21,8 @@ MotionControl.arc_ok = false;
 MotionControl.mode = "XY";
 MotionControl.adc_readings = [];
 MotionControl.last_absolute_position = {x: 0, y: 0};
+MotionControl.not_connected_window = {};
+
 MotionControl.average_adc = function(val)
 {
 	this.adc_readings.push(val);
@@ -95,6 +97,8 @@ MotionControl.init = function()
 		console.log("Setting connect port description query to: Arduino\n");
 	}*/
 	motion_control.set_dro_interval(125);
+
+	//gui.show(this.not_connected_window.id, true);
 }
 MotionControl.send_gcode_from_viewer = function()
 {
@@ -263,5 +267,18 @@ MotionControl.tick = function()
 		{
 			gui.show(this.error_window.id, false);
 		}
+	}
+	if (this.is_connected == false)
+	{
+		if (this.not_connected_window.id == undefined)
+		{
+			this.not_connected_window.id = gui.new_window("Not Connected!");
+			gui.add_text(this.not_connected_window.id, "Make sure USB is securely connected to Plasma Control Box!");
+		}
+		gui.show(this.not_connected_window.id, true);
+	}
+	else
+	{
+		gui.show(this.not_connected_window.id, false);
 	}
 }
