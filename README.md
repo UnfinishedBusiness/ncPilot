@@ -1,7 +1,7 @@
 # ncPilot
 Front-End Control Software for Xmotion CNC Controller. Native Cross-Platform (Windows, Linux, and MacOS)
 
-ncPilot is written in Javascript and is executed by our [Xkernel](https://github.com/UnfinishedBusiness/ncPilot) VM. This allows
+ncPilot is written in Javascript and is executed by our [Xkernel](https://github.com/UnfinishedBusiness/Xkernel) VM. This allows
 ncPilot to have the same code-base for every platform and allows the rapid-development for custom CNC applications.
 
 #Features
