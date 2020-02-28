@@ -5,6 +5,10 @@ NotchMaster.parameters.tube_length = 10;
 NotchMaster.parameters.tube_diameter = 1.5;
 NotchMaster.parameters.wall_thickness = 0.125;
 NotchMaster.parameters.relative_angle = 0;
+NotchMaster.parameters.feed_ipm = 10;
+NotchMaster.parameters.pierce_height = 0.165;
+NotchMaster.parameters.pierce_delay = 1.2;
+NotchMaster.parameters.cut_height = 0.1;
 NotchMaster.parameters.side_one = {};
 NotchMaster.parameters.side_one.operation_type = 0;
 NotchMaster.parameters.side_one.header_diameter = 1.750;
@@ -23,10 +27,10 @@ NotchMaster.init = function()
 	this.dialog.tube_diameter = gui.add_input_double(this.dialog.id, "Tube Diameter", NotchMaster.parameters.tube_diameter);
 	this.dialog.wall_thickness = gui.add_input_double(this.dialog.id, "Wall Thickness", NotchMaster.parameters.wall_thickness);
 	this.dialog.relative_angle = gui.add_input_double(this.dialog.id, "Relative Angle", NotchMaster.parameters.relative_angle);
-	this.dialog.feed_ipm = gui.add_input_double(this.dialog.id, "Feed (IPM)", 10);
-	this.dialog.pierce_height = gui.add_input_double(this.dialog.id, "Pierce Height", 0.165);
-	this.dialog.pierce_delay = gui.add_input_double(this.dialog.id, "Pierce Delay", 1.2);
-	this.dialog.cut_height = gui.add_input_double(this.dialog.id, "Cut Height", 0.155);
+	this.dialog.feed_ipm = gui.add_input_double(this.dialog.id, "Feed (IPM)", NotchMaster.parameters.feed_ipm);
+	this.dialog.pierce_height = gui.add_input_double(this.dialog.id, "Pierce Height", NotchMaster.parameters.pierce_height);
+	this.dialog.pierce_delay = gui.add_input_double(this.dialog.id, "Pierce Delay", NotchMaster.parameters.pierce_delay);
+	this.dialog.cut_height = gui.add_input_double(this.dialog.id, "Cut Height", NotchMaster.parameters.cut_height);
 	gui.separator(this.dialog.id);
 	this.dialog.side_one_operation = gui.add_radiogroup(this.dialog.id, ['Notch Side 1', 'Slice Side 1'], NotchMaster.parameters.side_one.operation_type);
 	this.dialog.side_one_header_diameter = gui.add_input_double(this.dialog.id, "Side 1 - Header Diameter", NotchMaster.parameters.side_one.header_diameter);
@@ -51,6 +55,20 @@ NotchMaster.tick = function()
 {
 	if (gui.get_button(this.dialog.id, this.dialog.save_button))
 	{
+		this.parameters.tube_length = gui.get_input_double(this.dialog.id, this.dialog.tube_length);
+		this.parameters.tube_diameter = gui.get_input_double(this.dialog.id, this.dialog.tube_diameter);
+		this.parameters.wall_thickness = gui.get_input_double(this.dialog.id, this.dialog.wall_thickness);
+		this.parameters.relative_angle = gui.get_input_double(this.dialog.id, this.dialog.relative_angle);
+		this.parameters.feed_ipm = gui.get_input_double(this.dialog.id, this.dialog.feed_ipm);
+		this.parameters.pierce_height = gui.get_input_double(this.dialog.id, this.dialog.pierce_height);
+		this.parameters.pierce_delay = gui.get_input_double(this.dialog.id, this.dialog.pierce_delay);
+		this.parameters.cut_height = gui.get_input_double(this.dialog.id, this.dialog.cut_height);
+		this.parameters.side_one.operation_type = gui.get_radiogroup(this.dialog.id, this.dialog.side_one_operation);
+		this.parameters.side_one.header_diameter = gui.get_input_double(this.dialog.id, this.dialog.side_one_header_diameter);
+		this.parameters.side_one.mate_angle = gui.get_input_double(this.dialog.id, this.dialog.side_one_mate_angle);
+		this.parameters.side_two.operation_type = gui.get_radiogroup(this.dialog.id, this.dialog.side_two_operation);
+		this.parameters.side_two.header_diameter = gui.get_input_double(this.dialog.id, this.dialog.side_two_header_diameter);
+		this.parameters.side_two.mate_angle = gui.get_input_double(this.dialog.id, this.dialog.side_two_mate_angle);
 		file.put_contents(file_dialog.save({ filter: ["*.notch"]}), JSON.stringify(this.parameters));
 	}
 	if (gui.get_button(this.dialog.id, this.dialog.open_button))
