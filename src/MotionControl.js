@@ -44,6 +44,10 @@ MotionControl.SaveParameters = function()
 	{
 		file.write(JSON.stringify(this.machine_parameters));
 		motion_control.set_work_offset({x: this.machine_parameters.work_offset.x, y:  this.machine_parameters.work_offset.y});
+		if (this.machine_parameters.work_offset.y != undefined)
+		{
+			motion_control.set_work_offset({z: this.machine_parameters.work_offset.z});
+		}
 		file.close();
 	}
 }
@@ -55,6 +59,10 @@ MotionControl.PullParameters = function()
 	{
 		this.machine_parameters = JSON.parse(contents);
 		motion_control.set_work_offset({x: this.machine_parameters.work_offset.x, y:  this.machine_parameters.work_offset.y});
+		if (this.machine_parameters.work_offset.y != undefined)
+		{
+			motion_control.set_work_offset({z: this.machine_parameters.work_offset.z});
+		}
 	}
 }
 MotionControl.ProgramAbort = function()
@@ -112,11 +120,12 @@ MotionControl.send_gcode_from_viewer = function()
 			{
 				var line = file.read();
 				//console.log("Sending line: \"" + line + "\"\n");
-				if (line.includes("#"))
+				if (line.includes("#") || line.includes("("))
 				{
 					//Comment, don't do anything
 				}
-				else if (line.includes("G0") || line.includes("G1") || line.includes("torch"))
+				//else if (line.includes("G0") || line.includes("G1") || line.includes("torch"))
+				else
 				{
 					if (line.includes("fire_torch"))
 					{

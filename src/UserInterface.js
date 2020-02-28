@@ -4,6 +4,7 @@ UserInterface.file_menu = {};
 UserInterface.control_window = {};
 UserInterface.dro_window = {};
 UserInterface.machine_parameters = {};
+UserInterface.mdi_window = {};
 UserInterface.thc_set_voltage = 0;
 
 UserInterface.init = function()
@@ -36,6 +37,8 @@ UserInterface.init = function()
 	UserInterface.control_window.x_origin = gui.add_button(UserInterface.control_window.window, "X=0");
 	gui.sameline(UserInterface.control_window.window);
 	UserInterface.control_window.y_origin = gui.add_button(UserInterface.control_window.window, "Y=0");
+	gui.sameline(UserInterface.control_window.window);
+	UserInterface.control_window.z_origin = gui.add_button(UserInterface.control_window.window, "Z=0");
 	UserInterface.control_window.clean = gui.add_button(UserInterface.control_window.window, "Clean");
 	gui.sameline(UserInterface.control_window.window);
 	UserInterface.control_window.mdi = gui.add_button(UserInterface.control_window.window, "MDI");
@@ -153,6 +156,14 @@ UserInterface.init = function()
 	UserInterface.machine_parameters.ok_button = gui.add_button(UserInterface.machine_parameters.window, "OK");
 	gui.show(UserInterface.machine_parameters.window, false);
 
+	this.mdi_window.id = gui.new_window("MDI");
+	this.mdi_window.mdi_text = gui.add_input_text(this.mdi_window.id, "MDI", "");
+	gui.sameline(this.mdi_window.id);
+	this.mdi_window.run_button = gui.add_button(this.mdi_window.id, "Run");
+	gui.sameline(this.mdi_window.id);
+	this.mdi_window.close_button = gui.add_button(this.mdi_window.id, "Close");
+	gui.show(this.mdi_window.id, false);
+
 	UserInterface.file_menu.file = {};
 	UserInterface.file_menu.file.menu = window_menu.create("File");
 	UserInterface.file_menu.file.open = window_menu.add_button(UserInterface.file_menu.file.menu, "Open");
@@ -172,6 +183,7 @@ UserInterface.init = function()
 	UserInterface.file_menu.tools = {};
 	UserInterface.file_menu.tools.menu = window_menu.create("Tools");
 	UserInterface.file_menu.tools.notch_master = window_menu.add_button(UserInterface.file_menu.tools.menu, "Notch Master");
+	
 }
 UserInterface.tick = function()
 {
@@ -210,7 +222,7 @@ UserInterface.tick = function()
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.park))
 	{
-		MotionControl.send("G0 Z0");
+		MotionControl.send("G53 G0 Z0");
 		MotionControl.send("G53 G0 X0 Y0");
 		motion_control.cycle_start();
 	}
@@ -234,6 +246,15 @@ UserInterface.tick = function()
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.y_origin))
 	{
 		MotionControl.machine_parameters.work_offset.y = MotionControl.dro_data.Y_MCS;
+		MotionControl.SaveParameters();
+		if (GcodeViewer.last_file != null)
+		{
+			GcodeViewer.parse_gcode(GcodeViewer.last_file);
+		}
+	}
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.z_origin))
+	{
+		MotionControl.machine_parameters.work_offset.z = MotionControl.dro_data.Z_MCS;
 		MotionControl.SaveParameters();
 		if (GcodeViewer.last_file != null)
 		{
@@ -267,6 +288,21 @@ UserInterface.tick = function()
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_auto_set))
 	{
 		this.thc_set_voltage = MotionControl.dro_data.THC_ARC_VOLTAGE;
+	}
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.mdi))
+	{
+		gui.show(this.mdi_window.id, true);
+	}
+	if (gui.get_button(this.mdi_window.id, this.mdi_window.close_button))
+	{
+		gui.show(this.mdi_window.id, false);
+	}
+	if (gui.get_button(this.mdi_window.id, this.mdi_window.run_button))
+	{
+		//console.log("Run: " + gui.get_input_text(this.mdi_window.id, this.mdi_window.mdi_text) + "\n");
+		var list = [];
+		list.push(gui.get_input_text(this.mdi_window.id, this.mdi_window.mdi_text));
+		MotionControl.send_gcode_from_list(list);
 	}
 	if (gui.get_button(UserInterface.machine_parameters.window, UserInterface.machine_parameters.ok_button))
 	{
