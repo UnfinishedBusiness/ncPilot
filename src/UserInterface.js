@@ -5,6 +5,9 @@ UserInterface.control_window = {};
 UserInterface.dro_window = {};
 UserInterface.machine_parameters = {};
 UserInterface.mdi_window = {};
+UserInterface.text_editor = {};
+UserInterface.text_editor.run_from_line = -1;
+UserInterface.text_editor.save = -1;
 UserInterface.thc_set_voltage = 0;
 
 UserInterface.init = function()
@@ -189,7 +192,7 @@ UserInterface.init = function()
 }
 UserInterface.tick = function()
 {
-	if (text_editor.file_menu_item_clicked(0)) //Run from line
+	if (text_editor.file_menu_item_clicked(this.text_editor.run_from_line)) //Run from line
 	{
 		//console.log(JSON.stringify(text_editor.get_cursor_position()) + "\n");
 		var gcode_list = [];
@@ -203,6 +206,10 @@ UserInterface.tick = function()
 			}
 		}
 		MotionControl.send_gcode_from_list(gcode_list);
+	}
+	if (text_editor.file_menu_item_clicked(this.text_editor.save))
+	{
+		file.put_contents(GcodeViewer.last_file, text_editor.get_text());
 	}
 	if (window_menu.get_button(UserInterface.file_menu.file.menu, UserInterface.file_menu.file.open))
 	{
@@ -257,7 +264,8 @@ UserInterface.tick = function()
 		{
 			text_editor.set_title("Gcode Editor");
 			text_editor.set_text(file.get_contents(GcodeViewer.last_file));
-			text_editor.add_file_menu_option("Run from line");
+			this.text_editor.run_from_line = text_editor.add_file_menu_option("Run from line");
+			this.text_editor.save = text_editor.add_file_menu_option("Save");
 			text_editor.open();
 		}
 	}
