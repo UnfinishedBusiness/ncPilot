@@ -42,6 +42,8 @@ UserInterface.init = function()
 	UserInterface.control_window.clean = gui.add_button(UserInterface.control_window.window, "Clean");
 	gui.sameline(UserInterface.control_window.window);
 	UserInterface.control_window.mdi = gui.add_button(UserInterface.control_window.window, "MDI");
+	gui.sameline(UserInterface.control_window.window);
+	UserInterface.control_window.edit = gui.add_button(UserInterface.control_window.window, "Edit");
 	UserInterface.control_window.park = gui.add_button(UserInterface.control_window.window, "Park");
 	gui.sameline(UserInterface.control_window.window);
 	UserInterface.control_window.hold = gui.add_button(UserInterface.control_window.window, "Hold");
@@ -187,6 +189,21 @@ UserInterface.init = function()
 }
 UserInterface.tick = function()
 {
+	if (text_editor.file_menu_item_clicked(0)) //Run from line
+	{
+		//console.log(JSON.stringify(text_editor.get_cursor_position()) + "\n");
+		var gcode_list = [];
+		var gcode = file.get_contents(GcodeViewer.last_file);
+		var full_list = gcode.split("\n");
+		for (var x = 0; x < full_list.length; x++)
+		{
+			if (x > text_editor.get_cursor_position().line-1)
+			{
+				gcode_list.push(full_list[x]);
+			}
+		}
+		MotionControl.send_gcode_from_list(gcode_list);
+	}
 	if (window_menu.get_button(UserInterface.file_menu.file.menu, UserInterface.file_menu.file.open))
 	{
 		GcodeViewer.parse_gcode(file_dialog.open({ filter: ["*.nc", "*.ngc"]}));
@@ -232,6 +249,16 @@ UserInterface.tick = function()
 		if (GcodeViewer.last_file != null)
 		{
 			GcodeViewer.parse_gcode(GcodeViewer.last_file);
+		}
+	}
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.edit))
+	{
+		if (GcodeViewer.last_file != null)
+		{
+			text_editor.set_title("Gcode Editor");
+			text_editor.set_text(file.get_contents(GcodeViewer.last_file));
+			text_editor.add_file_menu_option("Run from line");
+			text_editor.open();
 		}
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.x_origin))
