@@ -236,7 +236,7 @@ UserInterface.tick = function()
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.touch))
 	{
-		MotionControl.send("G38.3 Z-10 F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
+		MotionControl.send("G38.3 Z" + MotionControl.machine_parameters.machine_extents.z + " F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
 		MotionControl.send("G91 G0 Z0.200");
 		MotionControl.send("G91 G0 Z0.5");
 		MotionControl.send("G90"); //Back to absolute
