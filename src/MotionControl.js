@@ -138,7 +138,7 @@ MotionControl.send_gcode_from_viewer = function()
 							if (x == 2) fire_torch_parameters.pierce_delay = fire_torch[x];
 							if (x == 3) fire_torch_parameters.cut_height = fire_torch[x];
 						}
-						MotionControl.send("G53G38.3Z" + MotionControl.machine_parameters.machine_extents.z + "F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
+						MotionControl.send("G38.3Z" + MotionControl.machine_parameters.machine_extents.z + "F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
 						MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.floating_head_takeup);
 						MotionControl.send("G91G0Z" + fire_torch_parameters.pierce_height);
 						MotionControl.send("M3S1000");
@@ -190,7 +190,7 @@ MotionControl.send_gcode_from_list = function(list)
 					if (x == 2) fire_torch_parameters.pierce_delay = fire_torch[x];
 					if (x == 3) fire_torch_parameters.cut_height = fire_torch[x];
 				}
-				MotionControl.send("G53G38.3Z" + MotionControl.machine_parameters.machine_extents.z + "F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
+				MotionControl.send("G38.3Z" + MotionControl.machine_parameters.machine_extents.z + "F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
 				MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.floating_head_takeup);
 				MotionControl.send("G91G0Z" + fire_torch_parameters.pierce_height);
 				MotionControl.send("M3S1000");
