@@ -133,6 +133,7 @@ UserInterface.init = function()
 	UserInterface.machine_parameters.window = gui.new_window("Machine Parameters");
 	UserInterface.machine_parameters.x_extent = gui.add_input_double(UserInterface.machine_parameters.window, "X Extent", MotionControl.machine_parameters.machine_extents.x);
 	UserInterface.machine_parameters.y_extent = gui.add_input_double(UserInterface.machine_parameters.window, "Y Extent", MotionControl.machine_parameters.machine_extents.y);
+	UserInterface.machine_parameters.z_extent = gui.add_input_double(UserInterface.machine_parameters.window, "Z Extent", MotionControl.machine_parameters.machine_extents.z);
 	UserInterface.machine_parameters.x_scale = gui.add_input_double(UserInterface.machine_parameters.window, "X Scale", MotionControl.machine_parameters.machine_axis_scale.x);
 	UserInterface.machine_parameters.y_scale = gui.add_input_double(UserInterface.machine_parameters.window, "Y Scale", MotionControl.machine_parameters.machine_axis_scale.y);
 	UserInterface.machine_parameters.z_scale = gui.add_input_double(UserInterface.machine_parameters.window, "Z Scale", MotionControl.machine_parameters.machine_axis_scale.z);
@@ -344,6 +345,7 @@ UserInterface.tick = function()
 		//console.log("OK BUtton!\n");
 		MotionControl.machine_parameters.machine_extents.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_extent);
 		MotionControl.machine_parameters.machine_extents.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_extent);
+		MotionControl.machine_parameters.machine_extents.z = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_extent);
 		MotionControl.machine_parameters.machine_axis_scale.x = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.x_scale);
 		MotionControl.machine_parameters.machine_axis_scale.y = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.y_scale);
 		MotionControl.machine_parameters.machine_axis_scale.z = gui.get_input_double(UserInterface.machine_parameters.window, UserInterface.machine_parameters.z_scale);

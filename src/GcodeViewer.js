@@ -169,7 +169,7 @@ GcodeViewer.tick = function()
 		if (key.keycode == 267 && GcodeViewer.JogCancle.axis == false && MotionControl.dro_data.STATUS == "Idle") //Page Down when machine is not running
 		{
 			GcodeViewer.JogCancle.axis = true;
-			MotionControl.send("G53 G1 Z-5" + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
+			MotionControl.send("G53 G1 Z" + MotionControl.machine_parameters.machine_extents.z + " F" + gui.get_slider(UserInterface.control_window.window, UserInterface.control_window.jog_speed));
 			//console.log("Jog Z-\n");
 		}
 		if (key.keycode == 44 && GcodeViewer.JogCancle.z == false) //,
