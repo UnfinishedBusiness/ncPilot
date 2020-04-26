@@ -31,7 +31,7 @@ M30
 ```
 # Prepare a Arduino Uno (or other ATMega328p device with USB serial interface and arduino bootloader)
 - Install avrdude (If on windows, install via MSYS2 with pacman -S mingw-w64-x86_64-avrdude)
-- cd /c/Xmotion/Xkernel/
+- cd /c/Xmotion/ncPilot/extra/
 - ./flash.sh YOUR_COM_PORT
 - Windows will be COM0-6 or somthing, linux will be a /dev/ttyUSB or something like that
 
