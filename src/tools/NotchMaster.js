@@ -89,12 +89,8 @@ NotchMaster.tick = function()
 	}
 	if (gui.get_button(this.dialog.id, this.dialog.run))
 	{
-		/*for (var x = 0; x < this.GcodeLines.length; x++)
-		{
-			console.log(this.GcodeLines[x] + "\n");
-		}*/
+		this.ProcessNotches();
 		MotionControl.send_gcode_from_list(this.GcodeLines);
-		//motion_control.cycle_start();
 	}
 }
 NotchMaster.show = function()
@@ -259,15 +255,15 @@ NotchMaster.ProcessNotches = function()
 			notch_two[x].y -= tube_length;
 		}
 		var last_pointer = { x: notch_two[0].x, y: notch_two[0].y };
-		this.GcodeLines.push("G0 X" + Math.round(FastMath.map(last_pointer.x.toFixed(4), 0, tube_diameter * 3.14, 0, 360)) + " Y" + last_pointer.y.toFixed(4));
+		this.GcodeLines.push("G0 X" + (Math.round(FastMath.map(last_pointer.x.toFixed(4), 0, tube_diameter * 3.14, 0, 360)) + relative_angle) + " Y" + last_pointer.y.toFixed(4));
 		this.GcodeLines.push(fire_torch);
 		for (var x = 1; x < notch_two.length; x++)
 		{
 			render.add_entity({ type: "line", start: {x: last_pointer.x + MotionControl.machine_parameters.work_offset.x, y: last_pointer.y + MotionControl.machine_parameters.work_offset.y}, end: {x: notch_two[x].x + MotionControl.machine_parameters.work_offset.x, y: notch_two[x].y + MotionControl.machine_parameters.work_offset.y}, color: { r: 1, g: 1, b: 1} });
-			this.GcodeLines.push("G1 X" + Math.round(FastMath.map(last_pointer.x.toFixed(4), 0, tube_diameter * 3.14, 0, 360)) + " Y" + last_pointer.y.toFixed(4) + " F" + feed_deg_min.toFixed(4));
+			this.GcodeLines.push("G1 X" + (Math.round(FastMath.map(last_pointer.x.toFixed(4), 0, tube_diameter * 3.14, 0, 360)) + relative_angle) + " Y" + last_pointer.y.toFixed(4) + " F" + feed_deg_min.toFixed(4));
 			last_pointer = { x: notch_two[x].x, y: notch_two[x].y };
 		}
-		this.GcodeLines.push("G1 X" + Math.round(FastMath.map(last_pointer.x.toFixed(4), 0, tube_diameter * 3.14, 0, 360)) + " Y" + last_pointer.y.toFixed(4) + " F" + feed_deg_min.toFixed(4));
+		this.GcodeLines.push("G1 X" + (Math.round(FastMath.map(last_pointer.x.toFixed(4), 0, tube_diameter * 3.14, 0, 360)) + relative_angle) + " Y" + last_pointer.y.toFixed(4) + " F" + feed_deg_min.toFixed(4));
 		this.GcodeLines.push("torch_off");
 	}
 	else if (side_two_operation == 1) //Slice Side 2
