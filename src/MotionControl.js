@@ -241,6 +241,7 @@ MotionControl.tick = function()
 	MotionControl.arc_ok = !dro.ARC_OK ; //Logic is inverted because arc_ok is active low
 	//console.log(MotionControl.arc_ok + "\n");
 	MotionControl.dro_data = { X_MCS: dro.MCS.x, Y_MCS: dro.MCS.y, Z_MCS: dro.MCS.z, X_WCS: dro.WCS.x, Y_WCS: dro.WCS.y, Z_WCS: dro.WCS.z, VELOCITY: dro.FEED, THC_ARC_VOLTAGE: FastMath.map(this.average_adc(dro.ADC), 0, 1024, 0, 10) * 50.0, THC_SET_VOLTAGE: UserInterface.thc_set_voltage.toFixed(2), STATUS: dro.STATUS };
+	if (MotionControl.dro_data.THC_ARC_VOLTAGE < 29) MotionControl.dro_data.THC_ARC_VOLTAGE = 0; //Hide ghost voltages
 	if (this.is_connected == true && MotionControl.dro_data.STATUS == "Run")
 	{
 		render.set_loop_delay(60); //Make sure motion_control has priority

@@ -29,8 +29,6 @@ UserInterface.init = function()
 	gui.sameline(UserInterface.control_window.window);
 	UserInterface.control_window.thc_plus = gui.add_button(UserInterface.control_window.window, "+");
 	gui.sameline(UserInterface.control_window.window);
-	UserInterface.control_window.thc_auto_set = gui.add_button(UserInterface.control_window.window, "%");
-	gui.sameline(UserInterface.control_window.window);
 	UserInterface.control_window.thc_label = gui.add_text(UserInterface.control_window.window, "THC");
 	//UserInterface.control_window.thc_set_voltage = gui.add_slider(UserInterface.control_window.window, "THC", 0, 0, 200);
 	
@@ -297,33 +295,29 @@ UserInterface.tick = function()
 			GcodeViewer.parse_gcode(GcodeViewer.last_file);
 		}
 	}
-	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_zero))
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_zero) && MotionControl.dro_data.STATUS == "Idle")
 	{
 		this.thc_set_voltage = 0;
 		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
-	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_eighty_five))
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_eighty_five) && MotionControl.dro_data.STATUS == "Idle")
 	{
 		this.thc_set_voltage = 85;
 		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
-	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_plus))
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_plus) && MotionControl.dro_data.STATUS == "Idle")
 	{
 		this.thc_set_voltage += 2;
 		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 	}
-	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_minus))
+	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_minus) && MotionControl.dro_data.STATUS == "Idle")
 	{
 		this.thc_set_voltage -= 2;
 		//console.log(parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 		MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
-	}
-	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.thc_auto_set))
-	{
-		this.thc_set_voltage = MotionControl.dro_data.THC_ARC_VOLTAGE;
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.mdi))
 	{
