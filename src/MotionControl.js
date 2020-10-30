@@ -191,11 +191,18 @@ MotionControl.send_gcode_from_list = function(list)
 					if (x == 3) fire_torch_parameters.cut_height = fire_torch[x];
 				}
 				MotionControl.send("G38.3Z" + MotionControl.machine_parameters.machine_extents.z + "F" + MotionControl.machine_parameters.machine_torch_config.z_probe_feed);
-				MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.floating_head_takeup);
-				MotionControl.send("G91G0Z" + fire_torch_parameters.pierce_height);
+				MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.floating_head_takeup); //We are at Z0 here
+				MotionControl.send("G91G0Z" + fire_torch_parameters.pierce_height); //Increment positive to pierce height
 				MotionControl.send("M3S1000");
 				MotionControl.send("G4P" + fire_torch_parameters.pierce_delay); //Pierce Delay
-				MotionControl.send("G91G0Z" + (fire_torch_parameters.cut_height - fire_torch_parameters.pierce_height).toFixed(3));
+				if (fire_torch_parameters.pierce_height > fire_torch_parameters.cut_height) //As it should be!
+				{
+					MotionControl.send("G91G0Z" + (fire_torch_parameters.pierce_height - fire_torch_parameters.cut_height).toFixed(3) * -1); //Do a negative move to cut height!
+				}
+				else
+				{
+					MotionControl.send("G91G0Z" + (fire_torch_parameters.cut_height - fire_torch_parameters.pierce_height).toFixed(3)); //Do a positive move to cut height!
+				}
 				MotionControl.send("G90"); //Back to absolute
 			}
 			else if (line.includes("torch_off"))
