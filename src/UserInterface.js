@@ -3,6 +3,7 @@ var UserInterface = {};
 UserInterface.file_menu = {};
 UserInterface.control_window = {};
 UserInterface.dro_window = {};
+UserInterface.information_window = {};
 UserInterface.machine_parameters = {};
 UserInterface.mdi_window = {};
 UserInterface.text_editor = {};
@@ -168,6 +169,11 @@ UserInterface.init = function()
 	this.mdi_window.close_button = gui.add_button(this.mdi_window.id, "Close");
 	gui.show(this.mdi_window.id, false);
 
+	this.information_window.id = gui.new_window("Information");
+	this.information_window.message = gui.add_text(this.information_window.id, "");
+	this.information_window.close_button = gui.add_button(this.information_window.id, "Close");
+	gui.show(this.information_window.id, false);
+
 	UserInterface.file_menu.file = {};
 	UserInterface.file_menu.file.menu = window_menu.create("File");
 	UserInterface.file_menu.file.open = window_menu.add_button(UserInterface.file_menu.file.menu, "Open");
@@ -187,10 +193,20 @@ UserInterface.init = function()
 	UserInterface.file_menu.tools = {};
 	UserInterface.file_menu.tools.menu = window_menu.create("Tools");
 	UserInterface.file_menu.tools.notch_master = window_menu.add_button(UserInterface.file_menu.tools.menu, "Notch Master");
-	
+}
+UserInterface.ShowInformationWindow = function(message)
+{
+	gui.set_text(this.information_window.id, this.information_window.message, message);
+	gui.show(this.information_window.id, true);
 }
 UserInterface.tick = function()
 {
+	/*Information Window*/
+	if (gui.get_button(this.information_window.id, this.information_window.close_button))
+	{
+		gui.show(this.information_window.id, false);
+	}
+	/*End Information Window*/
 	if (text_editor.file_menu_item_clicked(this.text_editor.run_from_line)) //Run from line
 	{
 		//console.log(JSON.stringify(text_editor.get_cursor_position()) + "\n");
@@ -229,8 +245,11 @@ UserInterface.tick = function()
 	//console.log("Windowid: " + UserInterface.control_window.window + " widgetid: " + UserInterface.control_window.park + "\n");
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.run))
 	{
-		MotionControl.send_gcode_from_viewer();
-		motion_control.cycle_start();
+		if (GcodeViewer.check_boundries())
+		{
+			MotionControl.send_gcode_from_viewer();
+			motion_control.cycle_start();
+		}
 	}
 	if (gui.get_button(UserInterface.control_window.window, UserInterface.control_window.touch))
 	{
@@ -329,10 +348,13 @@ UserInterface.tick = function()
 	}
 	if (gui.get_button(this.mdi_window.id, this.mdi_window.run_button))
 	{
-		//console.log("Run: " + gui.get_input_text(this.mdi_window.id, this.mdi_window.mdi_text) + "\n");
-		var list = [];
-		list.push(gui.get_input_text(this.mdi_window.id, this.mdi_window.mdi_text));
-		MotionControl.send_gcode_from_list(list);
+		if (GcodeViewer.check_boundries())
+		{
+			//console.log("Run: " + gui.get_input_text(this.mdi_window.id, this.mdi_window.mdi_text) + "\n");
+			var list = [];
+			list.push(gui.get_input_text(this.mdi_window.id, this.mdi_window.mdi_text));
+			MotionControl.send_gcode_from_list(list);
+		}
 	}
 	if (gui.get_button(UserInterface.machine_parameters.window, UserInterface.machine_parameters.ok_button))
 	{

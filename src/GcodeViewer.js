@@ -7,6 +7,7 @@ GcodeViewer.ControlKeyDown = false;
 
 GcodeViewer.last_file = null;
 GcodeViewer.contours = []; //Stores contours for ctrl-click jump in!
+GcodeViewer.program_is_inside_boundries = true;
 
 GcodeViewer.clear = function()
 {
@@ -17,8 +18,19 @@ GcodeViewer.clear = function()
 	render.add_entity({ type: "line", start: {x: MotionControl.machine_parameters.machine_extents.x, y: MotionControl.machine_parameters.machine_extents.y}, end: {x: 0, y: MotionControl.machine_parameters.machine_extents.y}, color: { r: 0, g: 0, b: 1} });
 	render.add_entity({ type: "line", start: {x: 0, y: MotionControl.machine_parameters.machine_extents.y}, end: {x: 0, y: 0}, color: { r: 0, g: 0, b: 1} });
 }
+GcodeViewer.check_boundries = function() //called Upon run or run from line to make sure program is inside boundries
+{
+	//Instead of parsing Gcode multiple times, this.parse_gcode flips a global bool when program is out of bound
+	//This function just shows the information window if false and returns the value of the bool
+	if (this.program_is_inside_boundries == false)
+	{
+		UserInterface.ShowInformationWindow("Program out of machine boundries!");
+	}
+	return this.program_is_inside_boundries;
+}
 GcodeViewer.parse_gcode = function (gcode_file)
 {	
+	this.program_is_inside_boundries = true; //Reset this every time we parse gcode...
 	this.last_file = gcode_file;
 	GcodeViewer.clear();
 	var timestamp = time.millis();
@@ -36,7 +48,6 @@ GcodeViewer.parse_gcode = function (gcode_file)
 			//pointer = {x: block.x, y: block.y};
 			if (block.g == 0)
 			{
-				
 				//contour.push({x: block.x, y: block.y });
 				if (last_pointer.x != null && last_pointer.y != null)
 				{
@@ -51,6 +62,24 @@ GcodeViewer.parse_gcode = function (gcode_file)
 				//render.add_entity({ type: "line", start: {x: last_pointer.x + MotionControl.machine_parameters.work_offset.x, y: last_pointer.y + MotionControl.machine_parameters.work_offset.y}, end: {x: pointer.x + MotionControl.machine_parameters.work_offset.x, y: pointer.y + MotionControl.machine_parameters.work_offset.y}, color: { r: 1, g: 1, b: 1} });
 				contour.push({x: block.x + MotionControl.machine_parameters.work_offset.x, y: block.y + MotionControl.machine_parameters.work_offset.y});
 				last_pointer = {x: block.x + MotionControl.machine_parameters.work_offset.x, y: block.y + MotionControl.machine_parameters.work_offset.y};
+			}
+			if ((block.g == 0 || block.g == 1) && this.program_is_inside_boundries == true)
+			{
+				//boundry check
+				if (last_pointer.x < 0 || 
+					last_pointer.x > MotionControl.machine_parameters.machine_extents.x ||
+					last_pointer.y < 0 ||
+					last_pointer.y > MotionControl.machine_parameters.machine_extents.x)
+				{
+					//program is outside of boundries!
+					this.program_is_inside_boundries = false;
+					console.log("Out of bounds\n");
+				}
+				else
+				{
+					//program is inside of boundries!
+					this.program_is_inside_boundries = true;
+				}
 			}
 		}
 		contours.push(contour);
