@@ -69,7 +69,7 @@ GcodeViewer.parse_gcode = function (gcode_file)
 				if (last_pointer.x < 0 || 
 					last_pointer.x > MotionControl.machine_parameters.machine_extents.x ||
 					last_pointer.y < 0 ||
-					last_pointer.y > MotionControl.machine_parameters.machine_extents.x)
+					last_pointer.y > MotionControl.machine_parameters.machine_extents.y)
 				{
 					//program is outside of boundries!
 					this.program_is_inside_boundries = false;
