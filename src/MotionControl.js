@@ -155,8 +155,15 @@ MotionControl.send_gcode_from_viewer = function()
 					}
 					else if (line.includes("THC"))
 					{
-						UserInterface.thc_set_voltage = line.split(" ")[1];
-						MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
+						var args = line.split(" ");
+						for (var x = 0; x < args.length; x++)
+						{
+							if (x == 1)
+							{
+								UserInterface.thc_set_voltage = parseInt(args[x]);
+								MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
+							}
+						}
 					}
 					else
 					{
@@ -224,7 +231,7 @@ MotionControl.send_gcode_from_list = function(list)
 				{
 					if (x == 1)
 					{
-						UserInterface.thc_set_voltage = args[x];
+						UserInterface.thc_set_voltage = parseInt(args[x]);
 						MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 					}
 				}
