@@ -153,6 +153,11 @@ MotionControl.send_gcode_from_viewer = function()
 						MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.clearance_height); //Retract
 						MotionControl.send("G90"); //Back to absolute
 					}
+					else if (line.includes("THC"))
+					{
+						UserInterface.thc_set_voltage = line.split(" ")[1];
+						MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
+					}
 					else
 					{
 						MotionControl.send(line);
@@ -211,6 +216,11 @@ MotionControl.send_gcode_from_list = function(list)
 				MotionControl.send("G4P1"); //Post Delay
 				MotionControl.send("G91G0Z" + this.machine_parameters.machine_torch_config.clearance_height); //Retract
 				MotionControl.send("G90"); //Back to absolute
+			}
+			else if (line.includes("THC"))
+			{
+				UserInterface.thc_set_voltage = line.split(" ")[1];
+						MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 			}
 			else
 			{
