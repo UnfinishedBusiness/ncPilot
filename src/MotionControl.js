@@ -161,7 +161,8 @@ MotionControl.send_gcode_from_viewer = function()
 							if (x == 1)
 							{
 								UserInterface.thc_set_voltage = parseInt(args[x]);
-								MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
+								console.log("Setting THC to " + UserInterface.thc_set_voltage + "\n");
+								MotionControl.send_rt("$T=" + parseInt(FastMath.map(UserInterface.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 							}
 						}
 					}
@@ -232,7 +233,8 @@ MotionControl.send_gcode_from_list = function(list)
 					if (x == 1)
 					{
 						UserInterface.thc_set_voltage = parseInt(args[x]);
-						MotionControl.send_rt("$T=" + parseInt(FastMath.map(this.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
+						console.log("Setting THC to " + UserInterface.thc_set_voltage + "\n");
+						MotionControl.send_rt("$T=" + parseInt(FastMath.map(UserInterface.thc_set_voltage / 50, 0, 10, 0, 1024)) + "\n");
 					}
 				}
 			}
