@@ -7,10 +7,10 @@
 #include "gui/TextEditor.h"
 #include "stk500/stk500.h"
 
-nlohmann::json xinit;
 serial::Serial serial_port;
 bool quite = false;
 double zoom = 1;
+Xrender_core_t *Xcore;
 Xrender_gui_t *menu_bar;
 double_point_t pan = {0, 0};
 double_point_t mouse_pos_in_screen_coordinates = {0, 0};
@@ -114,17 +114,13 @@ void _preference_window()
 {
     ImGui::SetNextWindowSize(ImVec2(600, 500), ImGuiCond_FirstUseEver);
     ImGui::Begin("Preferences", &preferences_window->visable, 0);
-    //col1[0] = (float)xinit["clear_color"]["r"];
-    //col1[1] = (float)xinit["clear_color"]["g"];
-    //col1[2] = (float)xinit["clear_color"]["b"];
     ImGui::ColorEdit3("Background Color", col1);
     if (ImGui::Button("OK"))
     {
         printf("Col[0] = %0.4f Col[1] = %.4f Col[2] = %.4f\n", col1[0] * 255, col1[1] * 255, col1[2] * 255);
-        xinit["clear_color"]["r"] = col1[0] * 255;
-        xinit["clear_color"]["g"] = col1[1] * 255;
-        xinit["clear_color"]["b"] = col1[2] * 255;
-        Xrender_update_init(xinit);
+        Xcore->data["clear_color"]["r"] = col1[0] * 255;
+        Xcore->data["clear_color"]["g"] = col1[1] * 255;
+        Xcore->data["clear_color"]["b"] = col1[2] * 255;
         preferences_window->visable = false;
     }
     if (ImGui::Button("Cancel"))
@@ -136,17 +132,14 @@ void _preference_window()
 int main()
 {
     //printf("App Config Dir = %s\n", Xrender_get_config_dir("test1").c_str());
-    if (Xrender_init({{"window_title", "ncPilot"}, {"maximize", true}, {"clear_color", { {"r", 8}, {"g", 14}, {"b", 84}, {"a", 255}}}}))
+    if (Xrender_init({{"window_title", "ncPilot"}, {"maximize", false}, {"clear_color", { {"r", 8}, {"g", 14}, {"b", 84}, {"a", 255}}}}))
     {
         Xrender_push_key_event({"up", "scroll", zoom_in});
         Xrender_push_key_event({"down", "scroll", zoom_out});
         Xrender_push_key_event({"none", "mouse_move", mouse_motion});
         menu_bar = Xrender_push_gui(true, _menu_bar);
         preferences_window = Xrender_push_gui(false, _preference_window);
-        xinit = Xrender_get_init();
-        pan.x = (double)xinit["window_width"] / 2.0f;
-        pan.y = (double)xinit["window_height"] / 2.0f;
-        zoom = 5;
+        Xcore = Xrender_get_core_variables();
 
         Xrender_object_t *line = Xrender_push_line({
             {"start", {

@@ -10,7 +10,7 @@ SRC_EXT = cpp
 # Path to the source directory, relative to the makefile
 SRC_PATH = ./src/
 # Space-separated pkg-config libraries used by this project
-LIBS = sdl2
+LIBS = glfw3
 # General compiler flags
 COMPILE_FLAGS = -static -std=gnu++17 -fpermissive
 # Additional release-specific flags
@@ -20,7 +20,7 @@ DCOMPILE_FLAGS = -D DEBUG
 # Add additional include paths
 INCLUDES = -I $(SRC_PATH)/ -I../Xrender/src/
 # General linker settings
-LINK_FLAGS = -lz -lm -lSDL2_image -lSDL2_ttf -lSDL2_gfx -L../Xrender/lib -lXrender
+LINK_FLAGS = -lz -lm -L../Xrender/lib -lXrender
 
 ECHO_MESSAGE = $(OS)
 
@@ -36,7 +36,7 @@ endif
 
 ifeq ($(OS),Darwin)
 	ECHO_MESSAGE = "Building for Mac OS X"
-	LINK_FLAGS += -framework Cocoa -framework IOKit
+	LINK_FLAGS += -framework Cocoa -framework IOKit -framework OpenGL
 	LINK_FLAGS += -L/usr/local/lib -L/opt/local/lib
 endif
 
