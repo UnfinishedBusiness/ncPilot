@@ -65,8 +65,15 @@ nlohmann::json view_matrix(nlohmann::json data)
     }
     return new_data;
 }
-bool hmi_update_timer() //This needs to be changed to a window rezize event instead of a timer...
+bool hmi_update_timer()
 {
+    
+    return true;
+}
+void hmi_resize(nlohmann::json e)
+{
+    globals->Xcore->data["window_width"] = (int)e["size"]["width"];
+    globals->Xcore->data["window_height"] = (int)e["size"]["height"];
     hmi_backpane->data["tl"] = {{"x", ((double)globals->Xcore->data["window_width"] / 2) - hmi_backplane_width}, {"y", -((double)globals->Xcore->data["window_height"] / 2)}};
     hmi_backpane->data["br"] = {{"x", ((double)globals->Xcore->data["window_width"] / 2)}, {"y", ((double)globals->Xcore->data["window_height"] / 2)}};
 
@@ -129,7 +136,6 @@ bool hmi_update_timer() //This needs to be changed to a window rezize event inst
 
         button_group_y -= button_height;
     }
-    return true;
 }
 void hmi_push_button_group(std::string b1, std::string b2)
 {
@@ -182,5 +188,6 @@ void hmi_init()
     dro.arc_set = Xrender_push_text({{"textval", "SET: 0.0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.run_time = Xrender_push_text({{"textval", "RUN: 00:00:00"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
 
+    Xrender_push_key_event({"none", "window_resize", hmi_resize});
     Xrender_push_timer(100, hmi_update_timer);
 }
