@@ -17,16 +17,22 @@ void menu_bar_render()
         {
             if (ImGui::MenuItem("Open", "CTRL+O"))
             {
-                ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".dxf", ".");
+                std::string path = ".";
+                std::ifstream f(Xrender_get_config_dir("ncPilot") + "last_gcode_open_path.conf");
+                if (f.is_open())
+                {
+                    std::string p((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+                    path = p;
+                }
+                ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".nc", path.c_str());
             }
+            ImGui::Separator();
             if (ImGui::MenuItem("Close", "")) { globals->quit = true; }
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Edit"))
         {
             if (ImGui::MenuItem("Preferences", "")) { dialogs_show_preferences(true); }
-            if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-            if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
             ImGui::Separator();
             if (ImGui::MenuItem("Cut", "CTRL+X")) {}
             if (ImGui::MenuItem("Copy", "CTRL+C")) {}

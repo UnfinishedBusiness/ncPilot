@@ -7,7 +7,6 @@
 */
 struct preferences_data_t{
     float background_color[3] = { 0.0f, 0.0f, 0.0f };
-    
 };
 struct global_variables_t{
     bool quit;

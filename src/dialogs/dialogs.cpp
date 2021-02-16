@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include <streambuf>
+#include <iostream>
 
 Xrender_gui_t *preferences_window_handle;
 
@@ -18,7 +19,11 @@ void dialogs_file_open()
         {
             std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
             std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
-            printf("File Path: %s\n", filePathName.c_str());
+            printf("File Path: %s, File Path Name: %s\n", filePath.c_str(), filePathName.c_str());
+            std::ofstream out(Xrender_get_config_dir("ncPilot") + "last_gcode_open_path.conf");
+            out << filePath;
+            out << "/";
+            out.close();
             //Xrender_parse_dxf_file(filePathName, handle_dxf);
         }
         ImGuiFileDialog::Instance()->Close();
@@ -35,11 +40,15 @@ void dialogs_preferences()
     ImGui::ColorEdit3("Background Color", globals->preferences.background_color);
     if (ImGui::Button("OK"))
     {
-        printf("Col[0] = %0.4f Col[1] = %.4f Col[2] = %.4f\n", globals->preferences.background_color[0] * 255, globals->preferences.background_color[1] * 255, globals->preferences.background_color[2] * 255);
         globals->Xcore->data["clear_color"]["r"] = globals->preferences.background_color[0] * 255;
         globals->Xcore->data["clear_color"]["g"] = globals->preferences.background_color[1] * 255;
         globals->Xcore->data["clear_color"]["b"] = globals->preferences.background_color[2] * 255;
-
+        //Write preferences to file
+        nlohmann::json preferences;
+        preferences["background_color"] = globals->Xcore->data["clear_color"];
+        std::ofstream out(Xrender_get_config_dir("ncPilot") + "preferences.json");
+        out << preferences.dump();
+        out.close();
         dialogs_show_preferences(false);
     }
     if (ImGui::Button("Cancel"))

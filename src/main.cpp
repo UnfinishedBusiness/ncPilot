@@ -41,9 +41,9 @@ void init_preferences()
         nlohmann::json preferences = nlohmann::json::parse(preference_json_string.c_str());
         try
         {
-            globals->preferences.background_color[0] = (double)preferences["clear_color"]["r"] / 255;
-            globals->preferences.background_color[1] = (double)preferences["clear_color"]["g"] / 255;
-            globals->preferences.background_color[2] = (double)preferences["clear_color"]["b"] / 255;
+            globals->preferences.background_color[0] = (double)preferences["background_color"]["r"] / 255;
+            globals->preferences.background_color[1] = (double)preferences["background_color"]["g"] / 255;
+            globals->preferences.background_color[2] = (double)preferences["background_color"]["b"] / 255;
         }
         catch(...)
         {
