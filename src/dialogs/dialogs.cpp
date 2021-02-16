@@ -38,14 +38,27 @@ void dialogs_preferences()
     ImGui::SetNextWindowSize(ImVec2(600, 500), ImGuiCond_FirstUseEver);
     ImGui::Begin("Preferences", &preferences_window_handle->visable, 0);
     ImGui::ColorEdit3("Background Color", globals->preferences.background_color);
+    ImGui::ColorEdit3("Machine Plane Color", globals->preferences.machine_plane_color);
+    ImGui::ColorEdit3("Cuttable Plane Color", globals->preferences.cuttable_plane_color);
     if (ImGui::Button("OK"))
     {
         globals->Xcore->data["clear_color"]["r"] = globals->preferences.background_color[0] * 255;
         globals->Xcore->data["clear_color"]["g"] = globals->preferences.background_color[1] * 255;
         globals->Xcore->data["clear_color"]["b"] = globals->preferences.background_color[2] * 255;
+
+        globals->machine_plane->data["color"]["r"] = globals->preferences.machine_plane_color[0] * 255;
+        globals->machine_plane->data["color"]["g"] = globals->preferences.machine_plane_color[1] * 255;
+        globals->machine_plane->data["color"]["b"] = globals->preferences.machine_plane_color[2] * 255;
+
+        globals->cuttable_plane->data["color"]["r"] = globals->preferences.cuttable_plane_color[0] * 255;
+        globals->cuttable_plane->data["color"]["g"] = globals->preferences.cuttable_plane_color[1] * 255;
+        globals->cuttable_plane->data["color"]["b"] = globals->preferences.cuttable_plane_color[2] * 255;
+
         //Write preferences to file
         nlohmann::json preferences;
         preferences["background_color"] = globals->Xcore->data["clear_color"];
+        preferences["machine_plane_color"] = globals->machine_plane->data["color"];
+        preferences["cuttable_plane_color"] = globals->cuttable_plane->data["color"];
         std::ofstream out(Xrender_get_config_dir("ncPilot") + "preferences.json");
         out << preferences.dump();
         out.close();

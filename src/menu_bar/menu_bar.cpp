@@ -15,7 +15,7 @@ void menu_bar_render()
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("Open", "CTRL+O"))
+            if (ImGui::MenuItem("Open", ""))
             {
                 std::string path = ".";
                 std::ifstream f(Xrender_get_config_dir("ncPilot") + "last_gcode_open_path.conf");
@@ -27,16 +27,31 @@ void menu_bar_render()
                 ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".nc", path.c_str());
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Close", "")) { globals->quit = true; }
+            if (ImGui::MenuItem("Check for Updates", ""))
+            {
+
+            }
+            if (ImGui::MenuItem("Flash Firmware", ""))
+            {
+
+            }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Close", ""))
+            { 
+                globals->quit = true;
+            }
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Edit"))
         {
-            if (ImGui::MenuItem("Preferences", "")) { dialogs_show_preferences(true); }
-            ImGui::Separator();
-            if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-            if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-            if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+            if (ImGui::MenuItem("Preferences", ""))
+            {
+                dialogs_show_preferences(true);
+            }
+            if (ImGui::MenuItem("Machine Parameters", ""))
+            {
+                //dialogs_show_machine_parameters(true); 
+            }
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();

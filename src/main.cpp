@@ -30,6 +30,13 @@ nlohmann::json view_matrix(nlohmann::json data)
         new_data["center"]["y"] = ((double)data["center"]["y"]* globals->zoom) + globals->pan.y;
         new_data["radius"] = ((double)data["radius"] * globals->zoom);
     }
+    if (data["type"] == "box")
+    {
+        new_data["tl"]["x"] = ((double)data["tl"]["x"] * globals->zoom) + globals->pan.x;
+        new_data["tl"]["y"] = ((double)data["tl"]["y"] * globals->zoom) + globals->pan.y;
+        new_data["br"]["x"] = ((double)data["br"]["x"] * globals->zoom) + globals->pan.x;
+        new_data["br"]["y"] = ((double)data["br"]["y"] * globals->zoom) + globals->pan.y;
+    }
     return new_data;
 }
 void init_preferences()
@@ -44,6 +51,14 @@ void init_preferences()
             globals->preferences.background_color[0] = (double)preferences["background_color"]["r"] / 255;
             globals->preferences.background_color[1] = (double)preferences["background_color"]["g"] / 255;
             globals->preferences.background_color[2] = (double)preferences["background_color"]["b"] / 255;
+
+            globals->preferences.machine_plane_color[0] = (double)preferences["machine_plane_color"]["r"] / 255;
+            globals->preferences.machine_plane_color[1] = (double)preferences["machine_plane_color"]["g"] / 255;
+            globals->preferences.machine_plane_color[2] = (double)preferences["machine_plane_color"]["b"] / 255;
+
+            globals->preferences.cuttable_plane_color[0] = (double)preferences["cuttable_plane_color"]["r"] / 255;
+            globals->preferences.cuttable_plane_color[1] = (double)preferences["cuttable_plane_color"]["g"] / 255;
+            globals->preferences.cuttable_plane_color[2] = (double)preferences["cuttable_plane_color"]["b"] / 255;
         }
         catch(...)
         {
@@ -56,6 +71,14 @@ void init_preferences()
         globals->preferences.background_color[0] = 8.0f / 255;
         globals->preferences.background_color[1] = 14.0f / 255;
         globals->preferences.background_color[2] = 84.0f / 255;
+
+        globals->preferences.machine_plane_color[0] = 100.0f / 255;
+        globals->preferences.machine_plane_color[1] = 100.0f / 255;
+        globals->preferences.machine_plane_color[2] = 100.0f / 255;
+
+        globals->preferences.cuttable_plane_color[0] = 151.0f / 255;
+        globals->preferences.cuttable_plane_color[1] = 5.0f / 255;
+        globals->preferences.cuttable_plane_color[2] = 5.0f / 255;
     }
 }
 int main()
@@ -78,6 +101,7 @@ int main()
     globals->pan.y = 0;
     globals->mouse_pos_in_screen_coordinates = {0, 0};
     globals->mouse_pos_in_matrix_coordinates = {0, 0};
+
     init_preferences();
     if (Xrender_init({
         {"window_title", "ncPilot"},
@@ -99,6 +123,48 @@ int main()
         event_handling_init();
         dialogs_init();
         menu_bar_init();
+
+        globals->machine_plane = Xrender_push_box({
+            {"tl", {
+                {"x", 0},
+                {"y", 45}
+            }},
+            {"br", {
+                {"x", 45},
+                {"y", 0}
+            }},
+            {"radius", 0},
+            {"zindex", -20},
+            {"color", {
+                {"r", globals->preferences.machine_plane_color[0] * 255},
+                {"g", globals->preferences.machine_plane_color[1] * 255},
+                {"b", globals->preferences.machine_plane_color[2] * 255},
+                {"a", 255}
+            }},
+        });
+        globals->machine_plane->matrix_data = view_matrix;
+
+        globals->cuttable_plane = Xrender_push_box({
+            {"tl", {
+                {"x", 1},
+                {"y", 41}
+            }},
+            {"br", {
+                {"x", 41},
+                {"y", 1}
+            }},
+            {"radius", 0},
+            {"zindex", -10},
+            {"color", {
+                {"r", globals->preferences.cuttable_plane_color[0] * 255},
+                {"g", globals->preferences.cuttable_plane_color[1] * 255},
+                {"b", globals->preferences.cuttable_plane_color[2] * 255},
+                {"a", 255}
+            }},
+        });
+        globals->cuttable_plane->matrix_data = view_matrix;
+        
+
         while(Xrender_tick() && globals->quit == false)
         {
             //Running!
