@@ -27,15 +27,6 @@ void menu_bar_render()
                 ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".nc", path.c_str());
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Check for Updates", ""))
-            {
-
-            }
-            if (ImGui::MenuItem("Flash Firmware", ""))
-            {
-
-            }
-            ImGui::Separator();
             if (ImGui::MenuItem("Close", ""))
             { 
                 globals->quit = true;
@@ -52,6 +43,28 @@ void menu_bar_render()
             {
                 //dialogs_show_machine_parameters(true); 
             }
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Tools"))
+        {
+            if (ImGui::MenuItem("Check for Updates", ""))
+            {
+
+            }
+            if (ImGui::MenuItem("Flash Firmware", ""))
+            {
+
+            }
+            ImGui::Separator();
+            if (ImGui::MenuItem("CAD", "")){}
+            if (ImGui::MenuItem("CAM", "")){}
+            if (ImGui::MenuItem("NC", "")){}
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Help"))
+        {
+            if (ImGui::MenuItem("Remote Support", "")) {}
+            if (ImGui::MenuItem("About", "")) {}
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
