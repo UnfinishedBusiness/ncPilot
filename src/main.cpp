@@ -4,6 +4,7 @@
 #include "gui/imgui.h"
 #include "gui/ImGuiFileDialog.h"
 #include "debug/debug.h"
+#include "hmi/hmi.h"
 #include "event_handling/event_handling.h"
 #include "menu_bar/menu_bar.h"
 #include "dialogs/dialogs.h"
@@ -14,31 +15,6 @@
 
 global_variables_t *globals;
 
-nlohmann::json view_matrix(nlohmann::json data)
-{
-    nlohmann::json new_data = data;
-    if (data["type"] == "line")
-    {
-        new_data["start"]["x"] = ((double)data["start"]["x"] * globals->zoom) + globals->pan.x;
-        new_data["start"]["y"] = ((double)data["start"]["y"] * globals->zoom) + globals->pan.y;
-        new_data["end"]["x"] = ((double)data["end"]["x"] * globals->zoom) + globals->pan.x;
-        new_data["end"]["y"] = ((double)data["end"]["y"] * globals->zoom) + globals->pan.y;
-    }
-    if (data["type"] == "arc" || data["type"] == "circle")
-    {
-        new_data["center"]["x"] = ((double)data["center"]["x"] * globals->zoom) + globals->pan.x;
-        new_data["center"]["y"] = ((double)data["center"]["y"]* globals->zoom) + globals->pan.y;
-        new_data["radius"] = ((double)data["radius"] * globals->zoom);
-    }
-    if (data["type"] == "box")
-    {
-        new_data["tl"]["x"] = ((double)data["tl"]["x"] * globals->zoom) + globals->pan.x;
-        new_data["tl"]["y"] = ((double)data["tl"]["y"] * globals->zoom) + globals->pan.y;
-        new_data["br"]["x"] = ((double)data["br"]["x"] * globals->zoom) + globals->pan.x;
-        new_data["br"]["y"] = ((double)data["br"]["y"] * globals->zoom) + globals->pan.y;
-    }
-    return new_data;
-}
 void init_preferences()
 {
     std::ifstream preferences_file(Xrender_get_config_dir("ncPilot") + "preferences.json");
@@ -123,47 +99,7 @@ int main()
         event_handling_init();
         dialogs_init();
         menu_bar_init();
-
-        globals->machine_plane = Xrender_push_box({
-            {"tl", {
-                {"x", 0},
-                {"y", 45}
-            }},
-            {"br", {
-                {"x", 45},
-                {"y", 0}
-            }},
-            {"radius", 0},
-            {"zindex", -20},
-            {"color", {
-                {"r", globals->preferences.machine_plane_color[0] * 255},
-                {"g", globals->preferences.machine_plane_color[1] * 255},
-                {"b", globals->preferences.machine_plane_color[2] * 255},
-                {"a", 255}
-            }},
-        });
-        globals->machine_plane->matrix_data = view_matrix;
-
-        globals->cuttable_plane = Xrender_push_box({
-            {"tl", {
-                {"x", 1},
-                {"y", 41}
-            }},
-            {"br", {
-                {"x", 41},
-                {"y", 1}
-            }},
-            {"radius", 0},
-            {"zindex", -10},
-            {"color", {
-                {"r", globals->preferences.cuttable_plane_color[0] * 255},
-                {"g", globals->preferences.cuttable_plane_color[1] * 255},
-                {"b", globals->preferences.cuttable_plane_color[2] * 255},
-                {"a", 255}
-            }},
-        });
-        globals->cuttable_plane->matrix_data = view_matrix;
-        
+        hmi_init();        
 
         while(Xrender_tick() && globals->quit == false)
         {
