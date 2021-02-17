@@ -9,7 +9,7 @@
 #include "menu_bar/menu_bar.h"
 #include "dialogs/dialogs.h"
 #include "utility/utility.h"
-#include "easy_serial/easy_serial.h"
+#include "motion_control/motion_control.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -58,10 +58,6 @@ void init_preferences()
         globals->preferences.cuttable_plane_color[2] = 5.0f / 255;
     }
 }
-void line_handler(std::string line)
-{
-    printf("Read line from serial: %s\n", line.c_str());
-}
 int main()
 {
     printf("Config directory: %s\n", Xrender_get_config_dir("ncPilot").c_str());
@@ -105,12 +101,12 @@ int main()
         dialogs_init();
         menu_bar_init();
         hmi_init();
-
-        easy_serial s("arduino", NULL, line_handler);
+        motion_control_init();
 
         while(Xrender_tick() && globals->quit == false)
         {
-            s.tick();
+            motion_control_tick();
+            
         }
         Xrender_close();
         delete globals;

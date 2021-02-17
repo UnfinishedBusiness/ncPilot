@@ -12,9 +12,9 @@ class easy_serial{
         bool auto_connect;
         int baudrate;
         bool is_connected;
-        void (*read_line_handler)(std::string line);
-        void (*read_byte_handler)(char byte);
-        easy_serial(std::string c, void (*b)(char), void (*r)(std::string))
+        void (*read_line_handler)(std::string);
+        void (*read_byte_handler)(uint8_t);
+        easy_serial(std::string c, void (*b)(uint8_t), void (*r)(std::string))
         {
             connect_description = c;
             auto_connect = true;
@@ -32,7 +32,7 @@ class easy_serial{
         /*
             Send a single byte
         */
-        void send_byte(char b);
+        void send_byte(uint8_t b);
 
         /*
             Send a un-encoded string
@@ -40,9 +40,10 @@ class easy_serial{
         void send_string(std::string s);
 
         /*
-            Send a CRC32 encoded string
+            Equivilent to arduino delay
         */
-        void send_crc32(std::string s);
+        void delay(int ms);
+
     private:
         serial::Serial serial;
         std::string serial_port;
@@ -54,10 +55,7 @@ class easy_serial{
         #define POLY 0x82f63b78
         uint32_t crc32c(uint32_t crc, const char *buf, size_t len);
 
-        /*
-            Equivilent to arduino delay
-        */
-        void delay(int ms);
+        
 
 
 };

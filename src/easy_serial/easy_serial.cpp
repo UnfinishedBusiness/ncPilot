@@ -2,21 +2,40 @@
 #include <serial/serial.h>
 #include "easy_serial.h"
 
+void easy_serial::send_byte(uint8_t b)
+{
+    if (this->is_connected == true)
+    {
+        try
+        {
+            uint8_t bytes[1];
+            bytes[0] = b;
+            this->serial.write(bytes, 1);
+        }
+        catch(...)
+        {
+            //do nothing
+        }
+    }
+}
+void easy_serial::send_string(std::string s)
+{
+    if (this->is_connected == true)
+    {
+        try
+        {
+            this->serial.write(s);
+        }
+        catch(...)
+        {
+            //do nothing
+        }
+    }
+}
 void easy_serial::delay(int ms)
 {
     unsigned long delay_timer = Xrender_millis();
     while((Xrender_millis() - delay_timer) < ms);
-}
-uint32_t easy_serial::crc32c(uint32_t crc, const char *buf, size_t len)
-{
-    int k;
-    crc = ~crc;
-    while (len--) {
-        crc ^= *buf++;
-        for (k = 0; k < 8; k++)
-            crc = crc & 1 ? (crc >> 1) ^ POLY : crc >> 1;
-    }
-    return ~crc;
 }
 void easy_serial::tick()
 {
@@ -54,11 +73,14 @@ void easy_serial::tick()
             //std::cout << "available exception!\n";
             /* if a disconnect happens we need to close the port so is_open returns false */
             this->serial.close();
+            this->serial_port = "";
+            this->is_connected = false;
         }
     }
     else
     {
         this->is_connected = false;
+        this->serial_port = "";
     }
     if (this->is_connected == false)
     {
@@ -107,6 +129,7 @@ void easy_serial::tick()
                 catch (...)
                 {
                     this->is_connected = false;
+                    this->serial_port = "";
                 }
             }
         }
