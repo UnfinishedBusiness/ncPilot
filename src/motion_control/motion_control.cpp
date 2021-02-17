@@ -6,6 +6,7 @@
 #include "easy_serial/easy_serial.h"
 #include "json/json.h"
 #include <motion_control/motion_control.h>
+#include "logging/loguru.h"
 
 easy_serial motion_controller("arduino", byte_handler, line_handler);
 
@@ -86,19 +87,21 @@ void run_pop()
         gcode_stack.erase(gcode_stack.begin());
         if (line.find("fire_torch") != std::string::npos)
         {
-            printf("[fire_torch] Sending probing cycle! - Waiting for probe to finish!\n");
+            LOG_F(INFO, "[fire_torch] Sending probing cycle! - Waiting for probe to finish!");
             std::vector args = split(line, ' ');
             if (args.size() == 3)
             {
                 callback_args["pierce_height"] = args[1];
                 callback_args["pierce_delay"] = args[2];
                 callback_args["cut_height"] = args[3];
+                LOG_SCOPE_F(INFO, "Found arguments - %s", callback_args.dump().c_str());
             }
             else
             {
                 callback_args["pierce_height"] = 0.150;
                 callback_args["pierce_delay"] = 1.2;
                 callback_args["cut_height"] = 0.060;
+                LOG_SCOPE_F(INFO, "No arguments - Using default!");
             }
             okay_callback = NULL;
             probe_callback = &fire_torch_and_pierce;
@@ -106,7 +109,7 @@ void run_pop()
         }
         else if (line.find("touch_torch") != std::string::npos)
         {
-            printf("[touch_torch] Sending probing cycle! - Waiting for probe to finish!\n");
+            LOG_F(INFO, "[touch_torch] Sending probing cycle! - Waiting for probe to finish!");
             std::vector args = split(line, ' ');
             if (args.size() == 3)
             {
@@ -136,7 +139,7 @@ void run_pop()
         }
         else
         {
-            printf("(runpop) sending %s\n", line.c_str());
+            LOG_F(INFO, "(runpop) sending %s", line.c_str());
             motion_controller_send_crc32(line);
         }
     }
@@ -147,23 +150,34 @@ void run_pop()
     
 }
 /*          end callbacks           */
+nlohmann::json motion_controller_get_dro()
+{
+    return dro_data;
+}
 nlohmann::json motion_controller_get_run_time()
 {
-    unsigned long m = (Xrender_millis() - program_run_time);
-    unsigned long seconds=(m/1000)%60;
-    unsigned long minutes=(m/(1000*60))%60;
-    unsigned long hours=(m/(1000*60*60))%24;
-    return {
-        {"seconds", seconds},
-        {"minutes", minutes},
-        {"hours", hours}
-    };
+    if (program_run_time > 0)
+    {
+        unsigned long m = (Xrender_millis() - program_run_time);
+        unsigned long seconds=(m/1000)%60;
+        unsigned long minutes=(m/(1000*60))%60;
+        unsigned long hours=(m/(1000*60*60))%24;
+        return {
+            {"seconds", seconds},
+            {"minutes", minutes},
+            {"hours", hours}
+        };
+    }
+    else
+    {
+        return NULL;
+    }
 }
 void motion_controller_cmd(std::string cmd)
 {
     if (cmd == "abort")
     {
-        printf("Aborting!\n");
+        LOG_F(INFO, "Aborting!");
         motion_controller_send_crc32("!");
         abort_pending = true;
         motion_controller_clear_stack();
@@ -182,6 +196,7 @@ void motion_controller_run_stack()
 {
     run_pop();
     okay_callback = &run_pop;
+    program_run_time = Xrender_millis();
 }
 
 uint32_t motion_controller_crc32c(uint32_t crc, const char *buf, size_t len)
@@ -208,7 +223,7 @@ void line_handler(std::string line)
                 if (abort_pending == true && (bool)dro_data["IN_MOTION"] == false)
                 {
                     motion_controller.delay(300);
-                    printf("Sending Reset!\n");
+                    LOG_F(INFO, "Handling pending abort -> Sending Reset!");
                     motion_controller.send_byte(0x18);
                     motion_controller.delay(300);
                     abort_pending = false;
@@ -219,38 +234,39 @@ void line_handler(std::string line)
             }
             catch(...)
             {
-                //need to log the error
+                LOG_F(ERROR, "Error parsing DRO JSON data!");
             }
         }
         else if (line.find("[CHECKSUM_FAILURE]") != std::string::npos)
         {
-            printf("Checksum failure!\n");
+            LOG_F(ERROR, "Checksum failure, aborting program!");
             motion_controller_cmd("abort");
         }
         else if (line.find("error") != std::string::npos)
         {
+            LOG_F(ERROR, "Controller Error: %s", line.c_str());
             if (line.find("9") != std::string::npos)
             {
-                printf("Program was aborted because floating head or ohmic touch input was activated before probing cycle began!\n");
+                LOG_F(WARNING, "Program was aborted because floating head or ohmic touch input was activated before probing cycle began!");
             }
         }
         else if (line.find("[CRASH]") != std::string::npos && handling_crash == false)
         {
             if (torch_on == true && (Xrender_millis() - torch_on_timer) > 2000)
             {
-                printf("Program was aborted because troch crash was detected!\n");
+                LOG_F(INFO, "Program was aborted because troch crash was detected!");
                 motion_controller_cmd("abort");
                 handling_crash = true;
             }
         }
         else if (line.find("[PRB") != std::string::npos)
         {
-            printf("Probe finished - Running callback!\n");
+            LOG_F(INFO, "Probe finished - Running callback!");
             if (probe_callback != NULL) probe_callback();
         }
         else
         {
-            printf("Unidentified line recived - %s\n", line.c_str());
+            LOG_F(WARNING, "Unidentified line recived - %s", line.c_str());
         }
     }
 
@@ -258,20 +274,23 @@ void line_handler(std::string line)
     {
         if (line.find("Grbl") != std::string::npos)
         {
-            printf("Controller ready!\n");
+            LOG_F(INFO, "Controller ready!");
             controller_ready = true;
         }
     }
 }
-void byte_handler(uint8_t b)
+bool byte_handler(uint8_t b)
 {
     if (controller_ready == true)
     {
         if (b == '>')
         {
+            LOG_F(INFO, "Recieved ok byte!");
             if (okay_callback != NULL) okay_callback();
+            return true;
         }
     }
+    return false;
 }
 void motion_controller_send_crc32(std::string s)
 {
@@ -307,6 +326,7 @@ void motion_control_init()
     torch_on_timer = 0;
     abort_pending = false;
     handling_crash = false;
+    program_run_time = 0;
     Xrender_push_timer(100, motion_control_status_timer);
 }
 void motion_control_tick()
@@ -318,7 +338,7 @@ void motion_control_tick()
         {
             if (motion_sync_callback != NULL && (bool)dro_data["IN_MOTION"] == false)
             {
-                printf("Motion is synced, calling pending callback!\n");
+                LOG_F(INFO, "Motion is synced, calling pending callback!");
                 motion_sync_callback();
                 motion_sync_callback = NULL;
             }

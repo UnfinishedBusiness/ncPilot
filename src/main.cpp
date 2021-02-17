@@ -5,6 +5,7 @@
 #include "gui/ImGuiFileDialog.h"
 #include "debug/debug.h"
 #include "hmi/hmi.h"
+#include "logging/loguru.h"
 #include "event_handling/event_handling.h"
 #include "menu_bar/menu_bar.h"
 #include "dialogs/dialogs.h"
@@ -58,9 +59,9 @@ void init_preferences()
         globals->preferences.cuttable_plane_color[2] = 5.0f / 255;
     }
 }
-int main()
+int main(int argc, char **argv)
 {
-    printf("Config directory: %s\n", Xrender_get_config_dir("ncPilot").c_str());
+    loguru::init(argc, argv);
     if (!utility_dir_exists(Xrender_get_config_dir("ncPilot").c_str()))
     {
         #if defined(_WIN32)
@@ -80,6 +81,12 @@ int main()
     globals->mouse_pos_in_matrix_coordinates = {0, 0};
 
     init_preferences();
+    loguru::add_file(string(Xrender_get_config_dir("ncPilot") + "ncPilot.log").c_str(), loguru::Append, loguru::Verbosity_MAX);
+    // Only show most relevant things on stderr:
+    loguru::g_stderr_verbosity = 1;
+    
+    LOG_F(INFO, "Config directory: %s", Xrender_get_config_dir("ncPilot").c_str());
+
     if (Xrender_init({
         {"window_title", "ncPilot"},
         {"ini_file_name", Xrender_get_config_dir("ncPilot") + "gui.ini"}, 
@@ -102,12 +109,11 @@ int main()
         menu_bar_init();
         hmi_init();
         motion_control_init();
-
         while(Xrender_tick() && globals->quit == false)
         {
             motion_control_tick();
-            
         }
+        LOG_F(INFO, "Shutting down!");
         Xrender_close();
         delete globals;
     }

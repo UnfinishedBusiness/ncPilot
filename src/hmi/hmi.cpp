@@ -2,8 +2,12 @@
 #include <application.h>
 #include <vector>
 #include <hmi/hmi.h>
+#include <motion_control/motion_control.h>
 #include <iostream>
 #include <stdio.h>
+#include <iomanip>
+#include <sstream>
+#include "logging/loguru.h"
 
 double hmi_backplane_width = 300;
 Xrender_object_t *hmi_backpane;
@@ -13,6 +17,59 @@ Xrender_object_t *hmi_button_backpane;
 dro_group_data_t dro;
 std::vector<hmi_button_group_t> button_groups;
 
+void hmi_handle_button(std::string id)
+{
+    nlohmann::json dro_data = motion_controller_get_dro();
+    try{
+        if (dro_data["IN_MOTION"] == false)
+        {
+            if (id == "Wpos")
+            {
+                LOG_F(INFO, "Clicked Wpos");
+                motion_controller_push_stack("G0 X10 Y10");
+                motion_controller_run_stack();
+            }
+            else if (id == "Park")
+            {
+                LOG_F(INFO, "Clicked Park");
+                motion_controller_push_stack("G53 G0 Z0");
+                motion_controller_push_stack("G53 G0 X0 Y0");
+                motion_controller_run_stack();
+            }
+            else if (id == "Zero X")
+            {
+                LOG_F(INFO, "Clicked Zero X");
+            }
+            else if (id == "Zero Y")
+            {
+                LOG_F(INFO, "Clicked Zero Y");
+            }
+            else if (id == "Retract")
+            {
+                LOG_F(INFO, "Clicked Retract");
+                motion_controller_push_stack("G53 G0 Z0");
+                motion_controller_run_stack();
+            }
+            else if (id == "Touch")
+            {
+                LOG_F(INFO, "Clicked Touch");
+                motion_controller_push_stack("touch_torch");
+                motion_controller_run_stack();
+            }
+        }
+        else
+        {
+            if (id == "Clean")
+            {
+                LOG_F(INFO, "Clean");
+            }
+        }
+    }
+    catch(...)
+    {
+        //log exception
+    }
+}
 void mouse_callback(Xrender_object_t* o,nlohmann::json e)
 {
     if (o->data["type"] == "box")
@@ -36,6 +93,7 @@ void mouse_callback(Xrender_object_t* o,nlohmann::json e)
         {
             //printf("Mouse Up - %s\n", e.dump().c_str());
             o->data["color"] = {{"r", 10}, {"g", 100}, {"b", 10}, {"a", 255}};
+            hmi_handle_button(o->data["id"]);
         }
     }
 }
@@ -65,9 +123,30 @@ nlohmann::json view_matrix(nlohmann::json data)
     }
     return new_data;
 }
+std::string to_fixed_string(double n, int d)
+{
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(d) << n;
+    return stream.str();
+}
 bool hmi_update_timer()
 {
-    
+    nlohmann::json dro_data = motion_controller_get_dro();
+    if (dro_data.contains("STATUS"))
+    {
+        // { "STATUS": "Idle", "MCS": { "x": 0.000,"y": 0.000,"z": 0.000 }, "WCS": { "x": -4.594,"y": -3.260,"z": 0.000 }, "FEED": 0, "ADC": 0, "IN_MOTION": false, "ARC_OK": true }
+        dro.x.work_readout->data["textval"] = to_fixed_string(dro_data["WCS"]["x"], 4);
+        dro.y.work_readout->data["textval"] = to_fixed_string(dro_data["WCS"]["y"], 4);
+        dro.z.work_readout->data["textval"] = to_fixed_string(dro_data["WCS"]["z"], 4);
+        dro.x.absolute_readout->data["textval"] = to_fixed_string(dro_data["MCS"]["x"], 4);
+        dro.y.absolute_readout->data["textval"] = to_fixed_string(dro_data["MCS"]["y"], 4);
+        dro.z.absolute_readout->data["textval"] = to_fixed_string(dro_data["MCS"]["z"], 4);
+        dro.feed->data["textval"] = "FEED: " + to_fixed_string(dro_data["FEED"], 1);
+        dro.arc_readout->data["textval"] = "ARC: " + to_fixed_string(dro_data["ADC"], 1);
+        dro.arc_set->data["textval"] = "SET: " + to_fixed_string(0, 1);
+        nlohmann::json runtime = motion_controller_get_run_time();
+        if (runtime != NULL) dro.run_time->data["textval"] = "RUN: " + to_string(runtime["hours"]) + ":" + to_string(runtime["minutes"]) + ":" + to_string(runtime["seconds"]);
+    }
     return true;
 }
 void hmi_resize(nlohmann::json e)
@@ -141,10 +220,10 @@ void hmi_push_button_group(std::string b1, std::string b2)
 {
     hmi_button_group_t group;
     group.button_one.name = b1;
-    group.button_one.object = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 200},{"color", {{"r", 10},{"g", 10},{"b", 10},{"a", 255}}},});
+    group.button_one.object = Xrender_push_box({{"id", b1}, {"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 200},{"color", {{"r", 10},{"g", 10},{"b", 10},{"a", 255}}},});
     group.button_one.label = Xrender_push_text({{"textval", group.button_one.name},{"font", "default"},{"position", {{"x", -10000},{"y", -10000}}},{"font_size", 20},{"zindex", 210},{"angle", 0},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
     group.button_two.name = b2;
-    group.button_two.object = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 200},{"color", {{"r", 10},{"g", 10},{"b", 10},{"a", 255}}},});
+    group.button_two.object = Xrender_push_box({{"id", b2}, {"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 200},{"color", {{"r", 10},{"g", 10},{"b", 10},{"a", 255}}},});
     group.button_two.label = Xrender_push_text({{"textval", group.button_two.name},{"font", "default"},{"position", {{"x", -10000},{"y", -10000}}},{"font_size", 20},{"zindex", 210},{"angle", 0},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
     group.button_one.object->mouse_callback = mouse_callback;
     group.button_two.object->mouse_callback = mouse_callback;
@@ -169,17 +248,17 @@ void hmi_init()
     hmi_push_button_group("Run", "Abort");
  
     dro.x.label = Xrender_push_text({{"textval", "X"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 50},{"zindex", 210},{"angle", 0},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
-    dro.x.work_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 50},{"zindex", 210},{"angle", 0},{"color", {{"r", 10},{"g", 150},{"b", 10},{"a", 255},}},});
+    dro.x.work_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 40},{"zindex", 210},{"angle", 0},{"color", {{"r", 10},{"g", 150},{"b", 10},{"a", 255},}},});
     dro.x.absolute_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 15},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.x.divider = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 100},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
 
     dro.y.label = Xrender_push_text({{"textval", "Y"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 50},{"zindex", 210},{"angle", 0},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
-    dro.y.work_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 50},{"zindex", 210},{"angle", 0},{"color", {{"r", 10},{"g", 150},{"b", 10},{"a", 255},}},});
+    dro.y.work_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 40},{"zindex", 210},{"angle", 0},{"color", {{"r", 10},{"g", 150},{"b", 10},{"a", 255},}},});
     dro.y.absolute_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 15},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.y.divider = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 100},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
 
     dro.z.label = Xrender_push_text({{"textval", "Z"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 50},{"zindex", 210},{"angle", 0},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
-    dro.z.work_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 50},{"zindex", 210},{"angle", 0},{"color", {{"r", 10},{"g", 150},{"b", 10},{"a", 255},}},});
+    dro.z.work_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 40},{"zindex", 210},{"angle", 0},{"color", {{"r", 10},{"g", 150},{"b", 10},{"a", 255},}},});
     dro.z.absolute_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 15},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.z.divider = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 100},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
 

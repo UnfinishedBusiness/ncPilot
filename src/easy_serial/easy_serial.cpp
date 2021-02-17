@@ -1,6 +1,7 @@
 #include <Xrender.h>
 #include <serial/serial.h>
 #include "easy_serial.h"
+#include "logging/loguru.h"
 
 void easy_serial::send_byte(uint8_t b)
 {
@@ -48,9 +49,13 @@ void easy_serial::tick()
             if (bytes_available > 0)
             {
                 std::string read = this->serial.read(bytes_available);
+                bool eat_byte = false;
                 for (int x = 0; x < read.size(); x++)
                 {
-                    if (this->read_byte_handler != NULL) this->read_byte_handler(read.at(x));
+                    if (this->read_byte_handler != NULL)
+                    {
+                        eat_byte = this->read_byte_handler(read.at(x));
+                    }
                     if (read.at(x) == '\n' || read.at(x) == '\r')
                     {
                         this->read_line.erase(std::remove(this->read_line.begin(), this->read_line.end(), '\n'),this->read_line.end());
@@ -63,15 +68,17 @@ void easy_serial::tick()
                     }
                     else
                     {
-                        this->read_line.push_back(read.at(x));
+                        if (eat_byte == false)
+                        {
+                            this->read_line.push_back(read.at(x));
+                        }
                     }
                 }
             }
         }
         catch(...)
         {
-            //std::cout << "available exception!\n";
-            /* if a disconnect happens we need to close the port so is_open returns false */
+            LOG_F(WARNING, "Device Disconnected: %s", this->serial_port.c_str());
             this->serial.close();
             this->serial_port = "";
             this->is_connected = false;
@@ -94,13 +101,14 @@ void easy_serial::tick()
                 while( iter != devices_found.end() )
                 {
                     serial::PortInfo device = *iter++;
-                    //printf("%s - %s\n\r", device.port.c_str(), device.description.c_str());
+                    if (this->logged_devices_once == false) LOG_F(INFO, "Found Device-> %s - %s", device.port.c_str(), device.description.c_str());
                     std::transform(device.description.begin(), device.description.end(), device.description.begin(),[](unsigned char c){ return std::tolower(c); });
                     std::transform(connect_description.begin(), connect_description.end(), connect_description.begin(),[](unsigned char c){ return std::tolower(c); });
                     if (device.description.find(connect_description) != std::string::npos)
                     {
                         this->serial_port = device.port.c_str();
                     }
+                    this->logged_devices_once = true;
                 }
             }
             if (this->serial_port != "")
@@ -118,11 +126,11 @@ void easy_serial::tick()
                         this->serial.setDTR(true);
                         this->delay(100);
                         this->serial.setDTR(false);
-                        printf("\topened port! %s\n\r", this->serial_port.c_str());
+                        LOG_F(INFO,"Opened port: %s at %d baudrate", this->serial_port.c_str(), this->baudrate);
                     }
                     else
                     {
-                        printf("\tcould not open port!\n\r");
+                        LOG_F(ERROR, "Could not open port! %s", this->serial_port.c_str());
                         this->is_connected = false;
                     }
                 }

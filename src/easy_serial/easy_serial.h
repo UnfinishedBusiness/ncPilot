@@ -13,8 +13,8 @@ class easy_serial{
         int baudrate;
         bool is_connected;
         void (*read_line_handler)(std::string);
-        void (*read_byte_handler)(uint8_t);
-        easy_serial(std::string c, void (*b)(uint8_t), void (*r)(std::string))
+        bool (*read_byte_handler)(uint8_t); //returns true if byte is to be left off line and false if it is to be included!
+        easy_serial(std::string c, bool (*b)(uint8_t), void (*r)(std::string))
         {
             connect_description = c;
             auto_connect = true;
@@ -23,6 +23,7 @@ class easy_serial{
             read_byte_handler = b;
             connection_retry_timer = 0;
             serial_port = "";
+            logged_devices_once = false;
         }
         /*
             access to main loop
@@ -49,6 +50,7 @@ class easy_serial{
         std::string serial_port;
         std::string read_line;
         unsigned long connection_retry_timer;
+        bool logged_devices_once;
         /* 
             CRC-32C (iSCSI) polynomial in reversed bit order.
         */

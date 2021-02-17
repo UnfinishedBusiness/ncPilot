@@ -11,10 +11,11 @@ void run_pop();
 /*      End callbacks       */
 
 /*      Private Functions       */
-void byte_handler(uint8_t);
+bool byte_handler(uint8_t);
 void line_handler(std::string);
 /*      End Private Functions       */
 
+nlohmann::json motion_controller_get_dro();
 nlohmann::json motion_controller_get_run_time();
 void motion_controller_cmd(std::string cmd);
 void motion_controller_clear_stack();
