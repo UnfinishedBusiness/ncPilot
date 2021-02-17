@@ -83,27 +83,22 @@ void gcode_push_current_path_to_viewer()
         Geometry geo;
         try
         {
-            std::vector<double_point_t> simplified = geo.simplify(current_path.points, 0.030);
-            for (int i = 1; i < simplified.size(); i++)
+            std::vector<double_point_t> simplified = geo.simplify(current_path.points, 0.010);
+            nlohmann::json path;
+            for (int i = 0; i < simplified.size(); i++)
             {
-                Xrender_object_t *o = Xrender_push_line({
-                    {"start", {
-                        {"x", simplified[i-1].x},
-                        {"y", simplified[i-1].y}
-                    }},
-                    {"end", {
-                        {"x", simplified[i].x},
-                        {"y", simplified[i].y}
-                    }},
-                    {"color", {
-                        {"r", 255},
-                        {"g", 255},
-                        {"b", 255},
-                        {"a", 255},
-                    }},
-                });
-                o->matrix_data = &view_matrix;
+                path.push_back({{"x", simplified[i].x}, {"y", simplified[i].y}});
             }
+            Xrender_object_t *o = Xrender_push_path({
+                {"points", path},
+                {"color", {
+                    {"r", 255},
+                    {"g", 255},
+                    {"b", 255},
+                    {"a", 255},
+                }},
+            });
+            o->matrix_data = &view_matrix;
         }
         catch(const std::exception& e)
         {

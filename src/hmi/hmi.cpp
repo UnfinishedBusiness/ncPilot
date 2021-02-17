@@ -146,6 +146,14 @@ nlohmann::json view_matrix(nlohmann::json data)
         new_data["br"]["x"] = ((double)data["br"]["x"] * globals->zoom) + globals->pan.x;
         new_data["br"]["y"] = ((double)data["br"]["y"] * globals->zoom) + globals->pan.y;
     }
+    if (data["type"] == "path")
+    {
+        for (int x = 0; x < data["points"].size(); x++)
+        {
+            new_data["points"][x]["x"] = ((double)data["points"][x]["x"] * globals->zoom) + globals->pan.x;
+            new_data["points"][x]["y"] = ((double)data["points"][x]["y"] * globals->zoom) + globals->pan.y;
+        }
+    }
     return new_data;
 }
 std::string to_fixed_string(double n, int d)
