@@ -3,7 +3,9 @@
 #include <application.h>
 #include "gui/imgui.h"
 #include "gui/ImGuiFileDialog.h"
+#include "logging/loguru.h"
 #include "json/json.h"
+#include "gcode/gcode.h"
 #include <string>
 #include <fstream>
 #include <streambuf>
@@ -19,12 +21,16 @@ void dialogs_file_open()
         {
             std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
             std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
-            printf("File Path: %s, File Path Name: %s\n", filePath.c_str(), filePathName.c_str());
+            LOG_F(INFO, "File Path: %s, File Path Name: %s", filePath.c_str(), filePathName.c_str());
             std::ofstream out(Xrender_get_config_dir("ncPilot") + "last_gcode_open_path.conf");
             out << filePath;
             out << "/";
             out.close();
             //Xrender_parse_dxf_file(filePathName, handle_dxf);
+            if (gcode_open_file(filePathName))
+            {
+                Xrender_push_timer(0, &gcode_parse_timer);
+            }
         }
         ImGuiFileDialog::Instance()->Close();
     }

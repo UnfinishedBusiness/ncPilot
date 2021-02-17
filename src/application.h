@@ -21,6 +21,8 @@ struct global_variables_t{
     Xrender_object_t *machine_plane;
     Xrender_object_t *cuttable_plane;
 };
+
+nlohmann::json view_matrix(nlohmann::json data);
 extern global_variables_t *globals;
 
 #endif //APPLICATION_

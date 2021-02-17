@@ -60,6 +60,9 @@
         "utility": "cpp",
         "vector": "cpp",
         "*.tcc": "cpp",
-        "hashtable": "cpp"
+        "hashtable": "cpp",
+        "deque": "cpp",
+        "regex": "cpp",
+        "thread": "cpp"
     }
 }
