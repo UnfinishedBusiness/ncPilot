@@ -27,6 +27,7 @@ void hmi_handle_button(std::string id)
             {
                 LOG_F(INFO, "Clicked Wpos");
                 motion_controller_push_stack("G0 X10 Y10");
+                motion_controller_push_stack("M30");
                 motion_controller_run_stack();
             }
             else if (id == "Park")
@@ -34,6 +35,7 @@ void hmi_handle_button(std::string id)
                 LOG_F(INFO, "Clicked Park");
                 motion_controller_push_stack("G53 G0 Z0");
                 motion_controller_push_stack("G53 G0 X0 Y0");
+                motion_controller_push_stack("M30");
                 motion_controller_run_stack();
             }
             else if (id == "Zero X")
@@ -48,26 +50,49 @@ void hmi_handle_button(std::string id)
             {
                 LOG_F(INFO, "Clicked Retract");
                 motion_controller_push_stack("G53 G0 Z0");
+                motion_controller_push_stack("M30");
                 motion_controller_run_stack();
             }
             else if (id == "Touch")
             {
                 LOG_F(INFO, "Clicked Touch");
                 motion_controller_push_stack("touch_torch");
+                motion_controller_push_stack("M30");
                 motion_controller_run_stack();
+            }
+            else if (id == "Run")
+            {
+                LOG_F(INFO, "Clicked Run");
+            }
+            else if (id == "Test Run")
+            {
+                LOG_F(INFO, "Clicked Test Run");
             }
         }
         else
         {
-            if (id == "Clean")
+            if (id == "Abort")
             {
-                LOG_F(INFO, "Clean");
+                LOG_F(INFO, "Clicked Abort");
+                motion_controller_cmd("abort");
             }
+        }
+        if (id == "Clean")
+        {
+            LOG_F(INFO, "Clicked Clean");
+        }
+        else if (id == "Fit")
+        {
+            LOG_F(INFO, "Clicked Fit");
+        }
+        else if (id == "ATHC")
+        {
+            LOG_F(INFO, "Clicked ATHC");
         }
     }
     catch(...)
     {
-        //log exception
+        LOG_F(ERROR, "JSON Parsing ERROR!");
     }
 }
 void mouse_callback(Xrender_object_t* o,nlohmann::json e)
@@ -240,7 +265,6 @@ void hmi_init()
     hmi_button_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 100},{"color", {{"r", 29},{"g", 32},{"b", 48},{"a", 255}}},});
 
     hmi_push_button_group("Zero X", "Zero Y");
-    hmi_push_button_group("Touch", "Retract");
     hmi_push_button_group("Touch", "Retract");
     hmi_push_button_group("Fit", "Clean");
     hmi_push_button_group("Wpos", "Park");

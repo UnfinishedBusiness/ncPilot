@@ -37,6 +37,12 @@ bool handling_crash;
 /*
     Callbacks that get called via okay_callback
 */
+void program_finished()
+{
+    LOG_F(INFO, "M30 Program finished!");
+    program_run_time = 0;
+    motion_controller_clear_stack();
+}
 void fire_torch_and_pierce()
 {
     okay_callback = &run_pop;
@@ -60,9 +66,7 @@ void touch_torch_and_pierce()
     //Remember that inserting at the top of list means its the next code to run, meaning
     //This list that we are inserting is ran from bottom to top or LIFO mode
     gcode_stack.insert(gcode_stack.begin(), "G90");
-    gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string((double)callback_args["cut_height"] - (double)callback_args["pierce_height"]));
-    gcode_stack.insert(gcode_stack.begin(), "G4P" + to_string((double)callback_args["pierce_delay"]));
-    gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string((double)callback_args["pierce_height"]));
+    gcode_stack.insert(gcode_stack.begin(), "G91G0Z0.5");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z0.2"); //Floating head takeup
     torch_on = true;
     torch_on_timer = Xrender_millis();
@@ -130,12 +134,13 @@ void run_pop()
         else if (line.find("torch_off") != std::string::npos)
         {
             okay_callback = NULL;
-            motion_sync_callback = torch_off_and_retract;
+            motion_sync_callback = &torch_off_and_retract;
         }
         else if (line.find("M30") != std::string::npos)
         {
-            program_run_time = 0;
-            motion_controller_clear_stack();
+            motion_sync_callback = &program_finished;
+            okay_callback = NULL;
+            probe_callback = NULL;
         }
         else
         {
@@ -178,7 +183,7 @@ void motion_controller_cmd(std::string cmd)
     if (cmd == "abort")
     {
         LOG_F(INFO, "Aborting!");
-        motion_controller_send_crc32("!");
+        motion_controller_send("!");
         abort_pending = true;
         motion_controller_clear_stack();
     }
@@ -194,9 +199,9 @@ void motion_controller_push_stack(std::string gcode)
 }
 void motion_controller_run_stack()
 {
+    program_run_time = Xrender_millis();
     run_pop();
     okay_callback = &run_pop;
-    program_run_time = Xrender_millis();
 }
 
 uint32_t motion_controller_crc32c(uint32_t crc, const char *buf, size_t len)
@@ -230,6 +235,7 @@ void line_handler(std::string line)
                     program_run_time = 0;
                     torch_on = false;
                     handling_crash = false;
+                    controller_ready = false;
                 }
             }
             catch(...)
@@ -269,7 +275,6 @@ void line_handler(std::string line)
             LOG_F(WARNING, "Unidentified line recived - %s", line.c_str());
         }
     }
-
     if (controller_ready == false)
     {
         if (line.find("Grbl") != std::string::npos)
@@ -316,6 +321,18 @@ void motion_controller_send(std::string s)
 bool motion_control_status_timer()
 {
     //also use this to check if auto thc should be turned on...
+    if (controller_ready == true)
+    {
+        if (dro_data.contains("STATUS"))
+        {
+            if (motion_sync_callback != NULL && (bool)dro_data["IN_MOTION"] == false && (Xrender_millis() - program_run_time) > 500)
+            {
+                LOG_F(INFO, "Motion is synced, calling pending callback!");
+                motion_sync_callback();
+                motion_sync_callback = NULL;
+            }
+        }
+    }
     motion_controller_send("?");
     return true;
 }
@@ -332,18 +349,6 @@ void motion_control_init()
 void motion_control_tick()
 {
     motion_controller.tick();
-    if (controller_ready == true)
-    {
-        if (dro_data.contains("STATUS"))
-        {
-            if (motion_sync_callback != NULL && (bool)dro_data["IN_MOTION"] == false)
-            {
-                LOG_F(INFO, "Motion is synced, calling pending callback!");
-                motion_sync_callback();
-                motion_sync_callback = NULL;
-            }
-        }
-    }
     if (motion_controller.is_connected == false)
     {
         controller_ready = false;
