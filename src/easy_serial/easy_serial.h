@@ -8,6 +8,7 @@
 
 class easy_serial{
     public:
+        serial::Serial serial;
         std::string connect_description;
         bool auto_connect;
         int baudrate;
@@ -46,7 +47,6 @@ class easy_serial{
         void delay(int ms);
 
     private:
-        serial::Serial serial;
         std::string serial_port;
         std::string read_line;
         unsigned long connection_retry_timer;

@@ -6,6 +6,7 @@
 #include "logging/loguru.h"
 #include "json/json.h"
 #include "gcode/gcode.h"
+#include "motion_control/motion_control.h"
 #include <string>
 #include <fstream>
 #include <streambuf>
@@ -15,6 +16,8 @@ Xrender_gui_t *preferences_window_handle;
 Xrender_gui_t *machine_parameters_window_handle;
 Xrender_gui_t *progress_window_handle;
 float progress = 0.0f;
+Xrender_gui_t *info_window_handle;
+std::string info;
 
 void dialogs_file_open()
 {
@@ -139,6 +142,7 @@ void dialogs_machine_parameters()
         std::ofstream out(Xrender_get_config_dir("ncPilot") + "machine_parameters.json");
         out << preferences.dump();
         out.close();
+        motion_controller_trigger_reset();
         dialogs_show_machine_parameters(false);
     }
     ImGui::SameLine();
@@ -166,10 +170,32 @@ void dialogs_progress_window()
     ImGui::End();
 }
 
+void dialogs_show_info_window(bool s)
+{
+    info_window_handle->visable = s;
+}
+void dialogs_set_info_value(std::string i)
+{
+    info = i;
+    LOG_F(WARNING, "Info Window => %s", info.c_str());
+    dialogs_show_info_window(true);
+}
+void dialogs_info_window()
+{
+    ImGui::Begin("Info", &info_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Text("%s", info.c_str());
+    if (ImGui::Button("Close"))
+    {
+        dialogs_show_info_window(false);
+    }
+    ImGui::End();
+}
+
 void dialogs_init()
 {
     Xrender_push_gui(true, dialogs_file_open);
     preferences_window_handle = Xrender_push_gui(false, dialogs_preferences);
     machine_parameters_window_handle = Xrender_push_gui(false, dialogs_machine_parameters);
     progress_window_handle = Xrender_push_gui(false, dialogs_progress_window);
+    info_window_handle = Xrender_push_gui(false, dialogs_info_window);
 }

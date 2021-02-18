@@ -3,13 +3,22 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "dialogs/dialogs.h"
 #include "easy_serial/easy_serial.h"
 #include "json/json.h"
 #include <motion_control/motion_control.h>
 #include "logging/loguru.h"
+#include "application.h"
 
 easy_serial motion_controller("arduino", byte_handler, line_handler);
 
+void removeSubstrs(std::string& s, std::string p) { 
+  std::string::size_type n = p.length();
+  for (std::string::size_type i = s.find(p);
+      i != std::string::npos;
+      i = s.find(p))
+      s.erase(i, n);
+}
 vector<string> split(std::string str, char delimiter)
 { 
     vector<string> internal; 
@@ -54,7 +63,7 @@ void fire_torch_and_pierce()
     gcode_stack.insert(gcode_stack.begin(), "G4P" + to_string((double)callback_args["pierce_delay"]));
     gcode_stack.insert(gcode_stack.begin(), "M3S1000");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string((double)callback_args["pierce_height"]));
-    gcode_stack.insert(gcode_stack.begin(), "G91G0Z0.2"); //Floating head takeup
+    gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string(globals->machine_parameters.floating_head_backlash));
     torch_on = true;
     torch_on_timer = Xrender_millis();
     run_pop();
@@ -67,7 +76,7 @@ void touch_torch_and_pierce()
     //This list that we are inserting is ran from bottom to top or LIFO mode
     gcode_stack.insert(gcode_stack.begin(), "G90");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z0.5");
-    gcode_stack.insert(gcode_stack.begin(), "G91G0Z0.2"); //Floating head takeup
+    gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string(globals->machine_parameters.floating_head_backlash));
     torch_on = true;
     torch_on_timer = Xrender_millis();
     run_pop();
@@ -215,6 +224,52 @@ uint32_t motion_controller_crc32c(uint32_t crc, const char *buf, size_t len)
     }
     return ~crc;
 }
+void motion_controller_log_controller_error(int error)
+{
+    std::string ret;
+    switch(error)
+    {
+        case 1: ret = "G-code words consist of a letter and a value. Letter was not found"; break;
+        case 2: ret = "Numeric value format is not valid or missing an expected value."; break;
+        case 3: ret = "System command was not recognized or supported."; break;
+        case 4: ret = "Negative value received for an expected positive value."; break;
+        case 5: ret = "Homing cycle is not enabled via settings."; break;
+        case 6: ret = "Minimum step pulse time must be greater than 3usec"; break;
+        case 7: ret = "EEPROM read failed. Reset and restored to default values."; break;
+        case 8: ret = "Real-Time command cannot be used unless machine is IDLE. Ensures smooth operation during a job."; break;
+        case 9: ret = "G-code locked out during alarm or jog state"; break;
+        case 10: ret = "Soft limits cannot be enabled without homing also enabled."; break;
+        case 11: ret = "Max characters per line exceeded. Line was not processed and executed."; break;
+        case 12: ret = "Setting value exceeds the maximum step rate supported."; break;
+        case 13: ret = "Safety door detected as opened and door state initiated."; break;
+        case 14: ret = "Build info or startup line exceeded EEPROM line length limit."; break;
+        case 15: ret = "Jog target exceeds machine travel. Command ignored."; break;
+        case 16: ret = "Jog command with no '=' or contains prohibited g-code."; break;
+        case 17: ret = "Laser mode requires PWM output."; break;
+        case 20: ret = "Unsupported or invalid g-code command found in block."; break;
+        case 21: ret = "More than one g-code command from same modal group found in block."; break;
+        case 22: ret = "Feed rate has not yet been set or is undefined."; break;
+        case 23: ret = "G-code command in block requires an integer value."; break;
+        case 24: ret = "Two G-code commands that both require the use of the XYZ axis words were detected in the block."; break;
+        case 25: ret = "A G-code word was repeated in the block."; break;
+        case 26: ret = "A G-code command implicitly or explicitly requires XYZ axis words in the block, but none were detected."; break;
+        case 27: ret = "N line number value is not within the valid range of 1 - 9,999,999."; break;
+        case 28: ret = "A G-code command was sent, but is missing some required P or L value words in the line."; break;
+        case 29: ret = "System only supports six work coordinate systems G54-G59. G59.1, G59.2, and G59.3 are not supported."; break;
+        case 30: ret = "The G53 G-code command requires either a G0 seek or G1 feed motion mode to be active. A different motion was active."; break;
+        case 31: ret = "There are unused axis words in the block and G80 motion mode cancel is active."; break;
+        case 32: ret = "A G2 or G3 arc was commanded but there are no XYZ axis words in the selected plane to trace the arc."; break;
+        case 33: ret = "The motion command has an invalid target. G2, G3, and G38.2 generates this error, if the arc is impossible to generate or if the probe target is the current position."; break;
+        case 34: ret = "A G2 or G3 arc, traced with the radius definition, had a mathematical error when computing the arc geometry. Try either breaking up the arc into semi-circles or quadrants, or redefine them with the arc offset definition."; break;
+        case 35: ret = "A G2 or G3 arc, traced with the offset definition, is missing the IJK offset word in the selected plane to trace the arc."; break;
+        case 36: ret = "There are unused, leftover G-code words that aren't used by any command in the block."; break;
+        case 37: ret = "The G43.1 dynamic tool length offset command cannot apply an offset to an axis other than its configured axis. The Grbl default axis is the Z-axis."; break;
+        case 38: ret = "Tool number greater than max supported value."; break;
+        case 100: ret = "Communication Redundancy Check Failed. Program Aborted to ensure unintended behavior does not occur!"; break;
+        default: ret = "unknown"; break;
+    }
+    LOG_F(ERROR, "Firmware Error %d => %s", error, ret.c_str());
+}
 void line_handler(std::string line)
 {
     //printf("Read line from serial: %s\n", line.c_str());
@@ -245,22 +300,23 @@ void line_handler(std::string line)
         }
         else if (line.find("[CHECKSUM_FAILURE]") != std::string::npos)
         {
-            LOG_F(ERROR, "Checksum failure, aborting program!");
+            dialogs_set_info_value("Communication Checksum failure, aborting program!");
             motion_controller_cmd("abort");
         }
         else if (line.find("error") != std::string::npos)
         {
-            LOG_F(ERROR, "Controller Error: %s", line.c_str());
             if (line.find("9") != std::string::npos)
             {
-                LOG_F(WARNING, "Program was aborted because floating head or ohmic touch input was activated before probing cycle began!");
+                dialogs_set_info_value("Program was aborted because floating head or ohmic touch input was activated before probing cycle began!");
             }
+            removeSubstrs(line, "error:");
+            motion_controller_log_controller_error(atoi(line.c_str()));
         }
         else if (line.find("[CRASH]") != std::string::npos && handling_crash == false)
         {
             if (torch_on == true && (Xrender_millis() - torch_on_timer) > 2000)
             {
-                LOG_F(INFO, "Program was aborted because troch crash was detected!");
+                dialogs_set_info_value("Program was aborted because troch crash was detected!");
                 motion_controller_cmd("abort");
                 handling_crash = true;
             }
@@ -279,10 +335,39 @@ void line_handler(std::string line)
     {
         if (line.find("Grbl") != std::string::npos)
         {
-            LOG_F(INFO, "Controller ready!");
+            LOG_F(INFO, "Controller ready! Sending parameters!");
             controller_ready = true;
+
+            uint8_t dir_invert_mask = 0b00000000;
+            if (globals->machine_parameters.axis_invert[0]) dir_invert_mask |= (1 << 0);
+            if (globals->machine_parameters.axis_invert[1]) dir_invert_mask |= (1 << 1);
+            if (globals->machine_parameters.axis_invert[2]) dir_invert_mask |= (1 << 2);
+            if (globals->machine_parameters.axis_invert[3]) dir_invert_mask |= (1 << 3);
+
+            motion_controller_push_stack("$0=" + to_string(50));
+            motion_controller_push_stack("$3=" + to_string(dir_invert_mask));
+            motion_controller_push_stack("$11=" + to_string(globals->machine_parameters.junction_deviation));
+            motion_controller_push_stack("$100=" + to_string(globals->machine_parameters.axis_scale[0]));
+            motion_controller_push_stack("$101=" + to_string(globals->machine_parameters.axis_scale[1]));
+            motion_controller_push_stack("$102=" + to_string(globals->machine_parameters.axis_scale[2]));
+            motion_controller_push_stack("$110=" + to_string(globals->machine_parameters.max_vel[0]));
+            motion_controller_push_stack("$111=" + to_string(globals->machine_parameters.max_vel[1]));
+            motion_controller_push_stack("$112=" + to_string(globals->machine_parameters.max_vel[2]));
+            motion_controller_push_stack("$120=" + to_string(globals->machine_parameters.max_accel[0]));
+            motion_controller_push_stack("$121=" + to_string(globals->machine_parameters.max_accel[1]));
+            motion_controller_push_stack("$122=" + to_string(globals->machine_parameters.max_accel[2]));
+            motion_controller_push_stack("M30");
+            motion_controller_run_stack();
         }
     }
+}
+void motion_controller_trigger_reset()
+{
+    LOG_F(INFO, "Resetting Motion Controller!");
+    motion_controller.serial.setDTR(true);
+    motion_controller.delay(100);
+    motion_controller.serial.setDTR(false);
+    controller_ready = false;
 }
 bool byte_handler(uint8_t b)
 {
