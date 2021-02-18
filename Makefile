@@ -4,7 +4,7 @@ OS := $(shell uname)
 
 BIN_NAME := ncPilot
 # Compiler used
-CXX ?= 
+CXX ?= g++
 # Extension of source files used in the project
 SRC_EXT = cpp
 # Path to the source directory, relative to the makefile
