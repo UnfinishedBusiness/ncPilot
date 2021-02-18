@@ -3,6 +3,7 @@
 
 #include <Xrender.h>
 
+void dialogs_show_machine_parameters(bool s);
 void dialogs_show_preferences(bool s);
 void dialogs_init();
 

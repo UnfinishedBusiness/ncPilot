@@ -109,7 +109,7 @@ void gcode_push_current_path_to_viewer()
 bool gcode_parse_timer()
 {
     std::string line;
-    for (int x = 0; x < 100; x++)
+    for (int x = 0; x < 1000; x++)
     {
         if (std::getline(gcode.file, line))
         {

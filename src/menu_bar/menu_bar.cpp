@@ -5,6 +5,7 @@
 #include "gui/ImGuiFileDialog.h"
 #include "dialogs/dialogs.h"
 #include "logging/loguru.h"
+#include "debug/debug.h"
 #include <stdio.h>
 #include <iostream>
 
@@ -45,8 +46,8 @@ void menu_bar_render()
             }
             if (ImGui::MenuItem("Machine Parameters", ""))
             {
-                //dialogs_show_machine_parameters(true); 
                 LOG_F(INFO, "Edit->Machine Parameters");
+                dialogs_show_machine_parameters(true);
             }
             ImGui::EndMenu();
         }

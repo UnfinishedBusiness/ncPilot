@@ -345,6 +345,8 @@ void motion_control_init()
     handling_crash = false;
     program_run_time = 0;
     Xrender_push_timer(100, motion_control_status_timer);
+
+    
 }
 void motion_control_tick()
 {

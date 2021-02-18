@@ -29,34 +29,96 @@ void init_preferences()
             globals->preferences.background_color[0] = (double)preferences["background_color"]["r"] / 255;
             globals->preferences.background_color[1] = (double)preferences["background_color"]["g"] / 255;
             globals->preferences.background_color[2] = (double)preferences["background_color"]["b"] / 255;
-
             globals->preferences.machine_plane_color[0] = (double)preferences["machine_plane_color"]["r"] / 255;
             globals->preferences.machine_plane_color[1] = (double)preferences["machine_plane_color"]["g"] / 255;
             globals->preferences.machine_plane_color[2] = (double)preferences["machine_plane_color"]["b"] / 255;
-
             globals->preferences.cuttable_plane_color[0] = (double)preferences["cuttable_plane_color"]["r"] / 255;
             globals->preferences.cuttable_plane_color[1] = (double)preferences["cuttable_plane_color"]["g"] / 255;
             globals->preferences.cuttable_plane_color[2] = (double)preferences["cuttable_plane_color"]["b"] / 255;
         }
         catch(...)
         {
-            printf("Error parsing preferences file!\n");
+            LOG_F(WARNING, "Error parsing preferences file!");
         }
     }
     else
     {
-        //printf("Preferences file does not exist!\n");
+        LOG_F(WARNING, "Preferences file does not exist, creating it!");
         globals->preferences.background_color[0] = 8.0f / 255;
         globals->preferences.background_color[1] = 14.0f / 255;
         globals->preferences.background_color[2] = 84.0f / 255;
-
         globals->preferences.machine_plane_color[0] = 100.0f / 255;
         globals->preferences.machine_plane_color[1] = 100.0f / 255;
         globals->preferences.machine_plane_color[2] = 100.0f / 255;
-
         globals->preferences.cuttable_plane_color[0] = 151.0f / 255;
         globals->preferences.cuttable_plane_color[1] = 5.0f / 255;
         globals->preferences.cuttable_plane_color[2] = 5.0f / 255;
+    }
+
+    std::ifstream json_file(Xrender_get_config_dir("ncPilot") + "machine_parameters.json");
+    if (json_file.is_open())
+    {
+        std::string json_string((std::istreambuf_iterator<char>(json_file)), std::istreambuf_iterator<char>());
+        nlohmann::json parameters = nlohmann::json::parse(json_string.c_str());
+        try
+        {
+            LOG_F(INFO, "Found %s!", string(Xrender_get_config_dir("ncPilot") + "machine_preferences.json").c_str());
+            globals->machine_parameters.machine_extents[0] = (float)parameters["machine_extents"]["x"];
+            globals->machine_parameters.machine_extents[1] = (float)parameters["machine_extents"]["y"];
+            globals->machine_parameters.machine_extents[2] = (float)parameters["machine_extents"]["z"];
+            globals->machine_parameters.cutting_extents[0] = (float)parameters["cutting_extents"]["x1"];
+            globals->machine_parameters.cutting_extents[1] = (float)parameters["cutting_extents"]["y1"];
+            globals->machine_parameters.cutting_extents[2] = (float)parameters["cutting_extents"]["x2"];
+            globals->machine_parameters.cutting_extents[3] = (float)parameters["cutting_extents"]["y2"];
+            globals->machine_parameters.axis_scale[0] = (float)parameters["axis_scale"]["x"];
+            globals->machine_parameters.axis_scale[1] = (float)parameters["axis_scale"]["y"];
+            globals->machine_parameters.axis_scale[2] = (float)parameters["axis_scale"]["z"];
+            globals->machine_parameters.max_vel[0] = (float)parameters["max_vel"]["x"];
+            globals->machine_parameters.max_vel[1] = (float)parameters["max_vel"]["y"];
+            globals->machine_parameters.max_vel[2] = (float)parameters["max_vel"]["z"];
+            globals->machine_parameters.max_accel[0] = (float)parameters["max_accel"]["x"];
+            globals->machine_parameters.max_accel[1] = (float)parameters["max_accel"]["y"];
+            globals->machine_parameters.max_accel[2] = (float)parameters["max_accel"]["z"];
+            globals->machine_parameters.junction_deviation = (float)parameters["junction_deviation"];
+            globals->machine_parameters.floating_head_backlash = (float)parameters["floating_head_backlash"];
+            globals->machine_parameters.z_probe_feedrate = (float)parameters["z_probe_feedrate"];
+            globals->machine_parameters.axis_invert[0] = (bool)parameters["axis_invert"]["x"];
+            globals->machine_parameters.axis_invert[1] = (bool)parameters["axis_invert"]["y1"];
+            globals->machine_parameters.axis_invert[2] = (bool)parameters["axis_invert"]["y2"];
+            globals->machine_parameters.axis_invert[3] = (bool)parameters["axis_invert"]["z"];
+        }
+        catch(...)
+        {
+            LOG_F(WARNING, "Error parsing Machine Parameters file!");
+        }
+    }
+    else
+    {
+        LOG_F(WARNING, "%s does not exist, using default parameters!", string(Xrender_get_config_dir("ncPilot") + "machine_parameters.json").c_str());
+        globals->machine_parameters.machine_extents[0] = 48.0f;
+        globals->machine_parameters.machine_extents[1] = 96.0f;
+        globals->machine_parameters.machine_extents[2] = -6.0f;
+        globals->machine_parameters.cutting_extents[0] = 1.0f;
+        globals->machine_parameters.cutting_extents[1] = 1.0f;
+        globals->machine_parameters.cutting_extents[2] = -1.0f;
+        globals->machine_parameters.cutting_extents[3] = -1.0f;
+        globals->machine_parameters.axis_scale[0] = 1016.002f;
+        globals->machine_parameters.axis_scale[1] = 1016.002f;
+        globals->machine_parameters.axis_scale[2] = 1016.002f;
+        globals->machine_parameters.max_vel[0] = 230.0f;
+        globals->machine_parameters.max_vel[1] = 400.0f;
+        globals->machine_parameters.max_vel[2] = 200.0f;
+        globals->machine_parameters.max_accel[0] = 8.0f;
+        globals->machine_parameters.max_accel[1] = 8.0f;
+        globals->machine_parameters.max_accel[2] = 20.0f;
+        globals->machine_parameters.junction_deviation = 0.0005f;
+        globals->machine_parameters.floating_head_backlash = 0.200f;
+        globals->machine_parameters.z_probe_feedrate = 40.0f;
+        globals->machine_parameters.axis_invert[0] = true;
+        globals->machine_parameters.axis_invert[1] = true;
+        globals->machine_parameters.axis_invert[2] = true;
+        globals->machine_parameters.axis_invert[3] = true;
+
     }
 }
 int main(int argc, char **argv)

@@ -282,17 +282,17 @@ void hmi_init()
     dro.x.label = Xrender_push_text({{"textval", "X"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 50},{"zindex", 210},{"angle", 0},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
     dro.x.work_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 40},{"zindex", 210},{"angle", 0},{"color", {{"r", 10},{"g", 150},{"b", 10},{"a", 255},}},});
     dro.x.absolute_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 15},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
-    dro.x.divider = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 100},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
+    dro.x.divider = Xrender_push_box({{"id", "x_dro_divider"}, {"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 150},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
 
     dro.y.label = Xrender_push_text({{"textval", "Y"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 50},{"zindex", 210},{"angle", 0},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
     dro.y.work_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 40},{"zindex", 210},{"angle", 0},{"color", {{"r", 10},{"g", 150},{"b", 10},{"a", 255},}},});
     dro.y.absolute_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 15},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
-    dro.y.divider = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 100},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
+    dro.y.divider = Xrender_push_box({{"id", "y_dro_divider"},{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 150},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
 
     dro.z.label = Xrender_push_text({{"textval", "Z"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 50},{"zindex", 210},{"angle", 0},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
     dro.z.work_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 40},{"zindex", 210},{"angle", 0},{"color", {{"r", 10},{"g", 150},{"b", 10},{"a", 255},}},});
     dro.z.absolute_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 15},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
-    dro.z.divider = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 100},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
+    dro.z.divider = Xrender_push_box({{"id", "z_dro_divider"},{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 150},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
 
     dro.feed = Xrender_push_text({{"textval", "FEED: 0.0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.arc_readout = Xrender_push_text({{"textval", "ARC: 0.0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});

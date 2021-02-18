@@ -1,8 +1,12 @@
 #include <Xrender.h>
 #include <application.h>
 #include <vector>
-#include <iostream>
 #include <stdio.h>
+#include <string>
+#include <fstream>
+#include <streambuf>
+#include <iostream>
+#include "logging/loguru.h"
 
 Xrender_object_t *performance_label;
 std::vector<int> performance_average;
@@ -20,6 +24,18 @@ bool debug_render_fps_timer()
         performance_average.erase(performance_average.begin());
     }
     return true;
+}
+void debug_dump_stack()
+{
+    LOG_F(INFO, "Dumping Xrender stack!");
+    std::vector<Xrender_object_t *> *stack = Xrender_get_object_stack();
+    std::ofstream out("object_stack.dump");
+    for (int x = 0; x < stack->size(); x++)
+    {
+        out << std::to_string(x) << "> " << std::string(stack->at(x)->data.dump()) << std::endl;
+    }
+    out.close();
+    LOG_F(INFO, "Finished Dumping!");
 }
 void debug_init()
 {

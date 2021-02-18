@@ -12,10 +12,11 @@
 #include <iostream>
 
 Xrender_gui_t *preferences_window_handle;
+Xrender_gui_t *machine_parameters_window_handle;
 
 void dialogs_file_open()
 {
-    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse, ImVec2(600, 500))) 
+    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse, ImVec2(600, 500)))
     {
         if (ImGuiFileDialog::Instance()->IsOk())
         {
@@ -35,17 +36,18 @@ void dialogs_file_open()
         ImGuiFileDialog::Instance()->Close();
     }
 }
+
 void dialogs_show_preferences(bool s) 
 {
     preferences_window_handle->visable = s;
 }
 void dialogs_preferences()
 {
-    ImGui::SetNextWindowSize(ImVec2(600, 500), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Preferences", &preferences_window_handle->visable, 0);
+    ImGui::Begin("Preferences", &preferences_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
     ImGui::ColorEdit3("Background Color", globals->preferences.background_color);
     ImGui::ColorEdit3("Machine Plane Color", globals->preferences.machine_plane_color);
     ImGui::ColorEdit3("Cuttable Plane Color", globals->preferences.cuttable_plane_color);
+    ImGui::Spacing();
     if (ImGui::Button("OK"))
     {
         globals->Xcore->data["clear_color"]["r"] = globals->preferences.background_color[0] * 255;
@@ -70,14 +72,95 @@ void dialogs_preferences()
         out.close();
         dialogs_show_preferences(false);
     }
+    ImGui::SameLine();
     if (ImGui::Button("Cancel"))
     {
         dialogs_show_preferences(false);
     }
     ImGui::End();
 }
+
+void dialogs_show_machine_parameters(bool s)
+{
+    machine_parameters_window_handle->visable = s;
+}
+/*
+{
+    "machine_extents": {"x":46,"y":45.5,"z":-2.1},
+    "machine_axis_invert":{"x":false,"y1":true,"y2":false,"z":false},
+    "machine_axis_scale":{"x":485,"y":485,"z":1270.245,"a":21.85},
+    "machine_max_vel":{"x":1200,"y":1200,"z":100,"a":30000},
+    "machine_max_accel":{"x":10,"y":10,"z":50,"a":600},
+    "machine_thc":{"adc_filter":1,"tolerance":3},
+    "machine_junction_deviation":0.01,
+    "machine_torch_config":{"z_probe_feed":50,
+    "floating_head_takeup":0.2,"clearance_height":0.5},
+    "work_offset":{"x":25.198,"y":35.262,"z":-0.065}
+}
+*/
+void dialogs_machine_parameters()
+{
+    ImGui::Begin("Machine Parameters", &machine_parameters_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::InputFloat3("Machine Extents (X, Y, Z)", globals->machine_parameters.machine_extents);
+    ImGui::InputFloat4("Cutting Extents (X1, Y1, X2, Y2)", globals->machine_parameters.cutting_extents);
+    ImGui::Text("Scale is in steps per your desired units. E.G. To use machine in\nInches, set scales to steps per inch");
+    ImGui::InputFloat3("Axis Scale (X, Y, Z)", globals->machine_parameters.axis_scale);
+    ImGui::Checkbox("Invert X", &globals->machine_parameters.axis_invert[0]);
+    ImGui::SameLine();
+    ImGui::Checkbox("Invert Y1", &globals->machine_parameters.axis_invert[1]);
+    ImGui::SameLine();
+    ImGui::Checkbox("Invert Y2", &globals->machine_parameters.axis_invert[2]);
+    ImGui::SameLine();
+    ImGui::Checkbox("Invert Z", &globals->machine_parameters.axis_invert[3]);
+    ImGui::InputFloat3("Max Velocity (X, Y, Z)", globals->machine_parameters.max_vel);
+    ImGui::InputFloat3("Max Acceleration (X, Y, Z)", globals->machine_parameters.max_accel);
+    ImGui::InputFloat("Floating Head Takup", &globals->machine_parameters.floating_head_backlash);
+    ImGui::InputFloat("Z Probe Feed", &globals->machine_parameters.z_probe_feedrate);
+    ImGui::Spacing();
+    if (ImGui::Button("OK"))
+    {
+        //Write preferences to file
+        nlohmann::json preferences;
+        preferences["machine_extents"]["x"] = globals->machine_parameters.machine_extents[0];
+        preferences["machine_extents"]["y"] = globals->machine_parameters.machine_extents[1];
+        preferences["machine_extents"]["z"] = globals->machine_parameters.machine_extents[2];
+        preferences["cutting_extents"]["x1"] = globals->machine_parameters.cutting_extents[0];
+        preferences["cutting_extents"]["y1"] = globals->machine_parameters.cutting_extents[1];
+        preferences["cutting_extents"]["x2"] = globals->machine_parameters.cutting_extents[2];
+        preferences["cutting_extents"]["y2"] = globals->machine_parameters.cutting_extents[3];
+        preferences["axis_scale"]["x"] = globals->machine_parameters.axis_scale[0];
+        preferences["axis_scale"]["y"] = globals->machine_parameters.axis_scale[1];
+        preferences["axis_scale"]["z"] = globals->machine_parameters.axis_scale[2];
+        preferences["max_vel"]["x"] = globals->machine_parameters.max_vel[0];
+        preferences["max_vel"]["y"] = globals->machine_parameters.max_vel[1];
+        preferences["max_vel"]["z"] = globals->machine_parameters.max_vel[2];
+        preferences["max_accel"]["x"] = globals->machine_parameters.max_accel[0];
+        preferences["max_accel"]["y"] = globals->machine_parameters.max_accel[1];
+        preferences["max_accel"]["z"] = globals->machine_parameters.max_accel[2];
+        preferences["junction_deviation"] = globals->machine_parameters.junction_deviation;
+        preferences["floating_head_backlash"] = globals->machine_parameters.floating_head_backlash;
+        preferences["z_probe_feedrate"] = globals->machine_parameters.z_probe_feedrate;
+        preferences["axis_invert"]["x"] = globals->machine_parameters.axis_invert[0];
+        preferences["axis_invert"]["y1"] = globals->machine_parameters.axis_invert[1];
+        preferences["axis_invert"]["y2"] = globals->machine_parameters.axis_invert[2];
+        preferences["axis_invert"]["z"] = globals->machine_parameters.axis_invert[3];
+
+        std::ofstream out(Xrender_get_config_dir("ncPilot") + "machine_parameters.json");
+        out << preferences.dump();
+        out.close();
+        dialogs_show_machine_parameters(false);
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Cancel"))
+    {
+        dialogs_show_machine_parameters(false);
+    }
+    ImGui::End();
+}
+
 void dialogs_init()
 {
     Xrender_push_gui(true, dialogs_file_open);
     preferences_window_handle = Xrender_push_gui(false, dialogs_preferences);
+    machine_parameters_window_handle = Xrender_push_gui(false, dialogs_machine_parameters);
 }
