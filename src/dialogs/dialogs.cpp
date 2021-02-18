@@ -144,7 +144,10 @@ void dialogs_machine_parameters()
         preferences["axis_invert"]["y1"] = globals->machine_parameters.axis_invert[1];
         preferences["axis_invert"]["y2"] = globals->machine_parameters.axis_invert[2];
         preferences["axis_invert"]["z"] = globals->machine_parameters.axis_invert[3];
-
+        globals->machine_plane->data["tl"] = {{"x", 0},{"y", globals->machine_parameters.machine_extents[1]}};
+        globals->machine_plane->data["br"] = {{"x", globals->machine_parameters.machine_extents[0]},{"y", 0}};
+        globals->cuttable_plane->data["tl"] = {{"x", globals->machine_parameters.cutting_extents[0]},{"y", globals->machine_parameters.machine_extents[1]+globals->machine_parameters.cutting_extents[3]}};
+        globals->cuttable_plane->data["br"] = {{"x", globals->machine_parameters.machine_extents[0]+globals->machine_parameters.cutting_extents[2]},{"y", globals->machine_parameters.cutting_extents[1]}};
         std::ofstream out(Xrender_get_config_dir("ncPilot") + "machine_parameters.json");
         out << preferences.dump();
         out.close();

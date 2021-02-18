@@ -264,9 +264,9 @@ void hmi_push_button_group(std::string b1, std::string b2)
 }
 void hmi_init()
 {
-    globals->machine_plane = Xrender_push_box({{"tl", {{"x", 0},{"y", 45}}},{"br", {{"x", 45},{"y", 0}}},{"radius", 0},{"zindex", -20},{"color", {{"r", globals->preferences.machine_plane_color[0] * 255},{"g", globals->preferences.machine_plane_color[1] * 255},{"b", globals->preferences.machine_plane_color[2] * 255},{"a", 255}}},});
+    globals->machine_plane = Xrender_push_box({{"tl", {{"x", 0},{"y", globals->machine_parameters.machine_extents[1]}}},{"br", {{"x", globals->machine_parameters.machine_extents[0]},{"y", 0}}},{"radius", 0},{"zindex", -20},{"color", {{"r", globals->preferences.machine_plane_color[0] * 255},{"g", globals->preferences.machine_plane_color[1] * 255},{"b", globals->preferences.machine_plane_color[2] * 255},{"a", 255}}},});
     globals->machine_plane->matrix_data = view_matrix;
-    globals->cuttable_plane = Xrender_push_box({{"tl", {{"x", 1},{"y", 41}}},{"br", {{"x", 41},{"y", 1}}},{"radius", 0},{"zindex", -10},{"color", {{"r", globals->preferences.cuttable_plane_color[0] * 255},{"g", globals->preferences.cuttable_plane_color[1] * 255},{"b", globals->preferences.cuttable_plane_color[2] * 255},{"a", 255}}},});
+    globals->cuttable_plane = Xrender_push_box({{"tl", {{"x", globals->machine_parameters.cutting_extents[0]},{"y", globals->machine_parameters.machine_extents[1]+globals->machine_parameters.cutting_extents[3]}}},{"br", {{"x", globals->machine_parameters.machine_extents[0]+globals->machine_parameters.cutting_extents[2]},{"y", globals->machine_parameters.cutting_extents[1]}}},{"radius", 0},{"zindex", -10},{"color", {{"r", globals->preferences.cuttable_plane_color[0] * 255},{"g", globals->preferences.cuttable_plane_color[1] * 255},{"b", globals->preferences.cuttable_plane_color[2] * 255},{"a", 255}}},});
     globals->cuttable_plane->matrix_data = view_matrix;
     hmi_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 0},{"zindex", 100},{"color", {{"r", 25},{"g", 44},{"b", 71},{"a", 255}}},});
     hmi_dro_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 100},{"color", {{"r", 29},{"g", 32},{"b", 48},{"a", 255}}},});
