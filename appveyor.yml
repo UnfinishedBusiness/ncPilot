@@ -12,5 +12,5 @@ environment:
 
 build_script:
 
-- '%MSYS_BASH% -lc "cd /c/projects/ncpilot; pacman -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
+- '%MSYS_BASH% -lc "cd /c/projects/ncpilot; pacman --noconfirm -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
 - '%MSYS_BASH% -lc "cd /c/projects/ncpilot; mingw32-make.exe"'
