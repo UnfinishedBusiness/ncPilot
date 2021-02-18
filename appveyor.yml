@@ -7,7 +7,11 @@ branches:
 
   - dev
 
+environment:
+  global:
+    MSYS_BASH: C:\msys64\bin\bash
+
 build_script:
 
-- echo "WTF"
-
+- %MSYS_BASH% -l "cd $APPVEYOR_BUILD_FOLDER; pacman -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"
+- %MSYS_BASH% -l "cd $APPVEYOR_BUILD_FOLDER; mingw32-make.exe"
