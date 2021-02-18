@@ -13,5 +13,5 @@ environment:
 
 build_script:
 
-- %MSYS_BASH% -l "cd $APPVEYOR_BUILD_FOLDER; pacman -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"
-- %MSYS_BASH% -l "cd $APPVEYOR_BUILD_FOLDER; mingw32-make.exe"
+- '%MSYS_BASH% -l "cd $APPVEYOR_BUILD_FOLDER; pacman -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
+- '%MSYS_BASH% -l "cd $APPVEYOR_BUILD_FOLDER; mingw32-make.exe"'
