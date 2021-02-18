@@ -9,7 +9,7 @@ branches:
 environment:
   global:
     MSYS_BASH: C:\msys64\bin\bash
-    APPVEYOR_BUILD_FOLDER: C:\projects\ncPilot
+    APPVEYOR_BUILD_FOLDER: C:\projects\ncpilot
 
 build_script:
 
