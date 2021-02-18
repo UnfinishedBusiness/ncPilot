@@ -7,10 +7,19 @@ branches:
   - dev
 
 environment:
-  global:
+    # Tell msys2 to add mingw64 to the path
+    MSYSTEM: MINGW64
+    # Tell msys2 to inherit the current directory when starting the shell
+    CHERE_INVOKING: 1
+
     MSYS_BASH: C:\msys64\usr\bin\bash
+    
 
 build_script:
-
-- '%MSYS_BASH% -lc "cd /c/projects/ncpilot; pacman --noconfirm -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
-- '%MSYS_BASH% -lc "cd /c/projects/ncpilot; export PKG_CONFIG_PATH=/c/msys64/mingw64/lib/pkgconfig/; /c/msys64/mingw64/bin/mingw32-make.exe"'
+- set OLD_PATH=%PATH%
+- set OPT_PATH=C:\msys64\mingw32\bin;C:\msys64\mingw64\bin;
+- set PATH=%OPT_PATH%%PATH%
+- set PKG_CONFIG_PATH=C:\msys64\mingw64\lib\pkgconfig; 
+- cd C:\projects\ncpilot
+- '%MSYS_BASH% -lc "pacman --noconfirm -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
+- '%MSYS_BASH% -lc "mingw32-make.exe"'
