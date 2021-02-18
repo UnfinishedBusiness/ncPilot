@@ -9,6 +9,7 @@
 #include "gcode/gcode.h"
 #include "logging/loguru.h"
 #include "geometry/geometry.h"
+#include "dialogs/dialogs.h"
 #include "application.h"
 
 gcode_global_t gcode;
@@ -48,6 +49,8 @@ bool gcode_open_file(std::string file)
         gcode.lines_consumed = 0;
         gcode.filename = file;
         LOG_F(INFO, "Opened file: %s, size: %lu lines", file.c_str(), gcode.line_count);
+        dialogs_show_progress_window(true);
+        dialogs_set_progress_value(0.0f);
         return true;
     }
     else
@@ -114,6 +117,7 @@ bool gcode_parse_timer()
         if (std::getline(gcode.file, line))
         {
             gcode.lines_consumed++;
+            dialogs_set_progress_value((float)gcode.lines_consumed / (float)gcode.line_count);
             if (line.find("G0") != std::string::npos)
             {
                 gcode_push_current_path_to_viewer();
@@ -141,6 +145,7 @@ bool gcode_parse_timer()
                     LOG_F(ERROR, "Gcode parsing error at line %lu in file %s", gcode.lines_consumed, gcode.filename.c_str());
                 }
             }
+
         }
         else
         {
@@ -149,6 +154,8 @@ bool gcode_parse_timer()
             if (current_path.points.size() > 0) paths.push_back(current_path);
             current_path.points.clear();
             gcode.file.close();
+            dialogs_set_progress_value(1.0f);
+            dialogs_show_progress_window(false);
             return false;
         }
     }

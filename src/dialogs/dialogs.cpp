@@ -13,6 +13,8 @@
 
 Xrender_gui_t *preferences_window_handle;
 Xrender_gui_t *machine_parameters_window_handle;
+Xrender_gui_t *progress_window_handle;
+float progress = 0.0f;
 
 void dialogs_file_open()
 {
@@ -84,20 +86,6 @@ void dialogs_show_machine_parameters(bool s)
 {
     machine_parameters_window_handle->visable = s;
 }
-/*
-{
-    "machine_extents": {"x":46,"y":45.5,"z":-2.1},
-    "machine_axis_invert":{"x":false,"y1":true,"y2":false,"z":false},
-    "machine_axis_scale":{"x":485,"y":485,"z":1270.245,"a":21.85},
-    "machine_max_vel":{"x":1200,"y":1200,"z":100,"a":30000},
-    "machine_max_accel":{"x":10,"y":10,"z":50,"a":600},
-    "machine_thc":{"adc_filter":1,"tolerance":3},
-    "machine_junction_deviation":0.01,
-    "machine_torch_config":{"z_probe_feed":50,
-    "floating_head_takeup":0.2,"clearance_height":0.5},
-    "work_offset":{"x":25.198,"y":35.262,"z":-0.065}
-}
-*/
 void dialogs_machine_parameters()
 {
     ImGui::Begin("Machine Parameters", &machine_parameters_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
@@ -161,9 +149,27 @@ void dialogs_machine_parameters()
     ImGui::End();
 }
 
+void dialogs_show_progress_window(bool s)
+{
+    progress_window_handle->visable = s;
+}
+void dialogs_set_progress_value(float p)
+{
+    progress = p;
+}
+void dialogs_progress_window()
+{
+    ImGui::Begin("Progress", &progress_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f));
+    ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+    ImGui::Text("Progress");
+    ImGui::End();
+}
+
 void dialogs_init()
 {
     Xrender_push_gui(true, dialogs_file_open);
     preferences_window_handle = Xrender_push_gui(false, dialogs_preferences);
     machine_parameters_window_handle = Xrender_push_gui(false, dialogs_machine_parameters);
+    progress_window_handle = Xrender_push_gui(false, dialogs_progress_window);
 }
