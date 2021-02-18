@@ -13,5 +13,4 @@ environment:
 build_script:
 
 - '%MSYS_BASH% -lc "cd /c/projects/ncpilot; pacman --noconfirm -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
-- '%MSYS_BASH% -lc "cd /c/projects/ncpilot; ls /c/msys64/mingw64/lib/pkgconfig/"'
-- '%MSYS_BASH% -lc "cd /c/projects/ncpilot; PKG_CONFIG_PATH=/c/msys64/mingw64/lib/pkgconfig/ /c/msys64/mingw64/bin/mingw32-make.exe"'
+- '%MSYS_BASH% -lc "cd /c/projects/ncpilot; export PKG_CONFIG_PATH=/c/msys64/mingw64/lib/pkgconfig/ /c/msys64/mingw64/bin/mingw32-make.exe"'
