@@ -161,7 +161,6 @@ void dialogs_info_window()
     }
     ImGui::End();
 }
-
 void dialogs_init()
 {
     Xrender_push_gui(true, dialogs_file_open);

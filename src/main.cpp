@@ -14,6 +14,21 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "net_skeleton/net_skeleton.h"
+
+// This event handler implements TCP echo server
+static void ev_handler(struct ns_connection *nc, int ev, void *ev_data) { // 1
+  struct iobuf *io = &nc->recv_iobuf;
+
+  switch (ev) {
+    case NS_RECV:
+      ns_send(nc, io->buf, io->len);  // Echo received data back
+      iobuf_remove(io, io->len);      // Discard data from recv buffer
+      break;
+    default:
+      break;
+  }
+}
 
 global_variables_t *globals;
 
@@ -137,6 +152,9 @@ int main(int argc, char **argv)
             mkdir(Xrender_get_config_dir("ncPilot").c_str(), 0700);
         #endif
     }
+    struct ns_mgr mgr;
+    ns_mgr_init(&mgr, NULL);  // 2
+    ns_bind(&mgr, "1414", ev_handler);  // 3
     /*
         Initialize global variables
     */
@@ -176,12 +194,15 @@ int main(int argc, char **argv)
         menu_bar_init();
         hmi_init();
         motion_control_init();
-        while(Xrender_tick() && globals->quit == false)
+        while(globals->quit == false)
         {
+            globals->quit = !Xrender_tick();
             motion_control_tick();
+            ns_mgr_poll(&mgr, 1);
         }
         LOG_F(INFO, "Shutting down!");
         Xrender_close();
+        ns_mgr_free(&mgr);
         delete globals;
     }
     return 0;

@@ -177,6 +177,18 @@ void mouse_callback(Xrender_object_t* o,nlohmann::json e)
             //printf("Mouse Up - %s\n", e.dump().c_str());
             o->data["color"] = {{"r", 10}, {"g", 100}, {"b", 10}, {"a", 255}};
             hmi_handle_button(o->data["id"]);
+            nlohmann::json dro_data = motion_controller_get_dro();
+            try
+            {
+                if (o->data["id"] == "cuttable_plane" && dro_data["IN_MOTION"] == false)
+                {
+                    LOG_F(INFO, "Setting a way point: %s", e.dump().c_str());
+                }
+            }
+            catch(...)
+            {
+                LOG_F(ERROR, "Error parsing DRO Data!");
+            }
         }
     }
 }
