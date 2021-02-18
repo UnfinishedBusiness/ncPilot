@@ -62,7 +62,10 @@ void init_preferences()
         nlohmann::json parameters = nlohmann::json::parse(json_string.c_str());
         try
         {
-            LOG_F(INFO, "Found %s!", string(Xrender_get_config_dir("ncPilot") + "machine_preferences.json").c_str());
+            LOG_F(INFO, "Found %s!", string(Xrender_get_config_dir("ncPilot") + "machine_parameters.json").c_str());
+            globals->machine_parameters.work_offset[0] = (float)parameters["work_offset"]["x"];
+            globals->machine_parameters.work_offset[1] = (float)parameters["work_offset"]["y"];
+            globals->machine_parameters.work_offset[2] = (float)parameters["work_offset"]["z"];
             globals->machine_parameters.machine_extents[0] = (float)parameters["machine_extents"]["x"];
             globals->machine_parameters.machine_extents[1] = (float)parameters["machine_extents"]["y"];
             globals->machine_parameters.machine_extents[2] = (float)parameters["machine_extents"]["z"];
@@ -95,6 +98,9 @@ void init_preferences()
     else
     {
         LOG_F(WARNING, "%s does not exist, using default parameters!", string(Xrender_get_config_dir("ncPilot") + "machine_parameters.json").c_str());
+        globals->machine_parameters.work_offset[0] = 0.0f;
+        globals->machine_parameters.work_offset[1] = 0.0f;
+        globals->machine_parameters.work_offset[2] = 0.0f;
         globals->machine_parameters.machine_extents[0] = 48.0f;
         globals->machine_parameters.machine_extents[1] = 96.0f;
         globals->machine_parameters.machine_extents[2] = -6.0f;
@@ -118,7 +124,6 @@ void init_preferences()
         globals->machine_parameters.axis_invert[1] = true;
         globals->machine_parameters.axis_invert[2] = true;
         globals->machine_parameters.axis_invert[3] = true;
-
     }
 }
 int main(int argc, char **argv)

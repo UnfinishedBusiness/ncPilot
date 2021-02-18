@@ -27,7 +27,10 @@ std::vector<std::string> gcode_split(std::string str, char delimiter)
     } 
     return internal; 
 }
-
+std::string gcode_get_filename()
+{
+    return gcode.filename;
+}
 unsigned long count_lines(std::string file)
 {
     std::string line;

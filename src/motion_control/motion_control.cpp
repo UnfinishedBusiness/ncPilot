@@ -9,6 +9,10 @@
 #include <motion_control/motion_control.h>
 #include "logging/loguru.h"
 #include "application.h"
+#include <string>
+#include <fstream>
+#include <streambuf>
+#include <iostream>
 
 easy_serial motion_controller("arduino", byte_handler, line_handler);
 
@@ -356,9 +360,54 @@ void line_handler(std::string line)
             motion_controller_push_stack("$120=" + to_string(globals->machine_parameters.max_accel[0]));
             motion_controller_push_stack("$121=" + to_string(globals->machine_parameters.max_accel[1]));
             motion_controller_push_stack("$122=" + to_string(globals->machine_parameters.max_accel[2]));
+            motion_controller_push_stack("G10 L2 P0 X" + to_string(globals->machine_parameters.work_offset[0]) + " Y" + to_string(globals->machine_parameters.work_offset[1]) + " Z0");
             motion_controller_push_stack("M30");
             motion_controller_run_stack();
         }
+    }
+}
+void motion_controller_save_machine_parameters()
+{
+    nlohmann::json preferences;
+    preferences["work_offset"]["x"] = globals->machine_parameters.work_offset[0];
+    preferences["work_offset"]["y"] = globals->machine_parameters.work_offset[1];
+    preferences["work_offset"]["z"] = globals->machine_parameters.work_offset[2];
+    preferences["machine_extents"]["x"] = globals->machine_parameters.machine_extents[0];
+    preferences["machine_extents"]["y"] = globals->machine_parameters.machine_extents[1];
+    preferences["machine_extents"]["z"] = globals->machine_parameters.machine_extents[2];
+    preferences["cutting_extents"]["x1"] = globals->machine_parameters.cutting_extents[0];
+    preferences["cutting_extents"]["y1"] = globals->machine_parameters.cutting_extents[1];
+    preferences["cutting_extents"]["x2"] = globals->machine_parameters.cutting_extents[2];
+    preferences["cutting_extents"]["y2"] = globals->machine_parameters.cutting_extents[3];
+    preferences["axis_scale"]["x"] = globals->machine_parameters.axis_scale[0];
+    preferences["axis_scale"]["y"] = globals->machine_parameters.axis_scale[1];
+    preferences["axis_scale"]["z"] = globals->machine_parameters.axis_scale[2];
+    preferences["max_vel"]["x"] = globals->machine_parameters.max_vel[0];
+    preferences["max_vel"]["y"] = globals->machine_parameters.max_vel[1];
+    preferences["max_vel"]["z"] = globals->machine_parameters.max_vel[2];
+    preferences["max_accel"]["x"] = globals->machine_parameters.max_accel[0];
+    preferences["max_accel"]["y"] = globals->machine_parameters.max_accel[1];
+    preferences["max_accel"]["z"] = globals->machine_parameters.max_accel[2];
+    preferences["junction_deviation"] = globals->machine_parameters.junction_deviation;
+    preferences["floating_head_backlash"] = globals->machine_parameters.floating_head_backlash;
+    preferences["z_probe_feedrate"] = globals->machine_parameters.z_probe_feedrate;
+    preferences["axis_invert"]["x"] = globals->machine_parameters.axis_invert[0];
+    preferences["axis_invert"]["y1"] = globals->machine_parameters.axis_invert[1];
+    preferences["axis_invert"]["y2"] = globals->machine_parameters.axis_invert[2];
+    preferences["axis_invert"]["z"] = globals->machine_parameters.axis_invert[3];
+    globals->machine_plane->data["tl"] = {{"x", 0},{"y", globals->machine_parameters.machine_extents[1]}};
+    globals->machine_plane->data["br"] = {{"x", globals->machine_parameters.machine_extents[0]},{"y", 0}};
+    globals->cuttable_plane->data["tl"] = {{"x", globals->machine_parameters.cutting_extents[0]},{"y", globals->machine_parameters.machine_extents[1]+globals->machine_parameters.cutting_extents[3]}};
+    globals->cuttable_plane->data["br"] = {{"x", globals->machine_parameters.machine_extents[0]+globals->machine_parameters.cutting_extents[2]},{"y", globals->machine_parameters.cutting_extents[1]}};
+    try
+    {
+        std::ofstream out(Xrender_get_config_dir("ncPilot") + "machine_parameters.json");
+        out << preferences.dump();
+        out.close();
+    }
+    catch(...)
+    {
+        LOG_F(ERROR, "Could not write parameters file!");
     }
 }
 void motion_controller_trigger_reset()

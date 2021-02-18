@@ -12,6 +12,7 @@ struct preferences_data_t{
     float cuttable_plane_color[3] = { 0.0f, 0.0f, 0.0f };
 };
 struct machine_parameters_data_t{
+    float work_offset[3] = { 0.0f, 0.0f, 0.0f };
     float machine_extents[3] = { 0.0f, 0.0f, 0.0f };
     float cutting_extents[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
     float axis_scale[3] = { 0.0f, 0.0f, 0.0f };
@@ -32,6 +33,7 @@ struct global_variables_t{
     preferences_data_t preferences;
     Xrender_object_t *machine_plane;
     Xrender_object_t *cuttable_plane;
+    Xrender_object_t *torch_pointer;
     machine_parameters_data_t machine_parameters;
 };
 

@@ -3,10 +3,19 @@
 #include <vector>
 #include <hmi/hmi.h>
 #include <motion_control/motion_control.h>
-#include <iostream>
+#include <gcode/gcode.h>
+#include <dialogs/dialogs.h>
 #include <stdio.h>
 #include <iomanip>
+#include <string>
+#include <fstream>
+#include <streambuf>
+#include <iostream>
 #include <sstream>
+#include <iterator>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "logging/loguru.h"
 
 double hmi_backplane_width = 300;
@@ -41,10 +50,34 @@ void hmi_handle_button(std::string id)
             else if (id == "Zero X")
             {
                 LOG_F(INFO, "Clicked Zero X");
+                try
+                {
+                    globals->machine_parameters.work_offset[0] = (float)motion_controller_get_dro()["MCS"]["x"];
+                    motion_controller_push_stack("G10 L2 P0 X" + to_string(globals->machine_parameters.work_offset[0]));
+                    motion_controller_push_stack("M30");
+                    motion_controller_run_stack();
+                    motion_controller_save_machine_parameters();
+                }
+                catch (...)
+                {
+                    LOG_F(ERROR, "Could not set x work offset!");
+                }
             }
             else if (id == "Zero Y")
             {
                 LOG_F(INFO, "Clicked Zero Y");
+                try
+                {
+                    globals->machine_parameters.work_offset[1] = (float)motion_controller_get_dro()["MCS"]["y"];
+                    motion_controller_push_stack("G10 L2 P0 Y" + to_string(globals->machine_parameters.work_offset[1]));
+                    motion_controller_push_stack("M30");
+                    motion_controller_run_stack();
+                    motion_controller_save_machine_parameters();
+                }
+                catch (...)
+                {
+                    LOG_F(ERROR, "Could not set y work offset!");
+                }
             }
             else if (id == "Retract")
             {
@@ -63,6 +96,31 @@ void hmi_handle_button(std::string id)
             else if (id == "Run")
             {
                 LOG_F(INFO, "Clicked Run");
+                try
+                {
+                    if (gcode_get_filename() != "")
+                    {
+                        std::ifstream gcode_file(gcode_get_filename());
+                        if (gcode_file.is_open())
+                        {
+                            std::string line;
+                            while (std::getline(gcode_file, line))
+                            {
+                                motion_controller_push_stack(line);
+                            }
+                            gcode_file.close();
+                            motion_controller_run_stack();
+                        }
+                        else
+                        {
+                            dialogs_set_info_value("Could not open file!");
+                        }
+                    }
+                }
+                catch(...)
+                {
+                    dialogs_set_info_value("Caught exception while trying to read file!");
+                }
             }
             else if (id == "Test Run")
             {
@@ -135,9 +193,18 @@ nlohmann::json view_matrix(nlohmann::json data)
     }
     if (data["type"] == "arc" || data["type"] == "circle")
     {
-        new_data["center"]["x"] = ((double)data["center"]["x"] * globals->zoom) + globals->pan.x;
-        new_data["center"]["y"] = ((double)data["center"]["y"]* globals->zoom) + globals->pan.y;
-        new_data["radius"] = ((double)data["radius"] * globals->zoom);
+        if (data["id"] == "torch_pointer")
+        {
+            new_data["center"]["x"] = ((double)data["center"]["x"] * globals->zoom) + globals->pan.x;
+            new_data["center"]["y"] = ((double)data["center"]["y"]* globals->zoom) + globals->pan.y;
+            //new_data["radius"] = ((double)data["radius"] * globals->zoom);
+        }
+        else
+        {
+            new_data["center"]["x"] = ((double)data["center"]["x"] * globals->zoom) + globals->pan.x;
+            new_data["center"]["y"] = ((double)data["center"]["y"]* globals->zoom) + globals->pan.y;
+            new_data["radius"] = ((double)data["radius"] * globals->zoom);
+        }
     }
     if (data["type"] == "box")
     {
@@ -150,8 +217,8 @@ nlohmann::json view_matrix(nlohmann::json data)
     {
         for (int x = 0; x < data["points"].size(); x++)
         {
-            new_data["points"][x]["x"] = ((double)data["points"][x]["x"] * globals->zoom) + globals->pan.x;
-            new_data["points"][x]["y"] = ((double)data["points"][x]["y"] * globals->zoom) + globals->pan.y;
+            new_data["points"][x]["x"] = (((double)data["points"][x]["x"] + globals->machine_parameters.work_offset[0]) * globals->zoom) + globals->pan.x;
+            new_data["points"][x]["y"] = (((double)data["points"][x]["y"] + globals->machine_parameters.work_offset[1]) * globals->zoom) + globals->pan.y;
         }
     }
     return new_data;
@@ -179,6 +246,8 @@ bool hmi_update_timer()
         dro.arc_set->data["textval"] = "SET: " + to_fixed_string(0, 1);
         nlohmann::json runtime = motion_controller_get_run_time();
         if (runtime != NULL) dro.run_time->data["textval"] = "RUN: " + to_string(runtime["hours"]) + ":" + to_string(runtime["minutes"]) + ":" + to_string(runtime["seconds"]);
+
+        globals->torch_pointer->data["center"] = {{"x", (double)dro_data["MCS"]["x"]}, {"y", (double)dro_data["MCS"]["y"]}};
     }
     return true;
 }
@@ -298,6 +367,9 @@ void hmi_init()
     dro.arc_readout = Xrender_push_text({{"textval", "ARC: 0.0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.arc_set = Xrender_push_text({{"textval", "SET: 0.0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.run_time = Xrender_push_text({{"textval", "RUN: 00:00:00"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
+
+    globals->torch_pointer = Xrender_push_circle({{"center", {{"x", -1000},{"y", -1000}}},{"color", {{"r", 0},{"g", 255},{"b", 0},{"a", 255},}},{"radius", 5},{"zindex", 500},{"id", "torch_pointer"},});
+    globals->torch_pointer->matrix_data = &view_matrix;
 
     Xrender_push_key_event({"none", "window_resize", hmi_resize});
     Xrender_push_timer(100, hmi_update_timer);

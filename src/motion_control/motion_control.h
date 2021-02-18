@@ -20,6 +20,7 @@ nlohmann::json motion_controller_get_run_time();
 void motion_controller_cmd(std::string cmd);
 void motion_controller_clear_stack();
 void motion_controller_push_stack(std::string gcode);
+void motion_controller_save_machine_parameters();
 void motion_controller_run_stack();
 void motion_controller_send(std::string s);
 void motion_controller_send_crc32(std::string s);
