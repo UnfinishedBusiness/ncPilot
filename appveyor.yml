@@ -9,19 +9,5 @@ branches:
 
 build_script:
 
-- sh: >-
-
-    pacman -S git
-
-
-
-    pacman -S mingw64/mingw-w64-x86_64-glfw
-
-
-
-    pacman -S mingw64/mingw-w64-x86_64-freeglut
-
-
-
-    mingw32-make.exe
+- echo "WTF"
 
