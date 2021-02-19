@@ -63,6 +63,11 @@
         "hashtable": "cpp",
         "deque": "cpp",
         "regex": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "__errc": "cpp",
+        "__node_handle": "cpp",
+        "bit": "cpp",
+        "optional": "cpp",
+        "stack": "cpp"
     }
 }

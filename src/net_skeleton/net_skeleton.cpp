@@ -250,7 +250,7 @@ static void ns_destroy_conn(struct ns_connection *conn) {
   NS_FREE(conn);
 }
 
-static void ns_close_conn(struct ns_connection *conn) {
+void ns_close_conn(struct ns_connection *conn) {
   DBG(("%p %d", conn, conn->flags));
   ns_call(conn, NS_CLOSE, NULL);
   ns_remove_conn(conn);

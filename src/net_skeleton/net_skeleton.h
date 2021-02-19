@@ -251,6 +251,7 @@ void *ns_start_thread(void *(*f)(void *), void *p);
 int ns_socketpair(sock_t [2]);
 int ns_socketpair2(sock_t [2], int sock_type);  /* SOCK_STREAM or SOCK_DGRAM */
 void ns_set_close_on_exec(sock_t);
+void ns_close_conn(struct ns_connection *conn);
 void ns_sock_to_str(sock_t sock, char *buf, size_t len, int flags);
 int ns_hexdump(const void *buf, int len, char *dst, int dst_len);
 int ns_avprintf(char **buf, size_t size, const char *fmt, va_list ap);

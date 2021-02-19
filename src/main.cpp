@@ -11,27 +11,10 @@
 #include "dialogs/dialogs.h"
 #include "utility/utility.h"
 #include "motion_control/motion_control.h"
+#include "remote/remote.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "net_skeleton/net_skeleton.h"
-
-// This event handler implements TCP echo server
-static void ev_handler(struct ns_connection *nc, int ev, void *ev_data)
-{
-    struct iobuf *io = &nc->recv_iobuf;
-    if (ev == NS_RECV)
-    {
-        char ip[100];
-        int flags = 0;
-        flags |= 1UL << 2;
-        flags |= 1UL << 4;
-        ns_sock_to_str(nc->sock, ip, 100, flags);
-        LOG_F(INFO, "Recieved: %s from %s", io->buf, ip);
-        ns_send(nc, io->buf, io->len);  // Echo received data back
-        iobuf_remove(io, io->len);      // Discard data from recv buffer
-    }
-}
 
 global_variables_t *globals;
 
@@ -147,6 +130,7 @@ void init_preferences()
 int main(int argc, char **argv)
 {
     loguru::init(argc, argv);
+    loguru::g_stderr_verbosity = 1;
     if (!utility_dir_exists(Xrender_get_config_dir("ncPilot").c_str()))
     {
         #if defined(_WIN32)
@@ -155,9 +139,6 @@ int main(int argc, char **argv)
             mkdir(Xrender_get_config_dir("ncPilot").c_str(), 0700);
         #endif
     }
-    struct ns_mgr mgr;
-    ns_mgr_init(&mgr, NULL);  // 2
-    ns_bind(&mgr, "1414", ev_handler);  // 3
     /*
         Initialize global variables
     */
@@ -170,11 +151,8 @@ int main(int argc, char **argv)
 
     init_preferences();
     loguru::add_file(string(Xrender_get_config_dir("ncPilot") + "ncPilot.log").c_str(), loguru::Append, loguru::Verbosity_MAX);
-    // Only show most relevant things on stderr:
-    loguru::g_stderr_verbosity = 1;
-    
+    remote_init();
     LOG_F(INFO, "Config directory: %s", Xrender_get_config_dir("ncPilot").c_str());
-
     if (Xrender_init({
         {"window_title", "ncPilot"},
         {"ini_file_name", Xrender_get_config_dir("ncPilot") + "gui.ini"}, 
@@ -201,11 +179,11 @@ int main(int argc, char **argv)
         {
             globals->quit = !Xrender_tick();
             motion_control_tick();
-            ns_mgr_poll(&mgr, 1);
+            remote_tick();
         }
         LOG_F(INFO, "Shutting down!");
         Xrender_close();
-        ns_mgr_free(&mgr);
+        remote_close();
         delete globals;
     }
     return 0;
