@@ -48,6 +48,15 @@ bool gcode_open_file(std::string file)
     gcode.file.open(file);
     if (gcode.file.is_open())
     {
+        std::vector<Xrender_object_t*> *stack = Xrender_get_object_stack();
+        for (int x = 0; x < stack->size(); x++)
+        {
+            if (stack->at(x)->data["id"] == "gcode")
+            {
+                stack->erase(stack->begin() + x);
+                x = 0; //Restart at top because erase will chage count
+            }
+        }
         gcode.line_count = count_lines(file);
         gcode.lines_consumed = 0;
         gcode.filename = file;
@@ -96,6 +105,7 @@ void gcode_push_current_path_to_viewer()
                 path.push_back({{"x", simplified[i].x}, {"y", simplified[i].y}});
             }
             Xrender_object_t *o = Xrender_push_path({
+                {"id", "gcode"},
                 {"points", path},
                 {"color", {
                     {"r", 255},
