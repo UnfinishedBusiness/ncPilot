@@ -6,11 +6,10 @@
 
 void event_handling_mouse_motion(nlohmann::json e)
 {
-    //printf("%s\n", e.dump().c_str());
     globals->mouse_pos_in_screen_coordinates = {(double)e["pos"]["x"], (double)e["pos"]["y"]};
     globals->mouse_pos_in_matrix_coordinates = {
-        (globals->mouse_pos_in_screen_coordinates.x - globals->pan.x) / globals->zoom,
-        (globals->mouse_pos_in_screen_coordinates.y - globals->pan.y) / globals->zoom
+        ((double)e["pos"]["x"] / globals->zoom) - (globals->pan.x / globals->zoom),
+        ((double)e["pos"]["y"] / globals->zoom) - (globals->pan.y / globals->zoom)
     };
 }
 void event_handling_zoom_in(nlohmann::json e)

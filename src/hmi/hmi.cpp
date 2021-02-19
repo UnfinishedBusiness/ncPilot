@@ -18,6 +18,9 @@
 #include <unistd.h>
 #include "logging/loguru.h"
 
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
+
 double hmi_backplane_width = 300;
 Xrender_object_t *hmi_backpane;
 double hmi_dro_backplane_height = 200;
@@ -145,6 +148,34 @@ void hmi_handle_button(std::string id)
         else if (id == "Fit")
         {
             LOG_F(INFO, "Clicked Fit");
+            std::vector<Xrender_object_t*> *stack = Xrender_get_object_stack();
+            double_point_t bbox_max = {-1000000, -1000000};
+            double_point_t bbox_min = {1000000, 1000000};
+            for (int x = 0; x < stack->size(); x++)
+            {
+                if (stack->at(x)->data["type"] == "path")
+                {
+                    for (int i = 0; i < stack->at(x)->data["points"].size(); i++)
+                    {
+                        if ((double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0] < bbox_min.x) bbox_min.x = (double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0];
+                        if ((double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0] > bbox_max.x) bbox_max.x = (double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0];
+                        if ((double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1] < bbox_min.y) bbox_min.y = (double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1];
+                        if ((double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1] > bbox_max.y) bbox_max.y = (double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1];
+                    }
+                }
+            }
+            if (bbox_max.x == -1000000 && bbox_max.y == -1000000 && bbox_min.x == 1000000 && bbox_min.y == 1000000)
+            {
+                LOG_F(INFO, "No paths, fitting to machine extents!");
+                globals->zoom = 1;
+                globals->pan.x = ((globals->machine_parameters.machine_extents[0]) / 2) - (hmi_backplane_width / 2);
+                globals->pan.y = ((globals->machine_parameters.machine_extents[1]) / 2) * -1;
+                //globals->zoom = MAX((double)globals->machine_parameters.machine_extents[0], (double)globals->machine_parameters.machine_extents[1]) - MIN(globals->machine_parameters.machine_extents[0], globals->machine_parameters.machine_extents[1]) / (MAX((double)globals->Xcore->data["window_width"], (double)globals->Xcore->data["window_height"]) - 100);
+            }
+            else
+            {
+                LOG_F(INFO, "Calculated bounding box: => bbox_min = (%.4f, %.4f) and bbox_max = (%.4f, %.4f)", bbox_min.x, bbox_min.y, bbox_max.x, bbox_max.y);
+            }
         }
         else if (id == "ATHC")
         {
@@ -191,8 +222,7 @@ void mouse_callback(Xrender_object_t* o,nlohmann::json e)
             {
                 if (o->data["id"] == "cuttable_plane" && dro_data["IN_MOTION"] == false)
                 {
-                    way_point_position = {((double)e["mouse_pos"]["x"] / globals->zoom) - (globals->pan.x / globals->zoom), ((double)e["mouse_pos"]["y"] / globals->zoom) - (globals->pan.y / globals->zoom)};
-                    //LOG_F(INFO, "Setting a way point at (%.4f, %.4f) pan(%.4f, %.4f), zoom %.4f => calculated (%.4f, %.4f)", (double)e["mouse_pos"]["x"], (double)e["mouse_pos"]["y"], globals->pan.x, globals->pan.y, globals->zoom, way_point_position.x, way_point_position.y);
+                    way_point_position = globals->mouse_pos_in_matrix_coordinates;
                     way_point_marker->data["center"] = {{"x", way_point_position.x}, {"y", way_point_position.y}};
                     way_point_marker->data["visable"] = true;
                 }
@@ -360,7 +390,7 @@ void tab_key_up(nlohmann::json e)
     if (way_point_position.x != -1000 & way_point_position.y != -1000)
     {
         LOG_F(INFO, "Going to waypoint position: X%.4f Y%.4f", way_point_position.x, way_point_position.y);
-        motion_controller_push_stack("G0 X" + to_string(way_point_position.x) + " Y" + to_string(way_point_position.y));
+        motion_controller_push_stack("G53 G0 X" + to_string(way_point_position.x) + " Y" + to_string(way_point_position.y));
         motion_controller_push_stack("M30");
         motion_controller_run_stack();
         way_point_position.x = -1000;
