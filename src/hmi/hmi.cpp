@@ -124,35 +124,92 @@ void hmi_handle_button(std::string id)
             else if (id == "Run")
             {
                 LOG_F(INFO, "Clicked Run");
-                try
+                double_point_t bbox_min, bbox_max;
+                hmi_get_bounding_box(&bbox_min, &bbox_max);
+                if (bbox_min.x > 0.0f + globals->machine_parameters.cutting_extents[0] &&
+                    bbox_min.y > 0.0f + globals->machine_parameters.cutting_extents[1] &&
+                    bbox_max.x < globals->machine_parameters.machine_extents[0] - globals->machine_parameters.cutting_extents[2] &&
+                    bbox_max.y < globals->machine_parameters.machine_extents[1] - globals->machine_parameters.cutting_extents[3])
                 {
-                    if (gcode_get_filename() != "")
+                    try
                     {
-                        std::ifstream gcode_file(gcode_get_filename());
-                        if (gcode_file.is_open())
+                        if (gcode_get_filename() != "")
                         {
-                            std::string line;
-                            while (std::getline(gcode_file, line))
+                            std::ifstream gcode_file(gcode_get_filename());
+                            if (gcode_file.is_open())
                             {
-                                motion_controller_push_stack(line);
+                                std::string line;
+                                while (std::getline(gcode_file, line))
+                                {
+                                    motion_controller_push_stack(line);
+                                }
+                                gcode_file.close();
+                                motion_controller_run_stack();
                             }
-                            gcode_file.close();
-                            motion_controller_run_stack();
-                        }
-                        else
-                        {
-                            dialogs_set_info_value("Could not open file!");
+                            else
+                            {
+                                dialogs_set_info_value("Could not open file!");
+                            }
                         }
                     }
+                    catch(...)
+                    {
+                        dialogs_set_info_value("Caught exception while trying to read file!");
+                    }
                 }
-                catch(...)
+                else
                 {
-                    dialogs_set_info_value("Caught exception while trying to read file!");
+                    dialogs_set_info_value("Program is outside of machines cuttable extents!");
                 }
             }
             else if (id == "Test Run")
             {
                 LOG_F(INFO, "Clicked Test Run");
+                double_point_t bbox_min, bbox_max;
+                hmi_get_bounding_box(&bbox_min, &bbox_max);
+                if (bbox_min.x > 0.0f + globals->machine_parameters.cutting_extents[0] &&
+                    bbox_min.y > 0.0f + globals->machine_parameters.cutting_extents[1] &&
+                    bbox_max.x < globals->machine_parameters.machine_extents[0] - globals->machine_parameters.cutting_extents[2] &&
+                    bbox_max.y < globals->machine_parameters.machine_extents[1] - globals->machine_parameters.cutting_extents[3])
+                {
+                    try
+                    {
+                        if (gcode_get_filename() != "")
+                        {
+                            std::ifstream gcode_file(gcode_get_filename());
+                            if (gcode_file.is_open())
+                            {
+                                std::string line;
+                                while (std::getline(gcode_file, line))
+                                {
+                                    if (line.find("fire_torch") != std::string::npos)
+                                    {
+                                        removeSubstrs(line, "fire_torch");
+                                        motion_controller_push_stack("touch_torch" + line);
+                                    }
+                                    else
+                                    {
+                                        motion_controller_push_stack(line);
+                                    }
+                                }
+                                gcode_file.close();
+                                motion_controller_run_stack();
+                            }
+                            else
+                            {
+                                dialogs_set_info_value("Could not open file!");
+                            }
+                        }
+                    }
+                    catch(...)
+                    {
+                        dialogs_set_info_value("Caught exception while trying to read file!");
+                    }
+                }
+                else
+                {
+                    dialogs_set_info_value("Program is outside of machines cuttable extents!");
+                }
             }
         }
         else
@@ -166,6 +223,10 @@ void hmi_handle_button(std::string id)
         if (id == "Clean")
         {
             LOG_F(INFO, "Clicked Clean");
+            if (gcode_open_file(gcode_get_filename()))
+            {
+                Xrender_push_timer(0, &gcode_parse_timer);
+            }
         }
         else if (id == "Fit")
         {
@@ -342,8 +403,21 @@ bool hmi_update_timer()
         dro.arc_set->data["textval"] = "SET: " + to_fixed_string(0, 1);
         nlohmann::json runtime = motion_controller_get_run_time();
         if (runtime != NULL) dro.run_time->data["textval"] = "RUN: " + to_string(runtime["hours"]) + ":" + to_string(runtime["minutes"]) + ":" + to_string(runtime["seconds"]);
-
         globals->torch_pointer->data["center"] = {{"x", (double)dro_data["MCS"]["x"]}, {"y", (double)dro_data["MCS"]["y"]}};
+        if (motion_controller_is_torch_on())
+        {
+            //Turn dro background red
+            hmi_dro_backpane->data["color"]["r"] = 100;
+            hmi_dro_backpane->data["color"]["g"] = 32;
+            hmi_dro_backpane->data["color"]["b"] = 48;
+        }
+        else
+        {
+            //Turn dro background back to normal color = 29, 32, 48
+            hmi_dro_backpane->data["color"]["r"] = 29;
+            hmi_dro_backpane->data["color"]["g"] = 32;
+            hmi_dro_backpane->data["color"]["b"] = 48;
+        }
     }
     return true;
 }

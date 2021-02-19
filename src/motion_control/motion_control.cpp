@@ -68,6 +68,7 @@ void fire_torch_and_pierce()
     gcode_stack.insert(gcode_stack.begin(), "M3S1000");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string((double)callback_args["pierce_height"]));
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string(globals->machine_parameters.floating_head_backlash));
+    LOG_F(INFO, "Touching off torch piercing!");
     torch_on = true;
     torch_on_timer = Xrender_millis();
     run_pop();
@@ -81,8 +82,7 @@ void touch_torch_and_pierce()
     gcode_stack.insert(gcode_stack.begin(), "G90");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z0.5");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string(globals->machine_parameters.floating_head_backlash));
-    torch_on = true;
-    torch_on_timer = Xrender_millis();
+    LOG_F(INFO, "Touching off torch and dry running!");
     run_pop();
 }
 void torch_off_and_retract()
@@ -95,6 +95,8 @@ void torch_off_and_retract()
     //This list that we are inserting is ran from bottom to top or LIFO mode
     gcode_stack.insert(gcode_stack.begin(), "G53 G0 Z0");
     gcode_stack.insert(gcode_stack.begin(), "M5");
+    LOG_F(INFO, "Shutting torch off and retracting!");
+    run_pop();
 }
 void run_pop()
 {
@@ -106,19 +108,20 @@ void run_pop()
         {
             LOG_F(INFO, "[fire_torch] Sending probing cycle! - Waiting for probe to finish!");
             std::vector args = split(line, ' ');
-            if (args.size() == 3)
+            //LOG_F(INFO, "line: %s, args_size: %lu", line.c_str(), args.size());
+            if (args.size() == 4)
             {
-                callback_args["pierce_height"] = args[1];
-                callback_args["pierce_delay"] = args[2];
-                callback_args["cut_height"] = args[3];
-                LOG_SCOPE_F(INFO, "Found arguments - %s", callback_args.dump().c_str());
+                callback_args["pierce_height"] = (double)atof(args[1].c_str());
+                callback_args["pierce_delay"] = (double)atof(args[2].c_str());
+                callback_args["cut_height"] = (double)atof(args[3].c_str());
+                LOG_F(INFO, "Found arguments - %s", callback_args.dump().c_str());
             }
             else
             {
-                callback_args["pierce_height"] = 0.150;
-                callback_args["pierce_delay"] = 1.2;
-                callback_args["cut_height"] = 0.060;
-                LOG_SCOPE_F(INFO, "No arguments - Using default!");
+                callback_args["pierce_height"] = 0.150f;
+                callback_args["pierce_delay"] = 1.2f;
+                callback_args["cut_height"] = 0.060f;
+                LOG_F(INFO, "No arguments - Using default!");
             }
             okay_callback = NULL;
             probe_callback = &fire_torch_and_pierce;
@@ -128,17 +131,17 @@ void run_pop()
         {
             LOG_F(INFO, "[touch_torch] Sending probing cycle! - Waiting for probe to finish!");
             std::vector args = split(line, ' ');
-            if (args.size() == 3)
+            if (args.size() == 4)
             {
-                callback_args["pierce_height"] = args[1];
-                callback_args["pierce_delay"] = args[2];
-                callback_args["cut_height"] = args[3];
+                callback_args["pierce_height"] = (double)atof(args[1].c_str());
+                callback_args["pierce_delay"] = (double)atof(args[2].c_str());
+                callback_args["cut_height"] = (double)atof(args[3].c_str());
             }
             else
             {
-                callback_args["pierce_height"] = 0.150;
-                callback_args["pierce_delay"] = 1.2;
-                callback_args["cut_height"] = 0.060;
+                callback_args["pierce_height"] = 0.150f;
+                callback_args["pierce_delay"] = 1.2f;
+                callback_args["cut_height"] = 0.060f;
             }
             okay_callback = NULL;
             probe_callback = &touch_torch_and_pierce;
@@ -157,6 +160,7 @@ void run_pop()
         }
         else
         {
+            line.erase(std::remove(line.begin(), line.end(), ' '), line.end());
             LOG_F(INFO, "(runpop) sending %s", line.c_str());
             motion_controller_send_crc32(line);
         }
@@ -191,6 +195,10 @@ nlohmann::json motion_controller_get_run_time()
         return NULL;
     }
 }
+bool motion_controller_is_torch_on()
+{
+    return torch_on;
+}
 void motion_controller_cmd(std::string cmd)
 {
     if (cmd == "abort")
@@ -207,7 +215,6 @@ void motion_controller_clear_stack()
 }
 void motion_controller_push_stack(std::string gcode)
 {
-    gcode.erase(std::remove(gcode.begin(), gcode.end(), ' '), gcode.end());
     gcode_stack.push_back(gcode);
 }
 void motion_controller_run_stack()
