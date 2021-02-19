@@ -31,6 +31,28 @@ Xrender_object_t *way_point_marker;
 std::vector<hmi_button_group_t> button_groups;
 double_point_t way_point_position = {-1000, -1000};
 
+void hmi_get_bounding_box(double_point_t *bbox_min, double_point_t *bbox_max)
+{
+    std::vector<Xrender_object_t*> *stack = Xrender_get_object_stack();
+    bbox_max->x = -1000000;
+    bbox_max->y = -1000000;
+    bbox_min->x = 1000000;
+    bbox_min->y = 1000000;
+    for (int x = 0; x < stack->size(); x++)
+    {
+        if (stack->at(x)->data["type"] == "path")
+        {
+            for (int i = 0; i < stack->at(x)->data["points"].size(); i++)
+            {
+                if ((double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0] < bbox_min->x) bbox_min->x = (double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0];
+                if ((double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0] > bbox_max->x) bbox_max->x = (double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0];
+                if ((double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1] < bbox_min->y) bbox_min->y = (double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1];
+                if ((double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1] > bbox_max->y) bbox_max->y = (double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1];
+            }
+        }
+    }
+}
+
 void hmi_handle_button(std::string id)
 {
     nlohmann::json dro_data = motion_controller_get_dro();
@@ -148,24 +170,9 @@ void hmi_handle_button(std::string id)
         else if (id == "Fit")
         {
             LOG_F(INFO, "Clicked Fit");
-            std::vector<Xrender_object_t*> *stack = Xrender_get_object_stack();
-            double_point_t bbox_max = {-1000000, -1000000};
-            double_point_t bbox_min = {1000000, 1000000};
-            for (int x = 0; x < stack->size(); x++)
-            {
-                if (stack->at(x)->data["type"] == "path")
-                {
-                    for (int i = 0; i < stack->at(x)->data["points"].size(); i++)
-                    {
-                        if ((double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0] < bbox_min.x) bbox_min.x = (double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0];
-                        if ((double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0] > bbox_max.x) bbox_max.x = (double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0];
-                        if ((double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1] < bbox_min.y) bbox_min.y = (double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1];
-                        if ((double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1] > bbox_max.y) bbox_max.y = (double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1];
-                    }
-                }
-            }
-            //if (bbox_max.x == -1000000 && bbox_max.y == -1000000 && bbox_min.x == 1000000 && bbox_min.y == 1000000)
-            if (true)
+            double_point_t bbox_min, bbox_max;
+            hmi_get_bounding_box(&bbox_min, &bbox_max);
+            if (bbox_max.x == -1000000 && bbox_max.y == -1000000 && bbox_min.x == 1000000 && bbox_min.y == 1000000)
             {
                 LOG_F(INFO, "No paths, fitting to machine extents!");
                 globals->zoom = 1;
@@ -190,21 +197,25 @@ void hmi_handle_button(std::string id)
                 LOG_F(INFO, "Calculated bounding box: => bbox_min = (%.4f, %.4f) and bbox_max = (%.4f, %.4f)", bbox_min.x, bbox_min.y, bbox_max.x, bbox_max.y);
                 globals->zoom = 1;
                 globals->pan.x = ((bbox_max.x - bbox_min.x) / 2) - (hmi_backplane_width / 2);
-                globals->pan.y = (((bbox_max.y - bbox_min.y) / 2) + 10) * -1; //10 is for the menu bar
+                globals->pan.y = ((((bbox_max.y - bbox_min.y) / 2) + 10) * -1); //10 is for the menu bar
                 if ((MAX((double)globals->Xcore->data["window_height"], (bbox_max.x - bbox_min.x)) - MIN((double)globals->Xcore->data["window_height"], (bbox_max.y - bbox_min.y))) < 
                     MAX((double)globals->Xcore->data["window_width"] - hmi_backplane_width, (bbox_max.x - bbox_min.x)) - MIN((double)globals->Xcore->data["window_width"], (bbox_max.y - bbox_min.y)))
                 {
                     LOG_F(INFO, "Fitting to Y");
-                    //globals->zoom = ((double)globals->Xcore->data["window_height"] - 100) / (bbox_max.y - bbox_min.y);
-                    //globals->pan.x += (globals->pan.x / globals->zoom) * (1 - globals->zoom);
-                    //globals->pan.y += (bbox_max.y - bbox_min.y) * (1 - globals->zoom);
+                    globals->zoom = ((double)globals->Xcore->data["window_height"] - 300) / (bbox_max.y - bbox_min.y);
+                    globals->pan.x += (bbox_max.x - bbox_min.x) * (1 - globals->zoom) + (hmi_backplane_width / 2);
+                    globals->pan.y += (bbox_max.y - bbox_min.y) * (1 - globals->zoom);
+                    globals->pan.x -= globals->machine_parameters.work_offset[0] * globals->zoom;
+                    globals->pan.y -= globals->machine_parameters.work_offset[1] * globals->zoom;
                 }
                 else //Fit X
                 {
                     LOG_F(INFO, "Fitting to X");
-                    //globals->zoom = ((double)globals->Xcore->data["window_width"] - (hmi_backplane_width / 2) - 200) / (bbox_max.x - bbox_min.x);
-                    //globals->pan.x += ((bbox_max.x - bbox_min.x) / 2) * (1 - globals->zoom) - (hmi_backplane_width / 2) + 50;
-                    //globals->pan.y += ((bbox_max.y - bbox_min.y) / 2) * (1 - globals->zoom);
+                    globals->zoom = ((double)globals->Xcore->data["window_width"] - (hmi_backplane_width / 2) - 200) / (bbox_max.x - bbox_min.x);
+                    globals->pan.x += (bbox_max.x - bbox_min.x) * (1 - globals->zoom) + (hmi_backplane_width / 2);
+                    globals->pan.y += (bbox_max.y - bbox_min.y) * (1 - globals->zoom);
+                    globals->pan.x -= globals->machine_parameters.work_offset[0] * globals->zoom;
+                    globals->pan.y -= globals->machine_parameters.work_offset[1] * globals->zoom;
                 }
             }
         }
@@ -480,4 +491,5 @@ void hmi_init()
     Xrender_push_key_event({"Tab", "keyup", tab_key_up});
     Xrender_push_key_event({"none", "window_resize", hmi_resize});
     Xrender_push_timer(100, hmi_update_timer);
+    hmi_handle_button("Fit");
 }
