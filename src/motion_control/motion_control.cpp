@@ -46,6 +46,7 @@ unsigned long torch_on_timer;
 unsigned long program_run_time;
 bool abort_pending;
 bool handling_crash;
+bool send_parameters = true;
 
 /*
     Callbacks that get called via okay_callback
@@ -346,30 +347,34 @@ void line_handler(std::string line)
     {
         if (line.find("Grbl") != std::string::npos)
         {
-            LOG_F(INFO, "Controller ready! Sending parameters!");
+            LOG_F(INFO, "Controller ready!");
             controller_ready = true;
 
-            uint8_t dir_invert_mask = 0b00000000;
-            if (globals->machine_parameters.axis_invert[0]) dir_invert_mask |= (1 << 0);
-            if (globals->machine_parameters.axis_invert[1]) dir_invert_mask |= (1 << 1);
-            if (globals->machine_parameters.axis_invert[2]) dir_invert_mask |= (1 << 2);
-            if (globals->machine_parameters.axis_invert[3]) dir_invert_mask |= (1 << 3);
+            if (send_parameters == true)
+            {
+                send_parameters = false;
+                uint8_t dir_invert_mask = 0b00000000;
+                if (globals->machine_parameters.axis_invert[0]) dir_invert_mask |= (1 << 0);
+                if (globals->machine_parameters.axis_invert[1]) dir_invert_mask |= (1 << 1);
+                if (globals->machine_parameters.axis_invert[2]) dir_invert_mask |= (1 << 2);
+                if (globals->machine_parameters.axis_invert[3]) dir_invert_mask |= (1 << 3);
 
-            motion_controller_push_stack("$0=" + to_string(50));
-            motion_controller_push_stack("$3=" + to_string(dir_invert_mask));
-            motion_controller_push_stack("$11=" + to_string(globals->machine_parameters.junction_deviation));
-            motion_controller_push_stack("$100=" + to_string(globals->machine_parameters.axis_scale[0]));
-            motion_controller_push_stack("$101=" + to_string(globals->machine_parameters.axis_scale[1]));
-            motion_controller_push_stack("$102=" + to_string(globals->machine_parameters.axis_scale[2]));
-            motion_controller_push_stack("$110=" + to_string(globals->machine_parameters.max_vel[0]));
-            motion_controller_push_stack("$111=" + to_string(globals->machine_parameters.max_vel[1]));
-            motion_controller_push_stack("$112=" + to_string(globals->machine_parameters.max_vel[2]));
-            motion_controller_push_stack("$120=" + to_string(globals->machine_parameters.max_accel[0]));
-            motion_controller_push_stack("$121=" + to_string(globals->machine_parameters.max_accel[1]));
-            motion_controller_push_stack("$122=" + to_string(globals->machine_parameters.max_accel[2]));
-            motion_controller_push_stack("G10 L2 P0 X" + to_string(globals->machine_parameters.work_offset[0]) + " Y" + to_string(globals->machine_parameters.work_offset[1]) + " Z0");
-            motion_controller_push_stack("M30");
-            motion_controller_run_stack();
+                motion_controller_push_stack("$0=" + to_string(50));
+                motion_controller_push_stack("$3=" + to_string(dir_invert_mask));
+                motion_controller_push_stack("$11=" + to_string(globals->machine_parameters.junction_deviation));
+                motion_controller_push_stack("$100=" + to_string(globals->machine_parameters.axis_scale[0]));
+                motion_controller_push_stack("$101=" + to_string(globals->machine_parameters.axis_scale[1]));
+                motion_controller_push_stack("$102=" + to_string(globals->machine_parameters.axis_scale[2]));
+                motion_controller_push_stack("$110=" + to_string(globals->machine_parameters.max_vel[0]));
+                motion_controller_push_stack("$111=" + to_string(globals->machine_parameters.max_vel[1]));
+                motion_controller_push_stack("$112=" + to_string(globals->machine_parameters.max_vel[2]));
+                motion_controller_push_stack("$120=" + to_string(globals->machine_parameters.max_accel[0]));
+                motion_controller_push_stack("$121=" + to_string(globals->machine_parameters.max_accel[1]));
+                motion_controller_push_stack("$122=" + to_string(globals->machine_parameters.max_accel[2]));
+                motion_controller_push_stack("G10 L2 P0 X" + to_string(globals->machine_parameters.work_offset[0]) + " Y" + to_string(globals->machine_parameters.work_offset[1]) + " Z0");
+                motion_controller_push_stack("M30");
+                motion_controller_run_stack();
+            }
         }
     }
 }
@@ -424,6 +429,7 @@ void motion_controller_trigger_reset()
     motion_controller.delay(100);
     motion_controller.serial.setDTR(false);
     controller_ready = false;
+    send_parameters = true;
 }
 bool byte_handler(uint8_t b)
 {

@@ -29,5 +29,6 @@ struct dro_group_data_t{
 };
 
 void hmi_init();
+void hmi_handle_button(std::string id);
 
 #endif
