@@ -88,7 +88,7 @@ int commands::ls(std::vector<std::string> args, void *this_pointer)
         {
             if (string(ep->d_name) != "." && string(ep->d_name) != "..")
             {
-                self->printf("%s\n", ep->d_name);
+                ns_printf(self->nc, "%s\n", ep->d_name);
             }
         }
         closedir (dp);
@@ -151,27 +151,13 @@ int commands::dump_stack(std::vector<std::string> args, void *this_pointer)
             {
                 if (stack->at(x)->data.dump().find(args[3]) != std::string::npos)
                 {
-                    try
-                    {
-                        self->printf("%d> %s\n", x, stack->at(x)->data.dump().c_str());
-                    }
-                    catch(...)
-                    {
-                        self->printf("Cought an error!\n");
-                    }
+                    ns_printf(self->nc, "%d> %s\n", x, stack->at(x)->data.dump().c_str());
                 }
             }
         }
         else
         {
-            try
-            {
-                self->printf("%d> %s\n", x, stack->at(x)->data.dump().c_str());
-            }
-            catch(...)
-            {
-                self->printf("Cought an error!\n");
-            }
+            ns_printf(self->nc, "%d> %s\n", x, stack->at(x)->data.dump().c_str());
         }
     }
     return 0;
@@ -216,15 +202,16 @@ std::vector<std::string> commands::split(std::string str, char delimiter)
 }
 void commands::printf(const char* Format, ...)
 {
-    char Buffer[1024];
+    char Buffer[4096];
     va_list args;
     va_start(args,Format);
     vsprintf(Buffer,Format,args);
     va_end(args);
-    ns_printf(this->nc, "%s", Buffer);
+    ns_printf(this->nc, Buffer);
 }
 
 struct ns_mgr mgr;
+std::string last_cmd;
 
 static void ev_handler(struct ns_connection *nc, int ev, void *ev_data)
 {
@@ -235,12 +222,19 @@ static void ev_handler(struct ns_connection *nc, int ev, void *ev_data)
         ns_sock_to_str(nc->sock, src, sizeof(src), 3);
         ns_sock_to_str(nc->sock, dst, sizeof(dst), 7);
         std::string buffer = string(io->buf, io->len);
-        buffer.erase(std::remove(buffer.begin(), buffer.end(), '\n'),buffer.end());
-        buffer.erase(std::remove(buffer.begin(), buffer.end(), '\r'),buffer.end());
-        LOG_F(INFO, "Recieved (%s) => %s", src, buffer.c_str());
-        commands(nc, buffer);
+        if (buffer.size() > 1)
+        {
+            buffer.erase(std::remove(buffer.begin(), buffer.end(), '\n'),buffer.end());
+            buffer.erase(std::remove(buffer.begin(), buffer.end(), '\r'),buffer.end());
+            LOG_F(INFO, "Recieved (%s) => %s", src, buffer.c_str());
+            last_cmd = buffer;
+            commands(nc, buffer);
+        }
+        else
+        {
+            if (last_cmd != "") commands(nc, last_cmd);
+        }
         ns_printf(nc, "ncPilot> ");
-        //ns_send(nc, io->buf, io->len);  // Echo received data back
         iobuf_remove(io, io->len);      // Discard data from recv buffer
     }
     else if (ev == NS_ACCEPT) //Client Connected!
