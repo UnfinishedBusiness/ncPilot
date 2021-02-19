@@ -10,7 +10,9 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
-#include <filesystem>
+#include <sys/types.h>
+#include <dirent.h>
+#include <ftw.h>
 #include <Xrender.h>
 
 int commands::test(std::vector<std::string> args, void *this_pointer)
@@ -77,11 +79,23 @@ int commands::dmesg(std::vector<std::string> args, void *this_pointer)
 int commands::ls(std::vector<std::string> args, void *this_pointer)
 {
     commands *self = static_cast<commands*>(this_pointer);
-    namespace fs = std::filesystem;
-    std::string path = Xrender_get_config_dir("ncPilot");
-    for (const auto & entry : fs::directory_iterator(path))
+    DIR *dp;
+    struct dirent *ep;     
+    dp = opendir (Xrender_get_config_dir("ncPilot").c_str());
+    if (dp != NULL)
     {
-        self->printf("%s\n", entry.path().c_str());
+        while ((ep = readdir (dp)) != NULL)
+        {
+            if (string(ep->d_name) != "." && string(ep->d_name) != "..")
+            {
+                self->printf("%s\n", ep->d_name);
+            }
+        }
+        closedir (dp);
+    }
+    else
+    {
+        self->printf("Could not open the directory\n");
     }
     return 0;
 }
@@ -144,6 +158,30 @@ int commands::dump_stack(std::vector<std::string> args, void *this_pointer)
         {
             self->printf("%d> %s\n", x, stack->at(x)->data.dump().c_str());
         }
+    }
+    return 0;
+}
+int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
+{
+    int rv = remove(fpath);
+    if (rv)
+    {
+        LOG_F(ERROR, "Could not remove file or directory! %s", fpath);
+    }
+    return rv;
+}
+int commands::rm(std::vector<std::string> args, void *this_pointer)
+{
+    commands *self = static_cast<commands*>(this_pointer);
+    int rv = remove(string(Xrender_get_config_dir("ncPilot") + args[1]).c_str());
+    if (rv)
+    {
+        self->printf("Could not remove file or directory!");
+        return 1;
+    }
+    else
+    {
+        self->printf("File removed!\n");
     }
     return 0;
 }

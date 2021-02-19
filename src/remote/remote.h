@@ -32,6 +32,7 @@ class commands{
         static int ls(std::vector<std::string> args, void *this_pointer);
         static int cat(std::vector<std::string> args, void *this_pointer);
         static int dump_stack(std::vector<std::string> args, void *this_pointer);
+        static int rm(std::vector<std::string> args, void *this_pointer);
 
         commands(struct ns_connection *nc_, std::string cmd)
         {
@@ -43,6 +44,7 @@ class commands{
             this->command_stack.push_back(command_t("ls", &this->ls));
             this->command_stack.push_back(command_t("cat", &this->cat));
             this->command_stack.push_back(command_t("dump_stack", &this->dump_stack));
+            this->command_stack.push_back(command_t("rm", &this->rm));
 
             this->nc = nc_;
             this->cwd = Xrender_get_config_dir("ncPilot");
