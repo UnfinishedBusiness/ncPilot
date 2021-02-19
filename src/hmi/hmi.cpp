@@ -169,8 +169,20 @@ void hmi_handle_button(std::string id)
                 LOG_F(INFO, "No paths, fitting to machine extents!");
                 globals->zoom = 1;
                 globals->pan.x = ((globals->machine_parameters.machine_extents[0]) / 2) - (hmi_backplane_width / 2);
-                globals->pan.y = ((globals->machine_parameters.machine_extents[1]) / 2) * -1;
-                //globals->zoom = MAX((double)globals->machine_parameters.machine_extents[0], (double)globals->machine_parameters.machine_extents[1]) - MIN(globals->machine_parameters.machine_extents[0], globals->machine_parameters.machine_extents[1]) / (MAX((double)globals->Xcore->data["window_width"], (double)globals->Xcore->data["window_height"]) - 100);
+                globals->pan.y = (((globals->machine_parameters.machine_extents[1]) / 2) + 10) * -1; //10 is for the menu bar
+                if ((MAX((double)globals->Xcore->data["window_height"], (double)globals->machine_parameters.machine_extents[1]) - MIN((double)globals->Xcore->data["window_height"], (double)globals->machine_parameters.machine_extents[1])) < 
+                    MAX((double)globals->Xcore->data["window_width"] - hmi_backplane_width, (double)globals->machine_parameters.machine_extents[0]) - MIN((double)globals->Xcore->data["window_width"], (double)globals->machine_parameters.machine_extents[0]))
+                {
+                    globals->zoom = ((double)globals->Xcore->data["window_height"] - 100) / ((double)globals->machine_parameters.machine_extents[1]);
+                    globals->pan.x += ((double)globals->machine_parameters.machine_extents[0] / 2) * (1 - globals->zoom);
+                    globals->pan.y += ((double)globals->machine_parameters.machine_extents[1] / 2) * (1 - globals->zoom);
+                }
+                else //Fit X
+                {
+                    globals->zoom = ((double)globals->Xcore->data["window_width"] - (hmi_backplane_width / 2) - 200) / ((double)globals->machine_parameters.machine_extents[0]);
+                    globals->pan.x += ((double)globals->machine_parameters.machine_extents[0] / 2) * (1 - globals->zoom) - (hmi_backplane_width / 2) + 50;
+                    globals->pan.y += ((double)globals->machine_parameters.machine_extents[1] / 2) * (1 - globals->zoom);
+                }
             }
             else
             {

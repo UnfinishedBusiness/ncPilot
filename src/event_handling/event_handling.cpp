@@ -1,6 +1,7 @@
 #include <Xrender.h>
 #include <application.h>
 #include "event_handling/event_handling.h"
+#include "logging/loguru.h"
 #include <stdio.h>
 #include <iostream>
 
@@ -23,6 +24,7 @@ void event_handling_zoom_in(nlohmann::json e)
     double scalechange = old_zoom - globals->zoom;
     globals->pan.x += globals->mouse_pos_in_matrix_coordinates.x * scalechange;
     globals->pan.y += globals->mouse_pos_in_matrix_coordinates.y * scalechange; 
+    //LOG_F(INFO, "Zoom-> %.4f", globals->zoom);
 }
 void event_handling_zoom_out(nlohmann::json e)
 {
@@ -35,6 +37,7 @@ void event_handling_zoom_out(nlohmann::json e)
     double scalechange = old_zoom - globals->zoom;
     globals->pan.x += globals->mouse_pos_in_matrix_coordinates.x * scalechange;
     globals->pan.y += globals->mouse_pos_in_matrix_coordinates.y * scalechange; 
+    //LOG_F(INFO, "Zoom-> %.4f", globals->zoom);
 }
 void event_handling_init()
 {
