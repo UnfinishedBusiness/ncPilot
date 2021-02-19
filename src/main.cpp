@@ -175,9 +175,9 @@ int main(int argc, char **argv)
         menu_bar_init();
         hmi_init();
         motion_control_init();
-        while(globals->quit == false)
+        while(Xrender_tick())
         {
-            globals->quit = !Xrender_tick();
+            if (globals->quit == true) break; 
             motion_control_tick();
             remote_tick();
         }
