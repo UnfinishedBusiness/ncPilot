@@ -17,17 +17,20 @@
 #include "net_skeleton/net_skeleton.h"
 
 // This event handler implements TCP echo server
-static void ev_handler(struct ns_connection *nc, int ev, void *ev_data) { // 1
-  struct iobuf *io = &nc->recv_iobuf;
-
-  switch (ev) {
-    case NS_RECV:
-      ns_send(nc, io->buf, io->len);  // Echo received data back
-      iobuf_remove(io, io->len);      // Discard data from recv buffer
-      break;
-    default:
-      break;
-  }
+static void ev_handler(struct ns_connection *nc, int ev, void *ev_data)
+{
+    struct iobuf *io = &nc->recv_iobuf;
+    if (ev == NS_RECV)
+    {
+        char ip[100];
+        int flags = 0;
+        flags |= 1UL << 2;
+        flags |= 1UL << 4;
+        ns_sock_to_str(nc->sock, ip, 100, flags);
+        LOG_F(INFO, "Recieved: %s from %s", io->buf, ip);
+        ns_send(nc, io->buf, io->len);  // Echo received data back
+        iobuf_remove(io, io->len);      // Discard data from recv buffer
+    }
 }
 
 global_variables_t *globals;
