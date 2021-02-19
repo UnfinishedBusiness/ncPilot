@@ -141,6 +141,7 @@ int commands::cat(std::vector<std::string> args, void *this_pointer)
 int commands::dump_stack(std::vector<std::string> args, void *this_pointer)
 {
     commands *self = static_cast<commands*>(this_pointer);
+    LOG_F(INFO, "Dumping stack!");
     std::vector<Xrender_object_t *> *stack = Xrender_get_object_stack();
     for (int x = 0; x < stack->size(); x++)
     {
@@ -150,13 +151,27 @@ int commands::dump_stack(std::vector<std::string> args, void *this_pointer)
             {
                 if (stack->at(x)->data.dump().find(args[3]) != std::string::npos)
                 {
-                    self->printf("%d> %s\n", x, stack->at(x)->data.dump().c_str());
+                    try
+                    {
+                        self->printf("%d> %s\n", x, stack->at(x)->data.dump().c_str());
+                    }
+                    catch(...)
+                    {
+                        self->printf("Cought an error!\n");
+                    }
                 }
             }
         }
         else
         {
-            self->printf("%d> %s\n", x, stack->at(x)->data.dump().c_str());
+            try
+            {
+                self->printf("%d> %s\n", x, stack->at(x)->data.dump().c_str());
+            }
+            catch(...)
+            {
+                self->printf("Cought an error!\n");
+            }
         }
     }
     return 0;

@@ -164,7 +164,8 @@ void hmi_handle_button(std::string id)
                     }
                 }
             }
-            if (bbox_max.x == -1000000 && bbox_max.y == -1000000 && bbox_min.x == 1000000 && bbox_min.y == 1000000)
+            //if (bbox_max.x == -1000000 && bbox_max.y == -1000000 && bbox_min.x == 1000000 && bbox_min.y == 1000000)
+            if (true)
             {
                 LOG_F(INFO, "No paths, fitting to machine extents!");
                 globals->zoom = 1;
@@ -187,6 +188,24 @@ void hmi_handle_button(std::string id)
             else
             {
                 LOG_F(INFO, "Calculated bounding box: => bbox_min = (%.4f, %.4f) and bbox_max = (%.4f, %.4f)", bbox_min.x, bbox_min.y, bbox_max.x, bbox_max.y);
+                globals->zoom = 1;
+                globals->pan.x = ((bbox_max.x - bbox_min.x) / 2) - (hmi_backplane_width / 2);
+                globals->pan.y = (((bbox_max.y - bbox_min.y) / 2) + 10) * -1; //10 is for the menu bar
+                if ((MAX((double)globals->Xcore->data["window_height"], (bbox_max.x - bbox_min.x)) - MIN((double)globals->Xcore->data["window_height"], (bbox_max.y - bbox_min.y))) < 
+                    MAX((double)globals->Xcore->data["window_width"] - hmi_backplane_width, (bbox_max.x - bbox_min.x)) - MIN((double)globals->Xcore->data["window_width"], (bbox_max.y - bbox_min.y)))
+                {
+                    LOG_F(INFO, "Fitting to Y");
+                    //globals->zoom = ((double)globals->Xcore->data["window_height"] - 100) / (bbox_max.y - bbox_min.y);
+                    //globals->pan.x += (globals->pan.x / globals->zoom) * (1 - globals->zoom);
+                    //globals->pan.y += (bbox_max.y - bbox_min.y) * (1 - globals->zoom);
+                }
+                else //Fit X
+                {
+                    LOG_F(INFO, "Fitting to X");
+                    //globals->zoom = ((double)globals->Xcore->data["window_width"] - (hmi_backplane_width / 2) - 200) / (bbox_max.x - bbox_min.x);
+                    //globals->pan.x += ((bbox_max.x - bbox_min.x) / 2) * (1 - globals->zoom) - (hmi_backplane_width / 2) + 50;
+                    //globals->pan.y += ((bbox_max.y - bbox_min.y) / 2) * (1 - globals->zoom);
+                }
             }
         }
         else if (id == "ATHC")
