@@ -21,6 +21,7 @@ struct machine_parameters_data_t{
     float junction_deviation = 0;
     float floating_head_backlash = 0;
     float z_probe_feedrate = 0;
+    float arc_stablization_time = 0;
     bool axis_invert[4] = { false, false, false, false };
     //Not Included in machine_parameters.json
     int thc_set_value = 0;

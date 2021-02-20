@@ -483,6 +483,7 @@ void motion_controller_save_machine_parameters()
     preferences["max_accel"]["y"] = globals->machine_parameters.max_accel[1];
     preferences["max_accel"]["z"] = globals->machine_parameters.max_accel[2];
     preferences["junction_deviation"] = globals->machine_parameters.junction_deviation;
+    preferences["arc_stablization_time"] = globals->machine_parameters.arc_stablization_time;
     preferences["floating_head_backlash"] = globals->machine_parameters.floating_head_backlash;
     preferences["z_probe_feedrate"] = globals->machine_parameters.z_probe_feedrate;
     preferences["axis_invert"]["x"] = globals->machine_parameters.axis_invert[0];

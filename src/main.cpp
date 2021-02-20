@@ -84,6 +84,7 @@ void init_preferences()
             globals->machine_parameters.max_accel[1] = (float)parameters["max_accel"]["y"];
             globals->machine_parameters.max_accel[2] = (float)parameters["max_accel"]["z"];
             globals->machine_parameters.junction_deviation = (float)parameters["junction_deviation"];
+            globals->machine_parameters.arc_stablization_time = (float)parameters["arc_stablization_time"];
             globals->machine_parameters.floating_head_backlash = (float)parameters["floating_head_backlash"];
             globals->machine_parameters.z_probe_feedrate = (float)parameters["z_probe_feedrate"];
             globals->machine_parameters.axis_invert[0] = (bool)parameters["axis_invert"]["x"];
@@ -119,6 +120,7 @@ void init_preferences()
         globals->machine_parameters.max_accel[1] = 8.0f;
         globals->machine_parameters.max_accel[2] = 20.0f;
         globals->machine_parameters.junction_deviation = 0.0005f;
+        globals->machine_parameters.arc_stablization_time = 2000;
         globals->machine_parameters.floating_head_backlash = 0.200f;
         globals->machine_parameters.z_probe_feedrate = 40.0f;
         globals->machine_parameters.axis_invert[0] = true;

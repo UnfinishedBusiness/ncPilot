@@ -95,10 +95,15 @@ void dialogs_show_machine_parameters(bool s)
 void dialogs_machine_parameters()
 {
     ImGui::Begin("Machine Parameters", &machine_parameters_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Text("Machine extents is the max distance each axis can travel freely. X0 is the X negative stop, Y0 is Y negative stop, and Z0 is Z positive stop!");
     ImGui::InputFloat3("Machine Extents (X, Y, Z)", globals->machine_parameters.machine_extents);
+    ImGui::Separator();
+    ImGui::Text("Cutting extents are used to prevent accidentally cutting onto machine frames or generally any area outside of where cutting should happen.\nX1,Y1 is bottom left hand corner and X2, Y2 is top right hand corner, values are incremented off of machine extents (X2 and Y2 must be negative!)");
     ImGui::InputFloat4("Cutting Extents (X1, Y1, X2, Y2)", globals->machine_parameters.cutting_extents);
+    ImGui::Separator();
     ImGui::Text("Scale is in steps per your desired units. E.G. To use machine in\nInches, set scales to steps per inch");
     ImGui::InputFloat3("Axis Scale (X, Y, Z)", globals->machine_parameters.axis_scale);
+    ImGui::Separator();
     ImGui::Checkbox("Invert X", &globals->machine_parameters.axis_invert[0]);
     ImGui::SameLine();
     ImGui::Checkbox("Invert Y1", &globals->machine_parameters.axis_invert[1]);
@@ -106,10 +111,21 @@ void dialogs_machine_parameters()
     ImGui::Checkbox("Invert Y2", &globals->machine_parameters.axis_invert[2]);
     ImGui::SameLine();
     ImGui::Checkbox("Invert Z", &globals->machine_parameters.axis_invert[3]);
+    ImGui::Separator();
+    ImGui::Text("Each axis maximum allowable velocity in units per minute. E.g. Inch/Min or MM/MIN");
     ImGui::InputFloat3("Max Velocity (X, Y, Z)", globals->machine_parameters.max_vel);
+    ImGui::Separator();
+    ImGui::Text("Each axis maximum allowable acceleration in units per seconds squared");
     ImGui::InputFloat3("Max Acceleration (X, Y, Z)", globals->machine_parameters.max_accel);
+    ImGui::Separator();
+    ImGui::Text("The distance the floating head moves off of it's gravity stop to where it closes the probe switch. Ohmic sensing should have 0.0000 value");
     ImGui::InputFloat("Floating Head Takup", &globals->machine_parameters.floating_head_backlash);
+    ImGui::Separator();
+    ImGui::Text("Velocity in units per minute when probing the torch");
     ImGui::InputFloat("Z Probe Feed", &globals->machine_parameters.z_probe_feedrate);
+    ImGui::Separator();
+    ImGui::Text("The amount of time after motion starts after a probing cycle to consider the arc stabalized. This will affect Smart THC accuracy!");
+    ImGui::InputFloat("Arc Stabalization Time (ms)", &globals->machine_parameters.arc_stablization_time);
     ImGui::Spacing();
     if (ImGui::Button("OK"))
     {
