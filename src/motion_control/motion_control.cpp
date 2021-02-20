@@ -374,6 +374,7 @@ void line_handler(std::string line)
                     {
                         arc_okay_callback();
                         arc_okay_callback = NULL;
+                        arc_okay_timer = Xrender_millis();
                     }
                 }
                 if (abort_pending == true && (bool)dro_data["IN_MOTION"] == false)
@@ -601,5 +602,26 @@ void motion_control_tick()
     if (motion_controller.is_connected == false)
     {
         controller_ready = false;
+    }
+    try
+    {
+        if (torch_on == true && (Xrender_millis() - arc_okay_timer) > (globals->machine_parameters.arc_stablization_time + ((float)callback_args["pierce_delay"] * 1000)))
+        {
+            //LOG_F(INFO, "Arc is stabalized!");
+            /*
+                Need to implement real-time command that takes 4 bytes.
+                byte 1 -> THC set command
+                byte 2 -> value low bit
+                byte 3 -> value high bit
+                byte 4 -> End THC set command
+
+                This way THC can be changed on the fly withouth injecting into the gcode stream which under long line moves could b
+                some time after this event occurs... Also would allow setting thc on the fly manually
+            */
+        }
+    }
+    catch(...)
+    {
+        LOG_F(ERROR, "Error parsing callback args for Smart THC");
     }
 }
