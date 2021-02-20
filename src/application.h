@@ -22,6 +22,9 @@ struct machine_parameters_data_t{
     float floating_head_backlash = 0;
     float z_probe_feedrate = 0;
     bool axis_invert[4] = { false, false, false, false };
+    //Not Included in machine_parameters.json
+    int thc_set_value = 0;
+    bool smart_thc_on = false;
 };
 struct global_variables_t{
     bool quit;

@@ -44,6 +44,7 @@ void menu_bar_render()
                 LOG_F(INFO, "Edit->Preferences");
                 dialogs_show_preferences(true);
             }
+            ImGui::Separator();
             if (ImGui::MenuItem("Machine Parameters", ""))
             {
                 LOG_F(INFO, "Edit->Machine Parameters");
@@ -57,22 +58,23 @@ void menu_bar_render()
             {
                 LOG_F(INFO, "Tools->Checking for Updates");
             }
+            ImGui::Separator();
             if (ImGui::MenuItem("Flash Firmware", ""))
             {
                 LOG_F(INFO, "Tools->Flash Firmware");
             }
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Workbench"))
+        {
+            if (ImGui::MenuItem("Machine", ""))
+            {
+                LOG_F(INFO, "Workbench->Machine");
+            }
             ImGui::Separator();
-            if (ImGui::MenuItem("CAD", ""))
+            if (ImGui::MenuItem("Design", ""))
             {
-                LOG_F(INFO, "Tools->CAD");
-            }
-            if (ImGui::MenuItem("CAM", ""))
-            {
-                LOG_F(INFO, "Tools->CAM");
-            }
-            if (ImGui::MenuItem("NC", ""))
-            {
-                LOG_F(INFO, "Tools->NC");
+                LOG_F(INFO, "Workbench->Design");
             }
             ImGui::EndMenu();
         }
@@ -82,10 +84,12 @@ void menu_bar_render()
             {
                 LOG_F(INFO, "Help->Remote Support");
             }
+            ImGui::Separator();
             if (ImGui::MenuItem("Documentation", "")) 
             {
                 LOG_F(INFO, "Help->Documentation");
             }
+            ImGui::Separator();
             if (ImGui::MenuItem("About", "")) 
             {
                 LOG_F(INFO, "Help->About");

@@ -14,6 +14,7 @@
 #include <sstream>
 #include <iterator>
 
+Xrender_gui_t *thc_window_handle;
 Xrender_gui_t *preferences_window_handle;
 Xrender_gui_t *machine_parameters_window_handle;
 Xrender_gui_t *progress_window_handle;
@@ -161,6 +162,30 @@ void dialogs_info_window()
     }
     ImGui::End();
 }
+
+void dialogs_show_thc_window(bool s)
+{
+    thc_window_handle->visable = s;
+}
+void dialogs_thc_window()
+{
+    ImGui::Begin("Torch Height Control", &thc_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Text("Smart THC mode automatically sets the \"set voltage\" that is measured shortly\nafter the torch pierces and moves negative to cut height.\n By doing this, the THC should maintain approximately\nthe same cut height as is set in the cutting parameters.");
+    ImGui::BulletText("Smart THC Should not be used on thin materials that warp when the torch touches off!");
+    ImGui::Separator();
+    ImGui::Checkbox("Turn on Auto THC Setting Mode", &globals->machine_parameters.smart_thc_on);
+    ImGui::Separator();
+    ImGui::Text("When Smart THC is off (Not Checked) the THC set voltage set below will be used");
+    ImGui::Text("0 = THC OFF, Max value is 1024. Press Tab to manually enter a value");
+    ImGui::Separator();
+    ImGui::SliderInt("Set Voltage", &globals->machine_parameters.thc_set_value, 0, 1024);
+    if (ImGui::Button("Close"))
+    {
+        dialogs_show_thc_window(false);
+    }
+    ImGui::End();
+}
+
 void dialogs_init()
 {
     Xrender_push_gui(true, dialogs_file_open);
@@ -168,4 +193,5 @@ void dialogs_init()
     machine_parameters_window_handle = Xrender_push_gui(false, dialogs_machine_parameters);
     progress_window_handle = Xrender_push_gui(false, dialogs_progress_window);
     info_window_handle = Xrender_push_gui(false, dialogs_info_window);
+    thc_window_handle = Xrender_push_gui(false, dialogs_thc_window);
 }

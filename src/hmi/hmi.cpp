@@ -283,6 +283,7 @@ void hmi_handle_button(std::string id)
         else if (id == "ATHC")
         {
             LOG_F(INFO, "Clicked ATHC");
+            dialogs_show_thc_window(true);
         }
     }
     catch(...)
@@ -399,8 +400,8 @@ bool hmi_update_timer()
         dro.y.absolute_readout->data["textval"] = to_fixed_string(dro_data["MCS"]["y"], 4);
         dro.z.absolute_readout->data["textval"] = to_fixed_string(dro_data["MCS"]["z"], 4);
         dro.feed->data["textval"] = "FEED: " + to_fixed_string(dro_data["FEED"], 1);
-        dro.arc_readout->data["textval"] = "ARC: " + to_fixed_string(dro_data["ADC"], 1);
-        dro.arc_set->data["textval"] = "SET: " + to_fixed_string(0, 1);
+        dro.arc_readout->data["textval"] = "ARC: " + to_fixed_string(dro_data["ADC"], 0);
+        dro.arc_set->data["textval"] = "SET: " + to_fixed_string(globals->machine_parameters.thc_set_value, 0);
         nlohmann::json runtime = motion_controller_get_run_time();
         if (runtime != NULL) dro.run_time->data["textval"] = "RUN: " + to_string(runtime["hours"]) + ":" + to_string(runtime["minutes"]) + ":" + to_string(runtime["seconds"]);
         globals->torch_pointer->data["center"] = {{"x", (double)dro_data["MCS"]["x"]}, {"y", (double)dro_data["MCS"]["y"]}};
@@ -417,6 +418,18 @@ bool hmi_update_timer()
             hmi_dro_backpane->data["color"]["r"] = 29;
             hmi_dro_backpane->data["color"]["g"] = 32;
             hmi_dro_backpane->data["color"]["b"] = 48;
+        }
+        if ((bool)dro_data["ARC_OK"] == false)
+        {
+            dro.arc_readout->data["color"]["r"] = 255;
+            dro.arc_readout->data["color"]["g"] = 0;
+            dro.arc_readout->data["color"]["b"] = 0;
+        }
+        else
+        {
+            dro.arc_readout->data["color"]["r"] = 247;
+            dro.arc_readout->data["color"]["g"] = 104;
+            dro.arc_readout->data["color"]["b"] = 15;
         }
     }
     return true;
@@ -549,9 +562,9 @@ void hmi_init()
     dro.z.absolute_readout = Xrender_push_text({{"textval", "0.0000"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 15},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.z.divider = Xrender_push_box({{"id", "z_dro_divider"},{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 3},{"zindex", 150},{"color", {{"r", 0},{"g", 0},{"b", 0},{"a", 255}}},});
 
-    dro.feed = Xrender_push_text({{"textval", "FEED: 0.0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
+    dro.feed = Xrender_push_text({{"textval", "FEED: 0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.arc_readout = Xrender_push_text({{"textval", "ARC: 0.0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
-    dro.arc_set = Xrender_push_text({{"textval", "SET: 0.0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
+    dro.arc_set = Xrender_push_text({{"textval", "SET: 0"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
     dro.run_time = Xrender_push_text({{"textval", "RUN: 00:00:00"}, {"font", "default"}, {"position", {{"x", -10000}, {"y", -10000}}},{"font_size", 12},{"zindex", 210},{"angle", 0},{"color", {{"r", 247},{"g", 104},{"b", 15},{"a", 255},}},});
 
     globals->torch_pointer = Xrender_push_circle({{"center", {{"x", -1000},{"y", -1000}}},{"color", {{"r", 0},{"g", 255},{"b", 0},{"a", 255},}},{"radius", 5},{"zindex", 500},{"id", "torch_pointer"},});
