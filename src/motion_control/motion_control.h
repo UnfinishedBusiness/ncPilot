@@ -6,6 +6,7 @@
 /*
     Callbacks that get called via okay_callback
 */
+void torch_off_and_retract();
 void fire_torch_and_pierce();
 void run_pop();
 /*      End callbacks       */

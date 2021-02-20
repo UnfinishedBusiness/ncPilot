@@ -40,6 +40,8 @@ bool controller_ready;
 void (*okay_callback)() = NULL;
 void (*probe_callback)() = NULL;
 void (*motion_sync_callback)() = NULL;
+void (*arc_okay_callback)() = NULL;
+int arc_retry_count = 0;
 std::vector<std::string> gcode_stack;
 bool torch_on;
 unsigned long torch_on_timer;
@@ -55,21 +57,61 @@ void program_finished()
 {
     LOG_F(INFO, "M30 Program finished!");
     program_run_time = 0;
+    okay_callback = NULL;
+    probe_callback = NULL;
+    motion_sync_callback = NULL;
+    arc_okay_callback = NULL;
     motion_controller_clear_stack();
 }
-void fire_torch_and_pierce()
+bool arc_okay_expire_timer()
+{
+    /*
+        if this function is called, torch fired but controller never seen an arc okay signal after 3 seconds...
+    */
+    if (arc_okay_callback != NULL) //Only run this code if the arc_okay_callback was not processed, meaning the timr event fired and the arc never transfered after n seconds
+    {
+        okay_callback = &run_pop;
+        probe_callback = NULL;
+        motion_sync_callback = NULL;
+        arc_okay_callback = NULL;
+        torch_on = false;
+        //Remember that inserting at the top of list means its the next code to run, meaning
+        //This list that we are inserting is ran from bottom to top or LIFO mode
+        gcode_stack.insert(gcode_stack.begin(), "fire_torch " + to_string((double)callback_args["pierce_height"]) + " " + to_string((double)callback_args["pierce_delay"]) + " " + to_string((double)callback_args["cut_height"]));
+        gcode_stack.insert(gcode_stack.begin(), "G53 G0 Z0"); //Retract
+        gcode_stack.insert(gcode_stack.begin(), "G90"); //Absolute mode
+        gcode_stack.insert(gcode_stack.begin(), "M5"); //Torch Off
+        LOG_F(INFO, "Running callback => arc_okay_expire_timer() - retry count: %d", arc_retry_count);
+        run_pop();
+        arc_retry_count++;
+    }
+    return false; //Don't repeat
+}
+void raise_to_cut_height_and_run_program()
 {
     okay_callback = &run_pop;
     probe_callback = NULL;
+    arc_okay_callback = NULL;
+    arc_retry_count = 0;
     //Remember that inserting at the top of list means its the next code to run, meaning
     //This list that we are inserting is ran from bottom to top or LIFO mode
     gcode_stack.insert(gcode_stack.begin(), "G90");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string((double)callback_args["cut_height"] - (double)callback_args["pierce_height"]));
     gcode_stack.insert(gcode_stack.begin(), "G4P" + to_string((double)callback_args["pierce_delay"]));
+    LOG_F(INFO, "Running callback => raise_to_cut_height_and_run_program()");
+    run_pop();
+}
+void raise_to_pierce_height_and_fire_torch()
+{
+    okay_callback = &run_pop;
+    probe_callback = NULL;
+    //Remember that inserting at the top of list means its the next code to run, meaning
+    //This list that we are inserting is ran from bottom to top or LIFO mode
+    gcode_stack.insert(gcode_stack.begin(), "WAIT_FOR_ARC_OKAY");
     gcode_stack.insert(gcode_stack.begin(), "M3S1000");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string((double)callback_args["pierce_height"]));
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + to_string(globals->machine_parameters.floating_head_backlash));
-    LOG_F(INFO, "Touching off torch piercing!");
+    LOG_F(INFO, "Running callback => raise_to_pierce_height_and_fire_torch()");
     torch_on = true;
     torch_on_timer = Xrender_millis();
     run_pop();
@@ -86,11 +128,27 @@ void touch_torch_and_pierce()
     LOG_F(INFO, "Touching off torch and dry running!");
     run_pop();
 }
+void torch_off_and_abort()
+{
+    okay_callback = &run_pop;
+    probe_callback = NULL;
+    motion_sync_callback = NULL;
+    arc_okay_callback = NULL;
+    torch_on = false;
+    //Remember that inserting at the top of list means its the next code to run, meaning
+    //This list that we are inserting is ran from bottom to top or LIFO mode
+    gcode_stack.insert(gcode_stack.begin(), "M30");
+    gcode_stack.insert(gcode_stack.begin(), "G53 G0 Z0");
+    gcode_stack.insert(gcode_stack.begin(), "M5");
+    LOG_F(INFO, "Shutting torch off, retracting, and aborting!");
+    run_pop();
+}
 void torch_off_and_retract()
 {
     okay_callback = &run_pop;
     probe_callback = NULL;
     motion_sync_callback = NULL;
+    arc_okay_callback = NULL;
     torch_on = false;
     //Remember that inserting at the top of list means its the next code to run, meaning
     //This list that we are inserting is ran from bottom to top or LIFO mode
@@ -109,7 +167,6 @@ void run_pop()
         {
             LOG_F(INFO, "[fire_torch] Sending probing cycle! - Waiting for probe to finish!");
             std::vector args = split(line, ' ');
-            //LOG_F(INFO, "line: %s, args_size: %lu", line.c_str(), args.size());
             if (args.size() == 4)
             {
                 callback_args["pierce_height"] = (double)atof(args[1].c_str());
@@ -124,9 +181,19 @@ void run_pop()
                 callback_args["cut_height"] = 0.060f;
                 LOG_F(INFO, "No arguments - Using default!");
             }
-            okay_callback = NULL;
-            probe_callback = &fire_torch_and_pierce;
-            motion_controller_send_crc32("G38.3Z-5F60");
+            if (arc_retry_count > 3)
+            {
+                LOG_F(INFO, "[run_pop] Arc retry max count reached. Retracting and aborting program!");
+                okay_callback = NULL;
+                motion_sync_callback = &torch_off_and_abort;
+                dialogs_set_info_value("Arc Strike Retry max count expired!\nLikely causes are:\n1. Bad or worn out consumables.\n2. Faulty work clamp connection or wire\n3. Inadequate pressure and/or moisture in the air system\n4. Dirty material and/or non-conductive surface\n5. Faulty Cutting unit, eg. Plasma Power Unit is worn out or broken");
+            }
+            else
+            {
+                okay_callback = NULL;
+                probe_callback = &raise_to_pierce_height_and_fire_torch;
+                motion_controller_send_crc32("G38.3Z-5F60");
+            }
         }
         else if (line.find("touch_torch") != std::string::npos)
         {
@@ -147,6 +214,14 @@ void run_pop()
             okay_callback = NULL;
             probe_callback = &touch_torch_and_pierce;
             motion_controller_send_crc32("G38.3Z-5F60");
+        }
+        else if(line.find("WAIT_FOR_ARC_OKAY") != std::string::npos)
+        {
+            LOG_F(INFO, "[run_pop] Setting arc_okay callback and arc_okay expire timer => fires in %.4f ms!", (3 + (double)callback_args["pierce_delay"]) * 1000);
+            Xrender_push_timer((3 + (double)callback_args["pierce_delay"]) * 1000, &arc_okay_expire_timer);
+            arc_okay_callback = &raise_to_cut_height_and_run_program;
+            okay_callback = NULL;
+            probe_callback = NULL;
         }
         else if (line.find("torch_off") != std::string::npos)
         {
@@ -284,7 +359,6 @@ void motion_controller_log_controller_error(int error)
 }
 void line_handler(std::string line)
 {
-    //printf("Read line from serial: %s\n", line.c_str());
     if (controller_ready == true)
     {
         if (line.find("{") != std::string::npos)
@@ -292,6 +366,14 @@ void line_handler(std::string line)
             try
             {
                 dro_data = nlohmann::json::parse(line);
+                if (dro_data["ARC_OK"] == false) //Logic is inverted. Bool goes low when controller has arc_ok signal
+                {
+                    if (arc_okay_callback != NULL)
+                    {
+                        arc_okay_callback();
+                        arc_okay_callback = NULL;
+                    }
+                }
                 if (abort_pending == true && (bool)dro_data["IN_MOTION"] == false)
                 {
                     motion_controller.delay(300);
