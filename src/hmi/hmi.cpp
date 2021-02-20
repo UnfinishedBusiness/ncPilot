@@ -344,10 +344,10 @@ nlohmann::json view_matrix(nlohmann::json data)
     nlohmann::json new_data = data;
     if (data["type"] == "line")
     {
-        new_data["start"]["x"] = ((double)data["start"]["x"] * globals->zoom) + globals->pan.x;
-        new_data["start"]["y"] = ((double)data["start"]["y"] * globals->zoom) + globals->pan.y;
-        new_data["end"]["x"] = ((double)data["end"]["x"] * globals->zoom) + globals->pan.x;
-        new_data["end"]["y"] = ((double)data["end"]["y"] * globals->zoom) + globals->pan.y;
+        new_data["start"]["x"] = (((double)data["start"]["x"] + globals->machine_parameters.work_offset[0]) * globals->zoom) + globals->pan.x;
+        new_data["start"]["y"] = (((double)data["start"]["y"] + globals->machine_parameters.work_offset[1]) * globals->zoom) + globals->pan.y;
+        new_data["end"]["x"] = (((double)data["end"]["x"] + globals->machine_parameters.work_offset[0]) * globals->zoom) + globals->pan.x;
+        new_data["end"]["y"] = (((double)data["end"]["y"] + globals->machine_parameters.work_offset[1]) * globals->zoom) + globals->pan.y;
     }
     if (data["type"] == "arc" || data["type"] == "circle")
     {

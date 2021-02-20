@@ -104,16 +104,7 @@ void gcode_push_current_path_to_viewer()
             {
                 path.push_back({{"x", simplified[i].x}, {"y", simplified[i].y}});
             }
-            Xrender_object_t *o = Xrender_push_path({
-                {"id", "gcode"},
-                {"points", path},
-                {"color", {
-                    {"r", 255},
-                    {"g", 255},
-                    {"b", 255},
-                    {"a", 255},
-                }},
-            });
+            Xrender_object_t *o = Xrender_push_path({{"id", "gcode"},{"points", path},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
             o->matrix_data = &view_matrix;
         }
         catch(const std::exception& e)
@@ -133,6 +124,11 @@ bool gcode_parse_timer()
             dialogs_set_progress_value((float)gcode.lines_consumed / (float)gcode.line_count);
             if (line.find("G0") != std::string::npos)
             {
+                double_point_t last_path_endpoint = {-1000000, -1000000};
+                if (current_path.points.size() > 0)
+                {
+                    last_path_endpoint = current_path.points[current_path.points.size()-1];
+                }
                 gcode_push_current_path_to_viewer();
                 if (current_path.points.size() > 0) paths.push_back(current_path);
                 current_path.points.clear();
@@ -140,6 +136,11 @@ bool gcode_parse_timer()
                 try
                 {
                     current_path.points.push_back({ (double)g["x"], (double)g["y"]});
+                    if (last_path_endpoint.x != -1000000 && last_path_endpoint.y != -1000000)
+                    {
+                        Xrender_object_t *o = Xrender_push_line({{"id", "gcode"}, {"style", "dashed"},{"start", {{"x", last_path_endpoint.x}, {"y", last_path_endpoint.y}}}, {"end", {{"x", (double)g["x"]}, {"y", (double)g["y"]}}},{"color", {{"r", 100},{"g", 100},{"b", 100},{"a", 255},}},});
+                        o->matrix_data = &view_matrix;
+                    }
                 }
                 catch(...)
                 {
