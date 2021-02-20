@@ -38,7 +38,9 @@ struct global_variables_t{
     Xrender_object_t *machine_plane;
     Xrender_object_t *cuttable_plane;
     Xrender_object_t *torch_pointer;
+    Xrender_object_t *way_point_marker;
     machine_parameters_data_t machine_parameters;
+    double_point_t way_point_position;
 };
 
 nlohmann::json view_matrix(nlohmann::json data);

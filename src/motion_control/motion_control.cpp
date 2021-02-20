@@ -6,6 +6,7 @@
 #include "dialogs/dialogs.h"
 #include "easy_serial/easy_serial.h"
 #include "json/json.h"
+#include "stk500/stk500.h"
 #include <motion_control/motion_control.h>
 #include "logging/loguru.h"
 #include "application.h"
@@ -45,6 +46,7 @@ int arc_retry_count = 0;
 std::vector<std::string> gcode_stack;
 bool torch_on;
 unsigned long torch_on_timer;
+unsigned long arc_okay_timer;
 unsigned long program_run_time;
 bool abort_pending;
 bool handling_crash;
@@ -410,7 +412,7 @@ void line_handler(std::string line)
         {
             if (torch_on == true && (Xrender_millis() - torch_on_timer) > 2000)
             {
-                dialogs_set_info_value("Program was aborted because troch crash was detected!");
+                dialogs_set_info_value("Program was aborted because torch crash was detected!");
                 motion_controller_cmd("abort");
                 handling_crash = true;
             }
@@ -566,11 +568,28 @@ bool motion_control_status_timer()
     motion_controller_send("?");
     return true;
 }
+bool motion_control_update_firmware_hide_info_window()
+{
+    dialogs_show_info_window(false);
+    return false;
+}
+bool motion_control_update_firmware()
+{
+    /*
+        First we need to download the firmware...
+    */
+    motion_controller.serial.close();
+    controller_ready = false;
+    stk500_write_program(string(Xrender_get_config_dir("ncPilot") + "firmware.hex").c_str(), motion_controller.serial_port.c_str());
+    Xrender_push_timer(1000, &motion_control_update_firmware_hide_info_window);
+    return false;
+}
 void motion_control_init()
 {
     controller_ready = false;
     torch_on = false;
     torch_on_timer = 0;
+    arc_okay_timer = 0;
     abort_pending = false;
     handling_crash = false;
     program_run_time = 0;

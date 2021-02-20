@@ -11,6 +11,8 @@
 void event_handling_escape_key(nlohmann::json e)
 {
     hmi_handle_button("Abort");
+    globals->way_point_marker->data["visable"] = false;
+    globals->way_point_position = {-1000, -1000};
 }
 void event_handling_mouse_motion(nlohmann::json e)
 {

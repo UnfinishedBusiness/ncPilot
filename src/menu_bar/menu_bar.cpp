@@ -4,6 +4,7 @@
 #include "gui/imgui.h"
 #include "gui/ImGuiFileDialog.h"
 #include "dialogs/dialogs.h"
+#include "motion_control/motion_control.h"
 #include "logging/loguru.h"
 #include "debug/debug.h"
 #include <stdio.h>
@@ -59,9 +60,11 @@ void menu_bar_render()
                 LOG_F(INFO, "Tools->Checking for Updates");
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Flash Firmware", ""))
+            if (ImGui::MenuItem("Update Firmware", ""))
             {
-                LOG_F(INFO, "Tools->Flash Firmware");
+                LOG_F(INFO, "Tools->Update Firmware");
+                dialogs_set_info_value("Updating firmware on motion controller.\nThe screen will seem frozen during this process, please wait until it's complete!");
+                Xrender_push_timer(1000, &motion_control_update_firmware);
             }
             ImGui::EndMenu();
         }

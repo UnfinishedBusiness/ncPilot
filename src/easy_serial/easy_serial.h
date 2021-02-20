@@ -13,6 +13,7 @@ class easy_serial{
         bool auto_connect;
         int baudrate;
         bool is_connected;
+        std::string serial_port;
         void (*read_line_handler)(std::string);
         bool (*read_byte_handler)(uint8_t); //returns true if byte is to be left off line and false if it is to be included!
         easy_serial(std::string c, bool (*b)(uint8_t), void (*r)(std::string))
@@ -47,7 +48,6 @@ class easy_serial{
         void delay(int ms);
 
     private:
-        std::string serial_port;
         std::string read_line;
         unsigned long connection_retry_timer;
         bool logged_devices_once;

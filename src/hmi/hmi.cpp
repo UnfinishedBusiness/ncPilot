@@ -27,9 +27,7 @@ double hmi_dro_backplane_height = 200;
 Xrender_object_t *hmi_dro_backpane;
 Xrender_object_t *hmi_button_backpane;
 dro_group_data_t dro;
-Xrender_object_t *way_point_marker;
 std::vector<hmi_button_group_t> button_groups;
-double_point_t way_point_position = {-1000, -1000};
 
 void hmi_get_bounding_box(double_point_t *bbox_min, double_point_t *bbox_max)
 {
@@ -326,9 +324,9 @@ void mouse_callback(Xrender_object_t* o,nlohmann::json e)
             {
                 if (o->data["id"] == "cuttable_plane" && dro_data["IN_MOTION"] == false)
                 {
-                    way_point_position = globals->mouse_pos_in_matrix_coordinates;
-                    way_point_marker->data["center"] = {{"x", way_point_position.x}, {"y", way_point_position.y}};
-                    way_point_marker->data["visable"] = true;
+                    globals->way_point_position = globals->mouse_pos_in_matrix_coordinates;
+                    globals->way_point_marker->data["center"] = {{"x", globals->way_point_position.x}, {"y", globals->way_point_position.y}};
+                    globals->way_point_marker->data["visable"] = true;
                 }
             }
             catch(...)
@@ -351,7 +349,7 @@ nlohmann::json view_matrix(nlohmann::json data)
     }
     if (data["type"] == "arc" || data["type"] == "circle")
     {
-        if (data["id"] == "torch_pointer" || data["id"] == "way_point_marker")
+        if (data["id"] == "torch_pointer" || data["id"] == "globals->way_point_marker")
         {
             new_data["center"]["x"] = ((double)data["center"]["x"] * globals->zoom) + globals->pan.x;
             new_data["center"]["y"] = ((double)data["center"]["y"]* globals->zoom) + globals->pan.y;
@@ -516,20 +514,21 @@ void hmi_push_button_group(std::string b1, std::string b2)
 }
 void tab_key_up(nlohmann::json e)
 {
-    if (way_point_position.x != -1000 & way_point_position.y != -1000)
+    if (globals->way_point_position.x != -1000 & globals->way_point_position.y != -1000)
     {
-        LOG_F(INFO, "Going to waypoint position: X%.4f Y%.4f", way_point_position.x, way_point_position.y);
-        motion_controller_push_stack("G53 G0 X" + to_string(way_point_position.x) + " Y" + to_string(way_point_position.y));
+        LOG_F(INFO, "Going to waypoint position: X%.4f Y%.4f", globals->way_point_position.x, globals->way_point_position.y);
+        motion_controller_push_stack("G53 G0 X" + to_string(globals->way_point_position.x) + " Y" + to_string(globals->way_point_position.y));
         motion_controller_push_stack("M30");
         motion_controller_run_stack();
-        way_point_position.x = -1000;
-        way_point_position.y = -1000;
-        way_point_marker->data["center"] = {{"x", way_point_position.x}, {"y", way_point_position.y}};
-        way_point_marker->data["visable"] = false;
+        globals->way_point_position.x = -1000;
+        globals->way_point_position.y = -1000;
+        globals->way_point_marker->data["center"] = {{"x", globals->way_point_position.x}, {"y", globals->way_point_position.y}};
+        globals->way_point_marker->data["visable"] = false;
     }
 }
 void hmi_init()
 {
+    globals->way_point_position = {-1000, -1000};
     globals->machine_plane = Xrender_push_box({{"tl", {{"x", 0},{"y", globals->machine_parameters.machine_extents[1]}}},{"br", {{"x", globals->machine_parameters.machine_extents[0]},{"y", 0}}},{"radius", 0},{"zindex", -20},{"color", {{"r", globals->preferences.machine_plane_color[0] * 255},{"g", globals->preferences.machine_plane_color[1] * 255},{"b", globals->preferences.machine_plane_color[2] * 255},{"a", 255}}},});
     globals->machine_plane->matrix_data = view_matrix;
     globals->cuttable_plane = Xrender_push_box({{"id", "cuttable_plane"}, {"tl", {{"x", globals->machine_parameters.cutting_extents[0]},{"y", globals->machine_parameters.machine_extents[1]+globals->machine_parameters.cutting_extents[3]}}},{"br", {{"x", globals->machine_parameters.machine_extents[0]+globals->machine_parameters.cutting_extents[2]},{"y", globals->machine_parameters.cutting_extents[1]}}},{"radius", 0},{"zindex", -10},{"color", {{"r", globals->preferences.cuttable_plane_color[0] * 255},{"g", globals->preferences.cuttable_plane_color[1] * 255},{"b", globals->preferences.cuttable_plane_color[2] * 255},{"a", 255}}},});
@@ -537,8 +536,8 @@ void hmi_init()
     globals->cuttable_plane->mouse_callback = mouse_callback;
     
     hmi_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 0},{"zindex", 100},{"color", {{"r", 25},{"g", 44},{"b", 71},{"a", 255}}},});
-    hmi_dro_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 100},{"color", {{"r", 29},{"g", 32},{"b", 48},{"a", 255}}},});
-    hmi_button_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 100},{"color", {{"r", 29},{"g", 32},{"b", 48},{"a", 255}}},});
+    hmi_dro_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 110},{"color", {{"r", 29},{"g", 32},{"b", 48},{"a", 255}}},});
+    hmi_button_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 110},{"color", {{"r", 29},{"g", 32},{"b", 48},{"a", 255}}},});
 
     hmi_push_button_group("Zero X", "Zero Y");
     hmi_push_button_group("Touch", "Retract");
@@ -570,8 +569,8 @@ void hmi_init()
     globals->torch_pointer = Xrender_push_circle({{"center", {{"x", -1000},{"y", -1000}}},{"color", {{"r", 0},{"g", 255},{"b", 0},{"a", 255},}},{"radius", 5},{"zindex", 500},{"id", "torch_pointer"},});
     globals->torch_pointer->matrix_data = &view_matrix;
 
-    way_point_marker = Xrender_push_circle({{"center", {{"x", -1000},{"y", -1000}}},{"color", {{"r", 0},{"g", 0},{"b", 255},{"a", 255},}},{"radius", 5},{"zindex", 500},{"id", "way_point_marker"},{"visable", false}});
-    way_point_marker->matrix_data = &view_matrix;
+    globals->way_point_marker = Xrender_push_circle({{"center", {{"x", -1000},{"y", -1000}}},{"color", {{"r", 0},{"g", 0},{"b", 255},{"a", 255},}},{"radius", 5},{"zindex", 500},{"id", "globals->way_point_marker"},{"visable", false}});
+    globals->way_point_marker->matrix_data = &view_matrix;
 
    
     //Xrender_push_key_event({"Escape", "keyup", escape_key_up});

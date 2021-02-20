@@ -186,9 +186,6 @@ int commands::rm(std::vector<std::string> args, void *this_pointer)
     }
     return 0;
 }
-
-
-
 std::vector<std::string> commands::split(std::string str, char delimiter)
 { 
     vector<string> internal; 
