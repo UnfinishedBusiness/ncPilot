@@ -3,9 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <json/json.h>
 #include "dialogs/dialogs.h"
 #include "easy_serial/easy_serial.h"
-#include "json/json.h"
 #include "stk500/stk500.h"
 #include <motion_control/motion_control.h>
 #include "logging/loguru.h"
