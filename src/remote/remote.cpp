@@ -15,6 +15,8 @@
 #include <ftw.h>
 #include <Xrender.h>
 
+using namespace std;
+
 int commands::test(std::vector<std::string> args, void *this_pointer)
 {
     commands *self = static_cast<commands*>(this_pointer);

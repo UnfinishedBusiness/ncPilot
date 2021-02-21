@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <iostream>
 
+using namespace std;
+
 Xrender_gui_t *menu_bar;
 
 void menu_bar_render()

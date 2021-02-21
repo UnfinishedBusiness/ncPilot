@@ -14,6 +14,8 @@
 #include <sstream>
 #include <iterator>
 
+using namespace std;
+
 Xrender_gui_t *thc_window_handle;
 Xrender_gui_t *preferences_window_handle;
 Xrender_gui_t *machine_parameters_window_handle;

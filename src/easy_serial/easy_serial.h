@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <iostream>
 
+using namespace std;
+
 class easy_serial{
     public:
         serial::Serial serial;

@@ -8,6 +8,8 @@
 #include <iostream>
 #include "logging/loguru.h"
 
+using namespace std;
+
 Xrender_object_t *performance_label;
 std::vector<int> performance_average;
 

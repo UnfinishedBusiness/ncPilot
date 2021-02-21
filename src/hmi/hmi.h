@@ -3,6 +3,8 @@
 #include <Xrender.h>
 #include <string>
 
+using namespace std;
+
 struct hmi_button_t{
     std::string name;
     Xrender_object_t *object;

@@ -3,6 +3,8 @@
 
 #include <json/json.h>
 
+using namespace std;
+
 /*
     Callbacks that get called via okay_callback
 */

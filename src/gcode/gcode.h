@@ -10,6 +10,8 @@
 #include <sstream>
 #include <algorithm>
 
+using namespace std;
+
 struct gcode_path_t{
     std::vector<double_point_t> points;
 };

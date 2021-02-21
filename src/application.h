@@ -3,6 +3,8 @@
 
 #include <Xrender.h>
 #include <json/json.h>
+
+using namespace std;
 /*
     Primary structure to store global variables in
 */
