@@ -15,6 +15,8 @@
 #include <streambuf>
 #include <iostream>
 
+using namespace std;
+
 easy_serial motion_controller("arduino", byte_handler, line_handler);
 
 void removeSubstrs(std::string& s, std::string p) { 
@@ -26,10 +28,10 @@ void removeSubstrs(std::string& s, std::string p) {
 }
 vector<string> split(std::string str, char delimiter)
 { 
-    vector<string> internal; 
-    stringstream ss(str); // Turn the string into a stream. 
-    string tok; 
-    while(getline(ss, tok, delimiter))
+    std::vector<string> internal; 
+    std::stringstream ss(str); // Turn the string into a stream. 
+    std::string tok; 
+    while(std::getline(ss, tok, delimiter))
     { 
         internal.push_back(tok); 
     } 
