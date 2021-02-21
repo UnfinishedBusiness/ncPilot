@@ -1,4 +1,5 @@
 #include <Xrender.h>
+#include <json/json.h>
 #include <application.h>
 #include "menu_bar/menu_bar.h"
 #include "gui/imgui.h"

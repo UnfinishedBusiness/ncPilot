@@ -1,6 +1,7 @@
 #ifndef MOTION_CONTROL_
 #define MOTION_CONTROL_
 
+#include <Xrender.h>
 #include <json/json.h>
 
 using namespace std;

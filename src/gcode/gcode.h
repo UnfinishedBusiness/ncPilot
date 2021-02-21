@@ -2,6 +2,7 @@
 #define GCODE__
 
 #include <Xrender.h>
+#include <json/json.h>
 #include <string>
 #include <iostream>
 #include <fstream>

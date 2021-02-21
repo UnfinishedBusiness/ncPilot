@@ -1,6 +1,7 @@
 #ifndef HMI_
 #define HMI_
 #include <Xrender.h>
+#include <json/json.h>
 #include <string>
 
 using namespace std;

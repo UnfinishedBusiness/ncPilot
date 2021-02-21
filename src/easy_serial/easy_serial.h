@@ -2,6 +2,7 @@
 #define EASY_SERIAL_
 
 #include <Xrender.h>
+#include <json/json.h>
 #include <serial/serial.h>
 #include <stdio.h>
 #include <iostream>

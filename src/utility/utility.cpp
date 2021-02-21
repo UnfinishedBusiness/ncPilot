@@ -1,4 +1,5 @@
 #include <Xrender.h>
+#include <json/json.h>
 #include <utility/utility.h>
 #include <sys/stat.h>
 #include <sys/types.h>

@@ -6,6 +6,7 @@
 #include <fstream>
 #include <streambuf>
 #include <iostream>
+#include <json/json.h>
 #include "logging/loguru.h"
 
 using namespace std;

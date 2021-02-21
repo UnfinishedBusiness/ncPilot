@@ -1,6 +1,7 @@
 #include <Xrender.h>
 #include <serial/serial.h>
 #include "easy_serial.h"
+#include <json/json.h>
 #include "logging/loguru.h"
 
 using namespace std;

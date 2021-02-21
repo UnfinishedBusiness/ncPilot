@@ -4,7 +4,7 @@
 #include "gui/imgui.h"
 #include "gui/ImGuiFileDialog.h"
 #include "logging/loguru.h"
-#include "json/json.h"
+#include <json/json.h>
 #include "gcode/gcode.h"
 #include "motion_control/motion_control.h"
 #include <string>

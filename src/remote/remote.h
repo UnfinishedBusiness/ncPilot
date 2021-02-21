@@ -1,6 +1,8 @@
 #ifndef REMOTE_
 #define REMOTE_
 
+#include <Xrender.h>
+#include <json/json.h>
 #include <application.h>
 #include <string>
 #include <stdarg.h>

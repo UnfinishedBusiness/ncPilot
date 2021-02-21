@@ -2,6 +2,7 @@
 #define DEBUG_
 
 #include <Xrender.h>
+#include <json/json.h>
 
 using namespace std;
 
