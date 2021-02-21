@@ -194,7 +194,7 @@ void run_pop()
             {
                 okay_callback = NULL;
                 probe_callback = &raise_to_pierce_height_and_fire_torch;
-                motion_controller_send_crc32("G38.3Z-5F60");
+                motion_controller_send_crc32("G38.3Z" + to_string(globals->machine_parameters.machine_extents[2]) + "F" + to_string(globals->machine_parameters.z_probe_feedrate));
             }
         }
         else if (line.find("touch_torch") != std::string::npos)
@@ -215,7 +215,7 @@ void run_pop()
             }
             okay_callback = NULL;
             probe_callback = &touch_torch_and_pierce;
-            motion_controller_send_crc32("G38.3Z-5F60");
+            motion_controller_send_crc32("G38.3Z" + to_string(globals->machine_parameters.machine_extents[2]) + "F" + to_string(globals->machine_parameters.z_probe_feedrate));
         }
         else if(line.find("WAIT_FOR_ARC_OKAY") != std::string::npos)
         {

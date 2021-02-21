@@ -26,6 +26,7 @@ Xrender_object_t *hmi_backpane;
 double hmi_dro_backplane_height = 200;
 Xrender_object_t *hmi_dro_backpane;
 Xrender_object_t *hmi_button_backpane;
+Xrender_object_t *arc_okay_highlight_path;
 dro_group_data_t dro;
 std::vector<hmi_button_group_t> button_groups;
 
@@ -422,9 +423,22 @@ bool hmi_update_timer()
             dro.arc_readout->data["color"]["r"] = 255;
             dro.arc_readout->data["color"]["g"] = 0;
             dro.arc_readout->data["color"]["b"] = 0;
+            //Keep adding points to current highlight path
+            if (arc_okay_highlight_path == NULL)
+            {
+                nlohmann::json path;
+                path.push_back({{"x", (double)dro_data["WCS"]["x"]}, {"y", (double)dro_data["WCS"]["y"]}});
+                arc_okay_highlight_path = Xrender_push_path({{"id", "gcode"},{"width", 3}, {"closed", false},{"points", path},{"color", {{"r", 0},{"g", 255},{"b", 0},{"a", 255},}},});
+                arc_okay_highlight_path->matrix_data = &view_matrix;
+            }
+            else
+            {
+                arc_okay_highlight_path->data["points"].push_back({{"x", (double)dro_data["WCS"]["x"]}, {"y", (double)dro_data["WCS"]["y"]}});
+            }
         }
         else
         {
+            arc_okay_highlight_path = NULL;
             dro.arc_readout->data["color"]["r"] = 247;
             dro.arc_readout->data["color"]["g"] = 104;
             dro.arc_readout->data["color"]["b"] = 15;
