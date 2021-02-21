@@ -3,6 +3,17 @@
 
 #include <Xrender.h>
 #include <json/json.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <sys/types.h>
+#include <dirent.h>
+#include <ftw.h>
 
 using namespace std;
 /*
