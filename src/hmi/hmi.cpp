@@ -2,6 +2,7 @@
 #include <application.h>
 #include <vector>
 #include <hmi/hmi.h>
+#include <json/json.h>
 #include <motion_control/motion_control.h>
 #include <gcode/gcode.h>
 #include <dialogs/dialogs.h>

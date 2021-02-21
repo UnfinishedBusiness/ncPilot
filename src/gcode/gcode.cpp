@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <json/json.h>
 #include "gcode/gcode.h"
 #include "logging/loguru.h"
 #include "geometry/geometry.h"
