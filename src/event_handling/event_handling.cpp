@@ -4,6 +4,7 @@
 #include "motion_control/motion_control.h"
 #include "hmi/hmi.h"
 #include "logging/loguru.h"
+#include <json/json.h>
 #include <stdio.h>
 #include <iostream>
 
