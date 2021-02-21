@@ -102,7 +102,7 @@ static size_t ns_out(struct ns_connection *nc, const void *buf, size_t len) {
 
 #ifndef NS_DISABLE_THREADS
 void *ns_start_thread(void *(*f)(void *), void *p) {
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
   return (void *) _beginthread((void (__cdecl *)(void *)) f, 0, p);
 #else
   pthread_t thread_id = (pthread_t) 0;
@@ -258,7 +258,7 @@ void ns_close_conn(struct ns_connection *conn) {
 }
 
 void ns_set_close_on_exec(sock_t sock) {
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
   (void) SetHandleInformation((HANDLE) sock, HANDLE_FLAG_INHERIT, 0);
 #else
   fcntl(sock, F_SETFD, FD_CLOEXEC);
@@ -266,7 +266,7 @@ void ns_set_close_on_exec(sock_t sock) {
 }
 
 static void ns_set_non_blocking_mode(sock_t sock) {
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
   unsigned long on = 1;
   ioctlsocket(sock, FIONBIO, &on);
 #else
@@ -550,7 +550,7 @@ static int ns_is_error(int n) {
   return n == 0 ||
     (n < 0 && errno != EINTR && errno != EINPROGRESS &&
      errno != EAGAIN && errno != EWOULDBLOCK
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
      && WSAGetLastError() != WSAEINTR && WSAGetLastError() != WSAEWOULDBLOCK
 #endif
     );
@@ -919,7 +919,7 @@ void ns_mgr_init(struct ns_mgr *s, void *user_data) {
   s->ctl[0] = s->ctl[1] = INVALID_SOCKET;
   s->user_data = user_data;
 
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
   { WSADATA data; WSAStartup(MAKEWORD(2, 2), &data); }
 #else
   /* Ignore SIGPIPE signal, so if client cancels the request, it
@@ -981,7 +981,7 @@ void ns_mgr_free(struct ns_mgr *s) {
 #include <string.h>
 #include <stdarg.h>
 
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #define snprintf _snprintf
 #endif
 
@@ -2111,7 +2111,7 @@ int ns_vcmp(const struct ns_str *str2, const char *str1) {
   return n1 == n2 ? memcmp(str1, str2->p, n2) : n1 > n2 ? 1 : -1;
 }
 
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 static void to_wchar(const char *path, wchar_t *wbuf, size_t wbuf_len) {
   char buf[MAX_PATH_SIZE * 2], buf2[MAX_PATH_SIZE * 2], *p;
 
@@ -2137,7 +2137,7 @@ static void to_wchar(const char *path, wchar_t *wbuf, size_t wbuf_len) {
 #endif  /* _WIN32 */
 
 int ns_stat(const char *path, ns_stat_t *st) {
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
   wchar_t wpath[MAX_PATH_SIZE];
   to_wchar(path, wpath, ARRAY_SIZE(wpath));
   DBG(("[%ls] -> %d", wpath, _wstati64(wpath, st)));
@@ -2148,7 +2148,7 @@ int ns_stat(const char *path, ns_stat_t *st) {
 }
 
 FILE *ns_fopen(const char *path, const char *mode) {
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
   wchar_t wpath[MAX_PATH_SIZE], wmode[10];
   to_wchar(path, wpath, ARRAY_SIZE(wpath));
   to_wchar(mode, wmode, ARRAY_SIZE(wmode));
@@ -2159,7 +2159,7 @@ FILE *ns_fopen(const char *path, const char *mode) {
 }
 
 int ns_open(const char *path, int flag, int mode) {
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
   wchar_t wpath[MAX_PATH_SIZE];
   to_wchar(path, wpath, ARRAY_SIZE(wpath));
   return _wopen(wpath, flag, mode);

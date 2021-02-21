@@ -61,7 +61,7 @@
 #endif
 #endif
 
-#ifdef _WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #ifdef _MSC_VER
 #pragma comment(lib, "ws2_32.lib")    /* Linking with winsock library */
 #endif
