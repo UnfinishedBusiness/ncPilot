@@ -431,10 +431,21 @@ nlohmann::json view_matrix(nlohmann::json data)
     }
     if (data["type"] == "path")
     {
-        for (int x = 0; x < data["points"].size(); x++)
+        if (data["id"] == "gcode")
         {
-            new_data["points"][x]["x"] = (((double)data["points"][x]["x"] + globals->machine_parameters.work_offset[0]) * globals->zoom) + globals->pan.x;
-            new_data["points"][x]["y"] = (((double)data["points"][x]["y"] + globals->machine_parameters.work_offset[1]) * globals->zoom) + globals->pan.y;
+            for (int x = 0; x < data["points"].size(); x++)
+            {
+                new_data["points"][x]["x"] = (((double)data["points"][x]["x"] + globals->machine_parameters.work_offset[0]) * globals->zoom) + globals->pan.x;
+                new_data["points"][x]["y"] = (((double)data["points"][x]["y"] + globals->machine_parameters.work_offset[1]) * globals->zoom) + globals->pan.y;
+            }
+        }
+        if (data["id"] == "gcode_arrows")
+        {
+            for (int x = 0; x < data["points"].size(); x++)
+            {
+                new_data["points"][x]["x"] = (((double)data["points"][x]["x"] + globals->machine_parameters.work_offset[0]) * globals->zoom) + globals->pan.x;
+                new_data["points"][x]["y"] = (((double)data["points"][x]["y"] + globals->machine_parameters.work_offset[1]) * globals->zoom) + globals->pan.y;
+            }
         }
     }
     return new_data;

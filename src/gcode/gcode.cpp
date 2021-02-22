@@ -55,7 +55,7 @@ bool gcode_open_file(std::string file)
         std::vector<Xrender_object_t*> *stack = Xrender_get_object_stack();
         for (int x = 0; x < stack->size(); x++)
         {
-            if (stack->at(x)->data["id"] == "gcode")
+            if (stack->at(x)->data["id"] == "gcode" || stack->at(x)->data["id"] == "gcode_arrows")
             {
                 stack->erase(stack->begin() + x);
                 x = 0; //Restart at top because erase will chage count
@@ -104,9 +104,28 @@ void gcode_push_current_path_to_viewer(int rapid_line)
         {
             std::vector<double_point_t> simplified = geo.simplify(current_path.points, 0.010);
             nlohmann::json path;
+            int point_count = 0;
             for (int i = 0; i < simplified.size(); i++)
             {
+                if ((i == 0 && i+1 < simplified.size()) || (point_count == 0 && i+1 < simplified.size()))
+                {
+                    nlohmann::json arrow_path;
+                    double_point_t midpoint = geo.midpoint(simplified[i+1], simplified[i]);
+                    arrow_path.push_back({{"x", midpoint.x}, {"y", midpoint.y}});
+                    double angle = geo.measure_polar_angle(simplified[i + 1], simplified[i]);
+                    double_point_t p1 = geo.create_polar_line(midpoint, angle +30, 0.020).end;
+                    double_point_t p2 = geo.create_polar_line(midpoint, angle -30, 0.020).end;
+                    arrow_path.push_back({{"x", p1.x}, {"y", p1.y}});
+                    arrow_path.push_back({{"x", p2.x}, {"y", p2.y}});
+                    Xrender_object_t *direction_indicator = Xrender_push_path({{"id", "gcode_arrows"}, {"points", arrow_path},{"color", {{"r", 0},{"g", 0},{"b", 255},{"a", 255},}},});
+                    direction_indicator->matrix_data = &view_matrix;
+                }
                 path.push_back({{"x", simplified[i].x}, {"y", simplified[i].y}});
+                point_count++;
+                if (point_count > 5)
+                {
+                    point_count = 0;
+                }
             }
             Xrender_object_t *o = Xrender_push_path({{"id", "gcode"}, {"rapid_line", rapid_line}, {"points", path},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
             o->matrix_data = &view_matrix;
