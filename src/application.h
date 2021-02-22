@@ -55,6 +55,7 @@ struct global_variables_t{
     Xrender_object_t *way_point_marker;
     machine_parameters_data_t machine_parameters;
     double_point_t way_point_position;
+    unsigned long start_timestamp;
 };
 
 nlohmann::json view_matrix(nlohmann::json data);

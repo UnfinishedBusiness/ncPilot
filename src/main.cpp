@@ -133,6 +133,38 @@ void init_preferences()
         globals->machine_parameters.axis_invert[3] = true;
     }
 }
+void log_uptime()
+{
+    unsigned long m = (Xrender_millis() - globals->start_timestamp);
+    unsigned long seconds=(m/1000)%60;
+    unsigned long minutes=(m/(1000*60))%60;
+    unsigned long hours=(m/(1000*60*60))%24;
+    LOG_F(INFO, "Shutting down, Adding Uptime: %luh %lum %lus to total", hours, minutes, seconds);
+    std::ifstream uptime_file(Xrender_get_config_dir("ncPilot") + "uptime.json");
+    if (uptime_file.is_open())
+    {
+        std::string uptime_json_string((std::istreambuf_iterator<char>(uptime_file)), std::istreambuf_iterator<char>());
+        nlohmann::json uptime_json = nlohmann::json::parse(uptime_json_string.c_str());
+        try
+        {
+            hours += (unsigned long)uptime_json["hours"];
+            minutes += (unsigned long)uptime_json["minutes"];
+            seconds += (unsigned long)uptime_json["seconds"];
+        }
+        catch(...)
+        {
+            LOG_F(WARNING, "Error parsing uptime file!");
+        }
+    }
+    uptime_file.close();
+    nlohmann::json uptime;
+    uptime["hours"] = hours;
+    uptime["minutes"] = minutes;
+    uptime["seconds"] = seconds;
+    std::ofstream out(Xrender_get_config_dir("ncPilot") + "uptime.json");
+    out << uptime.dump();
+    out.close();
+}
 int main(int argc, char **argv)
 {
     loguru::init(argc, argv);
@@ -154,6 +186,7 @@ int main(int argc, char **argv)
     globals->pan.y = 0;
     globals->mouse_pos_in_screen_coordinates = {0, 0};
     globals->mouse_pos_in_matrix_coordinates = {0, 0};
+    globals->start_timestamp = Xrender_millis();
 
     init_preferences();
     loguru::add_file(string(Xrender_get_config_dir("ncPilot") + "ncPilot.log").c_str(), loguru::Append, loguru::Verbosity_MAX);
@@ -188,7 +221,7 @@ int main(int argc, char **argv)
             motion_control_tick();
             remote_tick();
         }
-        LOG_F(INFO, "Shutting down!");
+        log_uptime();
         Xrender_close();
         remote_close();
         delete globals;
