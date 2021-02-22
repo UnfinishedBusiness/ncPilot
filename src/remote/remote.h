@@ -19,7 +19,7 @@
 #include <ftw.h>
 #include "net_skeleton/net_skeleton.h"
 
-using namespace std;
+
 
 class commands;
 

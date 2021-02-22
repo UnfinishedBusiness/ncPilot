@@ -4,7 +4,7 @@
 #include <json/json.h>
 #include "logging/loguru.h"
 
-using namespace std;
+
 
 void easy_serial::send_byte(uint8_t b)
 {

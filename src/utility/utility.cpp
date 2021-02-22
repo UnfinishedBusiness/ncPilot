@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-using namespace std;
+
 
 bool utility_dir_exists(const char *path)
 {

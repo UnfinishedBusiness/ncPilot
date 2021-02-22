@@ -4,7 +4,7 @@
 #include <Xrender.h>
 #include <json/json.h>
 
-using namespace std;
+
 
 void dialogs_show_machine_parameters(bool s);
 void dialogs_show_preferences(bool s);

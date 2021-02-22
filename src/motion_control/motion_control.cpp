@@ -15,7 +15,7 @@
 #include <streambuf>
 #include <iostream>
 
-using namespace std;
+
 
 easy_serial motion_controller("arduino", byte_handler, line_handler);
 

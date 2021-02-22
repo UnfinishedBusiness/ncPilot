@@ -14,7 +14,7 @@
 #include "dialogs/dialogs.h"
 #include "application.h"
 
-using namespace std;
+
 
 gcode_global_t gcode;
 gcode_path_t current_path;

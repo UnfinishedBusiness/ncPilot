@@ -15,7 +15,7 @@
 #include <dirent.h>
 #include <ftw.h>
 
-using namespace std;
+
 /*
     Primary structure to store global variables in
 */

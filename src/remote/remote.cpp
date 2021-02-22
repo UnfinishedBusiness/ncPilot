@@ -16,7 +16,7 @@
 #include <Xrender.h>
 #include <json/json.h>
 
-using namespace std;
+
 
 int commands::test(std::vector<std::string> args, void *this_pointer)
 {

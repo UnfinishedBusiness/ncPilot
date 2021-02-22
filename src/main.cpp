@@ -15,10 +15,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#if defined(_WIN32)
-     #include <windows.h>
-#endif 
-
 global_variables_t *globals;
 
 Xrender_object_t *performance_label;
@@ -193,7 +189,7 @@ int main(int argc, char **argv)
     if (!utility_dir_exists(Xrender_get_config_dir("ncPilot").c_str()))
     {
         #if defined(_WIN32)
-            _mkdir(Xrender_get_config_dir("ncPilot").c_str()); // can be used on Windows
+            mkdir(Xrender_get_config_dir("ncPilot").c_str()); // can be used on Windows
         #else 
             mkdir(Xrender_get_config_dir("ncPilot").c_str(), 0700);
         #endif
