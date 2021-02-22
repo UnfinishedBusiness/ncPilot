@@ -140,8 +140,6 @@
 
 namespace loguru
 {
-	using namespace std::chrono;
-
 #if LOGURU_WITH_FILEABS
 	struct FileAbs
 	{
@@ -173,7 +171,7 @@ namespace loguru
 	using StringPair     = std::pair<std::string, std::string>;
 	using StringPairList = std::vector<StringPair>;
 
-	const auto s_start_time = steady_clock::now();
+	const auto s_start_time = std::chrono::steady_clock::now();
 
 	Verbosity g_stderr_verbosity  = Verbosity_0;
 	bool      g_colorlogtostderr  = true;
@@ -505,7 +503,7 @@ namespace loguru
 
 	static long long now_ns()
 	{
-		return duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
+		return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 	}
 
 	// Returns the part of the path after the last / or \ (if any).
@@ -668,8 +666,8 @@ namespace loguru
 
 	void write_date_time(char* buff, size_t buff_size)
 	{
-		auto now = system_clock::now();
-		long long ms_since_epoch = duration_cast<milliseconds>(now.time_since_epoch()).count();
+		auto now = std::chrono::system_clock::now();
+		long long ms_since_epoch = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
 		time_t sec_since_epoch = time_t(ms_since_epoch / 1000);
 		tm time_info;
 		localtime_r(&sec_since_epoch, &time_info);
@@ -1269,12 +1267,12 @@ namespace loguru
 		if (out_buff_size == 0) { return; }
 		out_buff[0] = '\0';
 		if (!g_preamble) { return; }
-		long long ms_since_epoch = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+		long long ms_since_epoch = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 		time_t sec_since_epoch = time_t(ms_since_epoch / 1000);
 		tm time_info;
 		localtime_r(&sec_since_epoch, &time_info);
 
-		auto uptime_ms = duration_cast<milliseconds>(steady_clock::now() - s_start_time).count();
+		auto uptime_ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - s_start_time).count();
 		auto uptime_sec = static_cast<double> (uptime_ms) / 1000.0;
 
 		char thread_name[LOGURU_THREADNAME_WIDTH + 1] = {0};
