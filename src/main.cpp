@@ -17,7 +17,7 @@
 
 #if defined(_WIN32)
      #include <windows.h>
-#else 
+#endif 
 
 global_variables_t *globals;
 
