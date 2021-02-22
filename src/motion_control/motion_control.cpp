@@ -60,6 +60,7 @@ bool send_parameters = true;
 void program_finished()
 {
     LOG_F(INFO, "M30 Program finished!");
+    motion_controller_log_runtime();
     program_run_time = 0;
     okay_callback = NULL;
     probe_callback = NULL;
@@ -275,6 +276,38 @@ nlohmann::json motion_controller_get_run_time()
         return NULL;
     }
 }
+void motion_controller_log_runtime()
+{
+    unsigned long m = (Xrender_millis() - program_run_time);
+    unsigned long seconds=(m/1000)%60;
+    unsigned long minutes=(m/(1000*60))%60;
+    unsigned long hours=(m/(1000*60*60))%24;
+    LOG_F(INFO, "Logging program run time %luh %lum %lus to total", hours, minutes, seconds);
+    std::ifstream runtime_file(Xrender_get_config_dir("ncPilot") + "runtime.json");
+    if (runtime_file.is_open())
+    {
+        std::string uptime_json_string((std::istreambuf_iterator<char>(runtime_file)), std::istreambuf_iterator<char>());
+        nlohmann::json runtime_json = nlohmann::json::parse(uptime_json_string.c_str());
+        try
+        {
+            hours += (unsigned long)runtime_json["hours"];
+            minutes += (unsigned long)runtime_json["minutes"];
+            seconds += (unsigned long)runtime_json["seconds"];
+        }
+        catch(...)
+        {
+            LOG_F(WARNING, "Error parsing uptime file!");
+        }
+    }
+    runtime_file.close();
+    nlohmann::json runtime;
+    runtime["hours"] = hours;
+    runtime["minutes"] = minutes;
+    runtime["seconds"] = seconds;
+    std::ofstream out(Xrender_get_config_dir("ncPilot") + "runtime.json");
+    out << runtime.dump();
+    out.close();
+}
 bool motion_controller_is_torch_on()
 {
     return torch_on;
@@ -381,6 +414,7 @@ void line_handler(std::string line)
                 }
                 if (abort_pending == true && (bool)dro_data["IN_MOTION"] == false)
                 {
+                    motion_controller_log_runtime();
                     motion_controller.delay(300);
                     LOG_F(INFO, "Handling pending abort -> Sending Reset!");
                     motion_controller.send_byte(0x18);

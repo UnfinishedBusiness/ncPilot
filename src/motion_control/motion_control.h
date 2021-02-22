@@ -21,6 +21,7 @@ void line_handler(std::string);
 
 nlohmann::json motion_controller_get_dro();
 nlohmann::json motion_controller_get_run_time();
+void motion_controller_log_runtime();
 void motion_controller_cmd(std::string cmd);
 bool motion_control_update_firmware();
 void motion_controller_clear_stack();
