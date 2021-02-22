@@ -349,7 +349,7 @@ void hmi_reverse(Xrender_object_t* o)
                 unsigned long count = 0;
                 while (std::getline(gcode_file, line))
                 {
-                    if (count < (unsigned long)o->data["rapid_line"] + 1)
+                    if (count <= (unsigned long)o->data["rapid_line"] + 1)
                     {
                         gcode_lines_before_reverse.push_back(line);
                     }
@@ -390,10 +390,11 @@ void hmi_reverse(Xrender_object_t* o)
             out << gcode_lines_before_reverse.at(x); 
             out << std::endl;
         }
-        for (unsigned long x = gcode_lines_to_reverse.size(); x > 1; x--)
+        while(gcode_lines_to_reverse.size() > 0)
         {
-            out << gcode_lines_to_reverse.at(x);
+            out << gcode_lines_to_reverse.back();
             out << std::endl;
+            gcode_lines_to_reverse.pop_back();
         }
         for (unsigned long x = 0; x < gcode_lines_after_reverse.size(); x++)
         {
@@ -426,7 +427,7 @@ void hmi_mouse_callback(Xrender_object_t* o,nlohmann::json e)
         if (e["event"] == "right_click_up")
         {
             o->data["color"] = {{"r", 0}, {"g", 190}, {"b", 0}, {"a", 255}};
-            dialogs_ask_yes_no("Are you sure you want to reverse this paths direction?", &hmi_reverse, NULL, o);
+            dialogs_ask_yes_no("This feature is new and experimental, Your gcode file could be destroyed!\nAre you sure you want to reverse this paths direction?", &hmi_reverse, NULL, o);
         }
         if (e["event"] == "right_click_down")
         {
@@ -520,7 +521,7 @@ nlohmann::json view_matrix(nlohmann::json data)
     }
     if (data["type"] == "path")
     {
-        if (data["id"] == "gcode")
+        if (data["id"] == "gcode" || data["id"] == "gcode_highlights")
         {
             for (int x = 0; x < data["points"].size(); x++)
             {
