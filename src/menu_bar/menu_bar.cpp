@@ -7,7 +7,6 @@
 #include "dialogs/dialogs.h"
 #include "motion_control/motion_control.h"
 #include "logging/loguru.h"
-#include "debug/debug.h"
 #include <stdio.h>
 #include <iostream>
 

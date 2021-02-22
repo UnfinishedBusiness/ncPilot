@@ -26,7 +26,7 @@ ECHO_MESSAGE = $(OS)
 
 ifeq ($(OS),Linux)
   ECHO_MESSAGE = "Building for Linux"
-  LINK_FLAGS +=
+  LINK_FLAGS += -lGL -lGLU -ldl -lpthread
 endif
 
 ifeq ($(findstring NT,$(OS)),NT)
