@@ -23,6 +23,11 @@ Xrender_gui_t *progress_window_handle;
 float progress = 0.0f;
 Xrender_gui_t *info_window_handle;
 std::string info;
+Xrender_gui_t *ask_window_handle;
+std::string ask_text;
+void (*ask_window_yes_callback)(Xrender_object_t *);
+void (*ask_window_no_callback)(Xrender_object_t *);
+Xrender_object_t *ask_window_args;
 
 void dialogs_file_open()
 {
@@ -190,6 +195,34 @@ void dialogs_info_window()
     ImGui::End();
 }
 
+
+void dialogs_ask_yes_no(std::string a, void (*y)(Xrender_object_t *), void (*n)(Xrender_object_t *), Xrender_object_t *args)
+{
+    ask_text = a;
+    ask_window_yes_callback = y;
+    ask_window_no_callback = n;
+    ask_window_args = args;
+    LOG_F(INFO, "Ask Window => %s", ask_text.c_str());
+    ask_window_handle->visable = true;
+}
+void dialogs_ask_window()
+{
+    ImGui::Begin("Question?", &ask_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Text("%s", ask_text.c_str());
+    if (ImGui::Button("Yes"))
+    {
+        if (ask_window_yes_callback != NULL) ask_window_yes_callback(ask_window_args);
+        ask_window_handle->visable = false;
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("No"))
+    {
+        if (ask_window_no_callback != NULL) ask_window_no_callback(ask_window_args);
+        ask_window_handle->visable = false;
+    }
+    ImGui::End();
+}
+
 void dialogs_show_thc_window(bool s)
 {
     thc_window_handle->visable = s;
@@ -220,5 +253,6 @@ void dialogs_init()
     machine_parameters_window_handle = Xrender_push_gui(false, dialogs_machine_parameters);
     progress_window_handle = Xrender_push_gui(false, dialogs_progress_window);
     info_window_handle = Xrender_push_gui(false, dialogs_info_window);
+    ask_window_handle = Xrender_push_gui(false, dialogs_ask_window);
     thc_window_handle = Xrender_push_gui(false, dialogs_thc_window);
 }

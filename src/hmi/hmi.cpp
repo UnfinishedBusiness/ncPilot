@@ -290,6 +290,125 @@ void hmi_handle_button(std::string id)
         LOG_F(ERROR, "JSON Parsing ERROR!");
     }
 }
+void hmi_jumpin(Xrender_object_t* o)
+{
+    double_point_t bbox_min, bbox_max;
+    hmi_get_bounding_box(&bbox_min, &bbox_max);
+    if (bbox_min.x > 0.0f + globals->machine_parameters.cutting_extents[0] &&
+        bbox_min.y > 0.0f + globals->machine_parameters.cutting_extents[1] &&
+        bbox_max.x < globals->machine_parameters.machine_extents[0] - globals->machine_parameters.cutting_extents[2] &&
+        bbox_max.y < globals->machine_parameters.machine_extents[1] - globals->machine_parameters.cutting_extents[3])
+    {
+        try
+        {
+            if (gcode_get_filename() != "")
+            {
+                std::ifstream gcode_file(gcode_get_filename());
+                if (gcode_file.is_open())
+                {
+                    std::string line;
+                    unsigned long count = 0;
+                    while (std::getline(gcode_file, line))
+                    {
+                        if (count > (unsigned long)o->data["rapid_line"] - 1) motion_controller_push_stack(line);
+                        count++;
+                    }
+                    gcode_file.close();
+                    motion_controller_run_stack();
+                }
+                else
+                {
+                    dialogs_set_info_value("Could not open file!");
+                }
+            }
+        }
+        catch(...)
+        {
+            dialogs_set_info_value("Caught exception while trying to read file!");
+        }
+    }
+    else
+    {
+        dialogs_set_info_value("Program is outside of machines cuttable extents!");
+    }
+}
+void hmi_reverse(Xrender_object_t* o)
+{
+    std::vector<std::string> gcode_lines_before_reverse;
+    std::vector<std::string> gcode_lines_to_reverse;
+    std::vector<std::string> gcode_lines_after_reverse;
+    bool found_path_end = false;
+    try
+    {
+        if (gcode_get_filename() != "")
+        {
+            std::ifstream gcode_file(gcode_get_filename());
+            if (gcode_file.is_open())
+            {
+                std::string line;
+                unsigned long count = 0;
+                while (std::getline(gcode_file, line))
+                {
+                    if (count < (unsigned long)o->data["rapid_line"] + 1)
+                    {
+                        gcode_lines_before_reverse.push_back(line);
+                    }
+                    else if (count > (unsigned long)o->data["rapid_line"] + 1)
+                    {
+                        if (line.find("torch_off") != std::string::npos)
+                        {
+                            found_path_end = true;
+                        }
+                        if (found_path_end == true)
+                        {
+                            gcode_lines_after_reverse.push_back(line);
+                        }
+                        else
+                        {
+                            gcode_lines_to_reverse.push_back(line);
+                        }
+                    }
+                    count++;
+                }
+                gcode_file.close();
+            }
+            else
+            {
+                dialogs_set_info_value("Could not open file!");
+            }
+        }
+    }
+    catch(...)
+    {
+        dialogs_set_info_value("Caught exception while trying to read file!");
+    }
+    try
+    {
+        std::ofstream out(gcode_get_filename());
+        for (unsigned long x = 0; x < gcode_lines_before_reverse.size(); x++)
+        {
+            out << gcode_lines_before_reverse.at(x); 
+            out << std::endl;
+        }
+        for (unsigned long x = gcode_lines_to_reverse.size(); x > 1; x--)
+        {
+            out << gcode_lines_to_reverse.at(x);
+            out << std::endl;
+        }
+        for (unsigned long x = 0; x < gcode_lines_after_reverse.size(); x++)
+        {
+            out << gcode_lines_after_reverse.at(x); 
+            out << std::endl;
+        }
+        out.close();
+        hmi_handle_button("Clean");
+    }
+    catch(...)
+    {
+        dialogs_set_info_value("Could not write gcode file to disk!");
+    }
+    
+}
 void hmi_mouse_callback(Xrender_object_t* o,nlohmann::json e)
 {
     if (o->data["type"] == "path" && o->data["id"] == "gcode")
@@ -304,53 +423,23 @@ void hmi_mouse_callback(Xrender_object_t* o,nlohmann::json e)
             //LOG_F(INFO, "Mouse Out - %s\n", e.dump().c_str());
             o->data["color"] = {{"r", 255}, {"g", 255}, {"b", 255}, {"a", 255}};
         }
+        if (e["event"] == "right_click_up")
+        {
+            o->data["color"] = {{"r", 0}, {"g", 190}, {"b", 0}, {"a", 255}};
+            dialogs_ask_yes_no("Are you sure you want to reverse this paths direction?", &hmi_reverse, NULL, o);
+        }
+        if (e["event"] == "right_click_down")
+        {
+            o->data["color"] = {{"r", 0}, {"g", 255}, {"b", 0}, {"a", 255}};
+        }
         if (e["event"] == "left_click_down")
         {
             o->data["color"] = {{"r", 0}, {"g", 255}, {"b", 0}, {"a", 255}};
         }
         if (e["event"] == "left_click_up")
         {
-            LOG_F(INFO, "Running from clicked contour!");
             o->data["color"] = {{"r", 255}, {"g", 255}, {"b", 255}, {"a", 255}};
-            double_point_t bbox_min, bbox_max;
-            hmi_get_bounding_box(&bbox_min, &bbox_max);
-            if (bbox_min.x > 0.0f + globals->machine_parameters.cutting_extents[0] &&
-                bbox_min.y > 0.0f + globals->machine_parameters.cutting_extents[1] &&
-                bbox_max.x < globals->machine_parameters.machine_extents[0] - globals->machine_parameters.cutting_extents[2] &&
-                bbox_max.y < globals->machine_parameters.machine_extents[1] - globals->machine_parameters.cutting_extents[3])
-            {
-                try
-                {
-                    if (gcode_get_filename() != "")
-                    {
-                        std::ifstream gcode_file(gcode_get_filename());
-                        if (gcode_file.is_open())
-                        {
-                            std::string line;
-                            unsigned long count = 0;
-                            while (std::getline(gcode_file, line))
-                            {
-                                if (count > (unsigned long)o->data["rapid_line"] - 1) motion_controller_push_stack(line);
-                                count++;
-                            }
-                            gcode_file.close();
-                            motion_controller_run_stack();
-                        }
-                        else
-                        {
-                            dialogs_set_info_value("Could not open file!");
-                        }
-                    }
-                }
-                catch(...)
-                {
-                    dialogs_set_info_value("Caught exception while trying to read file!");
-                }
-            }
-            else
-            {
-                dialogs_set_info_value("Program is outside of machines cuttable extents!");
-            }
+            dialogs_ask_yes_no("Are you sure you want to start the program at this path?", &hmi_jumpin, NULL, o);
         }
     }
     if (o->data["type"] == "box" && o->data["id"] != "cuttable_plane")
@@ -498,7 +587,7 @@ bool hmi_update_timer()
             {
                 nlohmann::json path;
                 path.push_back({{"x", (double)dro_data["WCS"]["x"]}, {"y", (double)dro_data["WCS"]["y"]}});
-                arc_okay_highlight_path = Xrender_push_path({{"id", "gcode"},{"width", 3}, {"closed", false},{"points", path},{"color", {{"r", 0},{"g", 255},{"b", 0},{"a", 255},}},});
+                arc_okay_highlight_path = Xrender_push_path({{"id", "gcode_highlight"},{"width", 3}, {"closed", false},{"points", path},{"color", {{"r", 0},{"g", 255},{"b", 0},{"a", 255},}},});
                 arc_okay_highlight_path->matrix_data = &view_matrix;
             }
             else

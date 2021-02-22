@@ -55,7 +55,7 @@ bool gcode_open_file(std::string file)
         std::vector<Xrender_object_t*> *stack = Xrender_get_object_stack();
         for (int x = 0; x < stack->size(); x++)
         {
-            if (stack->at(x)->data["id"] == "gcode" || stack->at(x)->data["id"] == "gcode_arrows")
+            if (stack->at(x)->data["id"] == "gcode" || stack->at(x)->data["id"] == "gcode_arrows" || stack->at(x)->data["id"] == "gcode_highlight")
             {
                 stack->erase(stack->begin() + x);
                 x = 0; //Restart at top because erase will chage count
