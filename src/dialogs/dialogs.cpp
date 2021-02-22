@@ -57,6 +57,13 @@ void dialogs_preferences()
     ImGui::ColorEdit3("Background Color", globals->preferences.background_color);
     ImGui::ColorEdit3("Machine Plane Color", globals->preferences.machine_plane_color);
     ImGui::ColorEdit3("Cuttable Plane Color", globals->preferences.cuttable_plane_color);
+    ImGui::InputInt2("Default Window Size", globals->preferences.window_size);
+    ImGui::SameLine();
+    if (ImGui::Button("<= Current Size"))
+    {
+        globals->preferences.window_size[0] = (int)globals->Xcore->data["window_width"];
+        globals->preferences.window_size[1] = (int)globals->Xcore->data["window_height"];
+    }
     ImGui::Spacing();
     if (ImGui::Button("OK"))
     {
@@ -77,6 +84,8 @@ void dialogs_preferences()
         preferences["background_color"] = globals->Xcore->data["clear_color"];
         preferences["machine_plane_color"] = globals->machine_plane->data["color"];
         preferences["cuttable_plane_color"] = globals->cuttable_plane->data["color"];
+        preferences["window_width"] = globals->preferences.window_size[0];
+        preferences["window_height"] = globals->preferences.window_size[1];
         std::ofstream out(Xrender_get_config_dir("ncPilot") + "preferences.json");
         out << preferences.dump();
         out.close();

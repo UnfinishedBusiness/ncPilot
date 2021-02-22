@@ -23,6 +23,7 @@ struct preferences_data_t{
     float background_color[3] = { 0.0f, 0.0f, 0.0f };
     float machine_plane_color[3] = { 0.0f, 0.0f, 0.0f };
     float cuttable_plane_color[3] = { 0.0f, 0.0f, 0.0f };
+    int window_size[2] = { 0, 0 };
 };
 struct machine_parameters_data_t{
     float work_offset[3] = { 0.0f, 0.0f, 0.0f };

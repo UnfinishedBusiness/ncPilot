@@ -451,6 +451,9 @@ bool hmi_update_timer()
 }
 void hmi_resize(nlohmann::json e)
 {
+    //Write new window size to file
+    
+
     globals->Xcore->data["window_width"] = (int)e["size"]["width"];
     globals->Xcore->data["window_height"] = (int)e["size"]["height"];
     hmi_backpane->data["tl"] = {{"x", ((double)globals->Xcore->data["window_width"] / 2) - hmi_backplane_width}, {"y", -((double)globals->Xcore->data["window_height"] / 2)}};

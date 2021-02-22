@@ -36,6 +36,8 @@ void init_preferences()
             globals->preferences.cuttable_plane_color[0] = (double)preferences["cuttable_plane_color"]["r"] / 255;
             globals->preferences.cuttable_plane_color[1] = (double)preferences["cuttable_plane_color"]["g"] / 255;
             globals->preferences.cuttable_plane_color[2] = (double)preferences["cuttable_plane_color"]["b"] / 255;
+            globals->preferences.window_size[0] = (double)preferences["window_width"];
+            globals->preferences.window_size[1] = (double)preferences["window_height"];
         }
         catch(...)
         {
@@ -54,6 +56,8 @@ void init_preferences()
         globals->preferences.cuttable_plane_color[0] = 151.0f / 255;
         globals->preferences.cuttable_plane_color[1] = 5.0f / 255;
         globals->preferences.cuttable_plane_color[2] = 5.0f / 255;
+        globals->preferences.window_size[0] = 500;
+        globals->preferences.window_size[1] = 400;
     }
 
     std::ifstream json_file(Xrender_get_config_dir("ncPilot") + "machine_parameters.json");
@@ -155,13 +159,14 @@ int main(int argc, char **argv)
     loguru::add_file(string(Xrender_get_config_dir("ncPilot") + "ncPilot.log").c_str(), loguru::Append, loguru::Verbosity_MAX);
     remote_init();
     LOG_F(INFO, "Config directory: %s", Xrender_get_config_dir("ncPilot").c_str());
+
     if (Xrender_init({
         {"window_title", "ncPilot"},
         {"ini_file_name", Xrender_get_config_dir("ncPilot") + "gui.ini"}, 
         {"log_file_name", Xrender_get_config_dir("ncPilot") + "ncPilot.log"}, 
         {"maximize", false}, 
-        {"window_width", 1200}, 
-        {"window_height", 700}, 
+        {"window_width", (int)globals->preferences.window_size[0]}, 
+        {"window_height", (int)globals->preferences.window_size[1]}, 
         {"clear_color", { 
                 {"r", (double)globals->preferences.background_color[0] * 255}, 
                 {"g", (double)globals->preferences.background_color[1] * 255}, 
