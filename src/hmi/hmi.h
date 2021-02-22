@@ -33,5 +33,6 @@ struct dro_group_data_t{
 
 void hmi_init();
 void hmi_handle_button(std::string id);
+void hmi_mouse_callback(Xrender_object_t* o,nlohmann::json e);
 
 #endif

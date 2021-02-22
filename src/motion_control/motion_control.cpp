@@ -62,6 +62,7 @@ void program_finished()
     LOG_F(INFO, "M30 Program finished!");
     motion_controller_log_runtime();
     program_run_time = 0;
+    arc_retry_count = 0;
     okay_callback = NULL;
     probe_callback = NULL;
     motion_sync_callback = NULL;
@@ -421,6 +422,7 @@ void line_handler(std::string line)
                     motion_controller.delay(300);
                     abort_pending = false;
                     program_run_time = 0;
+                    arc_retry_count = 0;
                     torch_on = false;
                     handling_crash = false;
                     controller_ready = false;
@@ -630,6 +632,7 @@ void motion_control_init()
     abort_pending = false;
     handling_crash = false;
     program_run_time = 0;
+    arc_retry_count = 0;
     Xrender_push_timer(100, motion_control_status_timer);
 }
 void motion_control_tick()

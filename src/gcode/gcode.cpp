@@ -10,6 +10,7 @@
 #include "gcode/gcode.h"
 #include "logging/loguru.h"
 #include "geometry/geometry.h"
+#include "hmi/hmi.h"
 #include "dialogs/dialogs.h"
 #include "application.h"
 
@@ -94,7 +95,7 @@ nlohmann::json parse_line(std::string line)
     }
     return ret;
 }
-void gcode_push_current_path_to_viewer()
+void gcode_push_current_path_to_viewer(int rapid_line)
 {
     if (current_path.points.size() > 0)
     {
@@ -107,8 +108,9 @@ void gcode_push_current_path_to_viewer()
             {
                 path.push_back({{"x", simplified[i].x}, {"y", simplified[i].y}});
             }
-            Xrender_object_t *o = Xrender_push_path({{"id", "gcode"},{"points", path},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
+            Xrender_object_t *o = Xrender_push_path({{"id", "gcode"}, {"rapid_line", rapid_line}, {"points", path},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
             o->matrix_data = &view_matrix;
+            o->mouse_callback = &hmi_mouse_callback;
         }
         catch(const std::exception& e)
         {
@@ -132,7 +134,7 @@ bool gcode_parse_timer()
                 {
                     last_path_endpoint = current_path.points[current_path.points.size()-1];
                 }
-                gcode_push_current_path_to_viewer();
+                gcode_push_current_path_to_viewer(gcode.last_rapid_line);
                 if (current_path.points.size() > 0) paths.push_back(current_path);
                 current_path.points.clear();
                 nlohmann::json g = parse_line(line);
@@ -149,6 +151,7 @@ bool gcode_parse_timer()
                 {
                     LOG_F(ERROR, "Gcode parsing error at line %lu in file %s", gcode.lines_consumed, gcode.filename.c_str());
                 }
+                gcode.last_rapid_line = gcode.lines_consumed -1;
             }
             else if (line.find("G1") != std::string::npos)
             {
@@ -167,7 +170,7 @@ bool gcode_parse_timer()
         else
         {
             LOG_F(INFO, "Reached end of file!");
-            gcode_push_current_path_to_viewer();
+            gcode_push_current_path_to_viewer(gcode.last_rapid_line);
             if (current_path.points.size() > 0) paths.push_back(current_path);
             current_path.points.clear();
             gcode.file.close();

@@ -293,8 +293,69 @@ void hmi_handle_button(std::string id)
         LOG_F(ERROR, "JSON Parsing ERROR!");
     }
 }
-void mouse_callback(Xrender_object_t* o,nlohmann::json e)
+void hmi_mouse_callback(Xrender_object_t* o,nlohmann::json e)
 {
+    if (o->data["type"] == "path" && o->data["id"] == "gcode")
+    {
+        if (e["event"] == "mouse_in")
+        {
+            //LOG_F(INFO, "Start Line => %lu", (unsigned long)o->data["rapid_line"]);
+            o->data["color"] = {{"r", 0}, {"g", 190}, {"b", 0}, {"a", 255}};
+        }
+        if (e["event"] == "mouse_out")
+        {
+            //LOG_F(INFO, "Mouse Out - %s\n", e.dump().c_str());
+            o->data["color"] = {{"r", 255}, {"g", 255}, {"b", 255}, {"a", 255}};
+        }
+        if (e["event"] == "left_click_down")
+        {
+            o->data["color"] = {{"r", 0}, {"g", 255}, {"b", 0}, {"a", 255}};
+        }
+        if (e["event"] == "left_click_up")
+        {
+            LOG_F(INFO, "Running from clicked contour!");
+            o->data["color"] = {{"r", 255}, {"g", 255}, {"b", 255}, {"a", 255}};
+            double_point_t bbox_min, bbox_max;
+            hmi_get_bounding_box(&bbox_min, &bbox_max);
+            if (bbox_min.x > 0.0f + globals->machine_parameters.cutting_extents[0] &&
+                bbox_min.y > 0.0f + globals->machine_parameters.cutting_extents[1] &&
+                bbox_max.x < globals->machine_parameters.machine_extents[0] - globals->machine_parameters.cutting_extents[2] &&
+                bbox_max.y < globals->machine_parameters.machine_extents[1] - globals->machine_parameters.cutting_extents[3])
+            {
+                try
+                {
+                    if (gcode_get_filename() != "")
+                    {
+                        std::ifstream gcode_file(gcode_get_filename());
+                        if (gcode_file.is_open())
+                        {
+                            std::string line;
+                            unsigned long count = 0;
+                            while (std::getline(gcode_file, line))
+                            {
+                                if (count > (unsigned long)o->data["rapid_line"] - 1) motion_controller_push_stack(line);
+                                count++;
+                            }
+                            gcode_file.close();
+                            motion_controller_run_stack();
+                        }
+                        else
+                        {
+                            dialogs_set_info_value("Could not open file!");
+                        }
+                    }
+                }
+                catch(...)
+                {
+                    dialogs_set_info_value("Caught exception while trying to read file!");
+                }
+            }
+            else
+            {
+                dialogs_set_info_value("Program is outside of machines cuttable extents!");
+            }
+        }
+    }
     if (o->data["type"] == "box" && o->data["id"] != "cuttable_plane")
     {
         if (e["event"] == "mouse_in")
@@ -329,8 +390,6 @@ void mouse_callback(Xrender_object_t* o,nlohmann::json e)
                 if (o->data["id"] == "cuttable_plane" && dro_data["IN_MOTION"] == false)
                 {
                     globals->way_point_position = globals->mouse_pos_in_matrix_coordinates;
-                    globals->way_point_marker->data["center"] = {{"x", globals->way_point_position.x}, {"y", globals->way_point_position.y}};
-                    globals->way_point_marker->data["visable"] = true;
                 }
             }
             catch(...)
@@ -353,7 +412,7 @@ nlohmann::json view_matrix(nlohmann::json data)
     }
     if (data["type"] == "arc" || data["type"] == "circle")
     {
-        if (data["id"] == "torch_pointer" || data["id"] == "globals->way_point_marker")
+        if (data["id"] == "torch_pointer")
         {
             new_data["center"]["x"] = ((double)data["center"]["x"] * globals->zoom) + globals->pan.x;
             new_data["center"]["y"] = ((double)data["center"]["y"]* globals->zoom) + globals->pan.y;
@@ -528,8 +587,8 @@ void hmi_push_button_group(std::string b1, std::string b2)
     group.button_two.name = b2;
     group.button_two.object = Xrender_push_box({{"id", b2}, {"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 200},{"color", {{"r", 10},{"g", 10},{"b", 10},{"a", 255}}},});
     group.button_two.label = Xrender_push_text({{"textval", group.button_two.name},{"font", "default"},{"position", {{"x", -10000},{"y", -10000}}},{"font_size", 20},{"zindex", 210},{"angle", 0},{"color", {{"r", 255},{"g", 255},{"b", 255},{"a", 255},}},});
-    group.button_one.object->mouse_callback = mouse_callback;
-    group.button_two.object->mouse_callback = mouse_callback;
+    group.button_one.object->mouse_callback = hmi_mouse_callback;
+    group.button_two.object->mouse_callback = hmi_mouse_callback;
     button_groups.push_back(group);
 }
 void tab_key_up(nlohmann::json e)
@@ -542,8 +601,6 @@ void tab_key_up(nlohmann::json e)
         motion_controller_run_stack();
         globals->way_point_position.x = -1000;
         globals->way_point_position.y = -1000;
-        globals->way_point_marker->data["center"] = {{"x", globals->way_point_position.x}, {"y", globals->way_point_position.y}};
-        globals->way_point_marker->data["visable"] = false;
     }
 }
 void hmi_init()
@@ -553,7 +610,7 @@ void hmi_init()
     globals->machine_plane->matrix_data = view_matrix;
     globals->cuttable_plane = Xrender_push_box({{"id", "cuttable_plane"}, {"tl", {{"x", globals->machine_parameters.cutting_extents[0]},{"y", globals->machine_parameters.machine_extents[1]+globals->machine_parameters.cutting_extents[3]}}},{"br", {{"x", globals->machine_parameters.machine_extents[0]+globals->machine_parameters.cutting_extents[2]},{"y", globals->machine_parameters.cutting_extents[1]}}},{"radius", 0},{"zindex", -10},{"color", {{"r", globals->preferences.cuttable_plane_color[0] * 255},{"g", globals->preferences.cuttable_plane_color[1] * 255},{"b", globals->preferences.cuttable_plane_color[2] * 255},{"a", 255}}},});
     globals->cuttable_plane->matrix_data = view_matrix;
-    globals->cuttable_plane->mouse_callback = mouse_callback;
+    globals->cuttable_plane->mouse_callback = hmi_mouse_callback;
     
     hmi_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 0},{"zindex", 100},{"color", {{"r", 25},{"g", 44},{"b", 71},{"a", 255}}},});
     hmi_dro_backpane = Xrender_push_box({{"tl", {{"x", -100000},{"y", -100000}}},{"br", {{"x", -100000},{"y", -100000}}},{"radius", 5},{"zindex", 110},{"color", {{"r", 29},{"g", 32},{"b", 48},{"a", 255}}},});
@@ -588,9 +645,6 @@ void hmi_init()
 
     globals->torch_pointer = Xrender_push_circle({{"center", {{"x", -1000},{"y", -1000}}},{"color", {{"r", 0},{"g", 255},{"b", 0},{"a", 255},}},{"radius", 5},{"zindex", 500},{"id", "torch_pointer"},});
     globals->torch_pointer->matrix_data = &view_matrix;
-
-    globals->way_point_marker = Xrender_push_circle({{"center", {{"x", -1000},{"y", -1000}}},{"color", {{"r", 0},{"g", 0},{"b", 255},{"a", 255},}},{"radius", 5},{"zindex", 500},{"id", "globals->way_point_marker"},{"visable", false}});
-    globals->way_point_marker->matrix_data = &view_matrix;
 
    
     //Xrender_push_key_event({"Escape", "keyup", escape_key_up});
