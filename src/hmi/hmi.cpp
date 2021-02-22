@@ -214,13 +214,10 @@ void hmi_handle_button(std::string id)
                 }
             }
         }
-        else
+        if (id == "Abort")
         {
-            if (id == "Abort")
-            {
-                LOG_F(INFO, "Clicked Abort");
-                motion_controller_cmd("abort");
-            }
+            LOG_F(INFO, "Clicked Abort");
+            motion_controller_cmd("abort");
         }
         if (id == "Clean")
         {

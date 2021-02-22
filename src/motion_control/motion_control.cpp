@@ -71,6 +71,7 @@ void program_finished()
 }
 bool arc_okay_expire_timer()
 {
+    if (abort_pending == true) return false; //Pending abort must cancel this timer otherwise aborts would be ignored in arc retry loop!
     /*
         if this function is called, torch fired but controller never seen an arc okay signal after 3 seconds...
     */
@@ -320,6 +321,10 @@ void motion_controller_cmd(std::string cmd)
         LOG_F(INFO, "Aborting!");
         motion_controller_send("!");
         abort_pending = true;
+        okay_callback = NULL;
+        probe_callback = NULL;
+        motion_sync_callback = NULL;
+        arc_okay_callback = NULL;
         motion_controller_clear_stack();
     }
 }
