@@ -15,6 +15,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#if defined(_WIN32)
+     #include <windows.h>
+#else 
+
 global_variables_t *globals;
 
 Xrender_object_t *performance_label;
