@@ -695,9 +695,10 @@ namespace loguru
 	{
 		#ifdef _WIN32
 			char* user_profile;
-			size_t len;
-			errno_t err = _dupenv_s(&user_profile, &len, "USERPROFILE");
-			CHECK_F(err != 0, "Missing USERPROFILE");
+			//size_t len;
+			//errno_t err = _dupenv_s(&user_profile, &len, "USERPROFILE");
+			//CHECK_F(err != 0, "Missing USERPROFILE");
+			user_profile = std::getenv("USERPROFILE");
 			return user_profile;
 		#else // _WIN32
 			auto home = getenv("HOME");
