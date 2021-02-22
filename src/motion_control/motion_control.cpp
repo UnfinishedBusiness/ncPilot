@@ -173,7 +173,7 @@ void run_pop()
         if (line.find("fire_torch") != std::string::npos)
         {
             LOG_F(INFO, "[fire_torch] Sending probing cycle! - Waiting for probe to finish!");
-            std::vector args = split(line, ' ');
+            std::vector<std::string> args = split(line, ' ');
             if (args.size() == 4)
             {
                 callback_args["pierce_height"] = (double)atof(args[1].c_str());
@@ -205,7 +205,7 @@ void run_pop()
         else if (line.find("touch_torch") != std::string::npos)
         {
             LOG_F(INFO, "[touch_torch] Sending probing cycle! - Waiting for probe to finish!");
-            std::vector args = split(line, ' ');
+            std::vector<std::string> args = split(line, ' ');
             if (args.size() == 4)
             {
                 callback_args["pierce_height"] = (double)atof(args[1].c_str());
