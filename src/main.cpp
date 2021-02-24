@@ -207,7 +207,7 @@ int main(int argc, char **argv)
 
     init_preferences();
     loguru::add_file(string(Xrender_get_config_dir("ncPilot") + "ncPilot.log").c_str(), loguru::Append, loguru::Verbosity_MAX);
-    remote_init();
+    //remote_init();
     LOG_F(INFO, "Config directory: %s", Xrender_get_config_dir("ncPilot").c_str());
 
     if (Xrender_init({
@@ -252,11 +252,11 @@ int main(int argc, char **argv)
         {
             if (globals->quit == true) break; 
             motion_control_tick();
-            remote_tick();
+            //remote_tick();
         }
         log_uptime();
         Xrender_close();
-        remote_close();
+        //remote_close();
         delete globals;
     }
     return 0;

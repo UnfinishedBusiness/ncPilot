@@ -262,7 +262,11 @@ static void ev_handler(struct ns_connection *nc, int ev, void *ev_data)
 void remote_init()
 {
     ns_mgr_init(&mgr, NULL);
-    ns_bind(&mgr, "1414", ev_handler);
+    //ns_bind(&mgr, "1414", ev_handler);
+    if (ns_connect(&mgr, "127.0.0.1:1414", ev_handler) == NULL)
+    {
+        LOG_F(WARNING, "Could not connect to ncPilot backend!");
+    }
 }
 void remote_tick()
 {
