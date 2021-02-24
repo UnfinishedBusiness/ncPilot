@@ -12,7 +12,7 @@ SRC_PATH = ./src/
 # Space-separated pkg-config libraries used by this project
 LIBS = glfw3
 # General compiler flags
-COMPILE_FLAGS = -static -std=gnu++14 -g -fpermissive
+COMPILE_FLAGS = -std=gnu++14 -g -fpermissive
 # Additional release-specific flags
 RCOMPILE_FLAGS = -D NDEBUG
 # Additional debug-specific flags
@@ -31,7 +31,7 @@ endif
 
 ifeq ($(findstring NT,$(OS)),NT)
 	ECHO_MESSAGE = "Building for NT"
-	LINK_FLAGS += -lopengl32 -lfreeglut -lglu32 -lws2_32 -lole32 -loleaut32 -lcomdlg32 -lhid -lsetupapi
+	LINK_FLAGS += -lopengl32 -lfreeglut -lglu32 -lws2_32 -lole32 -loleaut32 -lcomdlg32 -lhid -lsetupapi -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
 endif
 
 ifeq ($(OS),Darwin)
