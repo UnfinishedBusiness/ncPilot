@@ -28,3 +28,4 @@ build_script:
 - '%MSYS_BASH% -lc "mingw32-make.exe"'
 - cd C:\projects\ncpilot
 - '%MSYS_BASH% -lc "mingw32-make.exe"'
+- appveyor PushArtifact ncPilot\bin\release\ncPilot.exe
