@@ -1,4 +1,3 @@
-#include "Xrender.h"
 #include "application.h"
 #include "json/json.h"
 #include "gui/imgui.h"

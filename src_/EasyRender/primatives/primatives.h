@@ -1,0 +1,44 @@
+#ifndef PRIMATIVES_
+#define PRIMATIVES_
+
+#include <string>
+#include "../json/json.h"
+
+/*
+    Properties that all primatives will share
+*/
+class PrimativeProperties{
+    public:
+        bool visable;
+        bool mouse_over;
+        int zindex;
+        float color[4];
+        float offset[3];
+        float scale;
+        float angle;
+        std::string id;
+        nlohmann::json data;
+
+        /* Event Callbacks */
+        void (*mouse_callback)(void*, nlohmann::json);
+
+        PrimativeProperties()
+        {
+            this->visable = true;
+            this->zindex = 1;
+            this->color[0] = 255;
+            this->color[1] = 255;
+            this->color[2] = 255;
+            this->color[3] = 255;
+            this->scale = 1;
+            this->offset[0] = 0;
+            this->offset[1] = 0;
+            this->offset[2] = 0;
+            this->angle = 0;
+            this->id = "";
+            this->mouse_over = false;
+            this->data = NULL;
+        }
+};
+
+#endif //PRIMATIVES_

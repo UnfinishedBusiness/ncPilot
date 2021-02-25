@@ -1,0 +1,22 @@
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 11:03:49.242 (   0.016s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'ncPilot.log', mode: 'a', verbosity: 9
+2021-02-25 11:03:49.242 (   0.016s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 11:22:41.195 (   0.008s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'ncPilot.log', mode: 'a', verbosity: 9
+2021-02-25 11:22:41.195 (   0.008s) [main thread     ]             loguru.cpp:524   INFO| atexit

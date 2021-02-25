@@ -1,0 +1,283 @@
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 11:31:50.309 (   0.005s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 11:31:50.597 (   0.293s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 11:32:11.133 (   0.005s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 11:32:11.189 (   0.061s) [main thread     ]               main.cpp:42    INFO| IT Works!
+2021-02-25 11:32:11.189 (   0.061s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 11:33:48.850 (   0.005s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 11:33:48.897 (   0.052s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 11:49:26.203 (   0.033s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 11:49:26.849 (   0.679s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 11:59:25.302 (   0.015s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 11:59:26.083 (   0.797s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 11:59:49.674 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 11:59:57.518 (   7.848s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:10:53.823 (   0.012s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:10:56.396 (   2.585s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:13:29.858 (   0.014s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:13:34.698 (   4.854s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:18:42.494 (   0.018s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:18:47.202 (   4.726s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:23:45.299 (   0.011s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:23:50.043 (   4.756s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:28:40.411 (   0.010s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:28:46.755 (   6.354s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:30:05.529 (   0.019s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:30:21.697 (  16.187s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:31:22.914 (   0.010s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:31:32.155 (   9.252s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:32:14.023 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:32:27.792 (  13.773s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:32:37.590 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:32:46.280 (   8.694s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:33:55.046 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:34:09.220 (  14.178s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:34:38.701 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:34:44.681 (   5.984s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:34:57.972 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:35:06.913 (   8.945s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:35:35.437 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:35:47.776 (  12.343s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:36:09.706 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:36:15.431 (   5.728s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:36:27.866 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:36:31.331 (   3.469s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:49:52.698 (   0.012s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:49:58.710 (   6.024s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:55:26.162 (   0.015s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+Stack trace:
+5                  0x1 9   ???                                 0x0000000000000001 0x0 + 1
+4       0x7fff6bb4b015 start + 1
+3          0x10e3bae89 main + 345
+2          0x10e16052a EasyRender::Poll(bool) + 506
+1       0x7ffee1aa2050 5   ???                                 0x00007ffee1aa2050 0x0 + 140732684443728
+0       0x7fff6be59f5a _sigtramp + 26
+2021-02-25 12:55:28.309 (   2.163s) [main thread     ]                       :0     FATL| Signal: SIGSEGV
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 12:57:45.106 (   0.040s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 12:57:47.446 (   2.379s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:01:18.164 (   0.014s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:01:20.189 (   2.038s) [main thread     ]             loguru.cpp:524   INFO| atexit

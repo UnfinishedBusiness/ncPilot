@@ -8,7 +8,7 @@ CXX ?= g++
 # Extension of source files used in the project
 SRC_EXT = cpp
 # Path to the source directory, relative to the makefile
-SRC_PATH = ./src/
+SRC_PATH = ./src_/
 # Space-separated pkg-config libraries used by this project
 LIBS = glfw3
 # General compiler flags
@@ -18,9 +18,9 @@ RCOMPILE_FLAGS = -D NDEBUG
 # Additional debug-specific flags
 DCOMPILE_FLAGS = -D DEBUG
 # Add additional include paths
-INCLUDES = -I $(SRC_PATH)/ -I../Xrender/src/
+INCLUDES = -I $(SRC_PATH)/ -I../Xrender/src_/
 # General linker settings
-LINK_FLAGS = -lz -lm -L../Xrender/lib -lXrender
+LINK_FLAGS = -lz -lm
 
 ECHO_MESSAGE = $(OS)
 
