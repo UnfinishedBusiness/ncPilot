@@ -24,6 +24,7 @@ class PrimativeProperties{
 
         /* Event Callbacks */
         void (*mouse_callback)(PrimativeContainer*, nlohmann::json);
+        void (*matrix_callback)(PrimativeContainer*);
 
         PrimativeProperties()
         {
@@ -47,6 +48,7 @@ class PrimativeProperties{
             this->mouse_over = false;
             this->data = NULL;
             this->mouse_callback = NULL;
+            this->matrix_callback = NULL;
         }
 };
 

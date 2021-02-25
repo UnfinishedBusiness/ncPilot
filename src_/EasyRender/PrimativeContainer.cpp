@@ -54,6 +54,10 @@ void PrimativeContainer::process_mouse(float mpos_x, float mpos_y)
 }
 void PrimativeContainer::render()
 {
+    if (this->properties->matrix_callback != NULL)
+    {
+        this->properties->matrix_callback(this);
+    }
     if (this->type == "line")
     {
         this->line->render();

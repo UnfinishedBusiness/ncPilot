@@ -10,6 +10,8 @@ global_variables_t *globals;
 
 Text *fps;
 
+float zoom = 1;
+
 //Xrender_object_t *performance_label;
 //std::vector<int> performance_average;
 
@@ -42,11 +44,17 @@ void mouse_callback(PrimativeContainer* p, nlohmann::json e)
     if (e["type"] == "mouse_in")
     {
         renderer->SetColorByName(p->properties->color, "green");
+        zoom = 2;
     }
     if (e["type"] == "mouse_out")
     {
         renderer->SetColorByName(p->properties->color, "white");
+        zoom = 1;
     }
+}
+void view_matrix(PrimativeContainer *p)
+{
+    p->properties->scale = zoom;
 }
 
 int main(int argc, char **argv)
@@ -60,6 +68,7 @@ int main(int argc, char **argv)
     l->properties->offset[0] = 50;
     l->properties->offset[1] = -50;
     l->properties->mouse_callback = &mouse_callback;
+    l->properties->matrix_callback = &view_matrix;
 
     Text *fps = renderer->PushPrimative(new Text({0, 0}, "0", 30));
     fps->properties->mouse_callback = &mouse_callback;
