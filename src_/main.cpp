@@ -37,6 +37,14 @@ global_variables_t *globals;
 void mouse_callback(PrimativeContainer* p, nlohmann::json e)
 {
     LOG_F(INFO, "%s", e.dump().c_str());
+    if (e["type"] == "mouse_in")
+    {
+        renderer->SetColorByName(p->properties->color, "green");
+    }
+    if (e["type"] == "mouse_out")
+    {
+        renderer->SetColorByName(p->properties->color, "white");
+    }
 }
 
 int main(int argc, char **argv)
@@ -49,6 +57,7 @@ int main(int argc, char **argv)
     l->properties->scale = 0.5;
     l->properties->offset[0] = 50;
     l->properties->offset[1] = -50;
+    l->properties->mouse_callback = &mouse_callback;
 
     while(renderer->Poll(false))
     {

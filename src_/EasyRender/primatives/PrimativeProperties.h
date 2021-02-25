@@ -4,6 +4,7 @@
 #include <string>
 #include "../json/json.h"
 
+class PrimativeContainer;
 /*
     Properties that all primatives will share
 */
@@ -20,7 +21,7 @@ class PrimativeProperties{
         nlohmann::json data;
 
         /* Event Callbacks */
-        void (*mouse_callback)(void*, nlohmann::json);
+        void (*mouse_callback)(PrimativeContainer*, nlohmann::json);
 
         PrimativeProperties()
         {
@@ -38,6 +39,7 @@ class PrimativeProperties{
             this->id = "";
             this->mouse_over = false;
             this->data = NULL;
+            this->mouse_callback = NULL;
         }
 };
 

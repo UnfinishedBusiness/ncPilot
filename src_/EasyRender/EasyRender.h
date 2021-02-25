@@ -89,6 +89,7 @@ class EasyRender{
         std::string GetEvironmentVariable(const std::string & var);
         std::string GetConfigDirectory();
         double_point_t GetWindowMousePosition();
+        void SetColorByName(float *c, std::string color);
         bool Init(int argc, char** argv);
         bool Poll(bool should_quit);
         void Close();

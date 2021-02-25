@@ -7,7 +7,7 @@
 #include <sys/time.h>
 #include <ctime>
 #include <algorithm> 
-#include "primatives/primatives.h"
+#include "primatives/PrimativeProperties.h"
 #include "primatives/Line.h"
 
 class PrimativeContainer{

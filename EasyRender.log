@@ -281,3 +281,699 @@ File verbosity level: 9
 date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
 2021-02-25 13:01:18.164 (   0.014s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
 2021-02-25 13:01:20.189 (   2.038s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:04:14.811 (   0.016s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+Stack trace:
+5                  0x1 9   ???                                 0x0000000000000001 0x0 + 1
+4       0x7fff6bb4b015 start + 1
+3          0x1060dce89 main + 345
+2          0x105e8252a EasyRender::Poll(bool) + 506
+1       0x7ffee9d80050 5   ???                                 0x00007ffee9d80050 0x0 + 140732821667920
+0       0x7fff6be59f5a _sigtramp + 26
+2021-02-25 13:04:16.493 (   1.699s) [main thread     ]                       :0     FATL| Signal: SIGSEGV
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:05:15.557 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+Stack trace:
+5                  0x1 9   ???                                 0x0000000000000001 0x0 + 1
+4       0x7fff6bb4b015 start + 1
+3          0x104fece89 main + 345
+2          0x104d9250a EasyRender::Poll(bool) + 506
+1       0x7ffeeae70050 5   ???                                 0x00007ffeeae70050 0x0 + 140732839428176
+0       0x7fff6be59f5a _sigtramp + 26
+2021-02-25 13:05:16.834 (   1.281s) [main thread     ]                       :0     FATL| Signal: SIGSEGV
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:05:53.412 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+Stack trace:
+5                  0x1 9   ???                                 0x0000000000000001 0x0 + 1
+4       0x7fff6bb4b015 start + 1
+3          0x106d75f99 main + 345
+2          0x106b1b4ba EasyRender::Poll(bool) + 506
+1       0x7ffee90e7030 5   ???                                 0x00007ffee90e7030 0x0 + 140732808458288
+0       0x7fff6be59f5a _sigtramp + 26
+2021-02-25 13:05:54.316 (   0.908s) [main thread     ]                       :0     FATL| Signal: SIGSEGV
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:25:48.826 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:25:51.615 (   2.793s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+Stack trace:
+5                  0x1 9   ???                                 0x0000000000000001 0x0 + 1
+4       0x7fff6bb4b015 start + 1
+3          0x109799f69 main + 345
+2          0x10953f45a EasyRender::Poll(bool) + 506
+1       0x7ffee66c3030 5   ???                                 0x00007ffee66c3030 0x0 + 140732764270640
+0       0x7fff6be59f5a _sigtramp + 26
+2021-02-25 13:25:51.616 (   2.793s) [main thread     ]                       :0     FATL| Signal: SIGBUS
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:27:04.346 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:27:05.577 (   1.235s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:27:05.823 (   1.481s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:27:06.641 (   2.299s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:27:07.906 (   3.564s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:27:31.865 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:27:33.178 (   1.317s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:27:33.178 (   1.317s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.195 (   1.335s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.211 (   1.351s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.228 (   1.368s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.241 (   1.380s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.258 (   1.397s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.279 (   1.418s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.292 (   1.431s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.307 (   1.447s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.326 (   1.465s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.342 (   1.481s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.359 (   1.499s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.375 (   1.515s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.391 (   1.531s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.409 (   1.549s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.425 (   1.565s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.443 (   1.582s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.459 (   1.598s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.476 (   1.616s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.492 (   1.631s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.510 (   1.649s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.526 (   1.665s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.543 (   1.682s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.559 (   1.698s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.576 (   1.715s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.592 (   1.732s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.609 (   1.749s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.625 (   1.765s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.643 (   1.782s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.659 (   1.798s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.676 (   1.816s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.692 (   1.832s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.710 (   1.849s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.725 (   1.865s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.743 (   1.883s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.759 (   1.898s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.777 (   1.916s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.793 (   1.932s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.810 (   1.949s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.826 (   1.965s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.843 (   1.982s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.860 (   2.000s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.876 (   2.016s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.892 (   2.032s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.911 (   2.050s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.926 (   2.065s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.944 (   2.083s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.960 (   2.099s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.976 (   2.116s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:33.993 (   2.132s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.010 (   2.150s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.026 (   2.166s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.044 (   2.184s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.060 (   2.199s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.077 (   2.217s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.093 (   2.233s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.110 (   2.250s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.127 (   2.266s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.144 (   2.284s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.160 (   2.300s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.177 (   2.317s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.193 (   2.333s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.211 (   2.351s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.226 (   2.366s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.245 (   2.384s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.260 (   2.400s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.278 (   2.417s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.294 (   2.433s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.311 (   2.451s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.327 (   2.466s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.344 (   2.483s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.360 (   2.500s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.378 (   2.517s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.394 (   2.533s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.411 (   2.551s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.427 (   2.567s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.444 (   2.584s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.460 (   2.600s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.478 (   2.618s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.494 (   2.633s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.512 (   2.651s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.527 (   2.667s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.545 (   2.684s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.561 (   2.700s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.578 (   2.717s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.594 (   2.733s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.611 (   2.751s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.627 (   2.767s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.645 (   2.784s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.661 (   2.800s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.679 (   2.818s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.694 (   2.834s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.712 (   2.851s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.728 (   2.867s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.745 (   2.885s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.761 (   2.901s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.779 (   2.918s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.794 (   2.934s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.812 (   2.952s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.828 (   2.967s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.846 (   2.985s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.861 (   3.000s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.879 (   3.019s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.894 (   3.034s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.912 (   3.052s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.928 (   3.067s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.946 (   3.086s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.961 (   3.100s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.979 (   3.119s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:34.995 (   3.134s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.012 (   3.152s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.028 (   3.168s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.046 (   3.185s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.062 (   3.201s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.079 (   3.219s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.095 (   3.235s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.112 (   3.252s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.128 (   3.268s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.146 (   3.286s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.161 (   3.301s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.180 (   3.319s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.195 (   3.334s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.213 (   3.353s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.228 (   3.368s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.246 (   3.386s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.262 (   3.402s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.280 (   3.420s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.296 (   3.435s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.313 (   3.453s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.329 (   3.469s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.346 (   3.486s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.362 (   3.502s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.381 (   3.520s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.396 (   3.535s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.414 (   3.553s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.429 (   3.568s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.446 (   3.586s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.462 (   3.602s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.481 (   3.620s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.495 (   3.635s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.514 (   3.653s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.529 (   3.668s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.547 (   3.687s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.562 (   3.702s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.580 (   3.720s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.596 (   3.736s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.614 (   3.753s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.629 (   3.769s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.647 (   3.787s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.663 (   3.803s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.680 (   3.820s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.696 (   3.836s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.714 (   3.854s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.729 (   3.869s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.747 (   3.887s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.763 (   3.902s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.781 (   3.921s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.796 (   3.936s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.814 (   3.954s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.829 (   3.969s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.848 (   3.987s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.863 (   4.003s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.881 (   4.020s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.896 (   4.036s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.914 (   4.054s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.930 (   4.070s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.947 (   4.087s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.963 (   4.103s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.981 (   4.121s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:35.997 (   4.136s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.014 (   4.153s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:27:36.014 (   4.154s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.030 (   4.170s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.047 (   4.187s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.063 (   4.203s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.081 (   4.221s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.097 (   4.237s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.114 (   4.254s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.130 (   4.270s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.148 (   4.288s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.163 (   4.303s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.182 (   4.321s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.197 (   4.337s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.215 (   4.355s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.231 (   4.370s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.248 (   4.388s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.264 (   4.403s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.281 (   4.421s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.297 (   4.437s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.315 (   4.455s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.331 (   4.470s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.349 (   4.488s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.364 (   4.504s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.382 (   4.522s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.397 (   4.537s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.416 (   4.555s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.431 (   4.570s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.449 (   4.588s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.464 (   4.604s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.482 (   4.622s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.497 (   4.637s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.515 (   4.655s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.531 (   4.670s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.549 (   4.689s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.565 (   4.704s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.582 (   4.721s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.598 (   4.738s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.615 (   4.755s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.631 (   4.771s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.649 (   4.789s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.664 (   4.804s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.682 (   4.821s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.698 (   4.838s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.716 (   4.856s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.732 (   4.871s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.749 (   4.889s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.765 (   4.904s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.782 (   4.922s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.798 (   4.938s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.816 (   4.955s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.831 (   4.971s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.852 (   4.991s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.865 (   5.004s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.882 (   5.022s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.898 (   5.038s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.916 (   5.056s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.931 (   5.071s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.949 (   5.089s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.966 (   5.106s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.983 (   5.122s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:36.999 (   5.138s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.016 (   5.156s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.032 (   5.172s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.050 (   5.189s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.066 (   5.205s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.083 (   5.222s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.099 (   5.238s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.117 (   5.256s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.133 (   5.272s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.150 (   5.289s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.166 (   5.306s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.183 (   5.323s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.198 (   5.338s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.216 (   5.356s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.232 (   5.372s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.251 (   5.390s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.266 (   5.406s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.283 (   5.423s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.299 (   5.439s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.317 (   5.457s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.333 (   5.472s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.351 (   5.490s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.366 (   5.506s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.384 (   5.523s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.399 (   5.538s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.417 (   5.557s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.433 (   5.573s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.450 (   5.590s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.467 (   5.606s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.484 (   5.623s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.500 (   5.640s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.517 (   5.657s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.534 (   5.674s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.552 (   5.692s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.567 (   5.707s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.584 (   5.724s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.600 (   5.740s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.618 (   5.758s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.633 (   5.773s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.650 (   5.790s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.666 (   5.806s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.684 (   5.824s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.701 (   5.840s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.718 (   5.857s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.733 (   5.872s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.751 (   5.891s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.767 (   5.907s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.785 (   5.925s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.801 (   5.941s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.818 (   5.958s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.833 (   5.973s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.852 (   5.991s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.867 (   6.006s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.885 (   6.024s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.900 (   6.040s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.918 (   6.058s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.934 (   6.073s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.951 (   6.091s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.967 (   6.107s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:37.984 (   6.124s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.000 (   6.140s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.018 (   6.158s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.034 (   6.174s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.052 (   6.191s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.067 (   6.206s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.085 (   6.224s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.101 (   6.240s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.118 (   6.258s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.134 (   6.274s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.152 (   6.291s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.167 (   6.307s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.185 (   6.325s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.201 (   6.341s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.219 (   6.358s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.234 (   6.374s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.252 (   6.391s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.268 (   6.408s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.285 (   6.425s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.301 (   6.441s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.319 (   6.458s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.335 (   6.474s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.352 (   6.492s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.368 (   6.508s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.386 (   6.525s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.401 (   6.541s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.419 (   6.559s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.434 (   6.574s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.452 (   6.591s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.468 (   6.607s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.486 (   6.625s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.502 (   6.641s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.519 (   6.658s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.535 (   6.674s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:38.597 (   6.737s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:27:52.872 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:27:54.432 (   1.564s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:27:54.432 (   1.564s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:54.465 (   1.597s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:55.450 (   2.582s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:27:55.450 (   2.582s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:55.534 (   2.666s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:57.838 (   4.970s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:27:57.839 (   4.971s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:27:58.941 (   6.073s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:28:01.428 (   8.560s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:28:01.428 (   8.560s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:28:03.582 (  10.715s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:28:05.751 (  12.883s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:28:42.142 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:28:43.350 (   1.211s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:28:43.350 (   1.211s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+Stack trace:
+5                  0x1 9   ???                                 0x0000000000000001 0x0 + 1
+4       0x7fff6bb4b015 start + 1
+3          0x101fadf29 main + 345
+2          0x101d533aa EasyRender::Poll(bool) + 506
+1       0x7ffeedeaf010 5   ???                                 0x00007ffeedeaf010 0x0 + 140732890017808
+0       0x7fff6be59f5a _sigtramp + 26
+2021-02-25 13:28:43.350 (   1.212s) [main thread     ]                       :0     FATL| Signal: SIGSEGV
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:29:27.526 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:29:28.748 (   1.226s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:29:28.748 (   1.226s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:28.748 (   1.226s) [main thread     ] PrimativeContainer.cpp:14    INFO| Mouse callback is set!
+2021-02-25 13:29:28.810 (   1.289s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:30.680 (   3.159s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:29:30.681 (   3.159s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:31.800 (   4.278s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:34.622 (   7.100s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:29:34.622 (   7.100s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:34.654 (   7.133s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:34.972 (   7.451s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:29:34.973 (   7.451s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:35.006 (   7.485s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:35.323 (   7.801s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:29:35.323 (   7.801s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:35.340 (   7.818s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:29:36.268 (   8.747s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:30:56.183 (   0.055s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:30:59.266 (   3.138s) [main thread     ]               Line.cpp:47    INFO| Setting mouse_event!
+2021-02-25 13:30:59.266 (   3.138s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:31:00.334 (   4.206s) [main thread     ] PrimativeContainer.cpp:11    INFO| Handling mouse event!
+2021-02-25 13:31:01.789 (   5.661s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:31:41.527 (   0.016s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:31:45.112 (   3.601s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:32:12.977 (   0.011s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:32:14.240 (   1.274s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":40.2734375,"y":26.65625},"type":"mouse_in"}
+2021-02-25 13:32:22.839 (   9.873s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:32:44.810 (   0.004s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:32:46.155 (   1.349s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":1.71875,"y":-8.0625},"type":"mouse_in"}
+2021-02-25 13:32:46.752 (   1.947s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":21.140625,"y":-0.9140625},"type":"mouse_out"}
+2021-02-25 13:32:47.354 (   2.548s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":25.2421875,"y":13.515625},"type":"mouse_in"}
+2021-02-25 13:32:47.737 (   2.932s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":32.4453125,"y":10.6796875},"type":"mouse_out"}
+2021-02-25 13:32:48.071 (   3.265s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":39.4765625,"y":39.09375},"type":"mouse_in"}
+2021-02-25 13:32:48.255 (   3.449s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":52.40625,"y":28.46875},"type":"mouse_out"}
+2021-02-25 13:32:48.672 (   3.867s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":53.9296875,"y":39.8359375},"type":"mouse_in"}
+2021-02-25 13:32:48.741 (   3.935s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":37.8046875,"y":52.3515625},"type":"mouse_out"}
+2021-02-25 13:32:48.840 (   4.034s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":37.8046875,"y":51.8671875},"type":"mouse_in"}
+2021-02-25 13:32:48.906 (   4.101s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":49.8359375,"y":32.4609375},"type":"mouse_out"}
+2021-02-25 13:32:49.157 (   4.352s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":49.1640625,"y":37.4453125},"type":"mouse_in"}
+2021-02-25 13:32:49.591 (   4.786s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":50.0,"y":34.765625},"type":"mouse_out"}
+2021-02-25 13:32:49.975 (   5.169s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":50.4453125,"y":36.421875},"type":"mouse_in"}
+2021-02-25 13:32:50.292 (   5.487s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":51.125,"y":33.0859375},"type":"mouse_out"}
+2021-02-25 13:32:51.760 (   6.955s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:41:33.076 (   0.017s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:41:34.719 (   1.661s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":25.609375,"y":38.8515625},"type":"mouse_in"}
+2021-02-25 13:41:35.220 (   2.162s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":-2.3203125,"y":27.9609375},"type":"mouse_out"}
+2021-02-25 13:41:35.704 (   2.646s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":17.3828125,"y":26.7578125},"type":"mouse_in"}
+2021-02-25 13:41:35.738 (   2.680s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":39.2109375,"y":21.296875},"type":"mouse_out"}
+2021-02-25 13:41:36.005 (   2.947s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":27.984375,"y":29.578125},"type":"mouse_in"}
+2021-02-25 13:41:36.022 (   2.964s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":-55.765625,"y":100.09375},"type":"mouse_out"}
+2021-02-25 13:41:36.701 (   3.642s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:43:31.621 (   0.013s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:43:39.108 (   7.501s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:43:40.476 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:43:43.180 (   2.705s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":38.8203125,"y":25.0546875},"type":"mouse_in"}
+2021-02-25 13:43:43.563 (   3.088s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":48.59375,"y":19.015625},"type":"mouse_out"}
+2021-02-25 13:43:43.897 (   3.423s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":42.5859375,"y":29.3359375},"type":"mouse_in"}
+2021-02-25 13:43:43.948 (   3.473s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":27.90625,"y":43.3984375},"type":"mouse_out"}
+2021-02-25 13:43:44.381 (   3.907s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":28.71875,"y":38.765625},"type":"mouse_in"}
+2021-02-25 13:43:44.499 (   4.024s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":41.4765625,"y":24.9140625},"type":"mouse_out"}
+2021-02-25 13:43:44.866 (   4.391s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":41.1484375,"y":28.8515625},"type":"mouse_in"}
+2021-02-25 13:43:45.100 (   4.625s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":29.390625,"y":44.09375},"type":"mouse_out"}
+2021-02-25 13:43:45.418 (   4.943s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":30.7421875,"y":41.109375},"type":"mouse_in"}
+2021-02-25 13:43:45.500 (   5.026s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":42.984375,"y":25.9921875},"type":"mouse_out"}
+2021-02-25 13:43:45.852 (   5.377s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":43.328125,"y":35.0625},"type":"mouse_in"}
+2021-02-25 13:43:46.452 (   5.977s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":24.4609375,"y":53.6484375},"type":"mouse_out"}
+2021-02-25 13:43:47.550 (   7.075s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:43:48.929 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:43:50.560 (   1.631s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":22.1484375,"y":13.21875},"type":"mouse_in"}
+2021-02-25 13:43:50.944 (   2.016s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":12.5390625,"y":29.0546875},"type":"mouse_out"}
+2021-02-25 13:43:51.361 (   2.433s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":14.7265625,"y":22.3671875},"type":"mouse_in"}
+2021-02-25 13:43:51.645 (   2.717s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":26.0703125,"y":6.9609375},"type":"mouse_out"}
+2021-02-25 13:43:52.280 (   3.351s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":40.78125,"y":29.515625},"type":"mouse_in"}
+2021-02-25 13:43:52.464 (   3.536s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":36.4453125,"y":52.203125},"type":"mouse_out"}
+2021-02-25 13:43:52.831 (   3.903s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":43.1171875,"y":55.21875},"type":"mouse_in"}
+2021-02-25 13:43:52.965 (   4.037s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":55.2578125,"y":40.328125},"type":"mouse_out"}
+2021-02-25 13:43:53.399 (   4.471s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":52.828125,"y":45.4375},"type":"mouse_in"}
+2021-02-25 13:43:53.516 (   4.588s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":40.953125,"y":55.1796875},"type":"mouse_out"}
+2021-02-25 13:43:53.950 (   5.022s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":40.9453125,"y":54.703125},"type":"mouse_in"}
+2021-02-25 13:43:55.119 (   6.191s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":52.0625,"y":36.4375},"type":"mouse_out"}
+2021-02-25 13:43:56.003 (   7.075s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":53.5859375,"y":39.6640625},"type":"mouse_in"}
+2021-02-25 13:43:56.171 (   7.243s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":43.4140625,"y":57.71875},"type":"mouse_out"}
+2021-02-25 13:43:56.605 (   7.677s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":39.1328125,"y":52.2734375},"type":"mouse_in"}
+2021-02-25 13:43:56.721 (   7.793s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":51.8515625,"y":33.203125},"type":"mouse_out"}
+2021-02-25 13:43:56.922 (   7.994s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":52.0625,"y":39.3203125},"type":"mouse_in"}
+2021-02-25 13:43:56.972 (   8.044s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":39.5234375,"y":60.5390625},"type":"mouse_out"}
+2021-02-25 13:43:57.105 (   8.177s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":42.734375,"y":49.2734375},"type":"mouse_in"}
+2021-02-25 13:43:57.157 (   8.229s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":54.25,"y":30.71875},"type":"mouse_out"}
+2021-02-25 13:43:57.256 (   8.328s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":48.3515625,"y":45.5390625},"type":"mouse_in"}
+2021-02-25 13:43:57.273 (   8.345s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":34.1875,"y":69.734375},"type":"mouse_out"}
+2021-02-25 13:43:58.248 (   9.320s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:44:35.962 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:44:38.568 (   2.607s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":63.765625,"y":50.984375},"type":"mouse_in"}
+2021-02-25 13:44:38.651 (   2.691s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":50.875,"y":66.8359375},"type":"mouse_out"}
+2021-02-25 13:44:38.784 (   2.824s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":52.375,"y":64.8046875},"type":"mouse_in"}
+2021-02-25 13:44:39.136 (   3.175s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":26.7109375,"y":93.265625},"type":"mouse_out"}
+2021-02-25 13:44:40.233 (   4.272s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:44:41.336 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:44:43.399 (   2.064s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:44:44.807 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:44:47.205 (   2.399s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 13:44:48.176 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 13:44:49.623 (   1.448s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":69.375,"y":80.640625},"type":"mouse_in"}
+2021-02-25 13:44:49.723 (   1.548s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":71.703125,"y":51.890625},"type":"mouse_out"}
+2021-02-25 13:44:49.907 (   1.732s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":60.09375,"y":48.21875},"type":"mouse_in"}
+2021-02-25 13:44:49.923 (   1.749s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":47.7734375,"y":63.1953125},"type":"mouse_out"}
+2021-02-25 13:44:50.089 (   1.915s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":52.015625,"y":40.3125},"type":"mouse_in"}
+2021-02-25 13:44:50.106 (   1.932s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":67.109375,"y":17.0703125},"type":"mouse_out"}
+2021-02-25 13:44:50.257 (   2.082s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":51.2109375,"y":40.7265625},"type":"mouse_in"}
+2021-02-25 13:44:50.424 (   2.249s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":58.5546875,"y":21.390625},"type":"mouse_out"}
+2021-02-25 13:44:50.574 (   2.399s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":48.1015625,"y":36.265625},"type":"mouse_in"}
+2021-02-25 13:44:50.607 (   2.432s) [main thread     ]               main.cpp:39    INFO| {"pos":{"x":34.3046875,"y":50.0625},"type":"mouse_out"}
+2021-02-25 13:44:51.755 (   3.580s) [main thread     ]             loguru.cpp:524   INFO| atexit

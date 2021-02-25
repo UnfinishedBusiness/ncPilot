@@ -1,4 +1,5 @@
 #include "PrimativeContainer.h"
+#include "logging/loguru.h"
 
 void PrimativeContainer::process_mouse(float mpos_x, float mpos_y)
 {
@@ -7,7 +8,11 @@ void PrimativeContainer::process_mouse(float mpos_x, float mpos_y)
         this->line->process_mouse(mpos_x, mpos_y);
         if (this->line->mouse_event != NULL)
         {
-            this->properties->mouse_callback(this, this->line->mouse_event);
+            if (this->line->properties->mouse_callback != NULL)
+            {
+                this->line->properties->mouse_callback(this, this->line->mouse_event);
+            }
+            this->line->mouse_event = NULL;
         }
     }
 }

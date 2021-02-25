@@ -1,7 +1,7 @@
 #ifndef LINE_
 #define LINE_
 
-#include "primatives.h"
+#include "PrimativeProperties.h"
 #include "../json/json.h"
 #include "../geometry/geometry.h"
 #include <string>

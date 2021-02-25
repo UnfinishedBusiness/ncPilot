@@ -137,6 +137,44 @@ double_point_t EasyRender::GetWindowMousePosition()
     glfwGetCursorPos(this->Window, &mouseX, &mouseY);
     return {mouseX - (this->WindowSize[0]/ 2.0f), (this->WindowSize[1] - mouseY) - (this->WindowSize[1] / 2.0f)};
 }
+void EasyRender::SetColorByName(float *c, std::string color)
+{
+    if (color == "white")
+    {
+        c[0] = 255;
+        c[1] = 255;
+        c[2] = 255;
+        c[3] = 255;
+    }
+    else if (color == "red")
+    {
+        c[0] = 255;
+        c[1] = 0;
+        c[2] = 0;
+        c[3] = 255;
+    }
+    else if (color == "green")
+    {
+        c[0] = 0;
+        c[1] = 255;
+        c[2] = 0;
+        c[3] = 255;
+    }
+    else if (color == "blue")
+    {
+        c[0] = 0;
+        c[1] = 0;
+        c[2] = 255;
+        c[3] = 255;
+    }
+    else
+    {
+        c[0] = 255;
+        c[1] = 255;
+        c[2] = 255;
+        c[3] = 255;
+    }
+}
 bool EasyRender::Init(int argc, char** argv)
 {
     loguru::init(argc, argv);
