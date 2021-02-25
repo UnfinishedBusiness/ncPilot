@@ -1,6 +1,6 @@
 #include "Line.h"
-#include "../geometry/geometry.h"
-#include "../logging/loguru.h"
+#include "../../geometry/geometry.h"
+#include "../../logging/loguru.h"
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
    //define something for Windows (32-bit and 64-bit, this part is common)
@@ -28,17 +28,12 @@ std::string Line::get_type_name()
 {
     return "line";
 }
-nlohmann::json *Line::get_data()
-{
-    return &this->properties->data;
-}
 void Line::process_mouse(float mpos_x, float mpos_y)
 {
-    mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
-    mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
-    //printf("X%.4f, Y%.4f\n", mpos_x, mpos_y);
     if (this->properties->visable == true)
     {
+        mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
+        mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
         Geometry g;
         if (g.line_intersects_with_circle({{this->start.x, this->start.y}, {this->end.x, this->end.y}}, {mpos_x, mpos_y}, 10))
         {

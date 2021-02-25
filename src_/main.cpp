@@ -59,6 +59,9 @@ int main(int argc, char **argv)
     l->properties->offset[1] = -50;
     l->properties->mouse_callback = &mouse_callback;
 
+    Text *t = renderer->PushPrimative(new Text({0, 0}, "Test", 50));
+    t->properties->mouse_callback = &mouse_callback;
+
     while(renderer->Poll(false))
     {
         //Do stuff

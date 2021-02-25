@@ -1,9 +1,9 @@
 #ifndef LINE_
 #define LINE_
 
-#include "PrimativeProperties.h"
-#include "../json/json.h"
-#include "../geometry/geometry.h"
+#include "../PrimativeProperties.h"
+#include "../../json/json.h"
+#include "../../geometry/geometry.h"
 #include <string>
 
 class Line{
@@ -23,7 +23,6 @@ class Line{
             mouse_event = NULL;
         }
         std::string get_type_name();
-        nlohmann::json *get_data();
         void process_mouse(float mpos_x, float mpos_y);
         void render();
 };

@@ -15,11 +15,27 @@ void PrimativeContainer::process_mouse(float mpos_x, float mpos_y)
             this->line->mouse_event = NULL;
         }
     }
+    if (this->type == "text")
+    {
+        this->text->process_mouse(mpos_x, mpos_y);
+        if (this->text->mouse_event != NULL)
+        {
+            if (this->text->properties->mouse_callback != NULL)
+            {
+                this->text->properties->mouse_callback(this, this->text->mouse_event);
+            }
+            this->text->mouse_event = NULL;
+        }
+    }
 }
 void PrimativeContainer::render()
 {
     if (this->type == "line")
     {
         this->line->render();
+    }
+    if (this->type == "text")
+    {
+        this->text->render();
     }
 }

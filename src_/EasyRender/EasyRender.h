@@ -65,16 +65,19 @@ class EasyRender{
         {
             //Load Defaults
             this->SetWindowTitle("EasyRender");
-            this->SetWindowSize(500, 400);
+            this->SetWindowSize(800, 600);
             this->SetShowCursor(true);
             this->SetAutoMaximize(false);
             this->SetGuiIniFileName("EasyRenderGui.ini");
             this->SetGuiLogFileName("EasyRenderGio.log");
             this->SetMainLogFileName("EasyRender.log");
             this->SetGuiStyle("light");
-            this->SetClearColor(100, 100, 100);
+            this->SetClearColor(21, 22, 34);
         };
+        /* Primative Creation */
         Line* PushPrimative(Line* l);
+        Text* PushPrimative(Text* t);
+
         void SetWindowTitle(std::string w);
         void SetWindowSize(int width, int height);
         void SetShowCursor(bool s);

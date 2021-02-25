@@ -49,6 +49,12 @@ Line* EasyRender::PushPrimative(Line* l)
     primative_stack.push_back(c);
     return c->line;
 }
+Text* EasyRender::PushPrimative(Text* t)
+{  
+    PrimativeContainer *c = new PrimativeContainer(t);
+    primative_stack.push_back(c);
+    return c->text;
+}
 
 void EasyRender::SetWindowTitle(std::string w)
 {
@@ -226,6 +232,9 @@ bool EasyRender::Poll(bool should_quit)
     glLoadIdentity();
     glViewport(0, 0, this->WindowSize[0], this->WindowSize[1]);
     glClear(GL_COLOR_BUFFER_BIT);
+    sort(primative_stack.begin(), primative_stack.end(), [](auto* lhs, auto* rhs) {
+        return lhs->properties->zindex < rhs->properties->zindex ;
+    });
     for (int x = 0; x < this->primative_stack.size(); x ++)
     {
         primative_stack.at(x)->render();
