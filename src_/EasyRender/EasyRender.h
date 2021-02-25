@@ -81,6 +81,7 @@ class EasyRender{
         Path* PushPrimative(Path* i);
         Arc* PushPrimative(Arc* i);
         Circle* PushPrimative(Circle* ci);
+        Box* PushPrimative(Box* b);
 
         void SetWindowTitle(std::string w);
         void SetWindowSize(int width, int height);

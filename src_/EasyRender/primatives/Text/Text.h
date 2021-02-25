@@ -39,6 +39,8 @@ class Text{
         std::string font_file;
         float font_size;
         float position[3];
+        float width;
+        float height;
         GLuint texture;
         stbtt_bakedchar cdata[96];
         
@@ -48,6 +50,8 @@ class Text{
             this->position[0] = p.x;
             this->position[1] = p.y;
             this->position[2] = 0;
+            this->width = 0;
+            this->height = 0;
             this->textval = t;
             this->font_file = "default";
             this->font_size = s;

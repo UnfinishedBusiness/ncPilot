@@ -42,8 +42,8 @@ void Image::process_mouse(float mpos_x, float mpos_y)
     {
         mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
         mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
-        if (mpos_x > this->position[0] && mpos_x < (this->position[0] + this->properties->size[0]) &&
-            mpos_y > this->position[1] && mpos_y < (this->position[1] + this->properties->size[1])
+        if (mpos_x > this->position[0] && mpos_x < (this->position[0] + this->width) &&
+            mpos_y > this->position[1] && mpos_y < (this->position[1] + this->height)
         )
         {
             if (this->properties->mouse_over == false)
@@ -122,10 +122,10 @@ void Image::render()
                     //printf("Loaded image %s, width: %d, height: %d\n", this->image_file.c_str(), my_image_width, my_image_height);
                     this->image_size[0] = my_image_width;
                     this->image_size[1] = my_image_height;
-                    if (this->properties->size[0] == 0 && this->properties->size[1] == 0)
+                    if (this->width == 0 && this->height == 0)
                     {
-                        this->properties->size[0] = my_image_width;
-                        this->properties->size[1] = my_image_height;
+                        this->width = my_image_width;
+                        this->height = my_image_height;
                     }
                 }
                 else
@@ -140,8 +140,8 @@ void Image::render()
                     glTranslatef(this->position[0], this->position[1], 0.0);
                     glRotatef(this->properties->angle, 0.0, 0.0, 1.0);
                     glScalef(1.0f, -1.0f, 1.0f);
-                    double imgWidth = this->properties->size[0];
-                    double imgHeight = this->properties->size[1];
+                    double imgWidth = this->width;
+                    double imgHeight = this->height;
                     glBindTexture(GL_TEXTURE_2D, this->texture);
                     glEnable(GL_TEXTURE_2D);
                         glBegin(GL_QUADS);

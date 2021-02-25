@@ -43,8 +43,8 @@ void Text::process_mouse(float mpos_x, float mpos_y)
     {
         mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
         mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
-        if (mpos_x > this->position[0] && mpos_x < (this->position[0] + this->properties->size[0]) &&
-            mpos_y > this->position[1] && mpos_y < (this->position[1] + this->properties->size[1])
+        if (mpos_x > this->position[0] && mpos_x < (this->position[0] + this->width) &&
+            mpos_y > this->position[1] && mpos_y < (this->position[1] + this->height)
         )
         {
             if (this->properties->mouse_over == false)
@@ -134,10 +134,10 @@ void Text::RenderFont(float pos_x, float pos_y, std::string text)
         glPopMatrix();
     glDisable(GL_TEXTURE_2D);
     glFlush();
-    if (this->properties->size[0] == 0 || this->properties->size[1] == 0)
+    if (this->width == 0 || this->height == 0)
     {
-        this->properties->size[0] = width;
-        this->properties->size[1] = height;
+        this->width = width;
+        this->height = height;
     }
 }
 void Text::render()

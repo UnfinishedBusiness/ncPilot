@@ -3895,3 +3895,767 @@ date       time         ( uptime  ) [ thread name/id ]                   file:li
 2021-02-25 16:38:01.624 (  10.618s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-7.9453125,"y":-52.28125},"type":"mouse_in"}
 2021-02-25 16:38:01.641 (  10.634s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-23.38671875,"y":-22.796875},"type":"mouse_out"}
 2021-02-25 16:38:02.640 (  11.633s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:51:28.049 (   0.019s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 16:51:30.128 (   2.098s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":8.1640625,"y":-4.9453125},"type":"mouse_in"}
+2021-02-25 16:51:30.161 (   2.131s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-33.64453125,"y":-3.220703125},"type":"mouse_out"}
+2021-02-25 16:51:30.441 (   2.411s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-171.38671875,"y":-105.54296875},"type":"mouse_in"}
+2021-02-25 16:51:30.458 (   2.428s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-172.1875,"y":-115.43359375},"type":"mouse_out"}
+2021-02-25 16:51:30.675 (   2.645s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-161.81640625,"y":-110.47265625},"type":"mouse_in"}
+2021-02-25 16:51:31.009 (   2.979s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-145.1484375,"y":-103.83203125},"type":"mouse_out"}
+2021-02-25 16:51:31.476 (   3.446s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-32.203125,"y":-33.1953125},"type":"mouse_in"}
+2021-02-25 16:51:31.793 (   3.763s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-31.02734375,"y":-19.77734375},"type":"mouse_out"}
+2021-02-25 16:51:32.111 (   4.081s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":31.046875,"y":43.08984375},"type":"mouse_in"}
+2021-02-25 16:51:32.461 (   4.431s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":57.4921875,"y":26.4296875},"type":"mouse_out"}
+2021-02-25 16:51:32.495 (   4.465s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":44.55859375,"y":49.2578125},"type":"mouse_in"}
+2021-02-25 16:51:32.846 (   4.816s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":16.466796875,"y":30.951171875},"type":"mouse_out"}
+2021-02-25 16:51:33.972 (   5.942s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:58:59.955 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 16:59:03.817 (   3.869s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":1.98828125,"y":-77.3046875},"type":"mouse_in"}
+2021-02-25 16:59:03.867 (   3.919s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-12.421875,"y":-65.55078125},"type":"mouse_out"}
+2021-02-25 16:59:04.385 (   4.437s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-17.01953125,"y":-51.6640625},"type":"mouse_in"}
+2021-02-25 16:59:04.402 (   4.454s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-1.3828125,"y":-47.93359375},"type":"mouse_out"}
+2021-02-25 16:59:05.003 (   5.055s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":17.2265625,"y":15.55078125},"type":"mouse_in"}
+2021-02-25 16:59:05.019 (   5.071s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-12.015625,"y":57.60546875},"type":"mouse_out"}
+2021-02-25 16:59:06.890 (   6.942s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-64.49609375,"y":-7.2265625},"type":"mouse_in"}
+2021-02-25 16:59:06.958 (   7.009s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-70.64453125,"y":-9.7109375},"type":"mouse_out"}
+2021-02-25 16:59:07.074 (   7.126s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-70.64453125,"y":-9.46484375},"type":"mouse_in"}
+2021-02-25 16:59:07.574 (   7.626s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-42.72265625,"y":7.08984375},"type":"mouse_out"}
+2021-02-25 16:59:07.608 (   7.659s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":35.87890625,"y":38.22265625},"type":"mouse_in"}
+2021-02-25 16:59:07.641 (   7.693s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":97.49609375,"y":62.12109375},"type":"mouse_out"}
+2021-02-25 16:59:07.892 (   7.944s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":86.24609375,"y":54.7578125},"type":"mouse_in"}
+2021-02-25 16:59:08.276 (   8.328s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":77.59765625,"y":37.59765625},"type":"mouse_out"}
+2021-02-25 16:59:08.359 (   8.411s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":39.80078125,"y":53.1875},"type":"mouse_in"}
+2021-02-25 16:59:08.760 (   8.812s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-10.5,"y":-11.38671875},"type":"mouse_out"}
+2021-02-25 16:59:08.876 (   8.928s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-97.0703125,"y":-197.84375},"type":"mouse_in"}
+2021-02-25 16:59:08.927 (   8.979s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-106.015625,"y":-212.23046875},"type":"mouse_out"}
+2021-02-25 16:59:09.094 (   9.146s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-106.08203125,"y":-214.84765625},"type":"mouse_in"}
+2021-02-25 16:59:09.128 (   9.180s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-106.328125,"y":-214.84765625},"type":"mouse_out"}
+2021-02-25 16:59:09.178 (   9.230s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-105.47265625,"y":-213.12109375},"type":"mouse_in"}
+2021-02-25 16:59:09.228 (   9.280s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-103.93359375,"y":-130.484375},"type":"mouse_out"}
+2021-02-25 16:59:09.328 (   9.380s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-74.6640625,"y":-6.6640625},"type":"mouse_in"}
+2021-02-25 16:59:09.562 (   9.613s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-99.71875,"y":5.46484375},"type":"mouse_out"}
+2021-02-25 16:59:11.683 (  11.734s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-27.296875,"y":-38.01953125},"type":"mouse_in"}
+2021-02-25 16:59:12.250 (  12.301s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-32.69140625,"y":-34.93359375},"type":"mouse_out"}
+2021-02-25 16:59:14.504 (  14.556s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":14.35546875,"y":20.890625},"type":"mouse_in"}
+2021-02-25 16:59:14.521 (  14.573s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":11.671875,"y":36.90234375},"type":"mouse_out"}
+2021-02-25 16:59:15.339 (  15.391s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-84.31640625,"y":1.59375},"type":"mouse_in"}
+2021-02-25 16:59:15.590 (  15.642s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-75.1875,"y":3.1171875},"type":"mouse_out"}
+2021-02-25 16:59:16.058 (  16.110s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":96.8125,"y":109.1875},"type":"mouse_in"}
+2021-02-25 16:59:16.074 (  16.126s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":28.689453125,"y":42.94140625},"type":"mouse_out"}
+2021-02-25 16:59:17.978 (  18.030s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-25.88671875,"y":-26.83203125},"type":"mouse_in"}
+2021-02-25 16:59:17.994 (  18.046s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-8.93359375,"y":-17.7578125},"type":"mouse_out"}
+2021-02-25 16:59:18.061 (  18.113s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":85.52734375,"y":44.14453125},"type":"mouse_in"}
+2021-02-25 16:59:18.078 (  18.129s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":93.19140625,"y":50.91796875},"type":"mouse_out"}
+2021-02-25 16:59:18.277 (  18.329s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":89.23046875,"y":52.69140625},"type":"mouse_in"}
+2021-02-25 16:59:18.478 (  18.530s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":47.8203125,"y":56.90234375},"type":"mouse_out"}
+2021-02-25 16:59:19.097 (  19.149s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":53.44921875,"y":52.35546875},"type":"mouse_in"}
+2021-02-25 16:59:19.180 (  19.232s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":57.82421875,"y":30.5859375},"type":"mouse_out"}
+2021-02-25 16:59:19.397 (  19.449s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":59.47265625,"y":35.56640625},"type":"mouse_in"}
+2021-02-25 16:59:19.748 (  19.800s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":81.66796875,"y":29.72265625},"type":"mouse_out"}
+2021-02-25 16:59:19.765 (  19.817s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":57.32421875,"y":64.34375},"type":"mouse_in"}
+2021-02-25 16:59:20.316 (  20.368s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-14.203125,"y":-7.853515625},"type":"mouse_out"}
+2021-02-25 16:59:20.448 (  20.500s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":2.97265625,"y":-84.328125},"type":"mouse_in"}
+2021-02-25 16:59:20.766 (  20.818s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-10.1953125,"y":-78.796875},"type":"mouse_out"}
+2021-02-25 16:59:20.850 (  20.902s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-93.97265625,"y":4.171875},"type":"mouse_in"}
+2021-02-25 16:59:20.866 (  20.918s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-101.890625,"y":12.03125},"type":"mouse_out"}
+2021-02-25 16:59:21.534 (  21.587s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":53.69140625,"y":53.5859375},"type":"mouse_in"}
+2021-02-25 16:59:21.919 (  21.971s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":37.3828125,"y":51.875},"type":"mouse_out"}
+2021-02-25 16:59:30.943 (  30.995s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:00:32.530 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:00:35.325 (   2.803s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-0.04296875,"y":-84.46484375},"type":"mouse_in"}
+2021-02-25 17:00:35.342 (   2.819s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":5.3203125,"y":-43.515625},"type":"mouse_out"}
+2021-02-25 17:00:35.375 (   2.852s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":7.46875,"y":8.31640625},"type":"mouse_in"}
+2021-02-25 17:00:35.491 (   2.969s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":10.09375,"y":20.36328125},"type":"mouse_in"}
+2021-02-25 17:00:35.509 (   2.986s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":10.890625,"y":21.43359375},"type":"mouse_out"}
+2021-02-25 17:00:35.642 (   3.120s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":11.1328125,"y":20.66796875},"type":"mouse_in"}
+2021-02-25 17:00:35.675 (   3.153s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":10.82421875,"y":15.234375},"type":"mouse_out"}
+2021-02-25 17:00:35.708 (   3.185s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":9.08203125,"y":-3.94140625},"type":"mouse_out"}
+2021-02-25 17:00:36.811 (   4.288s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":28.7734375,"y":14.87109375},"type":"mouse_in"}
+2021-02-25 17:00:37.060 (   4.538s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":38.5078125,"y":52.20703125},"type":"mouse_out"}
+2021-02-25 17:00:41.353 (   8.831s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:01:07.402 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:01:09.322 (   1.927s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":30.6796875,"y":37.41796875},"type":"mouse_in"}
+2021-02-25 17:01:09.339 (   1.945s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":28.66796875,"y":12.4140625},"type":"mouse_out"}
+2021-02-25 17:01:09.640 (   2.245s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":32.625,"y":27.03515625},"type":"mouse_in"}
+2021-02-25 17:01:09.874 (   2.479s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":11.169921875,"y":26.4765625},"type":"mouse_out"}
+2021-02-25 17:01:10.708 (   3.313s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.01953125,"y":12.5078125},"type":"mouse_in"}
+2021-02-25 17:01:10.725 (   3.330s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-6.171875,"y":17.17578125},"type":"mouse_out"}
+2021-02-25 17:01:11.309 (   3.914s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":67.43359375,"y":56.546875},"type":"mouse_in"}
+2021-02-25 17:01:11.426 (   4.031s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":65.66015625,"y":34.14453125},"type":"mouse_out"}
+2021-02-25 17:01:13.813 (   6.418s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":87.05078125,"y":54.875},"type":"mouse_in"}
+2021-02-25 17:01:13.897 (   6.502s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":85.81640625,"y":40.53125},"type":"mouse_out"}
+2021-02-25 17:01:14.516 (   7.121s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":1.2421875,"y":14.25390625},"type":"mouse_in"}
+2021-02-25 17:01:14.716 (   7.322s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-1.48046875,"y":-11.818359375},"type":"mouse_out"}
+2021-02-25 17:01:16.485 (   9.091s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-5.65625,"y":1.80078125},"type":"mouse_in"}
+2021-02-25 17:01:16.520 (   9.125s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":11.314453125,"y":-15.00390625},"type":"mouse_out"}
+2021-02-25 17:01:23.015 (  15.620s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":5.0703125,"y":-3.28125},"type":"mouse_in"}
+2021-02-25 17:01:23.198 (  15.804s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":1.763671875,"y":17.53515625},"type":"mouse_out"}
+2021-02-25 17:01:24.768 (  17.374s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":6.21484375,"y":8.2578125},"type":"mouse_in"}
+2021-02-25 17:01:24.784 (  17.390s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":15.08203125,"y":9.4453125},"type":"mouse_out"}
+2021-02-25 17:01:25.385 (  17.991s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":3.3984375,"y":7.04296875},"type":"mouse_in"}
+2021-02-25 17:01:25.403 (  18.008s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-7.19921875,"y":9.359375},"type":"mouse_out"}
+2021-02-25 17:01:33.952 (  26.558s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-22.0625,"y":-32.27734375},"type":"mouse_in"}
+2021-02-25 17:01:33.968 (  26.574s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":2.171875,"y":-39.84375},"type":"mouse_out"}
+2021-02-25 17:01:39.646 (  32.252s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":1.68359375,"y":-86.55859375},"type":"mouse_in"}
+2021-02-25 17:01:39.663 (  32.269s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.3359375,"y":-86.55859375},"type":"mouse_out"}
+2021-02-25 17:01:40.481 (  33.087s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-11.5703125,"y":-48.91796875},"type":"mouse_in"}
+2021-02-25 17:01:40.565 (  33.171s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-9.37109375,"y":-73.71484375},"type":"mouse_out"}
+2021-02-25 17:01:40.815 (  33.421s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-5.65234375,"y":-87.4375},"type":"mouse_in"}
+2021-02-25 17:01:40.932 (  33.538s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.31640625,"y":-87.4375},"type":"mouse_out"}
+2021-02-25 17:01:41.250 (  33.855s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.06640625,"y":-87.19140625},"type":"mouse_in"}
+2021-02-25 17:01:41.933 (  34.539s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":7.46484375,"y":-92.16796875},"type":"mouse_out"}
+2021-02-25 17:01:43.420 (  36.026s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":8.0078125,"y":0.86328125},"type":"mouse_in"}
+2021-02-25 17:01:43.520 (  36.126s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":8.30859375,"y":-0.88671875},"type":"mouse_out"}
+2021-02-25 17:01:45.156 (  37.762s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":3.84375,"y":-98.94140625},"type":"mouse_in"}
+2021-02-25 17:01:45.208 (  37.813s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.71875,"y":-89.640625},"type":"mouse_out"}
+2021-02-25 17:01:47.444 (  40.050s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":5.69921875,"y":8.10546875},"type":"mouse_in"}
+2021-02-25 17:01:47.461 (  40.067s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":7.35546875,"y":36.49609375},"type":"mouse_out"}
+2021-02-25 17:01:47.928 (  40.534s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":2.0859375,"y":18.89453125},"type":"mouse_in"}
+2021-02-25 17:01:47.979 (  40.585s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":5.8359375,"y":-5.140625},"type":"mouse_out"}
+2021-02-25 17:01:49.314 (  41.920s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:02:46.897 (   0.008s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:02:48.844 (   1.955s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-4.34765625,"y":-7.234375},"type":"mouse_in"}
+2021-02-25 17:02:49.312 (   2.423s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":1.384765625,"y":-10.6328125},"type":"mouse_out"}
+2021-02-25 17:02:49.796 (   2.907s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":0.6875,"y":-72.56640625},"type":"mouse_in"}
+2021-02-25 17:02:49.812 (   2.923s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-11.1015625,"y":-66.66796875},"type":"mouse_out"}
+2021-02-25 17:02:50.230 (   3.341s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-15.59375,"y":-53.2890625},"type":"mouse_in"}
+2021-02-25 17:02:50.247 (   3.358s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-5.66015625,"y":-53.2890625},"type":"mouse_out"}
+2021-02-25 17:02:50.565 (   3.676s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":12.1875,"y":9.5859375},"type":"mouse_in"}
+2021-02-25 17:02:50.581 (   3.692s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":30.787109375,"y":10.77734375},"type":"mouse_out"}
+2021-02-25 17:02:51.098 (   4.210s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":88.28125,"y":84.79296875},"type":"mouse_in"}
+2021-02-25 17:02:51.733 (   4.844s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":41.982421875,"y":26.78515625},"type":"mouse_out"}
+2021-02-25 17:02:56.910 (  10.021s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":2.12890625,"y":15.98828125},"type":"mouse_in"}
+2021-02-25 17:02:57.411 (  10.522s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-2.23828125,"y":13.791015625},"type":"mouse_out"}
+2021-02-25 17:02:57.527 (  10.638s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":35.953125,"y":23.61328125},"type":"mouse_in"}
+2021-02-25 17:02:57.677 (  10.788s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":45.21875,"y":52.53125},"type":"mouse_out"}
+2021-02-25 17:03:00.883 (  13.994s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":9.703125,"y":17.55859375},"type":"mouse_in"}
+2021-02-25 17:03:00.901 (  14.012s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":11.703125,"y":14.59765625},"type":"mouse_in"}
+2021-02-25 17:03:00.917 (  14.028s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":20.83984375,"y":5.1171875},"type":"mouse_out"}
+2021-02-25 17:03:00.917 (  14.028s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":20.83984375,"y":5.1171875},"type":"mouse_out"}
+2021-02-25 17:03:00.985 (  14.097s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":18.28125,"y":31.1484375},"type":"mouse_in"}
+2021-02-25 17:03:01.118 (  14.229s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":10.412109375,"y":25.21875},"type":"mouse_out"}
+2021-02-25 17:03:02.637 (  15.748s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":52.70703125,"y":33.01953125},"type":"mouse_in"}
+2021-02-25 17:03:02.971 (  16.082s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":51.4453125,"y":32.26171875},"type":"mouse_out"}
+2021-02-25 17:03:03.472 (  16.584s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":43.0625,"y":55.84765625},"type":"mouse_in"}
+2021-02-25 17:03:03.872 (  16.984s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":16.365234375,"y":31.771484375},"type":"mouse_out"}
+2021-02-25 17:03:04.674 (  17.786s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-2.0,"y":11.39453125},"type":"mouse_in"}
+2021-02-25 17:03:04.825 (  17.936s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":0.626953125,"y":-12.693359375},"type":"mouse_out"}
+2021-02-25 17:03:08.348 (  21.459s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":28.55859375,"y":14.69921875},"type":"mouse_in"}
+2021-02-25 17:03:08.582 (  21.693s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":19.89453125,"y":40.19921875},"type":"mouse_out"}
+2021-02-25 17:03:10.084 (  23.196s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":2.0,"y":0.78125},"type":"mouse_in"}
+2021-02-25 17:03:10.118 (  23.229s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":15.12109375,"y":4.71484375},"type":"mouse_out"}
+2021-02-25 17:03:10.719 (  23.831s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.63671875,"y":25.1640625},"type":"mouse_in"}
+2021-02-25 17:03:10.735 (  23.847s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-21.8203125,"y":47.53125},"type":"mouse_out"}
+2021-02-25 17:03:15.146 (  28.257s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:03:21.311 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:03:29.605 (   8.294s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-96.5234375,"y":-1.68359375},"type":"mouse_in"}
+2021-02-25 17:03:30.072 (   8.762s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-96.51171875,"y":-4.87890625},"type":"mouse_out"}
+2021-02-25 17:03:30.339 (   9.029s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-96.5546875,"y":-2.703125},"type":"mouse_in"}
+2021-02-25 17:03:30.456 (   9.146s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-81.44140625,"y":-8.60546875},"type":"mouse_out"}
+2021-02-25 17:03:31.492 (  10.182s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-0.61328125,"y":-2.80859375},"type":"mouse_in"}
+2021-02-25 17:03:31.544 (  10.234s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-8.095703125,"y":8.142578125},"type":"mouse_out"}
+2021-02-25 17:03:48.457 (  27.147s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":1.3671875,"y":6.203125},"type":"mouse_in"}
+2021-02-25 17:03:48.473 (  27.164s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.9921875,"y":-16.16796875},"type":"mouse_out"}
+2021-02-25 17:03:49.543 (  28.233s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":3.98046875,"y":7.66015625},"type":"mouse_in"}
+2021-02-25 17:03:50.010 (  28.700s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-0.57421875,"y":-1.09765625},"type":"mouse_out"}
+2021-02-25 17:03:54.652 (  33.342s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":3.1640625,"y":3.9375},"type":"mouse_in"}
+2021-02-25 17:03:54.703 (  33.394s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.25390625,"y":-4.935546875},"type":"mouse_out"}
+2021-02-25 17:03:54.886 (  33.576s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":14.25,"y":1.18359375},"type":"mouse_in"}
+2021-02-25 17:03:54.919 (  33.610s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-6.080078125,"y":8.349609375},"type":"mouse_out"}
+2021-02-25 17:03:57.861 (  36.552s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:04:06.989 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:04:08.584 (   1.602s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":66.74609375,"y":53.9609375},"type":"mouse_in"}
+2021-02-25 17:04:08.604 (   1.622s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-0.458984375,"y":69.59765625},"type":"mouse_out"}
+2021-02-25 17:04:10.865 (   3.883s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:04:20.373 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:04:21.157 (   0.791s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-71.40234375,"y":0.09765625},"type":"mouse_in"}
+2021-02-25 17:04:21.172 (   0.807s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-67.375,"y":15.29296875},"type":"mouse_out"}
+2021-02-25 17:04:21.888 (   1.522s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":25.76953125,"y":20.84375},"type":"mouse_in"}
+2021-02-25 17:04:22.121 (   1.756s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":11.234375,"y":26.076171875},"type":"mouse_out"}
+2021-02-25 17:04:23.306 (   2.941s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:05:01.037 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:05:03.609 (   2.573s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:05:17.147 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:05:19.484 (   2.344s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":20.64453125,"y":17.71484375},"type":"mouse_in"}
+2021-02-25 17:05:19.546 (   2.406s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":9.962890625,"y":25.208984375},"type":"mouse_out"}
+2021-02-25 17:05:22.536 (   5.396s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":25.63671875,"y":34.91796875},"type":"mouse_in"}
+2021-02-25 17:05:22.604 (   5.464s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":31.6875,"y":14.576171875},"type":"mouse_out"}
+2021-02-25 17:05:22.920 (   5.780s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":41.9296875,"y":31.61328125},"type":"mouse_in"}
+2021-02-25 17:05:22.988 (   5.848s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":1.55078125,"y":18.0},"type":"mouse_out"}
+2021-02-25 17:05:29.198 (  12.058s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-8.11328125,"y":-3.734375},"type":"mouse_in"}
+2021-02-25 17:05:29.299 (  12.159s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.63671875,"y":-10.22265625},"type":"mouse_out"}
+2021-02-25 17:05:30.835 (  13.695s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-0.19921875,"y":-4.66015625},"type":"mouse_in"}
+2021-02-25 17:05:30.903 (  13.763s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-2.46875,"y":11.9921875},"type":"mouse_out"}
+2021-02-25 17:05:31.804 (  14.664s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":18.53125,"y":19.3671875},"type":"mouse_in"}
+2021-02-25 17:05:31.836 (  14.697s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":11.84765625,"y":-16.91015625},"type":"mouse_out"}
+2021-02-25 17:05:33.490 (  16.350s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-0.97265625,"y":-81.6796875},"type":"mouse_in"}
+2021-02-25 17:05:33.506 (  16.366s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-0.97265625,"y":-63.9453125},"type":"mouse_out"}
+2021-02-25 17:05:34.442 (  17.302s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":57.17578125,"y":53.3203125},"type":"mouse_in"}
+2021-02-25 17:05:34.592 (  17.452s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":53.84375,"y":30.0625},"type":"mouse_out"}
+2021-02-25 17:05:35.844 (  18.705s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.14453125,"y":24.4296875},"type":"mouse_in"}
+2021-02-25 17:05:35.911 (  18.771s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.33203125,"y":-2.48828125},"type":"mouse_out"}
+2021-02-25 17:05:36.228 (  19.088s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":14.6875,"y":11.29296875},"type":"mouse_in"}
+2021-02-25 17:05:36.262 (  19.122s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-9.259765625,"y":8.8359375},"type":"mouse_out"}
+2021-02-25 17:05:36.378 (  19.239s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":6.62109375,"y":11.421875},"type":"mouse_in"}
+2021-02-25 17:05:36.412 (  19.272s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":28.27734375,"y":1.9296875},"type":"mouse_out"}
+2021-02-25 17:05:37.798 (  20.658s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":11.53125,"y":2.3984375},"type":"mouse_in"}
+2021-02-25 17:05:37.881 (  20.742s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-8.587890625,"y":6.984375},"type":"mouse_out"}
+2021-02-25 17:05:39.585 (  22.445s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-3.2421875,"y":-94.3828125},"type":"mouse_in"}
+2021-02-25 17:05:39.601 (  22.461s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.3359375,"y":-101.015625},"type":"mouse_out"}
+2021-02-25 17:05:54.613 (  37.474s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-6.0,"y":-2.84375},"type":"mouse_in"}
+2021-02-25 17:05:54.647 (  37.507s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-10.927734375,"y":2.19921875},"type":"mouse_out"}
+2021-02-25 17:05:57.486 (  40.347s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.27734375,"y":17.625},"type":"mouse_in"}
+2021-02-25 17:05:57.502 (  40.363s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-2.40625,"y":18.83203125},"type":"mouse_out"}
+2021-02-25 17:05:57.552 (  40.413s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":26.75390625,"y":18.8515625},"type":"mouse_in"}
+2021-02-25 17:05:57.752 (  40.612s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":36.01171875,"y":12.6171875},"type":"mouse_out"}
+2021-02-25 17:05:57.936 (  40.797s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.94921875,"y":4.38671875},"type":"mouse_in"}
+2021-02-25 17:05:57.952 (  40.813s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-3.03125,"y":6.90625},"type":"mouse_out"}
+2021-02-25 17:05:58.437 (  41.298s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":7.6796875,"y":14.03515625},"type":"mouse_in"}
+2021-02-25 17:05:58.489 (  41.349s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":17.240234375,"y":-1.3828125},"type":"mouse_out"}
+2021-02-25 17:06:01.059 (  43.919s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":7.32421875,"y":11.5},"type":"mouse_in"}
+2021-02-25 17:06:01.076 (  43.936s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-7.28515625,"y":11.37890625},"type":"mouse_out"}
+2021-02-25 17:06:01.593 (  44.454s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-8.1796875,"y":-1.921875},"type":"mouse_in"}
+2021-02-25 17:06:01.660 (  44.521s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.673828125,"y":-9.724609375},"type":"mouse_out"}
+2021-02-25 17:06:10.056 (  52.917s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:06:34.546 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:06:40.320 (   5.781s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:07:07.402 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:07:12.923 (   5.529s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:07:22.449 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:07:24.904 (   2.462s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":21.02734375,"y":11.59765625},"type":"mouse_in"}
+2021-02-25 17:07:25.084 (   2.642s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":21.078125,"y":36.13671875},"type":"mouse_out"}
+2021-02-25 17:07:27.956 (   5.514s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.640625,"y":25.39453125},"type":"mouse_in"}
+2021-02-25 17:07:27.973 (   5.531s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":18.47265625,"y":3.83984375},"type":"mouse_out"}
+2021-02-25 17:07:28.274 (   5.832s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":5.60546875,"y":3.86328125},"type":"mouse_in"}
+2021-02-25 17:07:29.042 (   6.600s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":14.65625,"y":8.953125},"type":"mouse_out"}
+2021-02-25 17:07:29.059 (   6.617s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":18.37109375,"y":10.98046875},"type":"mouse_in"}
+2021-02-25 17:07:29.393 (   6.950s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.9375,"y":9.27734375},"type":"mouse_in"}
+2021-02-25 17:07:29.393 (   6.951s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.9375,"y":9.27734375},"type":"mouse_out"}
+2021-02-25 17:07:30.144 (   7.701s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.484375,"y":-0.6015625},"type":"mouse_out"}
+2021-02-25 17:07:34.051 (  11.609s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":7.640625,"y":6.57421875},"type":"mouse_in"}
+2021-02-25 17:07:34.102 (  11.661s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.35546875,"y":14.8359375},"type":"mouse_in"}
+2021-02-25 17:07:34.118 (  11.676s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":16.58203125,"y":18.78515625},"type":"mouse_out"}
+2021-02-25 17:07:34.170 (  11.728s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":50.5390625,"y":55.2421875},"type":"mouse_out"}
+2021-02-25 17:07:37.803 (  15.361s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:08:31.274 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:08:31.415 (   0.148s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.580 (   0.313s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.592 (   0.325s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.608 (   0.342s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.625 (   0.359s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.643 (   0.376s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.659 (   0.392s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.675 (   0.408s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.692 (   0.425s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.709 (   0.443s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.724 (   0.457s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.727 (   0.460s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.744 (   0.478s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.762 (   0.496s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.777 (   0.511s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.795 (   0.528s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.812 (   0.546s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.828 (   0.561s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.845 (   0.579s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.861 (   0.594s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.878 (   0.612s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.896 (   0.629s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.912 (   0.645s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.927 (   0.661s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.946 (   0.679s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.962 (   0.695s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.979 (   0.713s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:31.995 (   0.728s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.012 (   0.745s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.028 (   0.762s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.045 (   0.779s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.061 (   0.795s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.080 (   0.813s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.097 (   0.830s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.112 (   0.845s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.128 (   0.862s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.146 (   0.879s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.162 (   0.895s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.180 (   0.913s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.195 (   0.928s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.213 (   0.946s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.229 (   0.962s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.246 (   0.980s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.262 (   0.995s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.280 (   1.013s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.297 (   1.030s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.312 (   1.046s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.329 (   1.062s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.347 (   1.080s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.362 (   1.096s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.380 (   1.113s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.395 (   1.128s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.413 (   1.147s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.428 (   1.162s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.447 (   1.180s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.462 (   1.195s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.480 (   1.214s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.495 (   1.228s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.513 (   1.247s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.531 (   1.264s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.545 (   1.279s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.572 (   1.305s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.580 (   1.313s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.619 (   1.352s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.635 (   1.368s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.646 (   1.379s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.667 (   1.401s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.684 (   1.417s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.705 (   1.439s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.712 (   1.446s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.739 (   1.473s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.749 (   1.483s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.763 (   1.496s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.783 (   1.516s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.796 (   1.530s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.817 (   1.550s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.830 (   1.563s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.854 (   1.588s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.863 (   1.596s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.880 (   1.613s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.900 (   1.634s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.916 (   1.650s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.930 (   1.663s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.946 (   1.680s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.966 (   1.699s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.983 (   1.717s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:32.997 (   1.730s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.013 (   1.747s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.039 (   1.772s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.046 (   1.780s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.064 (   1.797s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.083 (   1.817s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.097 (   1.831s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.118 (   1.852s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.133 (   1.867s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.147 (   1.881s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.167 (   1.900s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.184 (   1.917s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.197 (   1.930s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.198 (   1.931s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":61.796875,"y":51.26171875},"type":"mouse_in"}
+2021-02-25 17:08:33.221 (   1.955s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.235 (   1.968s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.236 (   1.969s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":16.181640625,"y":36.994140625},"type":"mouse_out"}
+2021-02-25 17:08:33.247 (   1.981s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.264 (   1.997s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.280 (   2.014s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":60.77734375,"y":37.48046875},"type":"mouse_in"}
+2021-02-25 17:08:33.280 (   2.014s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.297 (   2.030s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.314 (   2.047s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":38.06640625,"y":50.58203125},"type":"mouse_out"}
+2021-02-25 17:08:33.314 (   2.047s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.340 (   2.074s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.347 (   2.080s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.365 (   2.098s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.381 (   2.114s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.398 (   2.131s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.415 (   2.149s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.431 (   2.164s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.449 (   2.182s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.464 (   2.197s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.482 (   2.215s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.498 (   2.231s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.515 (   2.249s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.531 (   2.265s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.549 (   2.282s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.564 (   2.297s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.582 (   2.316s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.598 (   2.332s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.615 (   2.349s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.631 (   2.365s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.649 (   2.382s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.664 (   2.398s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.682 (   2.416s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.699 (   2.432s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.715 (   2.448s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.732 (   2.465s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.749 (   2.482s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.766 (   2.500s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.781 (   2.515s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.799 (   2.532s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.815 (   2.548s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.832 (   2.566s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.849 (   2.582s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.866 (   2.599s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.882 (   2.615s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.900 (   2.633s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.915 (   2.648s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.932 (   2.666s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.948 (   2.682s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.966 (   2.700s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.982 (   2.715s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:33.999 (   2.733s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.015 (   2.748s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.033 (   2.767s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.048 (   2.781s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.066 (   2.799s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.082 (   2.816s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.100 (   2.833s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.116 (   2.849s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.133 (   2.866s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.149 (   2.882s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.166 (   2.900s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.182 (   2.916s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.200 (   2.933s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.216 (   2.949s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.233 (   2.967s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.249 (   2.982s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.267 (   3.000s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.283 (   3.016s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.300 (   3.034s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.316 (   3.050s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.333 (   3.066s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.349 (   3.082s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.366 (   3.099s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.384 (   3.117s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.400 (   3.133s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.416 (   3.149s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.434 (   3.167s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":47.25,"y":38.81640625},"type":"mouse_in"}
+2021-02-25 17:08:34.434 (   3.167s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.449 (   3.183s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":47.25,"y":25.8984375},"type":"mouse_out"}
+2021-02-25 17:08:34.450 (   3.183s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.467 (   3.200s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.483 (   3.216s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.501 (   3.234s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.516 (   3.250s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.534 (   3.267s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.549 (   3.283s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.567 (   3.301s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.583 (   3.316s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.600 (   3.334s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":63.7109375,"y":41.09375},"type":"mouse_in"}
+2021-02-25 17:08:34.600 (   3.334s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.616 (   3.349s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.634 (   3.368s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.649 (   3.383s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":75.3125,"y":61.78125},"type":"mouse_out"}
+2021-02-25 17:08:34.649 (   3.383s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.668 (   3.401s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.683 (   3.416s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.700 (   3.433s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.717 (   3.450s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.733 (   3.466s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.751 (   3.484s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.766 (   3.499s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.784 (   3.518s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.802 (   3.535s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.816 (   3.550s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.834 (   3.567s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.850 (   3.584s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.868 (   3.601s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.883 (   3.617s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.901 (   3.634s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.918 (   3.652s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.935 (   3.668s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.950 (   3.683s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.968 (   3.701s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:34.984 (   3.718s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.001 (   3.735s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.017 (   3.751s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.035 (   3.768s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.050 (   3.784s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.067 (   3.800s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.085 (   3.818s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.101 (   3.835s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.117 (   3.851s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.134 (   3.868s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.150 (   3.884s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.168 (   3.901s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.184 (   3.917s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.201 (   3.935s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.217 (   3.950s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.235 (   3.968s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.250 (   3.984s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.268 (   4.002s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.284 (   4.018s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.302 (   4.036s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.318 (   4.051s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.335 (   4.069s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.351 (   4.085s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.369 (   4.102s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.385 (   4.118s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.402 (   4.135s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.418 (   4.151s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.435 (   4.168s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.451 (   4.184s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.469 (   4.203s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.485 (   4.218s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.503 (   4.236s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.518 (   4.252s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.536 (   4.269s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.552 (   4.285s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.569 (   4.302s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.585 (   4.318s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.602 (   4.336s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.618 (   4.352s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.636 (   4.369s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.652 (   4.386s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.669 (   4.403s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.685 (   4.419s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.703 (   4.437s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.718 (   4.452s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.737 (   4.470s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.752 (   4.485s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.770 (   4.503s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.785 (   4.518s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.803 (   4.536s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.818 (   4.552s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.836 (   4.569s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.852 (   4.586s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.869 (   4.603s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.885 (   4.618s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.903 (   4.637s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.919 (   4.652s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.936 (   4.670s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.952 (   4.686s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.969 (   4.703s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:35.986 (   4.719s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.003 (   4.736s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.020 (   4.753s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.037 (   4.771s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.052 (   4.786s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.071 (   4.804s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.086 (   4.819s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.104 (   4.837s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.120 (   4.853s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.137 (   4.870s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.153 (   4.886s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.170 (   4.903s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.186 (   4.920s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.204 (   4.937s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.220 (   4.953s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.237 (   4.971s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.253 (   4.986s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.270 (   5.004s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.286 (   5.020s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.304 (   5.037s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.320 (   5.053s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.337 (   5.070s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.353 (   5.086s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.370 (   5.104s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.386 (   5.119s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.404 (   5.138s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.420 (   5.153s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.438 (   5.171s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.453 (   5.187s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.471 (   5.204s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.486 (   5.220s) [main thread     ]                Box.cpp:38    INFO| Checking mouse
+2021-02-25 17:08:36.531 (   5.264s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:09:00.831 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:09:01.956 (   1.132s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":84.19140625,"y":75.40625},"type":"mouse_in"}
+2021-02-25 17:09:01.988 (   1.165s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":33.181640625,"y":50.103515625},"type":"mouse_out"}
+2021-02-25 17:09:02.736 (   1.912s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":85.4453125,"y":99.4609375},"type":"mouse_in"}
+2021-02-25 17:09:03.604 (   2.781s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":101.4765625,"y":100.5390625},"type":"mouse_out"}
+2021-02-25 17:09:04.072 (   3.249s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":82.765625,"y":97.36328125},"type":"mouse_in"}
+2021-02-25 17:09:04.657 (   3.833s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":59.7421875,"y":110.26171875},"type":"mouse_out"}
+2021-02-25 17:09:05.475 (   4.651s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":0.03515625,"y":67.6015625},"type":"mouse_in"}
+2021-02-25 17:09:05.792 (   4.969s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-2.48828125,"y":65.171875},"type":"mouse_out"}
+2021-02-25 17:09:06.444 (   5.620s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":48.640625,"y":0.59765625},"type":"mouse_in"}
+2021-02-25 17:09:07.079 (   6.255s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":19.49609375,"y":33.544921875},"type":"mouse_in"}
+2021-02-25 17:09:07.128 (   6.304s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":106.46875,"y":26.89453125},"type":"mouse_out"}
+2021-02-25 17:09:07.128 (   6.305s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":61.90234375,"y":82.3203125},"type":"mouse_out"}
+2021-02-25 17:09:07.813 (   6.989s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":99.1328125,"y":51.2421875},"type":"mouse_in"}
+2021-02-25 17:09:08.196 (   7.373s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":57.07421875,"y":105.69921875},"type":"mouse_out"}
+2021-02-25 17:09:08.497 (   7.674s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":30.91796875,"y":97.64453125},"type":"mouse_in"}
+2021-02-25 17:09:08.831 (   8.008s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-1.8671875,"y":90.265625},"type":"mouse_out"}
+2021-02-25 17:09:09.399 (   8.576s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":0.13671875,"y":66.67578125},"type":"mouse_in"}
+2021-02-25 17:09:09.816 (   8.992s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":9.58203125,"y":20.2734375},"type":"mouse_in"}
+2021-02-25 17:09:09.833 (   9.010s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":10.5390625,"y":17.4140625},"type":"mouse_in"}
+2021-02-25 17:09:09.867 (   9.044s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.31640625,"y":12.46875},"type":"mouse_out"}
+2021-02-25 17:09:09.883 (   9.060s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":14.37890625,"y":11.671875},"type":"mouse_out"}
+2021-02-25 17:09:10.034 (   9.210s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":28.5625,"y":-0.68359375},"type":"mouse_out"}
+2021-02-25 17:09:10.568 (   9.745s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":39.33984375,"y":0.16015625},"type":"mouse_in"}
+2021-02-25 17:09:10.935 (  10.112s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":54.40234375,"y":37.0546875},"type":"mouse_in"}
+2021-02-25 17:09:10.969 (  10.145s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":59.75,"y":56.24609375},"type":"mouse_out"}
+2021-02-25 17:09:11.185 (  10.362s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":53.25390625,"y":101.51171875},"type":"mouse_out"}
+2021-02-25 17:09:11.837 (  11.014s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":45.5625,"y":99.96875},"type":"mouse_in"}
+2021-02-25 17:09:12.337 (  11.514s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":35.74609375,"y":105.23828125},"type":"mouse_out"}
+2021-02-25 17:09:13.664 (  12.841s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:09:29.414 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:09:31.808 (   2.401s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":133.640625,"y":-94.07421875},"type":"mouse_in"}
+2021-02-25 17:09:32.042 (   2.635s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":121.20703125,"y":-110.453125},"type":"mouse_out"}
+2021-02-25 17:09:32.225 (   2.818s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":132.25,"y":-99.4296875},"type":"mouse_in"}
+2021-02-25 17:09:32.493 (   3.086s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":134.71875,"y":-110.05078125},"type":"mouse_out"}
+2021-02-25 17:09:32.710 (   3.303s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":138.65625,"y":-99.9921875},"type":"mouse_in"}
+2021-02-25 17:09:32.877 (   3.470s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":132.51171875,"y":-104.953125},"type":"mouse_out"}
+2021-02-25 17:09:33.061 (   3.654s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":150.3515625,"y":-86.98046875},"type":"mouse_in"}
+2021-02-25 17:09:33.194 (   3.787s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":206.8828125,"y":-64.12890625},"type":"mouse_out"}
+2021-02-25 17:09:33.411 (   4.004s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":194.7265625,"y":-56.31640625},"type":"mouse_in"}
+2021-02-25 17:09:33.562 (   4.155s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":206.01953125,"y":-56.72265625},"type":"mouse_out"}
+2021-02-25 17:09:33.745 (   4.338s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":189.85546875,"y":-56.14453125},"type":"mouse_in"}
+2021-02-25 17:09:33.861 (   4.454s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":206.16015625,"y":-58.64453125},"type":"mouse_out"}
+2021-02-25 17:09:33.979 (   4.572s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":195.984375,"y":-59.765625},"type":"mouse_in"}
+2021-02-25 17:09:34.179 (   4.772s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":96.671875,"y":-66.3046875},"type":"mouse_out"}
+2021-02-25 17:09:34.463 (   5.056s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":104.61328125,"y":-64.17578125},"type":"mouse_in"}
+2021-02-25 17:09:34.597 (   5.190s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":96.11328125,"y":-60.76953125},"type":"mouse_out"}
+2021-02-25 17:09:34.814 (   5.407s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":103.35546875,"y":-63.91015625},"type":"mouse_in"}
+2021-02-25 17:09:35.415 (   6.008s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":169.1875,"y":2.04296875},"type":"mouse_out"}
+2021-02-25 17:09:35.733 (   6.326s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":160.36328125,"y":-1.984375},"type":"mouse_in"}
+2021-02-25 17:09:35.933 (   6.526s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":159.11328125,"y":3.08203125},"type":"mouse_out"}
+2021-02-25 17:09:36.100 (   6.693s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":158.73046875,"y":-0.4296875},"type":"mouse_in"}
+2021-02-25 17:09:36.267 (   6.860s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":163.1328125,"y":3.65234375},"type":"mouse_out"}
+2021-02-25 17:09:36.567 (   7.160s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":198.71484375,"y":-41.0390625},"type":"mouse_in"}
+2021-02-25 17:09:36.767 (   7.360s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":211.4296875,"y":-40.5625},"type":"mouse_out"}
+2021-02-25 17:09:36.885 (   7.478s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":188.60546875,"y":-42.59375},"type":"mouse_in"}
+2021-02-25 17:09:37.018 (   7.611s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":200.5546875,"y":-44.84375},"type":"mouse_out"}
+2021-02-25 17:09:37.419 (   8.012s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":158.9765625,"y":-94.34375},"type":"mouse_in"}
+2021-02-25 17:09:37.569 (   8.162s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":158.046875,"y":-106.29296875},"type":"mouse_out"}
+2021-02-25 17:09:37.769 (   8.363s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":156.5234375,"y":-98.703125},"type":"mouse_in"}
+2021-02-25 17:09:37.903 (   8.496s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":152.8515625,"y":-109.515625},"type":"mouse_out"}
+2021-02-25 17:09:38.321 (   8.914s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":101.1953125,"y":-54.1171875},"type":"mouse_in"}
+2021-02-25 17:09:38.505 (   9.098s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":99.02734375,"y":-53.22265625},"type":"mouse_out"}
+2021-02-25 17:09:38.555 (   9.148s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":100.66015625,"y":-53.22265625},"type":"mouse_in"}
+2021-02-25 17:09:38.671 (   9.264s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":99.625,"y":-53.73046875},"type":"mouse_out"}
+2021-02-25 17:09:38.737 (   9.331s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":100.30859375,"y":-53.73046875},"type":"mouse_in"}
+2021-02-25 17:09:38.888 (   9.481s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":21.482421875,"y":10.001953125},"type":"mouse_in"}
+2021-02-25 17:09:38.905 (   9.498s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":92.96484375,"y":-29.99609375},"type":"mouse_out"}
+2021-02-25 17:09:38.905 (   9.499s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":13.99609375,"y":43.75390625},"type":"mouse_out"}
+2021-02-25 17:09:38.939 (   9.533s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":21.95703125,"y":26.44140625},"type":"mouse_in"}
+2021-02-25 17:09:38.955 (   9.548s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-69.9375,"y":97.0078125},"type":"mouse_out"}
+2021-02-25 17:09:39.766 (  10.359s) [main thread     ]             loguru.cpp:524   INFO| atexit

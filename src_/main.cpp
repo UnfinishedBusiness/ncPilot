@@ -86,6 +86,9 @@ int main(int argc, char **argv)
     Circle *c = renderer->PushPrimative(new Circle({-200, -200}, 100));
     c->properties->mouse_callback = &mouse_callback;
 
+    Box *b = renderer->PushPrimative(new Box({100, -100}, 100, 100, 30));
+    b->properties->mouse_callback = &mouse_callback;
+
     while(renderer->Poll(false))
     {
         //Do stuff

@@ -15,7 +15,6 @@ class PrimativeProperties{
         int zindex;
         float color[4];
         float offset[3];
-        float size[2];
         float scale;
         float angle;
         std::string id;
@@ -37,8 +36,6 @@ class PrimativeProperties{
             this->offset[0] = 0;
             this->offset[1] = 0;
             this->offset[2] = 0;
-            this->size[0] = 0;
-            this->size[1] = 0;
             this->angle = 0;
             this->id = "";
             this->mouse_over = false;

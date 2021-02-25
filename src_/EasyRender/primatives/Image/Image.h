@@ -38,16 +38,18 @@ class Image{
         float position[3];
         std::string image_file;
         float image_size[2];
+        float width;
+        float height;
         GLuint texture;
         
-        Image(double_point_t p, std::string f, double_point_t size)
+        Image(double_point_t p, std::string f, float w, float h)
         {
             this->properties = new PrimativeProperties();
             this->position[0] = p.x;
             this->position[1] = p.y;
             this->position[2] = 0;
-            this->properties->size[0] = size.x;
-            this->properties->size[1] = size.y;
+            this->width = w;
+            this->height = h;
             this->image_file = f;
             this->texture = -1;
             this->mouse_event = NULL;
