@@ -8,6 +8,8 @@
 EasyRender *renderer;
 global_variables_t *globals;
 
+Text *fps;
+
 //Xrender_object_t *performance_label;
 //std::vector<int> performance_average;
 
@@ -59,12 +61,15 @@ int main(int argc, char **argv)
     l->properties->offset[1] = -50;
     l->properties->mouse_callback = &mouse_callback;
 
-    Text *t = renderer->PushPrimative(new Text({0, 0}, "Test", 50));
-    t->properties->mouse_callback = &mouse_callback;
+    Text *fps = renderer->PushPrimative(new Text({0, 0}, "0", 30));
+    fps->properties->mouse_callback = &mouse_callback;
+
+    Image* i = renderer->PushPrimative(new Image({0, 0}, "/Users/travis/Documents/Projects/Xrender/test/LineWork.png", {2048 / 4, 780 / 4}));
 
     while(renderer->Poll(false))
     {
         //Do stuff
+        fps->textval = std::to_string(renderer->GetFramesPerSecond());
     }
 
     delete renderer;

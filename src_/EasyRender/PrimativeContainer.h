@@ -10,6 +10,7 @@
 #include "primatives/PrimativeProperties.h"
 #include "primatives/Line/Line.h"
 #include "primatives/Text/Text.h"
+#include "primatives/Image/Image.h"
 
 class PrimativeContainer{
     public:
@@ -17,6 +18,7 @@ class PrimativeContainer{
         std::string type;
         Line *line;
         Text *text;
+        Image *image;
 
         void process_mouse(float mpos_x, float mpos_y);
         void render();
@@ -32,6 +34,12 @@ class PrimativeContainer{
             text = t;
             this->type = text->get_type_name();
             properties = text->properties;
+        }
+        PrimativeContainer(Image *i)
+        {
+            image = i;
+            this->type = image->get_type_name();
+            properties = image->properties;
         }
 };
 

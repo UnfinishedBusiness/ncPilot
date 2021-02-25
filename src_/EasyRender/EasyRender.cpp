@@ -55,6 +55,13 @@ Text* EasyRender::PushPrimative(Text* t)
     primative_stack.push_back(c);
     return c->text;
 }
+Image* EasyRender::PushPrimative(Image* i)
+{  
+    PrimativeContainer *c = new PrimativeContainer(i);
+    primative_stack.push_back(c);
+    return c->image;
+}
+
 
 void EasyRender::SetWindowTitle(std::string w)
 {
@@ -143,6 +150,10 @@ double_point_t EasyRender::GetWindowMousePosition()
     glfwGetCursorPos(this->Window, &mouseX, &mouseY);
     return {mouseX - (this->WindowSize[0]/ 2.0f), (this->WindowSize[1] - mouseY) - (this->WindowSize[1] / 2.0f)};
 }
+uint8_t EasyRender::GetFramesPerSecond()
+{
+    return (uint8_t)(1000.0f / (float)RenderPerformance);
+}
 void EasyRender::SetColorByName(float *c, std::string color)
 {
     if (color == "white")
@@ -213,7 +224,7 @@ bool EasyRender::Init(int argc, char** argv)
 }
 bool EasyRender::Poll(bool should_quit)
 {
-    this->RenderPerformance = this->Millis();
+    unsigned long begin_timestamp = this->Millis();
     glfwGetFramebufferSize(this->Window, &this->WindowSize[0], &this->WindowSize[1]);
     float ratio = this->WindowSize[0] / (float)this->WindowSize[1];
     double_point_t window_mouse_pos = this->GetWindowMousePosition();
@@ -245,7 +256,7 @@ bool EasyRender::Poll(bool should_quit)
     glfwPollEvents();
 
     //Execute pending timers here
-
+    this->RenderPerformance = (this->Millis() - begin_timestamp);
     if (should_quit == true) return false;
     return !glfwWindowShouldClose(this->Window);
 }

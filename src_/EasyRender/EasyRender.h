@@ -77,6 +77,7 @@ class EasyRender{
         /* Primative Creation */
         Line* PushPrimative(Line* l);
         Text* PushPrimative(Text* t);
+        Image* PushPrimative(Image* i);
 
         void SetWindowTitle(std::string w);
         void SetWindowSize(int width, int height);
@@ -92,6 +93,7 @@ class EasyRender{
         std::string GetEvironmentVariable(const std::string & var);
         std::string GetConfigDirectory();
         double_point_t GetWindowMousePosition();
+        uint8_t GetFramesPerSecond();
         void SetColorByName(float *c, std::string color);
         bool Init(int argc, char** argv);
         bool Poll(bool should_quit);

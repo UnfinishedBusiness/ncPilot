@@ -1,10 +1,10 @@
-#ifndef TEXT_
-#define TEXT_
+#ifndef IMAGE_
+#define IMAGE_
 
 #include "../PrimativeProperties.h"
 #include "../../json/json.h"
 #include "../../geometry/geometry.h"
-#include "../../gui/stb_truetype.h"
+#include "../../gui/stb_image.h"
 #include <string>
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -30,33 +30,32 @@
 #endif
 
 
-class Text{
+class Image{
     public:
         nlohmann::json mouse_event;
         PrimativeProperties *properties;
 
-        std::string textval;
-        std::string font_file;
-        float font_size;
+        std::string image_file;
+        float image_size[2];
         GLuint texture;
-        stbtt_bakedchar cdata[96];
         
-        Text(double_point_t p, std::string t, float s)
+        Image(double_point_t p, std::string f, double_point_t size)
         {
             this->properties = new PrimativeProperties();
             this->properties->position[0] = p.x;
             this->properties->position[1] = p.y;
-            this->textval = t;
-            this->font_file = "default";
-            this->font_size = s;
+            this->properties->size[0] = size.x;
+            this->properties->size[1] = size.y;
+            this->image_file = f;
             this->texture = -1;
             this->mouse_event = NULL;
         }
         std::string get_type_name();
         void process_mouse(float mpos_x, float mpos_y);
         void render();
-        bool InitFontFromFile(const char* filename, float font_size);
-        void RenderFont(float pos_x, float pos_y, std::string text);
+
+        bool ImageToTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height);
+        
 };
 
-#endif //TEXT_
+#endif //IMAGE_
