@@ -63,6 +63,7 @@ class Text{
         void render();
         bool InitFontFromFile(const char* filename, float font_size);
         void RenderFont(float pos_x, float pos_y, std::string text);
+        void destroy();
 };
 
 #endif //TEXT_

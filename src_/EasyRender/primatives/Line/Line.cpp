@@ -89,3 +89,7 @@ void Line::render()
         glPopMatrix();
     }
 }
+void Line::destroy()
+{
+    delete this->properties;
+}

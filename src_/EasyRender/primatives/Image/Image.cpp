@@ -157,3 +157,8 @@ void Image::render()
         glPopMatrix();
     }
 }
+void Image::destroy()
+{
+    glDeleteTextures(1, &this->texture);
+    delete this->properties;
+}

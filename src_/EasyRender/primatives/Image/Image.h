@@ -57,6 +57,7 @@ class Image{
         std::string get_type_name();
         void process_mouse(float mpos_x, float mpos_y);
         void render();
+        void destroy();
 
         bool ImageToTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height);
         

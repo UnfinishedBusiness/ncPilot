@@ -85,6 +85,14 @@ Box* EasyRender::PushPrimative(Box* b)
     primative_stack.push_back(c);
     return c->box;
 }
+void EasyRender::PushTimer(unsigned long intervol, bool (*c)())
+{
+    EasyRenderTimer *t = new EasyRenderTimer;
+    t->intervol = intervol;
+    t->timestamp = this->Millis();
+    t->callback = c;
+    timer_stack.push_back(t);
+}
 
 void EasyRender::SetWindowTitle(std::string w)
 {
@@ -277,15 +285,32 @@ bool EasyRender::Poll(bool should_quit)
     glfwMakeContextCurrent(this->Window);
     glfwSwapBuffers(this->Window);
     glfwPollEvents();
-
-    //Execute pending timers here
+    for (int x = 0; x < this->timer_stack.size(); x++)
+    {
+        if ((this->Millis() - this->timer_stack.at(x)->timestamp) > this->timer_stack.at(x)->intervol)
+        {
+            this->timer_stack.at(x)->timestamp = this->Millis();
+            if (this->timer_stack.at(x)->callback != NULL)
+            {
+                if (this->timer_stack.at(x)->callback() == false) //Don't repeat
+                {
+                    delete this->timer_stack.at(x);
+                    this->timer_stack.erase(this->timer_stack.begin()+x);
+                }
+            }
+        }
+    }
     this->RenderPerformance = (this->Millis() - begin_timestamp);
     if (should_quit == true) return false;
     return !glfwWindowShouldClose(this->Window);
 }
 void EasyRender::Close()
 {
-    //Delete EntityContainer objects
+    for (int x = 0; x < primative_stack.size(); x++)
+    {
+        primative_stack.at(x)->destroy();
+        delete primative_stack.at(x);
+    }
     //ImGui_ImplOpenGL2_Shutdown();
     //ImGui_ImplGlfw_Shutdown();
     //ImGui::DestroyContext();

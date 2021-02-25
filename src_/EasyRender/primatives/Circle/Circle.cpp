@@ -139,3 +139,7 @@ void Circle::render()
         glPopMatrix();
     }
 }
+void Circle::destroy()
+{
+    delete this->properties;
+}

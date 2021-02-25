@@ -7,14 +7,14 @@
 #include <sys/time.h>
 #include <ctime>
 #include <algorithm> 
-#include "primatives/PrimativeProperties.h"
-#include "primatives/Line/Line.h"
-#include "primatives/Text/Text.h"
-#include "primatives/Image/Image.h"
-#include "primatives/Path/Path.h"
-#include "primatives/Arc/Arc.h"
-#include "primatives/Circle/Circle.h"
-#include "primatives/Box/Box.h"
+#include "PrimativeProperties.h"
+#include "Line/Line.h"
+#include "Text/Text.h"
+#include "Image/Image.h"
+#include "Path/Path.h"
+#include "Arc/Arc.h"
+#include "Circle/Circle.h"
+#include "Box/Box.h"
 
 class PrimativeContainer{
     public:
@@ -30,6 +30,7 @@ class PrimativeContainer{
 
         void process_mouse(float mpos_x, float mpos_y);
         void render();
+        void destroy();
 
         PrimativeContainer(Line *l)
         {

@@ -29,6 +29,7 @@ class Box{
         void process_mouse(float mpos_x, float mpos_y);
         void render_rectangle_with_radius(float x, float y, float width, float height, float radius);
         void render();
+        void destroy();
 };
 
 #endif //BOX_

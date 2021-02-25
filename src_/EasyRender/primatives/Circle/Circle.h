@@ -29,6 +29,7 @@ class Circle{
         void process_mouse(float mpos_x, float mpos_y);
         void render_arc(double cx, double cy, double radius, double start_angle, double end_angle);
         void render();
+        void destroy();
 };
 
 #endif //CIRCLE_

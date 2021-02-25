@@ -139,3 +139,7 @@ void Arc::render()
         glPopMatrix();
     }
 }
+void Arc::destroy()
+{
+    delete this->properties;
+}

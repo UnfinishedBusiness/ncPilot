@@ -164,3 +164,8 @@ void Text::render()
         glPopMatrix();
     }
 }
+void Text::destroy()
+{
+    glDeleteTextures(1, &this->texture);
+    delete this->properties;
+}

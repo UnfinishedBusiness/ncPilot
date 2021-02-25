@@ -9,8 +9,7 @@
 #include <algorithm> 
 #include "geometry/geometry.h"
 #include "json/json.h"
-#include "PrimativeContainer.h"
-
+#include "primatives/PrimativeContainer.h"
 
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
@@ -43,9 +42,14 @@
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
-
 class EasyRender{
     private:
+        struct EasyRenderTimer{
+            unsigned long timestamp;
+            unsigned long intervol;
+            bool (*callback)();
+        };
+
         GLFWwindow* Window;
         unsigned long RenderPerformance;
         float ClearColor[3];
@@ -59,6 +63,7 @@ class EasyRender{
         std::string GuiStyle;
 
         std::vector<PrimativeContainer *> primative_stack;
+        std::vector<EasyRenderTimer*> timer_stack;
 
     public:
         EasyRender()
@@ -82,6 +87,10 @@ class EasyRender{
         Arc* PushPrimative(Arc* i);
         Circle* PushPrimative(Circle* ci);
         Box* PushPrimative(Box* b);
+
+        /* Timer Creation */
+        void PushTimer(unsigned long intervol, bool (*c)());
+
 
         void SetWindowTitle(std::string w);
         void SetWindowSize(int width, int height);

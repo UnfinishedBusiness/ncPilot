@@ -28,6 +28,7 @@ class Line{
         std::string get_type_name();
         void process_mouse(float mpos_x, float mpos_y);
         void render();
+        void destroy();
 };
 
 #endif //LINE_

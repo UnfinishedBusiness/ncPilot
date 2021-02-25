@@ -1,5 +1,5 @@
 #include "PrimativeContainer.h"
-#include "logging/loguru.h"
+#include "../logging/loguru.h"
 
 void PrimativeContainer::process_mouse(float mpos_x, float mpos_y)
 {
@@ -121,5 +121,43 @@ void PrimativeContainer::render()
     if (this->type == "box")
     {
         this->box->render();
+    }
+}
+void PrimativeContainer::destroy()
+{
+    if (this->type == "line")
+    {
+        this->line->destroy();
+        delete this->line;
+    }
+    if (this->type == "text")
+    {
+        this->text->destroy();
+        delete this->text;
+    }
+    if (this->type == "image")
+    {
+        this->image->destroy();
+        delete this->image;
+    }
+    if (this->type == "path")
+    {
+        this->path->destroy();
+        delete this->path;
+    }
+    if (this->type == "arc")
+    {
+        this->arc->destroy();
+        delete this->arc;
+    }
+    if (this->type == "circle")
+    {
+        this->circle->destroy();
+        delete this->circle;
+    }
+    if (this->type == "box")
+    {
+        this->box->destroy();
+        delete this->box;
     }
 }

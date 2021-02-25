@@ -107,3 +107,7 @@ void Path::render()
         glPopMatrix();
     }
 }
+void Path::destroy()
+{
+    delete this->properties;
+}

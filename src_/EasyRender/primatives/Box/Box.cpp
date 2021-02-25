@@ -141,3 +141,7 @@ void Box::render()
         glPopMatrix();
     }
 }
+void Box::destroy()
+{
+    delete this->properties;
+}

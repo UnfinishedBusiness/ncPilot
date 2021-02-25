@@ -56,6 +56,11 @@ void view_matrix(PrimativeContainer *p)
 {
     p->properties->scale = zoom;
 }
+bool fps_timer()
+{
+    fps->textval = std::to_string(renderer->GetFramesPerSecond());
+    return true;
+}
 
 int main(int argc, char **argv)
 {
@@ -70,7 +75,7 @@ int main(int argc, char **argv)
     l->properties->mouse_callback = &mouse_callback;
     l->properties->matrix_callback = &view_matrix;
 
-    Text *fps = renderer->PushPrimative(new Text({0, 0}, "0", 30));
+    fps = renderer->PushPrimative(new Text({0, 0}, "0", 30));
     fps->properties->mouse_callback = &mouse_callback;
 
     std::vector<double_point_t> path;
@@ -89,12 +94,14 @@ int main(int argc, char **argv)
     Box *b = renderer->PushPrimative(new Box({100, -100}, 100, 100, 30));
     b->properties->mouse_callback = &mouse_callback;
 
+    renderer->PushTimer(1000, &fps_timer);
+
     while(renderer->Poll(false))
     {
         //Do stuff
-        fps->textval = std::to_string(renderer->GetFramesPerSecond());
     }
 
+    renderer->Close();
     delete renderer;
     return 0;
 }
