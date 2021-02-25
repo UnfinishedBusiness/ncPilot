@@ -35,6 +35,7 @@ class Image{
         nlohmann::json mouse_event;
         PrimativeProperties *properties;
 
+        float position[3];
         std::string image_file;
         float image_size[2];
         GLuint texture;
@@ -42,8 +43,9 @@ class Image{
         Image(double_point_t p, std::string f, double_point_t size)
         {
             this->properties = new PrimativeProperties();
-            this->properties->position[0] = p.x;
-            this->properties->position[1] = p.y;
+            this->position[0] = p.x;
+            this->position[1] = p.y;
+            this->position[2] = 0;
             this->properties->size[0] = size.x;
             this->properties->size[1] = size.y;
             this->image_file = f;

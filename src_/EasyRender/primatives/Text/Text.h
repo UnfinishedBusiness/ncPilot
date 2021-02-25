@@ -38,14 +38,16 @@ class Text{
         std::string textval;
         std::string font_file;
         float font_size;
+        float position[3];
         GLuint texture;
         stbtt_bakedchar cdata[96];
         
         Text(double_point_t p, std::string t, float s)
         {
             this->properties = new PrimativeProperties();
-            this->properties->position[0] = p.x;
-            this->properties->position[1] = p.y;
+            this->position[0] = p.x;
+            this->position[1] = p.y;
+            this->position[2] = 0;
             this->textval = t;
             this->font_file = "default";
             this->font_size = s;

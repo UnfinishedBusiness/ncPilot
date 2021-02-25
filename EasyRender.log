@@ -3680,3 +3680,218 @@ date       time         ( uptime  ) [ thread name/id ]                   file:li
 2021-02-25 16:24:19.232 (   6.794s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-8.8515625,"y":-69.27734375},"type":"mouse_in"}
 2021-02-25 16:24:19.700 (   7.262s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":2.34765625,"y":-101.11328125},"type":"mouse_out"}
 2021-02-25 16:24:21.045 (   8.607s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:27:31.710 (   0.029s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 16:27:33.086 (   1.406s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":21.015625,"y":22.96484375},"type":"mouse_in"}
+2021-02-25 16:27:33.125 (   1.444s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":17.9375,"y":8.3671875},"type":"mouse_out"}
+2021-02-25 16:27:33.165 (   1.485s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":12.078125,"y":9.00390625},"type":"mouse_in"}
+2021-02-25 16:27:33.249 (   1.568s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-1.76171875,"y":-2.80078125},"type":"mouse_out"}
+2021-02-25 16:27:33.317 (   1.636s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-29.28515625,"y":-30.92578125},"type":"mouse_in"}
+2021-02-25 16:27:33.333 (   1.652s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-33.58203125,"y":-33.43359375},"type":"mouse_out"}
+2021-02-25 16:27:33.549 (   1.869s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-38.75390625,"y":-26.69921875},"type":"mouse_in"}
+2021-02-25 16:27:34.000 (   2.320s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-42.56640625,"y":-25.8125},"type":"mouse_out"}
+2021-02-25 16:27:34.251 (   2.571s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-40.19921875,"y":-22.8203125},"type":"mouse_in"}
+2021-02-25 16:27:34.303 (   2.622s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-36.14453125,"y":-15.40625},"type":"mouse_out"}
+2021-02-25 16:27:34.535 (   2.854s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":0.12109375,"y":20.78125},"type":"mouse_in"}
+2021-02-25 16:27:34.551 (   2.871s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":19.60546875,"y":61.14453125},"type":"mouse_out"}
+2021-02-25 16:27:35.019 (   3.339s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":49.703125,"y":49.81640625},"type":"mouse_in"}
+2021-02-25 16:27:35.487 (   3.806s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":52.18359375,"y":53.6328125},"type":"mouse_out"}
+2021-02-25 16:27:35.637 (   3.957s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":52.421875,"y":53.359375},"type":"mouse_in"}
+2021-02-25 16:27:35.988 (   4.308s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":52.39453125,"y":54.44140625},"type":"mouse_out"}
+2021-02-25 16:27:36.138 (   4.458s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":51.5859375,"y":53.01953125},"type":"mouse_in"}
+2021-02-25 16:27:36.405 (   4.724s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":52.35546875,"y":54.26171875},"type":"mouse_out"}
+2021-02-25 16:27:36.539 (   4.859s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":52.0859375,"y":52.8515625},"type":"mouse_in"}
+2021-02-25 16:27:36.772 (   5.091s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":50.796875,"y":54.20703125},"type":"mouse_out"}
+2021-02-25 16:27:37.424 (   5.743s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-28.3671875,"y":-23.57421875},"type":"mouse_in"}
+2021-02-25 16:27:37.874 (   6.194s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-56.95703125,"y":-2.1796875},"type":"mouse_out"}
+2021-02-25 16:27:38.686 (   7.006s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:32:28.094 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 16:32:29.447 (   1.361s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-51.0390625,"y":-12.51953125},"type":"mouse_in"}
+2021-02-25 16:32:29.464 (   1.378s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-45.51953125,"y":-2.84375},"type":"mouse_out"}
+2021-02-25 16:32:29.878 (   1.792s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-43.23046875,"y":-12.890625},"type":"mouse_in"}
+2021-02-25 16:32:29.946 (   1.859s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-46.76953125,"y":-21.7265625},"type":"mouse_out"}
+2021-02-25 16:32:30.195 (   2.109s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-45.42578125,"y":-21.96484375},"type":"mouse_in"}
+2021-02-25 16:32:30.263 (   2.177s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-22.78515625,"y":-20.546875},"type":"mouse_out"}
+2021-02-25 16:32:30.547 (   2.460s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":8.5625,"y":21.58984375},"type":"mouse_in"}
+2021-02-25 16:32:31.131 (   3.045s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-12.009765625,"y":-1.55078125},"type":"mouse_out"}
+2021-02-25 16:32:31.448 (   3.361s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-0.14453125,"y":-68.1640625},"type":"mouse_in"}
+2021-02-25 16:32:31.832 (   3.746s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":1.046875,"y":-63.23046875},"type":"mouse_out"}
+2021-02-25 16:32:32.617 (   4.530s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":52.296875,"y":33.49609375},"type":"mouse_in"}
+2021-02-25 16:32:33.001 (   4.915s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":44.91015625,"y":57.73046875},"type":"mouse_out"}
+2021-02-25 16:32:33.877 (   5.790s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:33:03.959 (   0.015s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+Stack trace:
+6                  0x1 10  ???                                 0x0000000000000001 0x0 + 1
+5       0x7fff6bb4b015 start + 1
+4          0x10259cee7 main + 3479
+3          0x102306967 EasyRender::Poll(bool) + 887
+2          0x10230cca4 PrimativeContainer::render() + 2260
+1                  0x0 5   ???                                 0x0000000000000000 0x0 + 0
+0       0x7fff6be59f5a _sigtramp + 26
+2021-02-25 16:33:04.235 (   0.292s) [main thread     ]                       :0     FATL| Signal: SIGSEGV
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:35:22.187 (   0.018s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+Stack trace:
+6                  0x1 10  ???                                 0x0000000000000001 0x0 + 1
+5       0x7fff6bb4b015 start + 1
+4          0x104b07ee7 main + 3479
+3          0x104871997 EasyRender::Poll(bool) + 887
+2          0x104877cd4 PrimativeContainer::render() + 2260
+1                  0x0 5   ???                                 0x0000000000000000 0x0 + 0
+0       0x7fff6be59f5a _sigtramp + 26
+2021-02-25 16:35:22.751 (   0.581s) [main thread     ]                       :0     FATL| Signal: SIGSEGV
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:36:07.931 (   0.053s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 16:36:10.213 (   2.335s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-17.9140625,"y":-38.921875},"type":"mouse_in"}
+2021-02-25 16:36:10.246 (   2.369s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-31.54296875,"y":-43.7421875},"type":"mouse_out"}
+2021-02-25 16:36:10.463 (   2.585s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-26.453125,"y":-39.67578125},"type":"mouse_in"}
+2021-02-25 16:36:10.831 (   2.953s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-14.78125,"y":-37.1640625},"type":"mouse_out"}
+2021-02-25 16:36:11.181 (   3.304s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":12.12109375,"y":21.69140625},"type":"mouse_in"}
+2021-02-25 16:36:11.549 (   3.671s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":9.6953125,"y":28.2265625},"type":"mouse_out"}
+2021-02-25 16:36:11.616 (   3.739s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":79.56640625,"y":46.2890625},"type":"mouse_in"}
+2021-02-25 16:36:12.200 (   4.322s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":25.34375,"y":50.25},"type":"mouse_out"}
+2021-02-25 16:36:16.308 (   8.431s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:36:29.100 (   0.019s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 16:36:31.647 (   2.567s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:36:47.663 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 16:36:51.108 (   3.452s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":26.23046875,"y":12.53125},"type":"mouse_in"}
+2021-02-25 16:36:51.258 (   3.602s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":12.984375,"y":27.6953125},"type":"mouse_out"}
+2021-02-25 16:36:51.609 (   3.952s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":22.32421875,"y":31.734375},"type":"mouse_in"}
+2021-02-25 16:36:52.477 (   4.821s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-5.046875,"y":-10.591796875},"type":"mouse_out"}
+2021-02-25 16:36:52.977 (   5.321s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-117.50390625,"y":-150.40625},"type":"mouse_in"}
+2021-02-25 16:36:53.010 (   5.354s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-109.375,"y":-144.69140625},"type":"mouse_out"}
+2021-02-25 16:36:53.228 (   5.572s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-110.58984375,"y":-145.5859375},"type":"mouse_in"}
+2021-02-25 16:36:53.728 (   6.072s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-108.1796875,"y":-145.7734375},"type":"mouse_out"}
+2021-02-25 16:36:54.580 (   6.924s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-106.5,"y":-153.296875},"type":"mouse_in"}
+2021-02-25 16:36:55.131 (   7.475s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-105.99609375,"y":-153.03515625},"type":"mouse_out"}
+2021-02-25 16:36:55.482 (   7.826s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":21.75390625,"y":33.88671875},"type":"mouse_in"}
+2021-02-25 16:36:55.833 (   8.177s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":2.470703125,"y":22.521484375},"type":"mouse_out"}
+2021-02-25 16:36:55.900 (   8.244s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":11.265625,"y":21.74609375},"type":"mouse_in"}
+2021-02-25 16:36:55.916 (   8.260s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-6.1015625,"y":37.7578125},"type":"mouse_out"}
+2021-02-25 16:36:57.341 (   9.685s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:36:58.912 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 16:37:00.877 (   1.967s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":18.76171875,"y":9.17578125},"type":"mouse_in"}
+2021-02-25 16:37:01.811 (   2.901s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":12.37890625,"y":-2.23828125},"type":"mouse_out"}
+2021-02-25 16:37:02.162 (   3.252s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":21.125,"y":7.91796875},"type":"mouse_in"}
+2021-02-25 16:37:02.579 (   3.669s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":7.759765625,"y":-8.369140625},"type":"mouse_out"}
+2021-02-25 16:37:02.829 (   3.919s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-5.671875,"y":-81.90625},"type":"mouse_in"}
+2021-02-25 16:37:02.846 (   3.935s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-42.66015625,"y":-55.3046875},"type":"mouse_out"}
+2021-02-25 16:37:03.713 (   4.802s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 16:37:51.022 (   0.015s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 16:37:52.874 (   1.867s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":67.078125,"y":37.99609375},"type":"mouse_in"}
+2021-02-25 16:37:52.892 (   1.885s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":29.2109375,"y":8.28515625},"type":"mouse_out"}
+2021-02-25 16:37:53.376 (   2.369s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-188.64453125,"y":-95.9765625},"type":"mouse_in"}
+2021-02-25 16:37:53.443 (   2.436s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-190.765625,"y":-105.5390625},"type":"mouse_out"}
+2021-02-25 16:37:54.094 (   3.087s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-134.75,"y":-130.48046875},"type":"mouse_in"}
+2021-02-25 16:37:54.161 (   3.154s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-118.62109375,"y":-132.4453125},"type":"mouse_out"}
+2021-02-25 16:37:54.427 (   3.420s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-114.1640625,"y":-139.97265625},"type":"mouse_in"}
+2021-02-25 16:37:55.129 (   4.122s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-103.52734375,"y":-242.31640625},"type":"mouse_out"}
+2021-02-25 16:37:55.195 (   4.189s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-109.890625,"y":-253.65625},"type":"mouse_in"}
+2021-02-25 16:37:55.295 (   4.288s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-142.6953125,"y":-270.2109375},"type":"mouse_out"}
+2021-02-25 16:37:55.445 (   4.438s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-253.90625,"y":-281.29296875},"type":"mouse_in"}
+2021-02-25 16:37:55.662 (   4.655s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-278.26953125,"y":-271.39453125},"type":"mouse_out"}
+2021-02-25 16:37:55.863 (   4.856s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-291.55078125,"y":-250.55078125},"type":"mouse_in"}
+2021-02-25 16:37:56.230 (   5.224s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-301.3203125,"y":-170.44921875},"type":"mouse_out"}
+2021-02-25 16:37:56.731 (   5.724s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-261.8828125,"y":-115.3359375},"type":"mouse_in"}
+2021-02-25 16:37:56.848 (   5.842s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-236.3203125,"y":-112.671875},"type":"mouse_out"}
+2021-02-25 16:37:57.266 (   6.259s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-169.89453125,"y":-108.98046875},"type":"mouse_in"}
+2021-02-25 16:37:57.450 (   6.443s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-140.71484375,"y":-113.0},"type":"mouse_out"}
+2021-02-25 16:37:57.649 (   6.643s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-116.9296875,"y":-136.1640625},"type":"mouse_in"}
+2021-02-25 16:37:58.285 (   7.278s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-143.453125,"y":-275.81640625},"type":"mouse_out"}
+2021-02-25 16:37:58.635 (   7.628s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-229.1015625,"y":-290.98046875},"type":"mouse_in"}
+2021-02-25 16:37:58.769 (   7.762s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-264.2109375,"y":-283.25390625},"type":"mouse_out"}
+2021-02-25 16:37:58.952 (   7.946s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-282.6875,"y":-263.90234375},"type":"mouse_in"}
+2021-02-25 16:37:59.804 (   8.797s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-283.94140625,"y":-240.140625},"type":"mouse_out"}
+2021-02-25 16:38:00.472 (   9.465s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-191.13671875,"y":-103.55078125},"type":"mouse_in"}
+2021-02-25 16:38:00.505 (   9.498s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-190.8125,"y":-88.16796875},"type":"mouse_out"}
+2021-02-25 16:38:00.672 (   9.666s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-190.203125,"y":-104.21875},"type":"mouse_in"}
+2021-02-25 16:38:00.689 (   9.683s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-190.203125,"y":-115.5078125},"type":"mouse_out"}
+2021-02-25 16:38:00.856 (   9.849s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-183.51953125,"y":-103.24609375},"type":"mouse_in"}
+2021-02-25 16:38:00.872 (   9.866s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-178.765625,"y":-96.53515625},"type":"mouse_out"}
+2021-02-25 16:38:00.957 (   9.950s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-175.72265625,"y":-100.875},"type":"mouse_in"}
+2021-02-25 16:38:00.973 (   9.966s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-176.64453125,"y":-118.7109375},"type":"mouse_out"}
+2021-02-25 16:38:01.106 (  10.099s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-143.1015625,"y":-123.06640625},"type":"mouse_in"}
+2021-02-25 16:38:01.123 (  10.117s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-122.90625,"y":-113.55859375},"type":"mouse_out"}
+2021-02-25 16:38:01.223 (  10.216s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":4.3125,"y":-90.4453125},"type":"mouse_in"}
+2021-02-25 16:38:01.240 (  10.233s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":8.51953125,"y":-91.13671875},"type":"mouse_out"}
+2021-02-25 16:38:01.624 (  10.618s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-7.9453125,"y":-52.28125},"type":"mouse_in"}
+2021-02-25 16:38:01.641 (  10.634s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-23.38671875,"y":-22.796875},"type":"mouse_out"}
+2021-02-25 16:38:02.640 (  11.633s) [main thread     ]             loguru.cpp:524   INFO| atexit

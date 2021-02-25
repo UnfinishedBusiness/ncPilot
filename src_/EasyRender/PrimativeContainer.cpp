@@ -63,6 +63,18 @@ void PrimativeContainer::process_mouse(float mpos_x, float mpos_y)
             this->arc->mouse_event = NULL;
         }
     }
+    if (this->type == "circle")
+    {
+        this->circle->process_mouse(mpos_x, mpos_y);
+        if (this->circle->mouse_event != NULL)
+        {
+            if (this->circle->properties->mouse_callback != NULL)
+            {
+                this->circle->properties->mouse_callback(this, this->circle->mouse_event);
+            }
+            this->circle->mouse_event = NULL;
+        }
+    }
 }
 void PrimativeContainer::render()
 {
@@ -89,5 +101,9 @@ void PrimativeContainer::render()
     if (this->type == "arc")
     {
         this->arc->render();
+    }
+    if (this->type == "circle")
+    {
+        this->circle->render();
     }
 }

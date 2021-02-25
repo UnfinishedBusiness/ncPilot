@@ -21,7 +21,9 @@ class Line{
             this->properties = new PrimativeProperties();
             this->start = s;
             this->end = e;
-            mouse_event = NULL;
+            this->width = 1;
+            this->style = "solid";
+            this->mouse_event = NULL;
         }
         std::string get_type_name();
         void process_mouse(float mpos_x, float mpos_y);

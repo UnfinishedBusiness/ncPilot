@@ -73,6 +73,12 @@ Arc* EasyRender::PushPrimative(Arc* a)
     primative_stack.push_back(c);
     return c->arc;
 }
+Circle* EasyRender::PushPrimative(Circle* ci)
+{  
+    PrimativeContainer *c = new PrimativeContainer(ci);
+    primative_stack.push_back(c);
+    return c->circle;
+}
 
 void EasyRender::SetWindowTitle(std::string w)
 {

@@ -42,8 +42,8 @@ void Image::process_mouse(float mpos_x, float mpos_y)
     {
         mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
         mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
-        if (mpos_x > this->properties->position[0] && mpos_x < (this->properties->position[0] + this->properties->size[0]) &&
-            mpos_y > this->properties->position[1] && mpos_y < (this->properties->position[1] + this->properties->size[1])
+        if (mpos_x > this->position[0] && mpos_x < (this->position[0] + this->properties->size[0]) &&
+            mpos_y > this->position[1] && mpos_y < (this->position[1] + this->properties->size[1])
         )
         {
             if (this->properties->mouse_over == false)
@@ -137,7 +137,7 @@ void Image::render()
             else
             {
                 glPushMatrix();
-                    glTranslatef(this->properties->position[0], this->properties->position[1], 0.0);
+                    glTranslatef(this->position[0], this->position[1], 0.0);
                     glRotatef(this->properties->angle, 0.0, 0.0, 1.0);
                     glScalef(1.0f, -1.0f, 1.0f);
                     double imgWidth = this->properties->size[0];

@@ -13,7 +13,6 @@ class PrimativeProperties{
         bool visable;
         bool mouse_over;
         int zindex;
-        float position[3];
         float color[4];
         float offset[3];
         float size[2];
@@ -38,9 +37,6 @@ class PrimativeProperties{
             this->offset[0] = 0;
             this->offset[1] = 0;
             this->offset[2] = 0;
-            this->position[0] = 0;
-            this->position[1] = 0;
-            this->position[2] = 0;
             this->size[0] = 0;
             this->size[1] = 0;
             this->angle = 0;
