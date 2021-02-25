@@ -51,6 +51,18 @@ void PrimativeContainer::process_mouse(float mpos_x, float mpos_y)
             this->path->mouse_event = NULL;
         }
     }
+    if (this->type == "arc")
+    {
+        this->arc->process_mouse(mpos_x, mpos_y);
+        if (this->arc->mouse_event != NULL)
+        {
+            if (this->arc->properties->mouse_callback != NULL)
+            {
+                this->arc->properties->mouse_callback(this, this->arc->mouse_event);
+            }
+            this->arc->mouse_event = NULL;
+        }
+    }
 }
 void PrimativeContainer::render()
 {
@@ -73,5 +85,9 @@ void PrimativeContainer::render()
     if (this->type == "path")
     {
         this->path->render();
+    }
+    if (this->type == "arc")
+    {
+        this->arc->render();
     }
 }

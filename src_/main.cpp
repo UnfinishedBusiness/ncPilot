@@ -80,6 +80,9 @@ int main(int argc, char **argv)
     Path *p = renderer->PushPrimative(new Path(path));
     p->properties->mouse_callback = &mouse_callback;
 
+    Arc *a = renderer->PushPrimative(new Arc({-100, -100}, 100, 0, 90));
+    a->properties->mouse_callback = &mouse_callback;
+
     while(renderer->Poll(false))
     {
         //Do stuff

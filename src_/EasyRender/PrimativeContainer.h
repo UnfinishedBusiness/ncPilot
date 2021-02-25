@@ -12,6 +12,7 @@
 #include "primatives/Text/Text.h"
 #include "primatives/Image/Image.h"
 #include "primatives/Path/Path.h"
+#include "primatives/Arc/Arc.h"
 
 class PrimativeContainer{
     public:
@@ -21,6 +22,7 @@ class PrimativeContainer{
         Text *text;
         Image *image;
         Path *path;
+        Arc *arc;
 
         void process_mouse(float mpos_x, float mpos_y);
         void render();
@@ -48,6 +50,12 @@ class PrimativeContainer{
             path = p;
             this->type = path->get_type_name();
             properties = path->properties;
+        }
+        PrimativeContainer(Arc *a)
+        {
+            arc = a;
+            this->type = arc->get_type_name();
+            properties = arc->properties;
         }
 };
 
