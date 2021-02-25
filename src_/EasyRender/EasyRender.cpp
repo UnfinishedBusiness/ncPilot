@@ -5,7 +5,9 @@
 #include <ctime>
 #include "EasyRender.h"
 #include "logging/loguru.h"
-
+#include "gui/imgui.h"
+#include "gui/imgui_impl_glfw.h"
+#include "gui/imgui_impl_opengl2.h"
 
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
@@ -93,7 +95,14 @@ void EasyRender::PushTimer(unsigned long intervol, bool (*c)())
     t->callback = c;
     timer_stack.push_back(t);
 }
-
+EasyRender::EasyRenderGui *EasyRender::PushGui(bool v, void (*c)())
+{
+    EasyRender::EasyRenderGui *g = new EasyRender::EasyRenderGui;
+    g->visable = v;
+    g->callback = c;
+    gui_stack.push_back(g);
+    return g;
+}
 void EasyRender::SetWindowTitle(std::string w)
 {
     this->WindowTitle = w;
@@ -250,7 +259,22 @@ bool EasyRender::Init(int argc, char** argv)
     glfwMakeContextCurrent(this->Window);
     glfwSwapInterval(1); // Enable vsync
     //Set calbacks here
-
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.IniFilename = this->GuiIniFileName;
+    io.LogFilename = this->GuiLogFileName;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    if (this->GuiStyle == "light")
+    {
+        ImGui::StyleColorsLight();
+    }
+    else if (this->GuiStyle == "dark")
+    {
+        ImGui::StyleColorsDark();
+    }
+    ImGui_ImplGlfw_InitForOpenGL(this->Window, true);
+    ImGui_ImplOpenGL2_Init();
     return true;
 }
 bool EasyRender::Poll(bool should_quit)
@@ -266,7 +290,19 @@ bool EasyRender::Poll(bool should_quit)
     glDepthRange(0, 1);
     glDepthFunc(GL_LEQUAL);
     glClearColor(this->ClearColor[0], this->ClearColor[1], this->ClearColor[2], 255);
-    //Execute GUI stack here
+    /* IMGUI */
+    ImGui_ImplOpenGL2_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    for (int x = 0; x < this->gui_stack.size(); x++)
+    {
+        if (this->gui_stack[x]->visable == true)
+        {
+            this->gui_stack[x]->callback();
+        }
+    }
+    ImGui::Render();
+    /*********/
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho( -this->WindowSize[0]/2, this->WindowSize[0]/2, -this->WindowSize[1]/2, this->WindowSize[1]/2, -1,1);
@@ -280,8 +316,13 @@ bool EasyRender::Poll(bool should_quit)
     for (int x = 0; x < this->primative_stack.size(); x ++)
     {
         primative_stack.at(x)->render();
-        primative_stack.at(x)->process_mouse(window_mouse_pos.x, window_mouse_pos.y);
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        if (!io.WantCaptureKeyboard || !io.WantCaptureMouse)
+        {
+            primative_stack.at(x)->process_mouse(window_mouse_pos.x, window_mouse_pos.y);
+        }
     }
+    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
     glfwMakeContextCurrent(this->Window);
     glfwSwapBuffers(this->Window);
     glfwPollEvents();
@@ -311,9 +352,19 @@ void EasyRender::Close()
         primative_stack.at(x)->destroy();
         delete primative_stack.at(x);
     }
-    //ImGui_ImplOpenGL2_Shutdown();
-    //ImGui_ImplGlfw_Shutdown();
-    //ImGui::DestroyContext();
+    for (int x = 0; x < timer_stack.size(); x++)
+    {
+        delete this->timer_stack.at(x);
+        this->timer_stack.erase(this->timer_stack.begin()+x);
+    }
+    for (int x = 0; x < gui_stack.size(); x++)
+    {
+        delete this->gui_stack.at(x);
+        this->gui_stack.erase(this->gui_stack.begin()+x);
+    }
+    ImGui_ImplOpenGL2_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
     glfwDestroyWindow(this->Window);
     glfwTerminate();
     free(this->GuiIniFileName);

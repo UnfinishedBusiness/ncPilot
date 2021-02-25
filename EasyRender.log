@@ -5243,3 +5243,164 @@ date       time         ( uptime  ) [ thread name/id ]                   file:li
 2021-02-25 17:47:20.575 (   6.502s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-119.3828125,"y":-140.05859375},"type":"mouse_in"}
 2021-02-25 17:47:20.592 (   6.519s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-131.69921875,"y":-147.49609375},"type":"mouse_out"}
 2021-02-25 17:47:21.640 (   7.567s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 17:55:11.250 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 17:55:12.951 (   1.708s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 18:07:24.504 (   0.030s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 18:07:29.182 (   4.709s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":26.6640625,"y":30.75},"type":"mouse_in"}
+2021-02-25 18:07:29.199 (   4.726s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":43.28515625,"y":23.546875},"type":"mouse_out"}
+2021-02-25 18:07:29.316 (   4.843s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":31.69921875,"y":33.8046875},"type":"mouse_in"}
+2021-02-25 18:07:29.333 (   4.860s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":15.328125,"y":46.65234375},"type":"mouse_out"}
+2021-02-25 18:07:37.715 (  13.242s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-60.1015625,"y":-13.12890625},"type":"mouse_in"}
+2021-02-25 18:07:37.732 (  13.259s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-132.6640625,"y":-10.51171875},"type":"mouse_out"}
+2021-02-25 18:07:37.865 (  13.392s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":11.4765625,"y":22.0703125},"type":"mouse_in"}
+2021-02-25 18:07:37.883 (  13.409s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-3.515625,"y":-9.6328125},"type":"mouse_out"}
+2021-02-25 18:07:38.000 (  13.526s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":41.72265625,"y":36.0234375},"type":"mouse_in"}
+2021-02-25 18:07:38.316 (  13.843s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":59.49609375,"y":66.42578125},"type":"mouse_out"}
+2021-02-25 18:07:38.935 (  14.461s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-108.37109375,"y":-159.3359375},"type":"mouse_in"}
+2021-02-25 18:07:38.951 (  14.478s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-168.57421875,"y":-118.2421875},"type":"mouse_out"}
+2021-02-25 18:07:39.336 (  14.863s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":103.578125,"y":93.19140625},"type":"mouse_in"}
+2021-02-25 18:07:39.353 (  14.879s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":30.095703125,"y":7.857421875},"type":"mouse_out"}
+2021-02-25 18:07:39.369 (  14.895s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":110.19140625,"y":-34.28515625},"type":"mouse_in"}
+2021-02-25 18:07:39.387 (  14.913s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":26.58984375,"y":-98.140625},"type":"mouse_out"}
+2021-02-25 18:07:39.603 (  15.130s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-7.72265625,"y":3.15234375},"type":"mouse_in"}
+2021-02-25 18:07:39.619 (  15.146s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":0.25390625,"y":-45.947265625},"type":"mouse_out"}
+2021-02-25 18:07:40.153 (  15.680s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":108.95703125,"y":-46.671875},"type":"mouse_in"}
+2021-02-25 18:07:40.521 (  16.048s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":35.115234375,"y":23.587890625},"type":"mouse_in"}
+2021-02-25 18:07:40.554 (  16.081s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":112.86328125,"y":8.47265625},"type":"mouse_out"}
+2021-02-25 18:07:40.554 (  16.081s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":50.9375,"y":73.1796875},"type":"mouse_out"}
+2021-02-25 18:07:40.971 (  16.498s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":75.7890625,"y":53.94140625},"type":"mouse_in"}
+2021-02-25 18:07:41.004 (  16.531s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":99.10546875,"y":39.55078125},"type":"mouse_out"}
+2021-02-25 18:07:41.023 (  16.550s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":64.23046875,"y":77.59375},"type":"mouse_in"}
+2021-02-25 18:07:41.256 (  16.783s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":42.78515625,"y":25.900390625},"type":"mouse_out"}
+2021-02-25 18:07:41.289 (  16.816s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":138.87890625,"y":-2.61328125},"type":"mouse_in"}
+2021-02-25 18:07:41.774 (  17.301s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":37.705078125,"y":24.3359375},"type":"mouse_in"}
+2021-02-25 18:07:41.807 (  17.334s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":120.78515625,"y":5.8125},"type":"mouse_out"}
+2021-02-25 18:07:41.841 (  17.367s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":53.59375,"y":79.609375},"type":"mouse_out"}
+2021-02-25 18:07:41.889 (  17.416s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":81.8203125,"y":52.40625},"type":"mouse_in"}
+2021-02-25 18:07:41.907 (  17.434s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":72.859375,"y":59.98046875},"type":"mouse_out"}
+2021-02-25 18:07:42.307 (  17.834s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-57.640625,"y":-13.5},"type":"mouse_in"}
+2021-02-25 18:07:42.324 (  17.851s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-79.0234375,"y":-29.54296875},"type":"mouse_out"}
+2021-02-25 18:07:42.408 (  17.935s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-158.43359375,"y":-113.23828125},"type":"mouse_in"}
+2021-02-25 18:07:42.424 (  17.951s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-172.52734375,"y":-126.1953125},"type":"mouse_out"}
+2021-02-25 18:07:42.758 (  18.285s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-67.33984375,"y":-8.02734375},"type":"mouse_in"}
+2021-02-25 18:07:42.775 (  18.302s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-45.73828125,"y":7.23046875},"type":"mouse_out"}
+2021-02-25 18:07:43.026 (  18.553s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":99.17578125,"y":105.32421875},"type":"mouse_in"}
+2021-02-25 18:07:43.059 (  18.586s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":59.451171875,"y":39.2578125},"type":"mouse_out"}
+2021-02-25 18:07:43.109 (  18.636s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":184.6796875,"y":-1.71875},"type":"mouse_in"}
+2021-02-25 18:07:43.443 (  18.970s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":41.396484375,"y":28.546875},"type":"mouse_in"}
+2021-02-25 18:07:43.460 (  18.987s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":132.79296875,"y":7.09375},"type":"mouse_out"}
+2021-02-25 18:07:43.510 (  19.037s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":68.69140625,"y":83.47265625},"type":"mouse_out"}
+2021-02-25 18:07:44.378 (  19.905s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-18.8515625,"y":-39.64453125},"type":"mouse_in"}
+2021-02-25 18:07:44.394 (  19.921s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-10.54296875,"y":-23.5859375},"type":"mouse_out"}
+2021-02-25 18:07:44.429 (  19.956s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":4.63671875,"y":11.87109375},"type":"mouse_in"}
+2021-02-25 18:07:44.444 (  19.971s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":8.39453125,"y":23.16796875},"type":"mouse_out"}
+2021-02-25 18:07:44.629 (  20.155s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":77.31640625,"y":79.15625},"type":"mouse_in"}
+2021-02-25 18:07:44.662 (  20.189s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":47.63671875,"y":29.7109375},"type":"mouse_out"}
+2021-02-25 18:07:44.712 (  20.239s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":153.17578125,"y":-4.703125},"type":"mouse_in"}
+2021-02-25 18:07:44.996 (  20.523s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":23.98046875,"y":30.16015625},"type":"mouse_in"}
+2021-02-25 18:07:45.012 (  20.539s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":97.9609375,"y":10.3203125},"type":"mouse_out"}
+2021-02-25 18:07:45.013 (  20.540s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":12.828125,"y":99.6953125},"type":"mouse_out"}
+2021-02-25 18:07:45.030 (  20.557s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":62.828125,"y":49.6953125},"type":"mouse_in"}
+2021-02-25 18:07:45.047 (  20.574s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":28.21875,"y":87.6796875},"type":"mouse_out"}
+2021-02-25 18:07:45.897 (  21.424s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-31.87109375,"y":-29.3203125},"type":"mouse_in"}
+2021-02-25 18:07:45.914 (  21.441s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-20.58203125,"y":-30.7265625},"type":"mouse_out"}
+2021-02-25 18:07:46.032 (  21.559s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":1.40625,"y":13.65234375},"type":"mouse_in"}
+2021-02-25 18:07:46.315 (  21.842s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":23.287109375,"y":7.015625},"type":"mouse_out"}
+2021-02-25 18:07:46.366 (  21.893s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":100.62109375,"y":-37.68359375},"type":"mouse_in"}
+2021-02-25 18:07:46.749 (  22.276s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":99.359375,"y":-48.89453125},"type":"mouse_out"}
+2021-02-25 18:07:47.367 (  22.894s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":101.07421875,"y":-51.0703125},"type":"mouse_in"}
+2021-02-25 18:07:47.684 (  23.211s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":98.5390625,"y":-51.57421875},"type":"mouse_out"}
+2021-02-25 18:07:48.185 (  23.712s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":100.75390625,"y":-52.34375},"type":"mouse_in"}
+2021-02-25 18:07:48.736 (  24.263s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":95.73046875,"y":-33.66796875},"type":"mouse_out"}
+2021-02-25 18:07:48.737 (  24.264s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":35.15234375,"y":22.59375},"type":"mouse_in"}
+2021-02-25 18:07:48.753 (  24.280s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-0.5390625,"y":22.169921875},"type":"mouse_out"}
+2021-02-25 18:07:48.787 (  24.314s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":17.12109375,"y":13.5703125},"type":"mouse_in"}
+2021-02-25 18:07:48.803 (  24.330s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-20.5859375,"y":39.2421875},"type":"mouse_out"}
+2021-02-25 18:07:49.834 (  25.361s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 18:08:56.307 (   0.026s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 18:08:59.003 (   2.723s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":119.2734375,"y":-56.375},"type":"mouse_in"}
+2021-02-25 18:09:01.608 (   5.328s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":38.80859375,"y":-14.80078125},"type":"mouse_out"}
+2021-02-25 18:09:01.641 (   5.361s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":17.26171875,"y":27.64453125},"type":"mouse_in"}
+2021-02-25 18:09:01.709 (   5.428s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":23.794921875,"y":8.2578125},"type":"mouse_out"}
+2021-02-25 18:09:01.742 (   5.462s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":102.24609375,"y":-35.2578125},"type":"mouse_in"}
+2021-02-25 18:09:02.192 (   5.912s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":99.140625,"y":-37.0390625},"type":"mouse_out"}
+2021-02-25 18:09:02.209 (   5.929s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":21.3359375,"y":18.16796875},"type":"mouse_in"}
+2021-02-25 18:09:02.410 (   6.130s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-4.857421875,"y":9.6328125},"type":"mouse_out"}
+2021-02-25 18:09:06.918 (  10.638s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-31.8515625,"y":-23.79296875},"type":"mouse_in"}
+2021-02-25 18:09:07.218 (  10.938s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-31.66796875,"y":-15.76171875},"type":"mouse_out"}
+2021-02-25 18:09:07.452 (  11.172s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-38.8671875,"y":-16.7734375},"type":"mouse_in"}
+2021-02-25 18:09:07.620 (  11.339s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-43.48828125,"y":-2.296875},"type":"mouse_out"}
+2021-02-25 18:09:10.759 (  14.479s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-65.61328125,"y":-1.46484375},"type":"mouse_in"}
+2021-02-25 18:09:10.775 (  14.495s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-64.67578125,"y":-12.75390625},"type":"mouse_out"}
+2021-02-25 18:09:11.026 (  14.746s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-32.25,"y":-28.0078125},"type":"mouse_in"}
+2021-02-25 18:09:11.042 (  14.762s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-0.109375,"y":-28.0078125},"type":"mouse_out"}
+2021-02-25 18:09:11.059 (  14.779s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":21.85546875,"y":19.62109375},"type":"mouse_in"}
+2021-02-25 18:09:11.377 (  15.097s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":28.125,"y":1.724609375},"type":"mouse_out"}
+2021-02-25 18:09:11.392 (  15.112s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":106.25,"y":-46.55078125},"type":"mouse_in"}
+2021-02-25 18:09:11.510 (  15.230s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":184.796875,"y":-101.37890625},"type":"mouse_out"}
+2021-02-25 18:09:11.660 (  15.380s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":184.98828125,"y":-96.57421875},"type":"mouse_in"}
+2021-02-25 18:09:11.712 (  15.432s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":43.56640625,"y":31.5703125},"type":"mouse_in"}
+2021-02-25 18:09:11.727 (  15.447s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":137.1328125,"y":13.140625},"type":"mouse_out"}
+2021-02-25 18:09:11.994 (  15.714s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":37.97265625,"y":66.06640625},"type":"mouse_out"}
+2021-02-25 18:09:12.061 (  15.781s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":49.48046875,"y":36.66796875},"type":"mouse_in"}
+2021-02-25 18:09:12.311 (  16.031s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":53.81640625,"y":30.546875},"type":"mouse_out"}
+2021-02-25 18:09:12.561 (  16.281s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-13.67578125,"y":-44.43359375},"type":"mouse_in"}
+2021-02-25 18:09:12.579 (  16.299s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-27.84375,"y":-64.14453125},"type":"mouse_out"}
+2021-02-25 18:09:12.678 (  16.398s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-108.79296875,"y":-157.0625},"type":"mouse_in"}
+2021-02-25 18:09:12.696 (  16.416s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-112.39453125,"y":-163.4375},"type":"mouse_out"}
+2021-02-25 18:09:12.846 (  16.566s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-110.84375,"y":-161.62109375},"type":"mouse_in"}
+2021-02-25 18:09:13.147 (  16.867s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-99.04296875,"y":-146.26171875},"type":"mouse_out"}
+2021-02-25 18:09:13.480 (  17.200s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-9.3984375,"y":-57.98046875},"type":"mouse_in"}
+2021-02-25 18:09:13.731 (  17.451s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-4.765625,"y":-54.2265625},"type":"mouse_out"}
+2021-02-25 18:09:13.915 (  17.635s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":8.37109375,"y":21.31640625},"type":"mouse_in"}
+2021-02-25 18:09:14.198 (  17.918s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":20.970703125,"y":4.8125},"type":"mouse_out"}
+2021-02-25 18:09:14.232 (  17.952s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":104.74609375,"y":-44.80859375},"type":"mouse_in"}
+2021-02-25 18:09:14.549 (  18.269s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":80.78125,"y":-102.06640625},"type":"mouse_out"}
+2021-02-25 18:09:14.632 (  18.352s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-103.16015625,"y":-169.9921875},"type":"mouse_in"}
+2021-02-25 18:09:14.649 (  18.370s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-113.7578125,"y":-171.828125},"type":"mouse_out"}
+2021-02-25 18:09:14.950 (  18.670s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-108.41796875,"y":-168.8203125},"type":"mouse_in"}
+2021-02-25 18:09:14.966 (  18.686s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-100.6328125,"y":-162.57421875},"type":"mouse_out"}
+2021-02-25 18:09:15.451 (  19.171s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-13.28515625,"y":-54.68359375},"type":"mouse_in"}
+2021-02-25 18:09:15.751 (  19.471s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-9.08984375,"y":-46.09765625},"type":"mouse_out"}
+2021-02-25 18:09:15.851 (  19.571s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":4.62109375,"y":0.265625},"type":"mouse_in"}
+2021-02-25 18:09:15.902 (  19.623s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":13.1328125,"y":14.9609375},"type":"mouse_in"}
+2021-02-25 18:09:15.919 (  19.639s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":14.68359375,"y":17.13671875},"type":"mouse_out"}
+2021-02-25 18:09:16.135 (  19.855s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":43.04296875,"y":28.89453125},"type":"mouse_out"}
+2021-02-25 18:09:16.419 (  20.139s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":36.50390625,"y":47.54296875},"type":"mouse_in"}
+2021-02-25 18:09:16.686 (  20.406s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":101.58203125,"y":-15.52734375},"type":"mouse_in"}
+2021-02-25 18:09:16.704 (  20.424s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":33.361328125,"y":11.50390625},"type":"mouse_out"}
+2021-02-25 18:09:16.987 (  20.707s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":96.46484375,"y":-71.45703125},"type":"mouse_out"}
+2021-02-25 18:09:17.053 (  20.774s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":0.24609375,"y":-77.6015625},"type":"mouse_in"}
+2021-02-25 18:09:17.086 (  20.807s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-11.1328125,"y":-70.9296875},"type":"mouse_out"}
+2021-02-25 18:09:17.354 (  21.074s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-11.5234375,"y":-61.81640625},"type":"mouse_in"}
+2021-02-25 18:09:17.555 (  21.275s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-17.4140625,"y":-62.7578125},"type":"mouse_out"}
+2021-02-25 18:09:17.921 (  21.642s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-119.78125,"y":-138.15234375},"type":"mouse_in"}
+2021-02-25 18:09:17.955 (  21.676s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-126.21484375,"y":-142.25390625},"type":"mouse_out"}
+2021-02-25 18:09:19.644 (  23.364s) [main thread     ]             loguru.cpp:524   INFO| atexit

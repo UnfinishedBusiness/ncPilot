@@ -49,7 +49,6 @@ class EasyRender{
             unsigned long intervol;
             bool (*callback)();
         };
-
         GLFWwindow* Window;
         unsigned long RenderPerformance;
         float ClearColor[3];
@@ -63,9 +62,15 @@ class EasyRender{
         std::string GuiStyle;
 
         std::vector<PrimativeContainer *> primative_stack;
-        std::vector<EasyRenderTimer*> timer_stack;
+        std::vector<EasyRenderTimer *> timer_stack;
 
     public:
+        struct EasyRenderGui{
+            bool visable;
+            void (*callback)();
+        };
+        std::vector<EasyRenderGui *> gui_stack;
+
         EasyRender()
         {
             //Load Defaults
@@ -90,6 +95,9 @@ class EasyRender{
 
         /* Timer Creation */
         void PushTimer(unsigned long intervol, bool (*c)());
+
+        /* Gui Creation */
+        EasyRenderGui *PushGui(bool v, void (*c)());
 
 
         void SetWindowTitle(std::string w);

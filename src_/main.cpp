@@ -1,6 +1,7 @@
 #include "application.h"
 #include "EasyRender/EasyRender.h"
 #include "EasyRender/logging/loguru.h"
+#include "EasyRender/gui/imgui.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -61,7 +62,21 @@ bool fps_timer()
     fps->textval = std::to_string(renderer->GetFramesPerSecond());
     return true;
 }
-
+EasyRender::EasyRenderGui *w;
+void test_dialog()
+{
+    ImGui::Begin("Question?", &w->visable, ImGuiWindowFlags_AlwaysAutoResize);
+    if (ImGui::Button("Yes"))
+    {
+        
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("No"))
+    {
+        
+    }
+    ImGui::End();
+}
 int main(int argc, char **argv)
 {
     renderer = new EasyRender();
@@ -95,6 +110,8 @@ int main(int argc, char **argv)
     b->properties->mouse_callback = &mouse_callback;
 
     renderer->PushTimer(1000, &fps_timer);
+
+    w = renderer->PushGui(true, &test_dialog);
 
     while(renderer->Poll(false))
     {
