@@ -1672,3 +1672,1038 @@ date       time         ( uptime  ) [ thread name/id ]                   file:li
 2021-02-25 15:21:24.089 (   5.407s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":0.375,"y":12.19921875},"type":"mouse_in"}
 2021-02-25 15:21:24.140 (   5.458s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":10.7265625,"y":-8.83203125},"type":"mouse_out"}
 2021-02-25 15:21:56.166 (  37.484s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:22:38.525 (   0.017s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:22:42.811 (   4.303s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:34:35.550 (   0.022s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:34:38.787 (   3.259s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":73.28125,"y":84.5703125},"type":"mouse_in"}
+2021-02-25 15:34:38.817 (   3.290s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":75.9765625,"y":52.28125},"type":"mouse_out"}
+2021-02-25 15:34:38.947 (   3.419s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":56.1484375,"y":42.265625},"type":"mouse_in"}
+2021-02-25 15:34:38.963 (   3.435s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":39.2109375,"y":57.328125},"type":"mouse_out"}
+2021-02-25 15:34:39.181 (   3.653s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":35.1640625,"y":42.7734375},"type":"mouse_in"}
+2021-02-25 15:34:39.581 (   4.053s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":7.78125,"y":51.8828125},"type":"mouse_out"}
+2021-02-25 15:34:41.298 (   5.770s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:35:55.907 (   0.128s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:36:04.522 (   8.743s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:36:07.692 (   0.001s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:36:09.826 (   2.135s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:36:22.674 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:36:24.547 (   1.881s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":9.921875,"y":19.109375},"type":"mouse_in"}
+2021-02-25 15:36:24.897 (   2.230s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":9.9296875,"y":26.3984375},"type":"mouse_out"}
+2021-02-25 15:36:25.979 (   3.313s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:38:09.302 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:38:09.505 (   0.210s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.637 (   0.342s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.637 (   0.342s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.637 (   0.343s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.637 (   0.343s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.638 (   0.343s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.638 (   0.343s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.638 (   0.344s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.642 (   0.347s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.642 (   0.348s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.642 (   0.348s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.642 (   0.348s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.642 (   0.348s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.643 (   0.348s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.643 (   0.348s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.643 (   0.348s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.643 (   0.348s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.647 (   0.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.647 (   0.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.647 (   0.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.648 (   0.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.648 (   0.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.648 (   0.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.648 (   0.354s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.648 (   0.354s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.692 (   0.398s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.693 (   0.398s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.693 (   0.398s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.693 (   0.398s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.693 (   0.398s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.693 (   0.399s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.693 (   0.399s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.693 (   0.399s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.705 (   0.410s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.705 (   0.410s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.705 (   0.410s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.705 (   0.410s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.705 (   0.411s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.705 (   0.411s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.705 (   0.411s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.705 (   0.411s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.706 (   0.411s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.742 (   0.447s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.742 (   0.447s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.742 (   0.447s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.742 (   0.448s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.742 (   0.448s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.742 (   0.448s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.743 (   0.448s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.743 (   0.448s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.759 (   0.464s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.759 (   0.464s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.759 (   0.464s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.759 (   0.465s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.759 (   0.465s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.759 (   0.465s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.760 (   0.465s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.760 (   0.465s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.785 (   0.490s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.785 (   0.490s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.785 (   0.491s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.785 (   0.491s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.785 (   0.491s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.785 (   0.491s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.786 (   0.491s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.786 (   0.491s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.787 (   0.492s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.801 (   0.507s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.802 (   0.507s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.802 (   0.507s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.802 (   0.507s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.802 (   0.508s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.802 (   0.508s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.802 (   0.508s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.803 (   0.508s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.829 (   0.534s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.829 (   0.534s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.829 (   0.534s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.829 (   0.535s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.829 (   0.535s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.829 (   0.535s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.830 (   0.535s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.830 (   0.535s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.850 (   0.555s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.850 (   0.555s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.850 (   0.555s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.850 (   0.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.850 (   0.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.850 (   0.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.850 (   0.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.851 (   0.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.851 (   0.557s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.875 (   0.580s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.875 (   0.581s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.875 (   0.581s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.875 (   0.581s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.875 (   0.581s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.876 (   0.581s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.876 (   0.581s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.876 (   0.581s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.891 (   0.597s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.891 (   0.597s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.892 (   0.597s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.892 (   0.597s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.892 (   0.597s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.892 (   0.598s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.892 (   0.598s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.892 (   0.598s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.916 (   0.622s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.917 (   0.622s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.917 (   0.622s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.917 (   0.622s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.917 (   0.622s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.917 (   0.623s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.917 (   0.623s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.918 (   0.624s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.919 (   0.624s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.933 (   0.638s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.933 (   0.638s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.933 (   0.638s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.933 (   0.638s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.933 (   0.639s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.933 (   0.639s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.933 (   0.639s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.933 (   0.639s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.957 (   0.662s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.957 (   0.663s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.957 (   0.663s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.958 (   0.663s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.958 (   0.663s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.958 (   0.663s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.958 (   0.663s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.958 (   0.664s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.974 (   0.679s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.974 (   0.679s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.974 (   0.679s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.974 (   0.680s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.974 (   0.680s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.974 (   0.680s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.974 (   0.680s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.975 (   0.680s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.975 (   0.680s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.998 (   0.703s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.998 (   0.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.998 (   0.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.998 (   0.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.999 (   0.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.999 (   0.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.999 (   0.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:09.999 (   0.705s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.014 (   0.719s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.014 (   0.719s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.014 (   0.720s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.014 (   0.720s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.014 (   0.720s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.014 (   0.720s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.015 (   0.720s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.015 (   0.720s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.039 (   0.744s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.039 (   0.744s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.039 (   0.745s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.039 (   0.745s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.039 (   0.745s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.039 (   0.745s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.040 (   0.745s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.040 (   0.745s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.040 (   0.745s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.056 (   0.762s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.057 (   0.762s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.057 (   0.762s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.057 (   0.762s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.057 (   0.762s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.057 (   0.763s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.057 (   0.763s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.057 (   0.763s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.081 (   0.786s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.081 (   0.787s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.081 (   0.787s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.081 (   0.787s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.082 (   0.787s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.082 (   0.787s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.082 (   0.787s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.082 (   0.787s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.099 (   0.805s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.099 (   0.805s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.100 (   0.805s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.100 (   0.805s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.100 (   0.806s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.100 (   0.806s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.101 (   0.806s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.101 (   0.806s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.101 (   0.806s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.124 (   0.830s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.125 (   0.830s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.125 (   0.830s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.125 (   0.830s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.125 (   0.831s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.125 (   0.831s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.125 (   0.831s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.126 (   0.832s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.141 (   0.847s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.141 (   0.847s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.142 (   0.847s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.142 (   0.847s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.142 (   0.847s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.142 (   0.847s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.142 (   0.848s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.142 (   0.848s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.166 (   0.872s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.166 (   0.872s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.166 (   0.872s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.167 (   0.872s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.167 (   0.872s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.167 (   0.873s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.167 (   0.873s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.167 (   0.873s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.167 (   0.873s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.186 (   0.891s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.186 (   0.891s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.186 (   0.891s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.186 (   0.892s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.186 (   0.892s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.186 (   0.892s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.187 (   0.892s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.187 (   0.892s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.212 (   0.917s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.212 (   0.917s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.212 (   0.918s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.212 (   0.918s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.212 (   0.918s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.213 (   0.918s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.213 (   0.918s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.213 (   0.918s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.228 (   0.934s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.228 (   0.934s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.229 (   0.934s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.229 (   0.934s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.229 (   0.934s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.229 (   0.934s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.229 (   0.935s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.229 (   0.935s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.229 (   0.935s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.229 (   0.935s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.230 (   0.935s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.230 (   0.935s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.230 (   0.935s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.230 (   0.935s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.230 (   0.936s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.230 (   0.936s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.230 (   0.936s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.254 (   0.960s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.254 (   0.960s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.254 (   0.960s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.255 (   0.960s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.255 (   0.960s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.255 (   0.960s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.255 (   0.960s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.255 (   0.961s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.272 (   0.977s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.272 (   0.977s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.272 (   0.978s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.272 (   0.978s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.272 (   0.978s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.272 (   0.978s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.273 (   0.978s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.273 (   0.978s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.297 (   1.003s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.297 (   1.003s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.298 (   1.003s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.298 (   1.003s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.298 (   1.004s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.298 (   1.004s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.298 (   1.004s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.298 (   1.004s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.299 (   1.004s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.342 (   1.048s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.343 (   1.048s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.343 (   1.048s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.343 (   1.048s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.343 (   1.048s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.343 (   1.049s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.343 (   1.049s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.343 (   1.049s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.396 (   1.102s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.396 (   1.102s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.397 (   1.102s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.397 (   1.102s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.397 (   1.102s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.397 (   1.102s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.397 (   1.103s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.398 (   1.104s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.438 (   1.144s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.438 (   1.144s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.438 (   1.144s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.439 (   1.144s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.439 (   1.144s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.439 (   1.144s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.439 (   1.144s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.439 (   1.145s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.439 (   1.145s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.446 (   1.151s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.446 (   1.151s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.446 (   1.151s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.446 (   1.152s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.446 (   1.152s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.446 (   1.152s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.446 (   1.152s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.447 (   1.153s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.488 (   1.194s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.488 (   1.194s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.489 (   1.194s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.489 (   1.194s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.489 (   1.194s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.489 (   1.195s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.489 (   1.195s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.490 (   1.195s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.523 (   1.228s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.523 (   1.228s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.523 (   1.228s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.523 (   1.229s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.523 (   1.229s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.523 (   1.229s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.523 (   1.229s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.524 (   1.229s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.524 (   1.229s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.550 (   1.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.550 (   1.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.550 (   1.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.550 (   1.256s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.550 (   1.256s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.550 (   1.256s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.550 (   1.256s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.551 (   1.256s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.595 (   1.301s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.595 (   1.301s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.596 (   1.301s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.596 (   1.301s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.596 (   1.301s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.596 (   1.301s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.596 (   1.302s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.596 (   1.302s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.640 (   1.345s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.640 (   1.345s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.640 (   1.345s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.640 (   1.346s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.640 (   1.346s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.640 (   1.346s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.640 (   1.346s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.641 (   1.347s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.641 (   1.347s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.663 (   1.368s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.663 (   1.368s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.663 (   1.368s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.663 (   1.368s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.663 (   1.369s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.663 (   1.369s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.663 (   1.369s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.663 (   1.369s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.664 (   1.369s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.664 (   1.369s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.694 (   1.399s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.694 (   1.399s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.694 (   1.399s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.694 (   1.400s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.694 (   1.400s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.694 (   1.400s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.694 (   1.400s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.695 (   1.400s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.746 (   1.452s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.747 (   1.452s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.747 (   1.452s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.747 (   1.452s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.747 (   1.453s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.747 (   1.453s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.747 (   1.453s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.747 (   1.453s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.793 (   1.499s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.794 (   1.499s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.794 (   1.499s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.794 (   1.499s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.795 (   1.500s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.795 (   1.500s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.795 (   1.500s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.795 (   1.501s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.795 (   1.501s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.850 (   1.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.850 (   1.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.850 (   1.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.850 (   1.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.851 (   1.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.851 (   1.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.851 (   1.556s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.851 (   1.557s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.862 (   1.568s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.862 (   1.568s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.863 (   1.568s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.863 (   1.568s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.863 (   1.568s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.863 (   1.568s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.863 (   1.569s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.864 (   1.569s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.877 (   1.583s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.877 (   1.583s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.878 (   1.583s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.878 (   1.583s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.878 (   1.583s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.878 (   1.583s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.878 (   1.584s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.878 (   1.584s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.878 (   1.584s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.906 (   1.612s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.907 (   1.612s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.907 (   1.612s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.907 (   1.612s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.907 (   1.613s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.907 (   1.613s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.907 (   1.613s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.907 (   1.613s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.942 (   1.647s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.942 (   1.648s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.943 (   1.648s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.943 (   1.648s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.943 (   1.648s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.943 (   1.648s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.943 (   1.649s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.943 (   1.649s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.975 (   1.681s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.975 (   1.681s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.976 (   1.681s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.976 (   1.681s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.976 (   1.681s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.976 (   1.682s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.976 (   1.682s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.976 (   1.682s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.976 (   1.682s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.998 (   1.703s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.998 (   1.703s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.998 (   1.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.998 (   1.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.998 (   1.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.998 (   1.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.999 (   1.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:10.999 (   1.704s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.026 (   1.732s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.027 (   1.732s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.027 (   1.732s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.027 (   1.732s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.027 (   1.732s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.027 (   1.733s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.027 (   1.733s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.027 (   1.733s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.080 (   1.785s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.080 (   1.786s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.080 (   1.786s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.080 (   1.786s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.081 (   1.786s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.081 (   1.786s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.081 (   1.786s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.081 (   1.787s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.081 (   1.787s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.104 (   1.809s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.104 (   1.809s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.104 (   1.810s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.104 (   1.810s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.104 (   1.810s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.104 (   1.810s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.105 (   1.810s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.107 (   1.812s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.129 (   1.835s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.129 (   1.835s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.129 (   1.835s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.130 (   1.835s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.130 (   1.835s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.130 (   1.836s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.130 (   1.836s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.130 (   1.836s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.151 (   1.857s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.151 (   1.857s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.152 (   1.857s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.152 (   1.857s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.152 (   1.857s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.152 (   1.857s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.152 (   1.858s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.152 (   1.858s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.152 (   1.858s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.173 (   1.878s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.173 (   1.878s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.173 (   1.879s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.173 (   1.879s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.173 (   1.879s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.173 (   1.879s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.174 (   1.879s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.174 (   1.879s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.190 (   1.895s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.190 (   1.895s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.190 (   1.896s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.190 (   1.896s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.190 (   1.896s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.190 (   1.896s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.191 (   1.896s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.191 (   1.896s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.217 (   1.922s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.217 (   1.922s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.217 (   1.922s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.217 (   1.923s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.217 (   1.923s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.217 (   1.923s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.217 (   1.923s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.218 (   1.923s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.223 (   1.928s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.233 (   1.938s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.233 (   1.939s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.233 (   1.939s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.233 (   1.939s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.234 (   1.939s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.234 (   1.939s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.234 (   1.939s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.235 (   1.941s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.258 (   1.964s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.258 (   1.964s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.258 (   1.964s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.258 (   1.964s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.259 (   1.964s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.259 (   1.964s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.259 (   1.965s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.259 (   1.965s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.276 (   1.982s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.276 (   1.982s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.276 (   1.982s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.276 (   1.982s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.277 (   1.982s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.277 (   1.982s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.277 (   1.982s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.277 (   1.983s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.277 (   1.983s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.334 (   2.039s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.334 (   2.039s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.334 (   2.039s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.334 (   2.040s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.334 (   2.040s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.334 (   2.040s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.334 (   2.040s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.335 (   2.040s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.350 (   2.056s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.350 (   2.056s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.350 (   2.056s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.350 (   2.056s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.351 (   2.056s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.351 (   2.056s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.351 (   2.056s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.351 (   2.057s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.384 (   2.089s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.384 (   2.089s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.384 (   2.089s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.384 (   2.090s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.384 (   2.090s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.384 (   2.090s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.384 (   2.090s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.385 (   2.090s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.385 (   2.090s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.399 (   2.104s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.399 (   2.104s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.399 (   2.104s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.399 (   2.105s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.399 (   2.105s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.399 (   2.105s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.400 (   2.105s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.400 (   2.105s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.425 (   2.130s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.425 (   2.130s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.425 (   2.130s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.425 (   2.130s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.425 (   2.131s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.426 (   2.131s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.426 (   2.131s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.426 (   2.132s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.437 (   2.142s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.437 (   2.142s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.437 (   2.142s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.437 (   2.143s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.437 (   2.143s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.437 (   2.143s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.437 (   2.143s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.438 (   2.143s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.438 (   2.143s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.466 (   2.172s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.466 (   2.172s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.466 (   2.172s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.467 (   2.172s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.467 (   2.172s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.467 (   2.172s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.467 (   2.173s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.468 (   2.174s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.478 (   2.184s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.478 (   2.184s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.479 (   2.184s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.479 (   2.184s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.479 (   2.184s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.479 (   2.184s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.479 (   2.185s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.479 (   2.185s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.479 (   2.185s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.479 (   2.185s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.480 (   2.185s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.480 (   2.185s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.480 (   2.185s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.480 (   2.185s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.480 (   2.186s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.480 (   2.186s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.480 (   2.186s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.480 (   2.186s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.481 (   2.186s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.481 (   2.187s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.481 (   2.187s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.482 (   2.187s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.482 (   2.187s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.482 (   2.187s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.506 (   2.212s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.506 (   2.212s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.506 (   2.212s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.507 (   2.212s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.507 (   2.212s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.507 (   2.213s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.507 (   2.213s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.507 (   2.213s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.524 (   2.230s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.525 (   2.230s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.525 (   2.230s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.525 (   2.230s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.525 (   2.230s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.525 (   2.231s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.525 (   2.231s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.525 (   2.231s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.549 (   2.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.549 (   2.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.549 (   2.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.549 (   2.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.550 (   2.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.550 (   2.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.550 (   2.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.550 (   2.255s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.550 (   2.256s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.565 (   2.271s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.565 (   2.271s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.565 (   2.271s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.565 (   2.271s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.566 (   2.271s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.566 (   2.271s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.566 (   2.271s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.566 (   2.272s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.590 (   2.296s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.591 (   2.296s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.591 (   2.296s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.591 (   2.296s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.591 (   2.297s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.591 (   2.297s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.591 (   2.297s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.591 (   2.297s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.608 (   2.313s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.608 (   2.313s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.608 (   2.314s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.608 (   2.314s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.608 (   2.314s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.608 (   2.314s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.609 (   2.314s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.609 (   2.314s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.609 (   2.314s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.633 (   2.338s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.633 (   2.339s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.633 (   2.339s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.633 (   2.339s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.633 (   2.339s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.634 (   2.339s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.634 (   2.339s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.634 (   2.339s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.646 (   2.351s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.646 (   2.351s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.646 (   2.351s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.646 (   2.352s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.646 (   2.352s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.646 (   2.352s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.646 (   2.352s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.646 (   2.352s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.647 (   2.352s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.647 (   2.352s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.647 (   2.352s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.647 (   2.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.647 (   2.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.647 (   2.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.647 (   2.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.647 (   2.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.648 (   2.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.648 (   2.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.648 (   2.353s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.670 (   2.376s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.670 (   2.376s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.670 (   2.376s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.671 (   2.376s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.671 (   2.376s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.671 (   2.376s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.671 (   2.376s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.671 (   2.377s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.689 (   2.395s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.690 (   2.395s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.690 (   2.395s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.690 (   2.395s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.690 (   2.396s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.690 (   2.396s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.690 (   2.396s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.690 (   2.396s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.714 (   2.420s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.714 (   2.420s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.714 (   2.420s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.715 (   2.420s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.715 (   2.420s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.715 (   2.421s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.715 (   2.421s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.715 (   2.421s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.715 (   2.421s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.732 (   2.437s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.732 (   2.437s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.732 (   2.438s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.732 (   2.438s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.732 (   2.438s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.732 (   2.438s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.732 (   2.438s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.733 (   2.438s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.756 (   2.462s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.757 (   2.462s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.757 (   2.462s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.757 (   2.462s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.757 (   2.463s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.757 (   2.463s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.757 (   2.463s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.757 (   2.463s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.773 (   2.479s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.773 (   2.479s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.774 (   2.479s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.774 (   2.479s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.774 (   2.479s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.774 (   2.479s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.774 (   2.480s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.774 (   2.480s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.774 (   2.480s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.799 (   2.504s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.799 (   2.504s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.799 (   2.504s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.799 (   2.505s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.799 (   2.505s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.799 (   2.505s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.799 (   2.505s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.801 (   2.506s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.815 (   2.521s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.816 (   2.521s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.816 (   2.521s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.816 (   2.521s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.816 (   2.521s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.816 (   2.522s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.816 (   2.522s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.816 (   2.522s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.840 (   2.546s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.840 (   2.546s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.840 (   2.546s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.840 (   2.546s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.841 (   2.546s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.841 (   2.546s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.841 (   2.547s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.841 (   2.547s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.841 (   2.547s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.852 (   2.558s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.853 (   2.558s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.853 (   2.558s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.853 (   2.558s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.853 (   2.558s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.853 (   2.559s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.853 (   2.559s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.853 (   2.559s) [main thread     ]               Path.cpp:81    INFO| Rendering Path!
+2021-02-25 15:38:11.937 (   2.643s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:39:23.696 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:39:27.866 (   4.178s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":56.7734375,"y":53.484375},"type":"mouse_in"}
+2021-02-25 15:39:27.874 (   4.185s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":47.5625,"y":64.7421875},"type":"mouse_out"}
+2021-02-25 15:39:28.574 (   4.885s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":39.7890625,"y":53.078125},"type":"mouse_in"}
+2021-02-25 15:39:28.590 (   4.901s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":53.0390625,"y":33.2890625},"type":"mouse_out"}
+2021-02-25 15:39:29.182 (   5.493s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":46.7734375,"y":37.5078125},"type":"mouse_in"}
+2021-02-25 15:39:29.220 (   5.531s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":38.5078125,"y":57.46875},"type":"mouse_out"}
+2021-02-25 15:39:33.164 (   9.475s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:40:58.220 (   0.020s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:41:00.620 (   2.421s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":35.9921875,"y":36.34375},"type":"mouse_in"}
+2021-02-25 15:41:01.037 (   2.838s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":20.9140625,"y":53.296875},"type":"mouse_out"}
+2021-02-25 15:41:01.808 (   3.608s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:41:47.200 (   0.007s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:41:51.199 (   4.006s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:42:39.639 (   0.028s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:42:41.980 (   2.369s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:42:52.800 (   0.037s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:42:55.121 (   2.359s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:43:36.620 (   0.016s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:43:38.603 (   1.999s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":49.265625,"y":41.4296875},"type":"mouse_in"}
+2021-02-25 15:43:39.021 (   2.417s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":52.59375,"y":36.2734375},"type":"mouse_out"}
+2021-02-25 15:43:39.288 (   2.684s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":47.0390625,"y":43.3203125},"type":"mouse_in"}
+2021-02-25 15:43:39.321 (   2.717s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":30.78125,"y":57.4921875},"type":"mouse_out"}
+2021-02-25 15:43:39.571 (   2.967s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":10.7578125,"y":20.4296875},"type":"mouse_in"}
+2021-02-25 15:43:39.588 (   2.984s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":-53.1484375,"y":63.3359375},"type":"mouse_out"}
+2021-02-25 15:43:42.205 (   5.601s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:43:52.337 (   0.018s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:43:53.682 (   1.364s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":79.15625,"y":76.65625},"type":"mouse_in"}
+2021-02-25 15:43:53.699 (   1.381s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":65.8515625,"y":102.3984375},"type":"mouse_out"}
+2021-02-25 15:44:01.746 (   9.428s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":7.1796875,"y":6.171875},"type":"mouse_in"}
+2021-02-25 15:44:01.763 (   9.444s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":39.69921875,"y":-11.6171875},"type":"mouse_out"}
+2021-02-25 15:44:03.149 (  10.830s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":11.71484375,"y":0.19921875},"type":"mouse_in"}
+2021-02-25 15:44:03.567 (  11.248s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":16.4921875,"y":7.34765625},"type":"mouse_out"}
+2021-02-25 15:44:04.085 (  11.766s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":48.8671875,"y":36.0859375},"type":"mouse_in"}
+2021-02-25 15:44:04.119 (  11.800s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":24.90625,"y":57.421875},"type":"mouse_out"}
+2021-02-25 15:44:05.062 (  12.743s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:44:24.628 (   0.103s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:44:28.163 (   3.638s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":11.2109375,"y":19.09765625},"type":"mouse_in"}
+2021-02-25 15:44:28.264 (   3.739s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":16.36328125,"y":1.484375},"type":"mouse_out"}
+2021-02-25 15:44:28.530 (   4.006s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":12.9453125,"y":26.65625},"type":"mouse_in"}
+2021-02-25 15:44:28.598 (   4.073s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":42.5078125,"y":13.6015625},"type":"mouse_out"}
+2021-02-25 15:44:28.915 (   4.390s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":37.5859375,"y":43.140625},"type":"mouse_in"}
+2021-02-25 15:44:28.932 (   4.407s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":30.546875,"y":70.2265625},"type":"mouse_out"}
+2021-02-25 15:44:30.733 (   6.208s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:44:53.081 (   0.020s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:44:55.366 (   2.304s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":63.5859375,"y":66.78125},"type":"mouse_in"}
+2021-02-25 15:44:55.382 (   2.321s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":74.2578125,"y":50.8359375},"type":"mouse_out"}
+2021-02-25 15:44:55.616 (   2.555s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":71.0078125,"y":58.1015625},"type":"mouse_in"}
+2021-02-25 15:44:56.050 (   2.989s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":58.8359375,"y":95.328125},"type":"mouse_out"}
+2021-02-25 15:45:07.589 (  14.528s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":61.296875,"y":71.0234375},"type":"mouse_in"}
+2021-02-25 15:45:07.605 (  14.544s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":70.90625,"y":48.8984375},"type":"mouse_out"}
+2021-02-25 15:45:07.989 (  14.928s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":61.125,"y":53.28125},"type":"mouse_in"}
+2021-02-25 15:45:08.374 (  15.313s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":48.203125,"y":77.4921875},"type":"mouse_out"}
+2021-02-25 15:45:26.223 (  33.163s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":13.6171875,"y":8.15234375},"type":"mouse_in"}
+2021-02-25 15:45:27.075 (  34.014s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":14.10546875,"y":14.796875},"type":"mouse_out"}
+2021-02-25 15:45:28.645 (  35.584s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":13.265625,"y":5.34375},"type":"mouse_in"}
+2021-02-25 15:45:29.346 (  36.286s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":0.9453125,"y":-0.609375},"type":"mouse_out"}
+2021-02-25 15:45:29.964 (  36.903s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":7.3984375,"y":0.30859375},"type":"mouse_in"}
+2021-02-25 15:45:30.582 (  37.521s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":14.3359375,"y":5.25390625},"type":"mouse_out"}
+2021-02-25 15:45:31.551 (  38.490s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":66.40625,"y":74.140625},"type":"mouse_in"}
+2021-02-25 15:45:31.567 (  38.507s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":80.671875,"y":64.90625},"type":"mouse_out"}
+2021-02-25 15:45:31.901 (  38.841s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":72.984375,"y":59.2109375},"type":"mouse_in"}
+2021-02-25 15:45:34.439 (  41.379s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":1.484375,"y":-9.953125},"type":"mouse_out"}
+2021-02-25 15:45:35.007 (  41.946s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":0.8359375,"y":-9.2578125},"type":"mouse_in"}
+2021-02-25 15:45:35.709 (  42.649s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":113.1796875,"y":102.4609375},"type":"mouse_out"}
+2021-02-25 15:45:36.276 (  43.216s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":13.40234375,"y":3.46875},"type":"mouse_in"}
+2021-02-25 15:45:36.877 (  43.817s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":14.1171875,"y":0.58203125},"type":"mouse_out"}
+2021-02-25 15:45:38.898 (  45.837s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":13.703125,"y":11.29296875},"type":"mouse_in"}
+2021-02-25 15:45:39.849 (  46.788s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":9.69921875,"y":19.09375},"type":"mouse_out"}
+2021-02-25 15:45:40.249 (  47.189s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":9.15234375,"y":18.26171875},"type":"mouse_in"}
+2021-02-25 15:45:41.118 (  48.058s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":0.0,"y":4.19140625},"type":"mouse_out"}
+2021-02-25 15:45:41.603 (  48.542s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":0.12890625,"y":5.4921875},"type":"mouse_in"}
+2021-02-25 15:45:42.003 (  48.943s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":14.31640625,"y":4.4375},"type":"mouse_out"}
+2021-02-25 15:45:42.905 (  49.845s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":13.5625,"y":3.71484375},"type":"mouse_in"}
+2021-02-25 15:45:43.823 (  50.763s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":9.6015625,"y":19.41015625},"type":"mouse_out"}
+2021-02-25 15:45:44.291 (  51.231s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":11.6484375,"y":16.96484375},"type":"mouse_in"}
+2021-02-25 15:45:44.342 (  51.282s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":14.1171875,"y":13.12109375},"type":"mouse_out"}
+2021-02-25 15:45:44.908 (  51.848s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":13.26953125,"y":5.3203125},"type":"mouse_in"}
+2021-02-25 15:45:45.376 (  52.316s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":15.44140625,"y":14.859375},"type":"mouse_out"}
+2021-02-25 15:45:58.412 (  65.352s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-25 15:46:16.859 (   0.016s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-25 15:46:18.123 (   1.279s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":18.07421875,"y":13.55078125},"type":"mouse_in"}
+2021-02-25 15:46:18.572 (   1.729s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":50.9453125,"y":32.05859375},"type":"mouse_out"}
+2021-02-25 15:46:19.040 (   2.196s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":56.69140625,"y":34.921875},"type":"mouse_in"}
+2021-02-25 15:46:19.441 (   2.598s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":62.53125,"y":32.20703125},"type":"mouse_out"}
+2021-02-25 15:46:19.708 (   2.865s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":61.7109375,"y":35.328125},"type":"mouse_in"}
+2021-02-25 15:46:19.975 (   3.132s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":53.98046875,"y":56.171875},"type":"mouse_out"}
+2021-02-25 15:46:20.192 (   3.349s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":50.08203125,"y":52.5625},"type":"mouse_in"}
+2021-02-25 15:46:20.292 (   3.449s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":56.80859375,"y":33.80859375},"type":"mouse_out"}
+2021-02-25 15:46:20.527 (   3.683s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":63.515625,"y":69.53125},"type":"mouse_in"}
+2021-02-25 15:46:20.560 (   3.717s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":67.7890625,"y":50.90625},"type":"mouse_out"}
+2021-02-25 15:46:20.810 (   3.967s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":61.2578125,"y":54.5703125},"type":"mouse_in"}
+2021-02-25 15:46:20.827 (   3.984s) [main thread     ]               main.cpp:41    INFO| {"pos":{"x":10.328125,"y":125.8984375},"type":"mouse_out"}
+2021-02-25 15:46:21.671 (   4.828s) [main thread     ]             loguru.cpp:524   INFO| atexit

@@ -39,6 +39,18 @@ void PrimativeContainer::process_mouse(float mpos_x, float mpos_y)
             this->image->mouse_event = NULL;
         }
     }
+    if (this->type == "path")
+    {
+        this->path->process_mouse(mpos_x, mpos_y);
+        if (this->path->mouse_event != NULL)
+        {
+            if (this->path->properties->mouse_callback != NULL)
+            {
+                this->path->properties->mouse_callback(this, this->path->mouse_event);
+            }
+            this->path->mouse_event = NULL;
+        }
+    }
 }
 void PrimativeContainer::render()
 {
@@ -53,5 +65,9 @@ void PrimativeContainer::render()
     if (this->type == "image")
     {
         this->image->render();
+    }
+    if (this->type == "path")
+    {
+        this->path->render();
     }
 }

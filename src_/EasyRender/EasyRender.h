@@ -78,6 +78,7 @@ class EasyRender{
         Line* PushPrimative(Line* l);
         Text* PushPrimative(Text* t);
         Image* PushPrimative(Image* i);
+        Path* PushPrimative(Path* i);
 
         void SetWindowTitle(std::string w);
         void SetWindowSize(int width, int height);

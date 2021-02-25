@@ -61,7 +61,12 @@ Image* EasyRender::PushPrimative(Image* i)
     primative_stack.push_back(c);
     return c->image;
 }
-
+Path* EasyRender::PushPrimative(Path* p)
+{  
+    PrimativeContainer *c = new PrimativeContainer(p);
+    primative_stack.push_back(c);
+    return c->path;
+}
 
 void EasyRender::SetWindowTitle(std::string w)
 {

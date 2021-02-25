@@ -64,7 +64,12 @@ int main(int argc, char **argv)
     Text *fps = renderer->PushPrimative(new Text({0, 0}, "0", 30));
     fps->properties->mouse_callback = &mouse_callback;
 
-    Image* i = renderer->PushPrimative(new Image({0, 0}, "/Users/travis/Documents/Projects/Xrender/test/LineWork.png", {2048 / 4, 780 / 4}));
+    std::vector<double_point_t> path;
+    path.push_back({20, 20});
+    path.push_back({40, 40});
+    path.push_back({80, 50});
+    Path *p = renderer->PushPrimative(new Path(path));
+    p->properties->mouse_callback = &mouse_callback;
 
     while(renderer->Poll(false))
     {

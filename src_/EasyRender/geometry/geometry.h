@@ -19,9 +19,9 @@
  **********************/
 typedef std::pair<double, double> Point;
 struct double_point_t{
-    double x;
-    double y;
-    double z;
+    double x = 0;
+    double y = 0;
+    double z = 0;
 };
 struct double_line_t{
     double_point_t start;

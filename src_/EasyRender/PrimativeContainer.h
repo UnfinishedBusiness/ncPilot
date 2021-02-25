@@ -11,6 +11,7 @@
 #include "primatives/Line/Line.h"
 #include "primatives/Text/Text.h"
 #include "primatives/Image/Image.h"
+#include "primatives/Path/Path.h"
 
 class PrimativeContainer{
     public:
@@ -19,6 +20,7 @@ class PrimativeContainer{
         Line *line;
         Text *text;
         Image *image;
+        Path *path;
 
         void process_mouse(float mpos_x, float mpos_y);
         void render();
@@ -40,6 +42,12 @@ class PrimativeContainer{
             image = i;
             this->type = image->get_type_name();
             properties = image->properties;
+        }
+        PrimativeContainer(Path *p)
+        {
+            path = p;
+            this->type = path->get_type_name();
+            properties = path->properties;
         }
 };
 
