@@ -8,15 +8,10 @@
 #include "menu_bar/menu_bar.h"
 #include "dialogs/dialogs.h"
 #include "motion_control/motion_control.h"
+#include "hmi/hmi.h"
 
 global_variables_t *globals;
 
-void view_matrix(PrimativeContainer *p)
-{
-    p->properties->scale = globals->zoom;
-    p->properties->offset[0] = globals->pan.x;
-    p->properties->offset[1] = globals->pan.y;
-}
 void zoom_event_handle(nlohmann::json e)
 {
     //LOG_F(INFO, "%s", e.dump().c_str());
@@ -203,7 +198,7 @@ int main(int argc, char **argv)
     globals->zoom = 1;
     globals->pan.x = 0;
     globals->pan.y = 0;
-    globals->view_matrix = &view_matrix;
+    globals->view_matrix = &hmi_view_matrix;
     globals->start_timestamp = EasyRender::Millis();
     globals->renderer = new EasyRender();
     globals->renderer->SetWindowTitle("ncPilot");
@@ -222,6 +217,7 @@ int main(int argc, char **argv)
     menu_bar_init();
     dialogs_init();
     motion_control_init();
+    hmi_init();
     while(globals->renderer->Poll(globals->quit))
     {
         motion_control_tick();

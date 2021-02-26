@@ -493,6 +493,8 @@ void EasyRender::DeletePrimativesById(std::string id)
         {
             this->primative_stack.at(x)->destroy();
             delete this->primative_stack.at(x);
+            this->primative_stack.erase (this->primative_stack.begin()+x);
+            x = 0;
         }
     }
 }
@@ -633,8 +635,8 @@ bool EasyRender::Poll(bool should_quit)
                 avg = avg / this->FPS_Average.size();
                 this->FPS_Label->textval = std::to_string((int)avg);
                 this->FPS_Label->properties->visable = true;
-                this->FPS_Label->position[0] = -(this->WindowSize[0] / 2.0f) + 10;
-                this->FPS_Label->position[1] = -(this->WindowSize[1] / 2.0f) + 10;
+                this->FPS_Label->position.x = -(this->WindowSize[0] / 2.0f) + 10;
+                this->FPS_Label->position.y = -(this->WindowSize[1] / 2.0f) + 10;
                 this->FPS_Average.erase(this->FPS_Average.begin());
             }
         }

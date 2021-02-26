@@ -527,8 +527,8 @@ void motion_controller_save_machine_parameters()
     globals->machine_plane->height = globals->machine_parameters.machine_extents[1];
     globals->cuttable_plane->bottom_left.x = globals->machine_parameters.cutting_extents[0];
     globals->cuttable_plane->bottom_left.y = globals->machine_parameters.cutting_extents[1];
-    globals->cuttable_plane->width = globals->machine_parameters.machine_extents[0] + globals->machine_parameters.cutting_extents[2];
-    globals->cuttable_plane->height = globals->machine_parameters.machine_extents[1] + globals->machine_parameters.cutting_extents[3];
+    globals->cuttable_plane->width = (globals->machine_parameters.machine_extents[0] + globals->machine_parameters.cutting_extents[2]) - globals->machine_parameters.cutting_extents[0];
+    globals->cuttable_plane->height = (globals->machine_parameters.machine_extents[1] + globals->machine_parameters.cutting_extents[3]) - globals->machine_parameters.cutting_extents[1];
     try
     {
         std::ofstream out(globals->renderer->GetConfigDirectory() + "machine_parameters.json");

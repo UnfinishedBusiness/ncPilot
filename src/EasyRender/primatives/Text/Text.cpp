@@ -43,8 +43,8 @@ void EasyPrimative::Text::process_mouse(float mpos_x, float mpos_y)
     {
         mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
         mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
-        if (mpos_x > this->position[0] && mpos_x < (this->position[0] + this->width) &&
-            mpos_y > this->position[1] && mpos_y < (this->position[1] + this->height)
+        if (mpos_x > this->position.x && mpos_x < (this->position.x + this->width) &&
+            mpos_y > this->position.y && mpos_y < (this->position.y + this->height)
         )
         {
             if (this->properties->mouse_over == false)
@@ -159,7 +159,7 @@ void EasyPrimative::Text::render()
             }
             else
             {
-                this->RenderFont(this->position[0], -this->position[1], this->textval);
+                this->RenderFont(this->position.x, -this->position.y, this->textval);
             }
         glPopMatrix();
     }

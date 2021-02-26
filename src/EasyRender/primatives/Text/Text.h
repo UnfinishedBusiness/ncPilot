@@ -38,7 +38,7 @@ class EasyPrimative::Text{
         std::string textval;
         std::string font_file;
         float font_size;
-        float position[3];
+        double_point_t position;
         float width;
         float height;
         GLuint texture;
@@ -47,9 +47,7 @@ class EasyPrimative::Text{
         Text(double_point_t p, std::string t, float s)
         {
             this->properties = new PrimativeProperties();
-            this->position[0] = p.x;
-            this->position[1] = p.y;
-            this->position[2] = 0;
+            this->position = p;
             this->width = 0;
             this->height = 0;
             this->textval = t;

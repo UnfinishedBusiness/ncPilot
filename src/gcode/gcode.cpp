@@ -111,6 +111,7 @@ void gcode_push_current_path_to_viewer(int rapid_line)
                 }
             }
             EasyPrimative::Path *g = globals->renderer->PushPrimative(new EasyPrimative::Path(path));
+            g->is_closed = false;
             g->properties->id = "gcode";
             g->properties->data = {{"rapid_line", rapid_line}};
             globals->renderer->SetColorByName(g->properties->color, "white");

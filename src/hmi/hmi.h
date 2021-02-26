@@ -32,6 +32,7 @@ struct dro_group_data_t{
 void hmi_init();
 void hmi_handle_button(std::string id);
 void hmi_mouse_callback(PrimativeContainer* c,nlohmann::json e);
+void hmi_view_matrix(PrimativeContainer *p);
 
 
 #endif
