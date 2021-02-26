@@ -45,12 +45,10 @@ void mouse_callback(PrimativeContainer* p, nlohmann::json e)
     if (e["type"] == "mouse_in")
     {
         renderer->SetColorByName(p->properties->color, "green");
-        zoom = 2;
     }
     if (e["type"] == "mouse_out")
     {
         renderer->SetColorByName(p->properties->color, "white");
-        zoom = 1;
     }
 }
 void view_matrix(PrimativeContainer *p)
@@ -77,9 +75,17 @@ void test_dialog()
     }
     ImGui::End();
 }
-void up_key(nlohmann::json e)
+void zoom_handle(nlohmann::json e)
 {
     LOG_F(INFO, "%s", e.dump().c_str());
+    if ((float)e["scroll"] > 0)
+    {
+        zoom += zoom * 0.1;
+    }
+    else
+    {
+        zoom -= zoom * 0.1;
+    }
 }
 int main(int argc, char **argv)
 {
@@ -103,12 +109,15 @@ int main(int argc, char **argv)
     path.push_back({80, 50});
     Path *p = renderer->PushPrimative(new Path(path));
     p->properties->mouse_callback = &mouse_callback;
+    p->properties->matrix_callback = &view_matrix;
 
     Arc *a = renderer->PushPrimative(new Arc({-100, -100}, 100, 0, 90));
     a->properties->mouse_callback = &mouse_callback;
+    a->properties->matrix_callback = &view_matrix;
 
     Circle *c = renderer->PushPrimative(new Circle({-200, -200}, 100));
     c->properties->mouse_callback = &mouse_callback;
+    c->properties->matrix_callback = &view_matrix;
 
     Box *b = renderer->PushPrimative(new Box({100, -100}, 100, 100, 30));
     b->properties->mouse_callback = &mouse_callback;
@@ -117,7 +126,8 @@ int main(int argc, char **argv)
 
     w = renderer->PushGui(true, &test_dialog);
 
-    renderer->PushEvent("Up", "keyup", &up_key);
+    renderer->PushEvent("up", "scroll", &zoom_handle);
+    renderer->PushEvent("down", "scroll", &zoom_handle);
 
     while(renderer->Poll(false))
     {

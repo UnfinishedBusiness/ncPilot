@@ -161,11 +161,18 @@ void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int actio
                                 event = "middle_click_down";
                             }
                         }
+                        double_point_t matrix_mouse = m;
+                        matrix_mouse.x = (matrix_mouse.x - self->primative_stack.at(x)->properties->offset[0]) / self->primative_stack.at(x)->properties->scale;
+                        matrix_mouse.y = (matrix_mouse.y - self->primative_stack.at(x)->properties->offset[1]) / self->primative_stack.at(x)->properties->scale;
                         self->primative_stack.at(x)->properties->mouse_callback(self->primative_stack.at(x), {
                             {"event", event},
                             {"mouse_pos", {
                                 {"x", m.x},
                                 {"y", m.y}
+                            }},
+                            {"matrix_mouse_pos", {
+                                {"x", matrix_mouse.x},
+                                {"y", matrix_mouse.y}
                             }}
                         });
                     }
@@ -174,7 +181,35 @@ void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int actio
         }
     }
 }
-
+void EasyRender::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
+    if (self != NULL)
+    {
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        if (!io.WantCaptureKeyboard || !io.WantCaptureMouse)
+        {
+            for (int x = 0; x < self->event_stack.size(); x++)
+            {
+                if (yoffset > 0)
+                {
+                    if (self->event_stack.at(x)->type == "scroll" && self->event_stack.at(x)->key == "up")
+                    {
+                        self->event_stack.at(x)->callback({{"scroll", yoffset}});
+                    }
+                }
+                else
+                {
+                    if (self->event_stack.at(x)->type == "scroll" && self->event_stack.at(x)->key == "down")
+                    {
+                        self->event_stack.at(x)->callback({{"scroll", yoffset}});
+                    }
+                }
+                
+            }
+        }
+    }
+}
 /*
     Each primative type must have a method
 */
@@ -400,7 +435,7 @@ bool EasyRender::Init(int argc, char** argv)
     glfwSetWindowUserPointer(this->Window, reinterpret_cast<void *>(this));
     glfwSetKeyCallback(this->Window, this->key_callback);
     glfwSetMouseButtonCallback(this->Window, this->mouse_button_callback);
-    //glfwSetScrollCallback(this->Window, Xrender_scroll_callback);
+    glfwSetScrollCallback(this->Window, this->scroll_callback);
     //glfwSetWindowCloseCallback(this->Window, window_close_callback);
     //glfwSetCursorPosCallback(this->Window, Xrender_cursor_position_callback);
     //glfwSetWindowSizeCallback(this->Window, Xrender_window_size_callback);
