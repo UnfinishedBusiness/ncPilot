@@ -485,6 +485,17 @@ std::vector<PrimativeContainer *> *EasyRender::GetPrimativeStack()
 {
     return &this->primative_stack;
 }
+void EasyRender::DeletePrimativesById(std::string id)
+{
+    for (int x = 0; x < this->primative_stack.size(); x++)
+    {
+        if (this->primative_stack.at(x)->properties->id == id)
+        {
+            this->primative_stack.at(x)->destroy();
+            delete this->primative_stack.at(x);
+        }
+    }
+}
 bool EasyRender::Init(int argc, char** argv)
 {
     loguru::init(argc, argv);
@@ -633,22 +644,22 @@ bool EasyRender::Poll(bool should_quit)
 }
 void EasyRender::Close()
 {
-    for (int x = 0; x < primative_stack.size(); x++)
+    for (int x = 0; x < this->primative_stack.size(); x++)
     {
-        primative_stack.at(x)->destroy();
-        delete primative_stack.at(x);
+        this->primative_stack.at(x)->destroy();
+        delete this->primative_stack.at(x);
     }
-    for (int x = 0; x < timer_stack.size(); x++)
+    for (int x = 0; x < this->timer_stack.size(); x++)
     {
         delete this->timer_stack.at(x);
         this->timer_stack.erase(this->timer_stack.begin()+x);
     }
-    for (int x = 0; x < gui_stack.size(); x++)
+    for (int x = 0; x < this->gui_stack.size(); x++)
     {
         delete this->gui_stack.at(x);
         this->gui_stack.erase(this->gui_stack.begin()+x);
     }
-    for (int x = 0; x < event_stack.size(); x++)
+    for (int x = 0; x < this->event_stack.size(); x++)
     {
         delete this->event_stack.at(x);
         this->event_stack.erase(this->event_stack.begin()+x);

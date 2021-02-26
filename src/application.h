@@ -54,6 +54,8 @@ struct global_variables_t{
     machine_parameters_data_t machine_parameters;
     double_point_t way_point_position;
     unsigned long start_timestamp;
+
+    void (*view_matrix)(PrimativeContainer *p);
 };
 extern global_variables_t *globals;
 

@@ -1,6 +1,6 @@
 
 #include "motion_control.h"
-
+#include <dialogs/dialogs.h>
 
 easy_serial motion_controller("arduino", byte_handler, line_handler);
 
@@ -178,7 +178,7 @@ void run_pop()
                 LOG_F(INFO, "[run_pop] Arc retry max count reached. Retracting and aborting program!");
                 okay_callback = NULL;
                 motion_sync_callback = &torch_off_and_abort;
-                //dialogs_set_info_value("Arc Strike Retry max count expired!\nLikely causes are:\n1. Bad or worn out consumables.\n2. Faulty work clamp connection or wire\n3. Inadequate pressure and/or moisture in the air system\n4. Dirty material and/or non-conductive surface\n5. Faulty Cutting unit, eg. Plasma Power Unit is worn out or broken");
+                dialogs_set_info_value("Arc Strike Retry max count expired!\nLikely causes are:\n1. Bad or worn out consumables.\n2. Faulty work clamp connection or wire\n3. Inadequate pressure and/or moisture in the air system\n4. Dirty material and/or non-conductive surface\n5. Faulty Cutting unit, eg. Plasma Power Unit is worn out or broken");
             }
             else
             {
@@ -425,14 +425,14 @@ void line_handler(std::string line)
         }
         else if (line.find("[CHECKSUM_FAILURE]") != std::string::npos)
         {
-            //dialogs_set_info_value("Communication Checksum failure, aborting program!");
+            dialogs_set_info_value("Communication Checksum failure, aborting program!");
             motion_controller_cmd("abort");
         }
         else if (line.find("error") != std::string::npos)
         {
             if (line.find("9") != std::string::npos)
             {
-                //dialogs_set_info_value("Program was aborted because floating head or ohmic touch input was activated before probing cycle began!");
+                dialogs_set_info_value("Program was aborted because floating head or ohmic touch input was activated before probing cycle began!");
             }
             removeSubstrs(line, "error:");
             motion_controller_log_controller_error(atoi(line.c_str()));
@@ -441,7 +441,7 @@ void line_handler(std::string line)
         {
             if (torch_on == true && (EasyRender::Millis() - torch_on_timer) > 2000)
             {
-                //dialogs_set_info_value("Program was aborted because torch crash was detected!");
+                dialogs_set_info_value("Program was aborted because torch crash was detected!");
                 motion_controller_cmd("abort");
                 handling_crash = true;
             }
@@ -603,7 +603,7 @@ bool motion_control_status_timer()
 }
 bool motion_control_update_firmware_hide_info_window()
 {
-    //dialogs_show_info_window(false);
+    dialogs_show_info_window(false);
     return false;
 }
 bool motion_control_update_firmware()

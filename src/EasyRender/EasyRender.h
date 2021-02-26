@@ -144,6 +144,9 @@ class EasyRender{
         uint8_t GetFramesPerSecond();
         std::vector<PrimativeContainer *> *GetPrimativeStack();
 
+        /* Primative Manipulators */
+        void DeletePrimativesById(std::string id);
+
         /* Main Operators */
         bool Init(int argc, char** argv);
         bool Poll(bool should_quit);

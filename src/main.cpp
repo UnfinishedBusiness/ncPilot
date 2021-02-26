@@ -6,18 +6,20 @@
 #include "EasyRender/logging/loguru.h"
 #include "EasyRender/gui/imgui.h"
 #include "menu_bar/menu_bar.h"
+#include "dialogs/dialogs.h"
+#include "motion_control/motion_control.h"
 
 global_variables_t *globals;
 
-/*void view_matrix(PrimativeContainer *p)
+void view_matrix(PrimativeContainer *p)
 {
     p->properties->scale = globals->zoom;
     p->properties->offset[0] = globals->pan.x;
     p->properties->offset[1] = globals->pan.y;
-}*/
-/*void zoom_handle(nlohmann::json e)
+}
+void zoom_event_handle(nlohmann::json e)
 {
-    LOG_F(INFO, "%s", e.dump().c_str());
+    //LOG_F(INFO, "%s", e.dump().c_str());
     double_point_t matrix_mouse = globals->renderer->GetWindowMousePosition();
     matrix_mouse.x = (matrix_mouse.x - globals->pan.x) / globals->zoom;
     matrix_mouse.y = (matrix_mouse.y - globals->pan.y) / globals->zoom;
@@ -45,7 +47,7 @@ global_variables_t *globals;
         globals->pan.x += matrix_mouse.x * scalechange;
         globals->pan.y += matrix_mouse.y * scalechange; 
     }
-}*/
+}
 void init_preferences()
 {
     std::ifstream preferences_file(globals->renderer->GetConfigDirectory() + "preferences.json");
@@ -201,6 +203,7 @@ int main(int argc, char **argv)
     globals->zoom = 1;
     globals->pan.x = 0;
     globals->pan.y = 0;
+    globals->view_matrix = &view_matrix;
     globals->start_timestamp = EasyRender::Millis();
     globals->renderer = new EasyRender();
     globals->renderer->SetWindowTitle("ncPilot");
@@ -209,17 +212,19 @@ int main(int argc, char **argv)
     globals->renderer->SetMainLogFileName(globals->renderer->GetConfigDirectory() + "ncPilot.log");
     globals->renderer->SetShowFPS(true);
     init_preferences();
+    globals->renderer->SetWindowSize(globals->preferences.window_size[0], globals->preferences.window_size[1]);
     globals->renderer->SetClearColor(globals->preferences.background_color[0], globals->preferences.background_color[1], globals->preferences.background_color[2]);
     globals->renderer->Init(argc, argv);
 
-
-    //globals->renderer->PushEvent("up", "scroll", &zoom_handle);
-    //globals->renderer->PushEvent("down", "scroll", &zoom_handle);
+    globals->renderer->PushEvent("up", "scroll", &zoom_event_handle);
+    globals->renderer->PushEvent("down", "scroll", &zoom_event_handle);
 
     menu_bar_init();
+    dialogs_init();
+    motion_control_init();
     while(globals->renderer->Poll(globals->quit))
     {
-        //Do Stuff
+        motion_control_tick();
     }
     log_uptime();
     globals->renderer->Close();

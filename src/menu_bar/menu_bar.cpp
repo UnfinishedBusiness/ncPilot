@@ -1,4 +1,6 @@
 #include "menu_bar.h"
+#include <dialogs/dialogs.h>
+#include <motion_control/motion_control.h>
 
 EasyRender::EasyRenderGui *menu_bar;
 
@@ -33,13 +35,13 @@ void menu_bar_render()
             if (ImGui::MenuItem("Preferences", ""))
             {
                 LOG_F(INFO, "Edit->Preferences");
-                //dialogs_show_preferences(true);
+                dialogs_show_preferences(true);
             }
             ImGui::Separator();
             if (ImGui::MenuItem("Machine Parameters", ""))
             {
                 LOG_F(INFO, "Edit->Machine Parameters");
-                //dialogs_show_machine_parameters(true);
+                dialogs_show_machine_parameters(true);
             }
             ImGui::EndMenu();
         }
@@ -53,8 +55,8 @@ void menu_bar_render()
             if (ImGui::MenuItem("Update Firmware", ""))
             {
                 LOG_F(INFO, "Tools->Update Firmware");
-                //dialogs_set_info_value("Updating firmware on motion controller.\nThe screen will seem frozen during this process, please wait until it's complete!");
-                //Xrender_push_timer(1000, &motion_control_update_firmware);
+                dialogs_set_info_value("Updating firmware on motion controller.\nThe screen will seem frozen during this process, please wait until it's complete!");
+                globals->renderer->PushTimer(1000, &motion_control_update_firmware);
             }
             ImGui::EndMenu();
         }
