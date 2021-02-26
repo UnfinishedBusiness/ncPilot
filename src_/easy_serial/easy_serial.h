@@ -1,12 +1,12 @@
 #ifndef EASY_SERIAL_
 #define EASY_SERIAL_
 
+#include <Xrender.h>
+#include <json/json.h>
+#include <serial/serial.h>
 #include <stdio.h>
 #include <iostream>
-#include <serial/serial.h>
-#include <EasyRender/EasyRender.h>
-#include <EasyRender/json/json.h>
-#include <EasyRender/logging/loguru.h>
+
 
 
 class easy_serial{

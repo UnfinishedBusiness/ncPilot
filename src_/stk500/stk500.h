@@ -1,13 +1,5 @@
 #ifndef STK500_
 #define STK500_
-
-#include <stdio.h>
-#include <iostream>
-#include <vector>
-#include <EasyRender/EasyRender.h> //For EasyRender::Millis()
-#include <serial/serial.h>
-#include "hex/hex.h"
-
 /* STK500 constants list, from AVRDUDE */
 #define STK_OK                   0x10
 #define STK_FAILED               0x11  // Not used

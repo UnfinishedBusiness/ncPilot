@@ -1,4 +1,10 @@
-#include "stk500.h"
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include "Xrender.h"
+#include "serial/serial.h"
+#include "stk500/stk500.h"
+#include "hex/hex.h"
 
 serial::Serial stk_serial;
 HexFileClass hexFile;
@@ -44,7 +50,7 @@ void stk500_get_parameters()
     for (int x = 0; x < 16; x++)
     {
         stk500_write_bytes({STK_GET_PARAMETER, params_list[x] ,CRC_EOP});
-        EasyRender::Delay(50);
+        Xrender_delay(50);
         r = stk500_wait_response(1);
         if (r[0] == STK_INSYNC)
         {
@@ -135,7 +141,7 @@ bool stk500_write_program(const char *intelhex, const char *port)
         {
             stk_serial.setDTR(true);
             stk_serial.setRTS(true);
-            EasyRender::Delay(250);
+            Xrender_delay(250);
             stk_serial.setDTR(false);
             stk_serial.setRTS(false);
             bool have_sync = false;
@@ -149,7 +155,7 @@ bool stk500_write_program(const char *intelhex, const char *port)
                     have_sync = true;
                     break;
                 }
-                EasyRender::Delay(250);
+                Xrender_delay(250);
             }
             if (have_sync == true)
             {

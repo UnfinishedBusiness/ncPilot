@@ -124,8 +124,8 @@ class EasyRender{
         void SetMainLogFileName(std::string l);
         void SetGuiStyle(std::string s);
         void SetClearColor(float r, float g, float b);
-        unsigned long Millis();
-        void Delay(unsigned long ms);
+        static unsigned long Millis();
+        static void Delay(unsigned long ms);
         std::string GetEvironmentVariable(const std::string & var);
         std::string GetConfigDirectory();
         double_point_t GetWindowMousePosition();

@@ -25,9 +25,9 @@
 #ifndef DXFParse_Class_H
 #define DXFParse_Class_H
 
-#include <EasyRender/EasyRender.h>
-#include <dxf/dxflib/dl_creationadapter.h>
-
+#include <dxflib/dl_creationadapter.h>
+#include <json/json.h>
+#include <Xrender.h>
 
 /**
  * This class takes care of the entities read from the file.

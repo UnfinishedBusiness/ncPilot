@@ -361,8 +361,8 @@ unsigned long EasyRender::Millis()
 }
 void EasyRender::Delay(unsigned long ms)
 {
-  unsigned long delay_timer = this->Millis();
-  while((this->Millis() - delay_timer) < ms);
+  unsigned long delay_timer = EasyRender::Millis();
+  while((EasyRender::Millis() - delay_timer) < ms);
   return;
 }
 std::string EasyRender::GetEvironmentVariable(const std::string & var)

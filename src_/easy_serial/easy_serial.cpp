@@ -1,5 +1,8 @@
+#include <Xrender.h>
+#include <serial/serial.h>
 #include "easy_serial.h"
-
+#include <json/json.h>
+#include "logging/loguru.h"
 
 
 
@@ -35,8 +38,8 @@ void easy_serial::send_string(std::string s)
 }
 void easy_serial::delay(int ms)
 {
-    unsigned long delay_timer = EasyRender::Millis();
-    while((EasyRender::Millis() - delay_timer) < ms);
+    unsigned long delay_timer = Xrender_millis();
+    while((Xrender_millis() - delay_timer) < ms);
 }
 void easy_serial::tick()
 {
@@ -91,7 +94,7 @@ void easy_serial::tick()
     }
     if (this->is_connected == false)
     {
-        if ((EasyRender::Millis() - this->connection_retry_timer) > 1000)
+        if ((Xrender_millis() - this->connection_retry_timer) > 1000)
         {
             this->connection_retry_timer = 0;
             if (this->serial_port == "")

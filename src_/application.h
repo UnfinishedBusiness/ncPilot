@@ -1,6 +1,8 @@
 #ifndef APPLICATION_
 #define APPLICATION_
 
+#include <Xrender.h>
+#include <json/json.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <iostream>
@@ -12,7 +14,6 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <ftw.h>
-#include "EasyRender/EasyRender.h"
 
 
 /*
@@ -46,15 +47,17 @@ struct global_variables_t{
     double_point_t pan;
     double_point_t mouse_pos_in_screen_coordinates;
     double_point_t mouse_pos_in_matrix_coordinates;
-    //Xrender_core_t *Xcore;
+    Xrender_core_t *Xcore;
     preferences_data_t preferences;
-    //Xrender_object_t *machine_plane;
-    //Xrender_object_t *cuttable_plane;
-    //Xrender_object_t *torch_pointer;
+    Xrender_object_t *machine_plane;
+    Xrender_object_t *cuttable_plane;
+    Xrender_object_t *torch_pointer;
     machine_parameters_data_t machine_parameters;
     double_point_t way_point_position;
     unsigned long start_timestamp;
 };
+
+nlohmann::json view_matrix(nlohmann::json data);
 extern global_variables_t *globals;
 
 #endif //APPLICATION_
