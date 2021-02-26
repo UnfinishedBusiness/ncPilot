@@ -119,7 +119,7 @@ class EasyRender{
         /* Key Event Creation */
         void PushEvent(std::string key, std::string type, void (*callback)(nlohmann::json));
 
-
+        /* Setters */
         void SetWindowTitle(std::string w);
         void SetWindowSize(int width, int height);
         void SetShowCursor(bool s);
@@ -130,14 +130,21 @@ class EasyRender{
         void SetGuiStyle(std::string s);
         void SetClearColor(float r, float g, float b);
         void SetShowFPS(bool show_fps);
+        void SetColorByName(float *c, std::string color);
+
+        /* Time */
         static unsigned long Millis();
         static void Delay(unsigned long ms);
+
+        /* Getters */
         std::string GetEvironmentVariable(const std::string & var);
         std::string GetConfigDirectory();
-        double_point_t GetWindowMousePosition();
-        double_point_t GetWindowSize();
+        double_point_t  GetWindowMousePosition();
+        double_point_t  GetWindowSize();
         uint8_t GetFramesPerSecond();
-        void SetColorByName(float *c, std::string color);
+        std::vector<PrimativeContainer *> *GetPrimativeStack();
+
+        /* Main Operators */
         bool Init(int argc, char** argv);
         bool Poll(bool should_quit);
         void Close();

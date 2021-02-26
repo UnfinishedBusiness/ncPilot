@@ -48,9 +48,9 @@ struct global_variables_t{
     double_point_t mouse_pos_in_matrix_coordinates;
     EasyRender *renderer;
     preferences_data_t preferences;
-    //Xrender_object_t *machine_plane;
-    //Xrender_object_t *cuttable_plane;
-    //Xrender_object_t *torch_pointer;
+    EasyPrimative::Box *machine_plane;
+    EasyPrimative::Box *cuttable_plane;
+    EasyPrimative::Circle *torch_pointer;
     machine_parameters_data_t machine_parameters;
     double_point_t way_point_position;
     unsigned long start_timestamp;

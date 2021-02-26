@@ -3,38 +3,39 @@
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-/*
+
 double hmi_backplane_width = 300;
-Box *hmi_backpane;
+EasyPrimative::Box *hmi_backpane;
 double hmi_dro_backplane_height = 200;
-Box *hmi_dro_backpane;
-Box *hmi_button_backpane;
-Box *arc_okay_highlight_path;
+EasyPrimative::Box *hmi_dro_backpane;
+EasyPrimative::Box *hmi_button_backpane;
+EasyPrimative::Box *arc_okay_highlight_path;
 dro_group_data_t dro;
 std::vector<hmi_button_group_t> button_groups;
 
+
 void hmi_get_bounding_box(double_point_t *bbox_min, double_point_t *bbox_max)
 {
-    std::vector<Xrender_object_t*> *stack = Xrender_get_object_stack();
+    std::vector<PrimativeContainer*> *stack = globals->renderer->GetPrimativeStack();
     bbox_max->x = -1000000;
     bbox_max->y = -1000000;
     bbox_min->x = 1000000;
     bbox_min->y = 1000000;
     for (int x = 0; x < stack->size(); x++)
     {
-        if (stack->at(x)->data["type"] == "path")
+        if (stack->at(x)->type == "path")
         {
-            for (int i = 0; i < stack->at(x)->data["points"].size(); i++)
+            for (int i = 0; i < stack->at(x)->path->points.size(); i++)
             {
-                if ((double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0] < bbox_min->x) bbox_min->x = (double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0];
-                if ((double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0] > bbox_max->x) bbox_max->x = (double)stack->at(x)->data["points"].at(i)["x"] + globals->machine_parameters.work_offset[0];
-                if ((double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1] < bbox_min->y) bbox_min->y = (double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1];
-                if ((double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1] > bbox_max->y) bbox_max->y = (double)stack->at(x)->data["points"].at(i)["y"] + globals->machine_parameters.work_offset[1];
+                if ((double)stack->at(x)->path->points.at(i).x + globals->machine_parameters.work_offset[0] < bbox_min->x) bbox_min->x = stack->at(x)->path->points.at(i).x + globals->machine_parameters.work_offset[0];
+                if ((double)stack->at(x)->path->points.at(i).x + globals->machine_parameters.work_offset[0] > bbox_max->x) bbox_max->x = stack->at(x)->path->points.at(i).x + globals->machine_parameters.work_offset[0];
+                if ((double)stack->at(x)->path->points.at(i).y + globals->machine_parameters.work_offset[1] < bbox_min->y) bbox_min->y = stack->at(x)->path->points.at(i).y + globals->machine_parameters.work_offset[1];
+                if ((double)stack->at(x)->path->points.at(i).y + globals->machine_parameters.work_offset[1] > bbox_max->y) bbox_max->y = stack->at(x)->path->points.at(i).y + globals->machine_parameters.work_offset[1];
             }
         }
     }
 }
-
+/*
 void hmi_handle_button(std::string id)
 {
     nlohmann::json dro_data = motion_controller_get_dro();
@@ -270,6 +271,9 @@ void hmi_handle_button(std::string id)
         LOG_F(ERROR, "JSON Parsing ERROR!");
     }
 }
+*/
+
+/*
 void hmi_jumpin(Xrender_object_t* o)
 {
     double_point_t bbox_min, bbox_max;
@@ -312,6 +316,7 @@ void hmi_jumpin(Xrender_object_t* o)
         dialogs_set_info_value("Program is outside of machines cuttable extents!");
     }
 }
+
 void hmi_reverse(Xrender_object_t* o)
 {
     std::vector<std::string> gcode_lines_before_reverse;
@@ -390,71 +395,68 @@ void hmi_reverse(Xrender_object_t* o)
     }
     
 }
-void hmi_mouse_callback(Xrender_object_t* o,nlohmann::json e)
+*/
+void hmi_mouse_callback(PrimativeContainer* c, nlohmann::json e)
 {
-    if (o->data["type"] == "path" && o->data["id"] == "gcode")
+    if (c->type == "path" && c->properties->id == "gcode")
     {
         if (e["event"] == "mouse_in")
         {
             //LOG_F(INFO, "Start Line => %lu", (unsigned long)o->data["rapid_line"]);
-            o->data["color"] = {{"r", 0}, {"g", 190}, {"b", 0}, {"a", 255}};
+            globals->renderer->SetColorByName(c->properties->color, "light-green");
         }
         if (e["event"] == "mouse_out")
         {
             //LOG_F(INFO, "Mouse Out - %s\n", e.dump().c_str());
-            o->data["color"] = {{"r", 255}, {"g", 255}, {"b", 255}, {"a", 255}};
+            globals->renderer->SetColorByName(c->properties->color, "white");
         }
         if (e["event"] == "right_click_up")
         {
-            o->data["color"] = {{"r", 0}, {"g", 190}, {"b", 0}, {"a", 255}};
-            dialogs_ask_yes_no("This feature is new and experimental, Your gcode file could be destroyed!\nAre you sure you want to reverse this paths direction?", &hmi_reverse, NULL, o);
+            globals->renderer->SetColorByName(c->properties->color, "light-green");
+            //dialogs_ask_yes_no("This feature is new and experimental, Your gcode file could be destroyed!\nAre you sure you want to reverse this paths direction?", &hmi_reverse, NULL, o);
         }
         if (e["event"] == "right_click_down")
         {
-            o->data["color"] = {{"r", 0}, {"g", 255}, {"b", 0}, {"a", 255}};
+            globals->renderer->SetColorByName(c->properties->color, "dark-green");
         }
         if (e["event"] == "left_click_down")
         {
-            o->data["color"] = {{"r", 0}, {"g", 255}, {"b", 0}, {"a", 255}};
+            globals->renderer->SetColorByName(c->properties->color, "dark-green");
         }
         if (e["event"] == "left_click_up")
         {
-            o->data["color"] = {{"r", 255}, {"g", 255}, {"b", 255}, {"a", 255}};
-            dialogs_ask_yes_no("Are you sure you want to start the program at this path?", &hmi_jumpin, NULL, o);
+            globals->renderer->SetColorByName(c->properties->color, "white");
+            //dialogs_ask_yes_no("Are you sure you want to start the program at this path?", &hmi_jumpin, NULL, o);
         }
     }
-    if (o->data["type"] == "box" && o->data["id"] != "cuttable_plane")
+    if (c->type == "box" && c->properties->id != "cuttable_plane")
     {
         if (e["event"] == "mouse_in")
         {
-            //printf("Mouse In - %s\n", e.dump().c_str());
-            o->data["color"] = {{"r", 10}, {"g", 100}, {"b", 10}, {"a", 255}};
+            globals->renderer->SetColorByName(c->properties->color, "light-green");
         }
         if (e["event"] == "mouse_out")
         {
-            //printf("Mouse Out - %s\n", e.dump().c_str());
-            o->data["color"] = {{"r", 10}, {"g", 10}, {"b", 10}, {"a", 255}};
+            globals->renderer->SetColorByName(c->properties->color, "black");
         }
         if (e["event"] == "left_click_down")
         {
-            //printf("Mouse Down - %s\n", e.dump().c_str());
-            o->data["color"] = {{"r", 10}, {"g", 150}, {"b", 10}, {"a", 255}};
+            globals->renderer->SetColorByName(c->properties->color, "dark-green");
         }
         if (e["event"] == "left_click_up")
         {
-            //printf("Mouse Up - %s\n", e.dump().c_str());
-            o->data["color"] = {{"r", 10}, {"g", 100}, {"b", 10}, {"a", 255}};
-            hmi_handle_button(o->data["id"]);
+            globals->renderer->SetColorByName(c->properties->color, "light-green");
+            //hmi_handle_button(o->data["id"]);
         }
     }
-    else if (o->data["type"] == "box" && o->data["id"] == "cuttable_plane")
+    else if (c->type == "box" && c->properties->id == "cuttable_plane")
     {
-        if (e["event"] == "left_click_up")
+        /*if (e["event"] == "left_click_up")
         {
             nlohmann::json dro_data = motion_controller_get_dro();
             try
             {
-                if (o->data["id"] == "cuttable_plane" && dro_data["IN_MOTION"] == false)
+                if (c->properties->id == "cuttable_plane" && dro_data["IN_MOTION"] == false)
                 {
                     globals->way_point_position = globals->mouse_pos_in_matrix_coordinates;
                 }
@@ -463,10 +465,10 @@ void hmi_mouse_callback(Xrender_object_t* o,nlohmann::json e)
             {
                 LOG_F(ERROR, "Error parsing DRO Data!");
             }
-        }
+        }*/
     }
 }
-
+/*
 nlohmann::json view_matrix(nlohmann::json data)
 {
     nlohmann::json new_data = data;

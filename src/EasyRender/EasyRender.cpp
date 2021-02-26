@@ -354,6 +354,79 @@ void EasyRender::SetShowFPS(bool show_fps)
 {
     this->ShowFPS = show_fps;
 }
+void EasyRender::SetColorByName(float *c, std::string color)
+{
+    if (color == "white")
+    {
+        c[0] = 255;
+        c[1] = 255;
+        c[2] = 255;
+        c[3] = 255;
+    }
+    else if (color == "black")
+    {
+        c[0] = 0;
+        c[1] = 0;
+        c[2] = 0;
+        c[3] = 0;
+    }
+    else if (color == "grey")
+    {
+        c[0] = 100;
+        c[1] = 100;
+        c[2] = 100;
+        c[3] = 255;
+    }
+    else if (color == "light-red")
+    {
+        c[0] = 190;
+        c[1] = 0;
+        c[2] = 0;
+        c[3] = 255;
+    }
+    else if (color == "red")
+    {
+        c[0] = 255;
+        c[1] = 0;
+        c[2] = 0;
+        c[3] = 255;
+    }
+    else if (color == "light-green")
+    {
+        c[0] = 0;
+        c[1] = 190;
+        c[2] = 0;
+        c[3] = 255;
+    }
+    else if (color == "green")
+    {
+        c[0] = 0;
+        c[1] = 255;
+        c[2] = 0;
+        c[3] = 255;
+    }
+    else if (color == "light-blue")
+    {
+        c[0] = 0;
+        c[1] = 0;
+        c[2] = 190;
+        c[3] = 255;
+    }
+    else if (color == "blue")
+    {
+        c[0] = 0;
+        c[1] = 0;
+        c[2] = 255;
+        c[3] = 255;
+    }
+    else
+    {
+        c[0] = 255;
+        c[1] = 255;
+        c[2] = 255;
+        c[3] = 255;
+    }
+}
 unsigned long EasyRender::Millis()
 {
     using std::chrono::duration_cast;
@@ -408,43 +481,9 @@ uint8_t EasyRender::GetFramesPerSecond()
 {
     return (uint8_t)(1000.0f / (float)RenderPerformance);
 }
-void EasyRender::SetColorByName(float *c, std::string color)
+std::vector<PrimativeContainer *> *EasyRender::GetPrimativeStack()
 {
-    if (color == "white")
-    {
-        c[0] = 255;
-        c[1] = 255;
-        c[2] = 255;
-        c[3] = 255;
-    }
-    else if (color == "red")
-    {
-        c[0] = 255;
-        c[1] = 0;
-        c[2] = 0;
-        c[3] = 255;
-    }
-    else if (color == "green")
-    {
-        c[0] = 0;
-        c[1] = 255;
-        c[2] = 0;
-        c[3] = 255;
-    }
-    else if (color == "blue")
-    {
-        c[0] = 0;
-        c[1] = 0;
-        c[2] = 255;
-        c[3] = 255;
-    }
-    else
-    {
-        c[0] = 255;
-        c[1] = 255;
-        c[2] = 255;
-        c[3] = 255;
-    }
+    return &this->primative_stack;
 }
 bool EasyRender::Init(int argc, char** argv)
 {
