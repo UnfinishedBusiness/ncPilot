@@ -348,6 +348,7 @@ void EasyRender::SetClearColor(float r, float g, float b)
     this->ClearColor[0] = r / 255;
     this->ClearColor[1] = g / 255;
     this->ClearColor[2] = b / 255;
+    //LOG_F(INFO, "Set Clear Color (%.4f, %.4f, %.4f)", this->ClearColor[0], this->ClearColor[1], this->ClearColor[2]);
 }
 void EasyRender::SetShowFPS(bool show_fps)
 {
