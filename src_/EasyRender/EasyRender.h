@@ -64,6 +64,8 @@ class EasyRender{
         std::vector<PrimativeContainer *> primative_stack;
         std::vector<EasyRenderTimer *> timer_stack;
 
+        static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
     public:
         struct EasyRenderGui{
             bool visable;

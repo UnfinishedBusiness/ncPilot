@@ -43,6 +43,22 @@
 const auto EasyRenderProgramStartTime = std::chrono::steady_clock::now();
 
 /*
+    GLFW Key Callbacks
+*/
+void EasyRender::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
+    if (self != NULL)
+    {
+        LOG_F(INFO, "Keycallback!");
+        for (int x = 0; x < self->primative_stack.size(); x++)
+        {
+            //LOG_F(INFO, "%d->%s", x, self->primative_stack.at(x)->type.c_str());
+        }
+    }
+}
+
+/*
     Each primative type must have a method
 */
 Line* EasyRender::PushPrimative(Line* l)
@@ -256,6 +272,13 @@ bool EasyRender::Init(int argc, char** argv)
     {
         glfwSetInputMode(this->Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
+    glfwSetWindowUserPointer(this->Window, reinterpret_cast<void *>(this));
+    glfwSetKeyCallback(this->Window, this->key_callback);
+    //glfwSetMouseButtonCallback(this->Window, Xrender_mouse_button_callback);
+    //glfwSetScrollCallback(this->Window, Xrender_scroll_callback);
+    //glfwSetWindowCloseCallback(this->Window, window_close_callback);
+    //glfwSetCursorPosCallback(this->Window, Xrender_cursor_position_callback);
+    //glfwSetWindowSizeCallback(this->Window, Xrender_window_size_callback);
     glfwMakeContextCurrent(this->Window);
     glfwSwapInterval(1); // Enable vsync
     //Set calbacks here
