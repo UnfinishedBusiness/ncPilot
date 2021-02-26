@@ -30,7 +30,7 @@
 #endif
 
 
-class Text{
+class EasyPrimative::Text{
     public:
         nlohmann::json mouse_event;
         PrimativeProperties *properties;

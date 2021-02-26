@@ -5,6 +5,18 @@
 #include "../json/json.h"
 
 class PrimativeContainer;
+
+namespace EasyPrimative
+{
+    class Arc;
+    class Box;
+    class Circle;
+    class Image;
+    class Line;
+    class Path;
+    class Text;
+};
+
 /*
     Properties that all primatives will share
 */

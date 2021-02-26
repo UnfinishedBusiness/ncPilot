@@ -6,7 +6,7 @@
 #include "../../geometry/geometry.h"
 #include <string>
 
-class Circle{
+class EasyPrimative::Circle{
     public:
         nlohmann::json mouse_event;
         PrimativeProperties *properties;

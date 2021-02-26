@@ -57,7 +57,7 @@ class EasyRender{
         bool ShowCursor;
         bool AutoMaximize;
         bool ShowFPS;
-        Text *FPS_Label;
+        EasyPrimative::Text *FPS_Label;
         std::vector<float> FPS_Average;
         char* GuiIniFileName;
         char* GuiLogFileName;
@@ -102,13 +102,13 @@ class EasyRender{
             this->FPS_Label = NULL;
         };
         /* Primative Creation */
-        Line* PushPrimative(Line* l);
-        Text* PushPrimative(Text* t);
-        Image* PushPrimative(Image* i);
-        Path* PushPrimative(Path* i);
-        Arc* PushPrimative(Arc* i);
-        Circle* PushPrimative(Circle* ci);
-        Box* PushPrimative(Box* b);
+        EasyPrimative::Line* PushPrimative(EasyPrimative::Line* l);
+        EasyPrimative::Text* PushPrimative(EasyPrimative::Text* t);
+        EasyPrimative::Image* PushPrimative(EasyPrimative::Image* i);
+        EasyPrimative::Path* PushPrimative(EasyPrimative::Path* i);
+        EasyPrimative::Arc* PushPrimative(EasyPrimative::Arc* i);
+        EasyPrimative::Circle* PushPrimative(EasyPrimative::Circle* ci);
+        EasyPrimative::Box* PushPrimative(EasyPrimative::Box* b);
 
         /* Timer Creation */
         void PushTimer(unsigned long intervol, bool (*c)());

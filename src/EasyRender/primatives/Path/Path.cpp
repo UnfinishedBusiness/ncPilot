@@ -24,11 +24,11 @@
 #   error "Unknown compiler"
 #endif
 
-std::string Path::get_type_name()
+std::string EasyPrimative::Path::get_type_name()
 {
     return "path";
 }
-void Path::process_mouse(float mpos_x, float mpos_y)
+void EasyPrimative::Path::process_mouse(float mpos_x, float mpos_y)
 {
     if (this->properties->visable == true)
     {
@@ -81,7 +81,7 @@ void Path::process_mouse(float mpos_x, float mpos_y)
         }
     }
 }
-void Path::render()
+void EasyPrimative::Path::render()
 {
     if (this->properties->visable == true)
     {
@@ -114,7 +114,7 @@ void Path::render()
         glPopMatrix();
     }
 }
-void Path::destroy()
+void EasyPrimative::Path::destroy()
 {
     delete this->properties;
 }

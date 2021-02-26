@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-class Path{
+class EasyPrimative::Path{
     public:
         nlohmann::json mouse_event;
         PrimativeProperties *properties;

@@ -24,11 +24,11 @@
 #   error "Unknown compiler"
 #endif
 
-std::string Line::get_type_name()
+std::string EasyPrimative::Line::get_type_name()
 {
     return "line";
 }
-void Line::process_mouse(float mpos_x, float mpos_y)
+void EasyPrimative::Line::process_mouse(float mpos_x, float mpos_y)
 {
     if (this->properties->visable == true)
     {
@@ -65,7 +65,7 @@ void Line::process_mouse(float mpos_x, float mpos_y)
         }
     }
 }
-void Line::render()
+void EasyPrimative::Line::render()
 {
     if (this->properties->visable == true)
     {
@@ -89,7 +89,7 @@ void Line::render()
         glPopMatrix();
     }
 }
-void Line::destroy()
+void EasyPrimative::Line::destroy()
 {
     delete this->properties;
 }

@@ -32,11 +32,11 @@
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-std::string Text::get_type_name()
+std::string EasyPrimative::Text::get_type_name()
 {
     return "text";
 }
-void Text::process_mouse(float mpos_x, float mpos_y)
+void EasyPrimative::Text::process_mouse(float mpos_x, float mpos_y)
 {
     //printf("X%.4f, Y%.4f\n", mpos_x, mpos_y);
     if (this->properties->visable == true)
@@ -75,7 +75,7 @@ void Text::process_mouse(float mpos_x, float mpos_y)
         }
     }
 }
-bool Text::InitFontFromFile(const char* filename, float font_size)
+bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size)
 {
     unsigned char temp_bitmap[512*512];
     unsigned char ttf_buffer[1<<20];
@@ -107,7 +107,7 @@ bool Text::InitFontFromFile(const char* filename, float font_size)
     fclose(fp);
     return true;
 }
-void Text::RenderFont(float pos_x, float pos_y, std::string text)
+void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
 {
     double width, height = 0;
     glEnable(GL_TEXTURE_2D);
@@ -140,7 +140,7 @@ void Text::RenderFont(float pos_x, float pos_y, std::string text)
         this->height = height;
     }
 }
-void Text::render()
+void EasyPrimative::Text::render()
 {
     if (this->properties->visable == true)
     {
@@ -164,7 +164,7 @@ void Text::render()
         glPopMatrix();
     }
 }
-void Text::destroy()
+void EasyPrimative::Text::destroy()
 {
     glDeleteTextures(1, &this->texture);
     delete this->properties;

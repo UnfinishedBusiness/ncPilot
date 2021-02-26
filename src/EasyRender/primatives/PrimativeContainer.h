@@ -20,55 +20,55 @@ class PrimativeContainer{
     public:
         PrimativeProperties *properties;
         std::string type;
-        Line *line;
-        Text *text;
-        Image *image;
-        Path *path;
-        Arc *arc;
-        Circle *circle;
-        Box *box;
+        EasyPrimative::Line *line;
+        EasyPrimative::Text *text;
+        EasyPrimative::Image *image;
+        EasyPrimative::Path *path;
+        EasyPrimative::Arc *arc;
+        EasyPrimative::Circle *circle;
+        EasyPrimative::Box *box;
 
         void process_mouse(float mpos_x, float mpos_y);
         void render();
         void destroy();
 
-        PrimativeContainer(Line *l)
+        PrimativeContainer(EasyPrimative::Line *l)
         {
             line = l;
             this->type = line->get_type_name();
             properties = line->properties;
         }
-        PrimativeContainer(Text *t)
+        PrimativeContainer(EasyPrimative::Text *t)
         {
             text = t;
             this->type = text->get_type_name();
             properties = text->properties;
         }
-        PrimativeContainer(Image *i)
+        PrimativeContainer(EasyPrimative::Image *i)
         {
             image = i;
             this->type = image->get_type_name();
             properties = image->properties;
         }
-        PrimativeContainer(Path *p)
+        PrimativeContainer(EasyPrimative::Path *p)
         {
             path = p;
             this->type = path->get_type_name();
             properties = path->properties;
         }
-        PrimativeContainer(Arc *a)
+        PrimativeContainer(EasyPrimative::Arc *a)
         {
             arc = a;
             this->type = arc->get_type_name();
             properties = arc->properties;
         }
-        PrimativeContainer(Circle *c)
+        PrimativeContainer(EasyPrimative::Circle *c)
         {
             circle = c;
             this->type = circle->get_type_name();
             properties = circle->properties;
         }
-        PrimativeContainer(Box *b)
+        PrimativeContainer(EasyPrimative::Box *b)
         {
             box = b;
             this->type = box->get_type_name();

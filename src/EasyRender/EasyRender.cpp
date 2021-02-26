@@ -242,43 +242,43 @@ void EasyRender::window_size_callback(GLFWwindow* window, int width, int height)
 /*
     Each primative type must have a method
 */
-Line* EasyRender::PushPrimative(Line* l)
+EasyPrimative::Line* EasyRender::PushPrimative(EasyPrimative::Line* l)
 {  
     PrimativeContainer *c = new PrimativeContainer(l);
     primative_stack.push_back(c);
     return c->line;
 }
-Text* EasyRender::PushPrimative(Text* t)
+EasyPrimative::Text* EasyRender::PushPrimative(EasyPrimative::Text* t)
 {  
     PrimativeContainer *c = new PrimativeContainer(t);
     primative_stack.push_back(c);
     return c->text;
 }
-Image* EasyRender::PushPrimative(Image* i)
+EasyPrimative::Image* EasyRender::PushPrimative(EasyPrimative::Image* i)
 {  
     PrimativeContainer *c = new PrimativeContainer(i);
     primative_stack.push_back(c);
     return c->image;
 }
-Path* EasyRender::PushPrimative(Path* p)
+EasyPrimative::Path* EasyRender::PushPrimative(EasyPrimative::Path* p)
 {  
     PrimativeContainer *c = new PrimativeContainer(p);
     primative_stack.push_back(c);
     return c->path;
 }
-Arc* EasyRender::PushPrimative(Arc* a)
+EasyPrimative::Arc* EasyRender::PushPrimative(EasyPrimative::Arc* a)
 {  
     PrimativeContainer *c = new PrimativeContainer(a);
     primative_stack.push_back(c);
     return c->arc;
 }
-Circle* EasyRender::PushPrimative(Circle* ci)
+EasyPrimative::Circle* EasyRender::PushPrimative(EasyPrimative::Circle* ci)
 {  
     PrimativeContainer *c = new PrimativeContainer(ci);
     primative_stack.push_back(c);
     return c->circle;
 }
-Box* EasyRender::PushPrimative(Box* b)
+EasyPrimative::Box* EasyRender::PushPrimative(EasyPrimative::Box* b)
 {  
     PrimativeContainer *c = new PrimativeContainer(b);
     primative_stack.push_back(c);
@@ -567,7 +567,7 @@ bool EasyRender::Poll(bool should_quit)
     {
         if (this->FPS_Label == NULL)
         {
-            this->FPS_Label = this->PushPrimative(new Text({0, 0}, "0", 30));
+            this->FPS_Label = this->PushPrimative(new EasyPrimative::Text({0, 0}, "0", 30));
             this->FPS_Label->properties->visable = false;
         } 
         else

@@ -30,7 +30,7 @@
 #endif
 
 
-class Image{
+class EasyPrimative::Image{
     public:
         nlohmann::json mouse_event;
         PrimativeProperties *properties;

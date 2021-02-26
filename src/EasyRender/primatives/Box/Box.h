@@ -6,7 +6,7 @@
 #include "../../geometry/geometry.h"
 #include <string>
 
-class Box{
+class EasyPrimative::Box{
     public:
         nlohmann::json mouse_event;
         PrimativeProperties *properties;

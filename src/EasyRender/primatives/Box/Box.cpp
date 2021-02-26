@@ -27,11 +27,11 @@
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-std::string Box::get_type_name()
+std::string EasyPrimative::Box::get_type_name()
 {
     return "box";
 }
-void Box::process_mouse(float mpos_x, float mpos_y)
+void EasyPrimative::Box::process_mouse(float mpos_x, float mpos_y)
 {
     if (this->properties->visable == true)
     {
@@ -67,7 +67,7 @@ void Box::process_mouse(float mpos_x, float mpos_y)
         }
     }
 }
-void Box::render_rectangle_with_radius(float x, float y, float width, float height, float radius)
+void EasyPrimative::Box::render_rectangle_with_radius(float x, float y, float width, float height, float radius)
 {
     #define ROUNDING_POINT_COUNT 8
     double_point_t top_left[ROUNDING_POINT_COUNT];
@@ -129,7 +129,7 @@ void Box::render_rectangle_with_radius(float x, float y, float width, float heig
     }
     glEnd();
 }
-void Box::render()
+void EasyPrimative::Box::render()
 {
     if (this->properties->visable == true)
     {
@@ -141,7 +141,7 @@ void Box::render()
         glPopMatrix();
     }
 }
-void Box::destroy()
+void EasyPrimative::Box::destroy()
 {
     delete this->properties;
 }

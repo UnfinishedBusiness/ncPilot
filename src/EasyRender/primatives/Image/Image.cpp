@@ -31,11 +31,11 @@
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-std::string Image::get_type_name()
+std::string EasyPrimative::Image::get_type_name()
 {
     return "image";
 }
-void Image::process_mouse(float mpos_x, float mpos_y)
+void EasyPrimative::Image::process_mouse(float mpos_x, float mpos_y)
 {
     //printf("X%.4f, Y%.4f\n", mpos_x, mpos_y);
     if (this->properties->visable == true)
@@ -74,7 +74,7 @@ void Image::process_mouse(float mpos_x, float mpos_y)
         }
     }
 }
-bool Image::ImageToTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
+bool EasyPrimative::Image::ImageToTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
 {
     int image_width = 0;
     int image_height = 0;
@@ -103,7 +103,7 @@ bool Image::ImageToTextureFromFile(const char* filename, GLuint* out_texture, in
     *out_height = image_height;
     return true;
 }
-void Image::render()
+void EasyPrimative::Image::render()
 {
     if (this->properties->visable == true)
     {
@@ -157,7 +157,7 @@ void Image::render()
         glPopMatrix();
     }
 }
-void Image::destroy()
+void EasyPrimative::Image::destroy()
 {
     glDeleteTextures(1, &this->texture);
     delete this->properties;

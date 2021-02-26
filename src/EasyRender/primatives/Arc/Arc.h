@@ -6,7 +6,7 @@
 #include "../../geometry/geometry.h"
 #include <string>
 
-class Arc{
+class EasyPrimative::Arc{
     public:
         nlohmann::json mouse_event;
         PrimativeProperties *properties;

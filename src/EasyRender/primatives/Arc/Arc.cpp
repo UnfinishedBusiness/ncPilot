@@ -27,11 +27,11 @@
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-std::string Arc::get_type_name()
+std::string EasyPrimative::Arc::get_type_name()
 {
     return "arc";
 }
-void Arc::process_mouse(float mpos_x, float mpos_y)
+void EasyPrimative::Arc::process_mouse(float mpos_x, float mpos_y)
 {
     if (this->properties->visable == true)
     {
@@ -70,7 +70,7 @@ void Arc::process_mouse(float mpos_x, float mpos_y)
         }
     }
 }
-void Arc::render_arc(double cx, double cy, double radius, double start_angle, double end_angle)
+void EasyPrimative::Arc::render_arc(double cx, double cy, double radius, double start_angle, double end_angle)
 {
     if ( (((MAX(start_angle, end_angle) - MIN(start_angle, end_angle)) / 360.0f) * (2 * 3.1415926f * radius)) > 8)
     {
@@ -118,7 +118,7 @@ void Arc::render_arc(double cx, double cy, double radius, double start_angle, do
         glEnd();
     }
 }
-void Arc::render()
+void EasyPrimative::Arc::render()
 {
     if (this->properties->visable == true)
     {
@@ -139,7 +139,7 @@ void Arc::render()
         glPopMatrix();
     }
 }
-void Arc::destroy()
+void EasyPrimative::Arc::destroy()
 {
     delete this->properties;
 }

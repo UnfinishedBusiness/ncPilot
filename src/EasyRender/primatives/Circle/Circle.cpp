@@ -27,11 +27,11 @@
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-std::string Circle::get_type_name()
+std::string EasyPrimative::Circle::get_type_name()
 {
     return "circle";
 }
-void Circle::process_mouse(float mpos_x, float mpos_y)
+void EasyPrimative::Circle::process_mouse(float mpos_x, float mpos_y)
 {
     if (this->properties->visable == true)
     {
@@ -69,7 +69,7 @@ void Circle::process_mouse(float mpos_x, float mpos_y)
         }
     }
 }
-void Circle::render_arc(double cx, double cy, double radius, double start_angle, double end_angle)
+void EasyPrimative::Circle::render_arc(double cx, double cy, double radius, double start_angle, double end_angle)
 {
     if ( (((MAX(start_angle, end_angle) - MIN(start_angle, end_angle)) / 360.0f) * (2 * 3.1415926f * radius)) > 8)
     {
@@ -117,7 +117,7 @@ void Circle::render_arc(double cx, double cy, double radius, double start_angle,
         glEnd();
     }
 }
-void Circle::render()
+void EasyPrimative::Circle::render()
 {
     if (this->properties->visable == true)
     {
@@ -139,7 +139,7 @@ void Circle::render()
         glPopMatrix();
     }
 }
-void Circle::destroy()
+void EasyPrimative::Circle::destroy()
 {
     delete this->properties;
 }
