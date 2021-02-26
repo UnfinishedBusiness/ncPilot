@@ -77,6 +77,10 @@ void test_dialog()
     }
     ImGui::End();
 }
+void up_key(nlohmann::json e)
+{
+    LOG_F(INFO, "%s", e.dump().c_str());
+}
 int main(int argc, char **argv)
 {
     renderer = new EasyRender();
@@ -112,6 +116,8 @@ int main(int argc, char **argv)
     renderer->PushTimer(1000, &fps_timer);
 
     w = renderer->PushGui(true, &test_dialog);
+
+    renderer->PushEvent("Up", "keyup", &up_key);
 
     while(renderer->Poll(false))
     {

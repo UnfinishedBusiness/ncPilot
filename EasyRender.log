@@ -5755,3 +5755,407 @@ date       time         ( uptime  ) [ thread name/id ]                   file:li
 2021-02-25 20:25:19.095 (   6.766s) [main thread     ]         EasyRender.cpp:57    INFO| 4->circle
 2021-02-25 20:25:19.095 (   6.766s) [main thread     ]         EasyRender.cpp:57    INFO| 5->box
 2021-02-25 20:25:25.024 (  12.696s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 09:12:35.696 (   0.074s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 09:12:38.015 (   2.393s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-293.2421875,"y":-231.7734375},"type":"mouse_in"}
+2021-02-26 09:12:38.031 (   2.409s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-244.5078125,"y":-200.30859375},"type":"mouse_out"}
+2021-02-26 09:12:38.381 (   2.760s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-178.52734375,"y":-97.6484375},"type":"mouse_in"}
+2021-02-26 09:12:38.397 (   2.776s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-177.5078125,"y":-75.16796875},"type":"mouse_out"}
+2021-02-26 09:12:38.632 (   3.010s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-174.84765625,"y":-100.5546875},"type":"mouse_in"}
+2021-02-26 09:12:38.748 (   3.127s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-173.9140625,"y":-108.95703125},"type":"mouse_out"}
+2021-02-26 09:12:38.832 (   3.210s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-167.86328125,"y":-109.1875},"type":"mouse_in"}
+2021-02-26 09:12:38.849 (   3.227s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-152.63671875,"y":-106.05078125},"type":"mouse_out"}
+2021-02-26 09:12:41.905 (   6.283s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-4.17578125,"y":-8.609375},"type":"mouse_in"}
+2021-02-26 09:12:41.971 (   6.350s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":1.25390625,"y":22.24609375},"type":"mouse_out"}
+2021-02-26 09:12:43.043 (   7.421s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 09:17:23.841 (   0.067s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 09:17:26.962 (   3.189s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-175.078125,"y":-99.76953125},"type":"mouse_in"}
+2021-02-26 09:17:26.979 (   3.206s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-180.3828125,"y":-88.69921875},"type":"mouse_out"}
+2021-02-26 09:17:28.340 (   4.567s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:28.340 (   4.567s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:28.382 (   4.609s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:28.515 (   4.742s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:28.515 (   4.742s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:28.615 (   4.842s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:30.218 (   6.445s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:30.218 (   6.445s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:30.285 (   6.512s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:31.837 (   8.065s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:31.838 (   8.065s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:31.988 (   8.215s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:32.522 (   8.749s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 264
+
+2021-02-26 09:17:32.656 (   8.883s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 264
+
+2021-02-26 09:17:33.057 (   9.284s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 263
+
+2021-02-26 09:17:33.224 (   9.451s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 263
+
+2021-02-26 09:17:33.391 (   9.618s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:33.391 (   9.618s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:33.507 (   9.734s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 262
+
+2021-02-26 09:17:33.558 (   9.785s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:33.725 (   9.952s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 264
+
+2021-02-26 09:17:33.775 (  10.002s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 262
+
+2021-02-26 09:17:33.875 (  10.102s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 263
+
+2021-02-26 09:17:33.891 (  10.119s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 264
+
+2021-02-26 09:17:34.025 (  10.252s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:34.025 (  10.252s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:34.092 (  10.319s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 263
+
+2021-02-26 09:17:34.141 (  10.369s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 262
+
+2021-02-26 09:17:34.176 (  10.403s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:34.292 (  10.520s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 264
+
+2021-02-26 09:17:34.343 (  10.570s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 262
+
+2021-02-26 09:17:34.393 (  10.620s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 263
+
+2021-02-26 09:17:34.409 (  10.636s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 264
+
+2021-02-26 09:17:34.527 (  10.754s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:34.527 (  10.754s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:34.560 (  10.787s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 263
+
+2021-02-26 09:17:34.643 (  10.870s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 262
+
+2021-02-26 09:17:34.660 (  10.888s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:34.777 (  11.004s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 264
+
+2021-02-26 09:17:34.859 (  11.087s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 262
+
+2021-02-26 09:17:34.893 (  11.120s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 263
+
+2021-02-26 09:17:34.894 (  11.121s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 264
+
+2021-02-26 09:17:35.044 (  11.271s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 263
+
+2021-02-26 09:17:35.294 (  11.521s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:35.294 (  11.522s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:35.428 (  11.655s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:36.096 (  12.323s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:36.096 (  12.323s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:36.196 (  12.423s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:37.031 (  13.258s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:37.031 (  13.258s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:37.114 (  13.341s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:37.599 (  13.826s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:37.599 (  13.826s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:37.649 (  13.876s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:38.600 (  14.827s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:38.600 (  14.827s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:38.651 (  14.878s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:38.984 (  15.212s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:38.984 (  15.212s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:39.035 (  15.262s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.185 (  15.412s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.185 (  15.412s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:39.202 (  15.429s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.369 (  15.596s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.369 (  15.596s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:39.402 (  15.629s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.553 (  15.780s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.553 (  15.780s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:39.618 (  15.846s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.770 (  15.997s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.770 (  15.997s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:39.803 (  16.031s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.953 (  16.180s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:39.953 (  16.180s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:39.987 (  16.214s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:40.137 (  16.364s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:40.137 (  16.364s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:40.170 (  16.397s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:40.337 (  16.564s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:40.337 (  16.564s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:40.353 (  16.581s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:40.504 (  16.731s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:40.504 (  16.731s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:40.538 (  16.766s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:40.871 (  17.099s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:40.872 (  17.099s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:17:40.938 (  17.165s) [main thread     ]         EasyRender.cpp:60    INFO| Unknown key: 265
+
+2021-02-26 09:17:42.257 (  18.484s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-96.15625,"y":-191.18359375},"type":"mouse_in"}
+2021-02-26 09:17:42.291 (  18.518s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-109.78515625,"y":-191.18359375},"type":"mouse_out"}
+2021-02-26 09:17:43.409 (  19.636s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-114.73828125,"y":-157.23828125},"type":"mouse_in"}
+2021-02-26 09:17:43.877 (  20.104s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-103.2734375,"y":-153.54296875},"type":"mouse_out"}
+2021-02-26 09:17:44.544 (  20.772s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-1.28125,"y":-87.734375},"type":"mouse_in"}
+2021-02-26 09:17:44.579 (  20.806s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-51.52734375,"y":47.05078125},"type":"mouse_out"}
+2021-02-26 09:17:45.434 (  21.661s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 09:38:08.534 (   0.028s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 09:38:10.974 (   2.468s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:38:11.824 (   3.318s) [main thread     ]               main.cpp:82    INFO| {"action":1,"key":"Up","type":"keyup"}
+2021-02-26 09:38:13.680 (   5.174s) [main thread     ]         EasyRender.cpp:73    INFO| Unknown key: 259
+
+2021-02-26 09:38:13.764 (   5.258s) [main thread     ]         EasyRender.cpp:73    INFO| Unknown key: 259
+
+2021-02-26 09:38:14.697 (   6.191s) [main thread     ]         EasyRender.cpp:73    INFO| Unknown key: 259
+
+2021-02-26 09:38:14.768 (   6.262s) [main thread     ]         EasyRender.cpp:73    INFO| Unknown key: 259
+
+2021-02-26 09:38:17.078 (   8.573s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 09:59:44.774 (   0.008s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 09:59:46.028 (   1.262s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-134.47265625,"y":-129.3671875},"type":"mouse_in"}
+2021-02-26 09:59:46.045 (   1.279s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-115.41796875,"y":-114.60546875},"type":"mouse_out"}
+2021-02-26 09:59:46.427 (   1.661s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-154.64453125,"y":-106.2890625},"type":"mouse_in"}
+2021-02-26 09:59:47.246 (   2.480s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-155.18359375,"y":-108.85546875}}
+2021-02-26 09:59:47.330 (   2.564s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-155.18359375,"y":-108.85546875}}
+2021-02-26 09:59:49.017 (   4.251s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-155.18359375,"y":-108.85546875}}
+2021-02-26 09:59:49.935 (   5.169s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-155.18359375,"y":-108.85546875}}
+2021-02-26 09:59:50.670 (   5.904s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-155.18359375,"y":-109.09765625}}
+2021-02-26 09:59:51.538 (   6.772s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-155.18359375,"y":-109.09765625}}
+2021-02-26 09:59:52.139 (   7.373s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-154.94140625,"y":-109.09375}}
+2021-02-26 09:59:52.456 (   7.690s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-155.1875,"y":-108.84765625}}
+2021-02-26 09:59:53.091 (   8.325s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-141.83984375,"y":-110.05859375},"type":"mouse_out"}
+2021-02-26 09:59:53.258 (   8.492s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-11.05859375,"y":-61.109375},"type":"mouse_in"}
+2021-02-26 09:59:53.308 (   8.542s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-2.765625,"y":-60.1015625},"type":"mouse_out"}
+2021-02-26 09:59:53.743 (   8.977s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":0.2890625,"y":-9.37109375},"type":"mouse_in"}
+2021-02-26 09:59:54.660 (   9.894s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":52.46484375,"y":-52.39453125}}
+2021-02-26 09:59:57.499 (  12.733s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":51.7265625,"y":-54.5703125}}
+2021-02-26 09:59:58.151 (  13.385s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.828125}}
+2021-02-26 09:59:58.585 (  13.819s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.828125}}
+2021-02-26 09:59:58.952 (  14.186s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.82421875}}
+2021-02-26 09:59:59.353 (  14.587s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.82421875}}
+2021-02-26 09:59:59.654 (  14.888s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.8203125}}
+2021-02-26 09:59:59.904 (  15.138s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.8203125}}
+2021-02-26 10:00:00.087 (  15.321s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.81640625}}
+2021-02-26 10:00:00.188 (  15.422s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.5703125}}
+2021-02-26 10:00:00.288 (  15.522s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.8125}}
+2021-02-26 10:00:00.355 (  15.589s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.56640625}}
+2021-02-26 10:00:00.639 (  15.873s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.8046875}}
+2021-02-26 10:00:00.688 (  15.923s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.55859375}}
+2021-02-26 10:00:00.806 (  16.040s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.80078125}}
+2021-02-26 10:00:00.872 (  16.106s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.5546875}}
+2021-02-26 10:00:00.973 (  16.207s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.796875}}
+2021-02-26 10:00:01.039 (  16.273s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.796875}}
+2021-02-26 10:00:01.139 (  16.373s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.79296875}}
+2021-02-26 10:00:01.223 (  16.457s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.7890625}}
+2021-02-26 10:00:01.289 (  16.523s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":50.98828125,"y":-53.7890625}}
+2021-02-26 10:00:01.591 (  16.825s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":50.98828125,"y":-53.7890625}}
+2021-02-26 10:00:01.757 (  16.991s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":11.080078125,"y":-7.1015625},"type":"mouse_out"}
+2021-02-26 10:00:01.823 (  17.057s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":106.8828125,"y":-64.88671875},"type":"mouse_in"}
+2021-02-26 10:00:02.392 (  17.626s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":156.44140625,"y":-46.734375}}
+2021-02-26 10:00:02.709 (  17.943s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":156.44140625,"y":-46.734375}}
+2021-02-26 10:00:02.959 (  18.194s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":156.44140625,"y":-46.734375}}
+2021-02-26 10:00:03.327 (  18.561s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":156.44140625,"y":-46.734375}}
+2021-02-26 10:00:03.611 (  18.845s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":156.44140625,"y":-46.73046875}}
+2021-02-26 10:00:03.911 (  19.146s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":156.44140625,"y":-46.73046875}}
+2021-02-26 10:00:04.128 (  19.362s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":156.44140625,"y":-46.73046875}}
+2021-02-26 10:00:04.196 (  19.430s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":156.44140625,"y":-46.73046875}}
+2021-02-26 10:00:04.329 (  19.563s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":156.44140625,"y":-46.73046875}}
+2021-02-26 10:00:04.379 (  19.613s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":156.44140625,"y":-46.73046875}}
+2021-02-26 10:00:04.629 (  19.864s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":156.44140625,"y":-46.97265625}}
+2021-02-26 10:00:04.730 (  19.964s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":156.44140625,"y":-46.7265625}}
+2021-02-26 10:00:04.780 (  20.014s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":156.44140625,"y":-46.96875}}
+2021-02-26 10:00:04.879 (  20.113s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":156.44140625,"y":-46.72265625}}
+2021-02-26 10:00:04.963 (  20.198s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":156.44140625,"y":-46.96484375}}
+2021-02-26 10:00:05.047 (  20.281s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":156.44140625,"y":-46.71875}}
+2021-02-26 10:00:05.246 (  20.480s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":112.16796875,"y":-109.77734375},"type":"mouse_out"}
+2021-02-26 10:00:06.382 (  21.617s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":150.5703125,"y":-98.8046875},"type":"mouse_in"}
+2021-02-26 10:00:06.667 (  21.901s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":152.8828125,"y":-90.9453125}}
+2021-02-26 10:00:06.733 (  21.968s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":152.63671875,"y":-90.69921875}}
+2021-02-26 10:00:06.817 (  22.051s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":152.87890625,"y":-90.94140625}}
+2021-02-26 10:00:06.917 (  22.152s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":152.87890625,"y":-90.94140625}}
+2021-02-26 10:00:07.001 (  22.235s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":152.6328125,"y":-90.9375}}
+2021-02-26 10:00:07.084 (  22.318s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":152.62890625,"y":-90.69140625}}
+2021-02-26 10:00:07.150 (  22.385s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":152.62890625,"y":-90.69140625}}
+2021-02-26 10:00:07.267 (  22.501s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":152.625,"y":-90.6875}}
+2021-02-26 10:00:07.334 (  22.569s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":152.8671875,"y":-90.9296875}}
+2021-02-26 10:00:07.752 (  22.987s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:08.270 (  23.504s) [main thread     ]               main.cpp:44    INFO| {"event":"middle_click_down","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:08.687 (  23.922s) [main thread     ]               main.cpp:44    INFO| {"event":"middle_click_up","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:09.005 (  24.239s) [main thread     ]               main.cpp:44    INFO| {"event":"middle_click_down","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:09.171 (  24.406s) [main thread     ]               main.cpp:44    INFO| {"event":"middle_click_up","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:09.389 (  24.623s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:09.922 (  25.157s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:10.174 (  25.408s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:10.590 (  25.825s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:10.975 (  26.210s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:11.476 (  26.710s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:11.760 (  26.994s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:11.860 (  27.094s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:12.027 (  27.261s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:12.144 (  27.378s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:12.260 (  27.495s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:12.411 (  27.645s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.6171875,"y":-90.6796875}}
+2021-02-26 10:00:12.527 (  27.762s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.37109375,"y":-90.43359375}}
+2021-02-26 10:00:12.628 (  27.862s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.37109375,"y":-90.43359375}}
+2021-02-26 10:00:12.712 (  27.946s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.37109375,"y":-90.43359375}}
+2021-02-26 10:00:12.778 (  28.013s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.37109375,"y":-90.43359375}}
+2021-02-26 10:00:12.862 (  28.096s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.37109375,"y":-90.43359375}}
+2021-02-26 10:00:12.929 (  28.163s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.37109375,"y":-90.43359375}}
+2021-02-26 10:00:13.146 (  28.381s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_down","mouse_pos":{"x":152.37109375,"y":-90.43359375}}
+2021-02-26 10:00:13.212 (  28.446s) [main thread     ]               main.cpp:44    INFO| {"event":"right_click_up","mouse_pos":{"x":152.37109375,"y":-90.43359375}}
+2021-02-26 10:00:13.412 (  28.647s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":90.24609375,"y":-65.58984375},"type":"mouse_out"}
+2021-02-26 10:00:16.702 (  31.936s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":4.71484375,"y":17.45703125},"type":"mouse_in"}
+2021-02-26 10:00:16.736 (  31.970s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":17.05859375,"y":3.4375},"type":"mouse_out"}
+2021-02-26 10:00:17.187 (  32.421s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":13.93359375,"y":4.50390625},"type":"mouse_in"}
+2021-02-26 10:00:17.821 (  33.056s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":12.703125,"y":5.2421875}}
+2021-02-26 10:00:18.238 (  33.473s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":12.703125,"y":5.24609375}}
+2021-02-26 10:00:18.740 (  33.974s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":12.703125,"y":5.24609375}}
+2021-02-26 10:00:19.040 (  34.275s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":12.703125,"y":5.25}}
+2021-02-26 10:00:19.591 (  34.826s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":12.2109375,"y":4.52734375}}
+2021-02-26 10:00:19.808 (  35.043s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":12.2109375,"y":4.7734375}}
+2021-02-26 10:00:20.042 (  35.276s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":12.2109375,"y":4.53125}}
+2021-02-26 10:00:20.192 (  35.427s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":12.2109375,"y":4.53125}}
+2021-02-26 10:00:20.393 (  35.628s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":12.20703125,"y":4.53515625}}
+2021-02-26 10:00:20.510 (  35.744s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":12.20703125,"y":4.78125}}
+2021-02-26 10:00:20.710 (  35.944s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":12.20703125,"y":4.5390625}}
+2021-02-26 10:00:20.810 (  36.045s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":12.20703125,"y":4.54296875}}
+2021-02-26 10:00:20.927 (  36.161s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":1.72265625,"y":-4.03515625},"type":"mouse_out"}
+2021-02-26 10:00:20.977 (  36.212s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-23.08984375,"y":-39.55078125},"type":"mouse_in"}
+2021-02-26 10:00:20.993 (  36.228s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-33.26171875,"y":-56.03515625},"type":"mouse_out"}
+2021-02-26 10:00:21.528 (  36.762s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-18.27734375,"y":-51.28515625},"type":"mouse_in"}
+2021-02-26 10:00:21.912 (  37.147s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.47265625,"y":-50.25}}
+2021-02-26 10:00:22.029 (  37.264s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.71875,"y":-50.00390625}}
+2021-02-26 10:00:22.346 (  37.581s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.72265625,"y":-50.00390625}}
+2021-02-26 10:00:22.464 (  37.698s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.96875,"y":-50.0}}
+2021-02-26 10:00:22.664 (  37.899s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.96875,"y":-50.0}}
+2021-02-26 10:00:22.780 (  38.015s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.97265625,"y":-50.0}}
+2021-02-26 10:00:22.947 (  38.182s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.73046875,"y":-50.0}}
+2021-02-26 10:00:23.030 (  38.265s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.9765625,"y":-49.99609375}}
+2021-02-26 10:00:23.147 (  38.382s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.9765625,"y":-49.99609375}}
+2021-02-26 10:00:23.248 (  38.483s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:23.365 (  38.600s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:23.448 (  38.683s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:23.548 (  38.783s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:23.632 (  38.867s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:23.765 (  39.000s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:23.850 (  39.084s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:23.983 (  39.218s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:24.083 (  39.318s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:24.233 (  39.467s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:24.317 (  39.552s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:24.466 (  39.701s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:24.551 (  39.785s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:24.734 (  39.969s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:24.784 (  40.019s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:24.901 (  40.136s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:25.001 (  40.236s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:25.118 (  40.353s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:25.185 (  40.419s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:25.302 (  40.537s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:25.402 (  40.636s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:25.519 (  40.754s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:25.585 (  40.820s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-15.98046875,"y":-49.99609375}}
+2021-02-26 10:00:25.703 (  40.937s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-21.59375,"y":-52.30078125},"type":"mouse_out"}
+2021-02-26 10:00:25.836 (  41.071s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-158.7890625,"y":-113.41796875},"type":"mouse_in"}
+2021-02-26 10:00:25.852 (  41.087s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-168.28515625,"y":-115.6640625},"type":"mouse_out"}
+2021-02-26 10:00:26.037 (  41.271s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-159.96875,"y":-112.75390625},"type":"mouse_in"}
+2021-02-26 10:00:26.086 (  41.321s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-143.7890625,"y":-109.375},"type":"mouse_out"}
+2021-02-26 10:00:26.521 (  41.755s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-146.05859375,"y":-110.20703125},"type":"mouse_in"}
+2021-02-26 10:00:27.155 (  42.390s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-147.578125,"y":-110.953125}}
+2021-02-26 10:00:27.540 (  42.775s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-147.3359375,"y":-111.1953125}}
+2021-02-26 10:00:27.873 (  43.108s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":-147.3359375,"y":-111.1953125}}
+2021-02-26 10:00:27.973 (  43.208s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":-147.3359375,"y":-111.1953125}}
+2021-02-26 10:00:28.207 (  43.441s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-134.54296875,"y":-112.69921875},"type":"mouse_out"}
+2021-02-26 10:00:28.492 (  43.726s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-0.20703125,"y":4.05859375},"type":"mouse_in"}
+2021-02-26 10:00:29.075 (  44.310s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":102.5390625,"y":-12.18359375},"type":"mouse_in"}
+2021-02-26 10:00:29.109 (  44.344s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":131.79296875,"y":8.59375},"type":"mouse_out"}
+2021-02-26 10:00:29.110 (  44.344s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":88.12890625,"y":66.6953125},"type":"mouse_out"}
+2021-02-26 10:00:29.911 (  45.146s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":109.3515625,"y":102.48046875},"type":"mouse_in"}
+2021-02-26 10:00:32.566 (  47.801s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":250.37890625,"y":147.84765625}}
+2021-02-26 10:00:34.269 (  49.504s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":250.37890625,"y":148.09375}}
+2021-02-26 10:00:34.453 (  49.687s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":250.1328125,"y":147.8515625}}
+2021-02-26 10:00:34.620 (  49.855s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":250.1328125,"y":147.8515625}}
+2021-02-26 10:00:34.820 (  50.055s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":250.1328125,"y":147.8515625}}
+2021-02-26 10:00:34.920 (  50.155s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":250.1328125,"y":147.8515625}}
+2021-02-26 10:00:35.488 (  50.722s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":105.11328125,"y":-1.09375},"type":"mouse_in"}
+2021-02-26 10:00:35.522 (  50.757s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":95.25390625,"y":-3.984375},"type":"mouse_out"}
+2021-02-26 10:00:35.571 (  50.806s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":18.0625,"y":35.16015625},"type":"mouse_out"}
+2021-02-26 10:00:35.772 (  51.007s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":-5.859375,"y":7.34765625},"type":"mouse_in"}
+2021-02-26 10:00:36.924 (  52.159s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":54.73828125,"y":-51.98828125}}
+2021-02-26 10:00:37.157 (  52.392s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":54.734375,"y":-51.7421875}}
+2021-02-26 10:00:37.392 (  52.627s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":54.48828125,"y":-51.73828125}}
+2021-02-26 10:00:37.692 (  52.927s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":54.484375,"y":-51.73828125}}
+2021-02-26 10:00:37.943 (  53.178s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":54.48046875,"y":-51.98046875}}
+2021-02-26 10:00:38.277 (  53.512s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":54.48046875,"y":-51.98046875}}
+2021-02-26 10:00:38.477 (  53.712s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_down","mouse_pos":{"x":54.234375,"y":-51.98046875}}
+2021-02-26 10:00:38.694 (  53.929s) [main thread     ]               main.cpp:44    INFO| {"event":"left_click_up","mouse_pos":{"x":53.984375,"y":-52.21875}}
+2021-02-26 10:00:38.811 (  54.046s) [main thread     ]               main.cpp:44    INFO| {"pos":{"x":7.958984375,"y":-9.62109375},"type":"mouse_out"}
+2021-02-26 10:00:45.626 (  60.861s) [main thread     ]             loguru.cpp:524   INFO| atexit

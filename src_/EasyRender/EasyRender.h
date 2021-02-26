@@ -65,6 +65,7 @@ class EasyRender{
         std::vector<EasyRenderTimer *> timer_stack;
 
         static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
     public:
         struct EasyRenderGui{
@@ -108,7 +109,7 @@ class EasyRender{
         EasyRenderGui *PushGui(bool v, void (*c)());
 
         /* Key Event Creation */
-        void PushEvent(std::string key, std::string type, void (*callback)());
+        void PushEvent(std::string key, std::string type, void (*callback)(nlohmann::json));
 
 
         void SetWindowTitle(std::string w);

@@ -57,7 +57,6 @@ void EasyRender::key_callback(GLFWwindow* window, int key, int scancode, int act
         }
         else
         {
-            LOG_F(INFO, "Unknown key: %d\n", key);
             switch(key)
             {
                 case 256: keyname = "Escape"; break;
@@ -68,6 +67,10 @@ void EasyRender::key_callback(GLFWwindow* window, int key, int scancode, int act
                 case 263: keyname = "Left"; break;
                 case 262: keyname = "Right"; break;
                 default: keyname = "None";
+            }
+            if (keyname == "None")
+            {
+                LOG_F(INFO, "(key_callback) Unknown key: %d", key);
             }
         }
         ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -103,6 +106,68 @@ void EasyRender::key_callback(GLFWwindow* window, int key, int scancode, int act
                         {
                             self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
+    if (self != NULL)
+    {
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        if (!io.WantCaptureKeyboard || !io.WantCaptureMouse)
+        {
+            double_point_t m = self->GetWindowMousePosition();
+            for (int x = 0; x < self->primative_stack.size(); x++)
+            {
+                if (self->primative_stack.at(x)->properties->visable == true && self->primative_stack.at(x)->properties->mouse_over == true)
+                {
+                    if (self->primative_stack.at(x)->properties->mouse_callback != NULL)
+                    {
+                        std::string event;
+                        if (button == 0) //Left click
+                        {
+                            if (action == 0) //Up
+                            {
+                                event = "left_click_up";
+                            }
+                            else if (action == 1) //Down
+                            {
+                                event = "left_click_down";
+                            }
+                        }
+                        else if (button == 1) //Right Click
+                        {
+                            if (action == 0) //Up
+                            {
+                                event = "right_click_up";
+                            }
+                            else if (action == 1) //Down
+                            {
+                                event = "right_click_down";
+                            }
+                        }
+                        else if (button == 2) //Middle Click
+                        {
+                            if (action == 0) //Up
+                            {
+                                event = "middle_click_up";
+                            }
+                            else if (action == 1) //Down
+                            {
+                                event = "middle_click_down";
+                            }
+                        }
+                        self->primative_stack.at(x)->properties->mouse_callback(self->primative_stack.at(x), {
+                            {"event", event},
+                            {"mouse_pos", {
+                                {"x", m.x},
+                                {"y", m.y}
+                            }}
+                        });
                     }
                 }
             }
@@ -170,6 +235,14 @@ EasyRender::EasyRenderGui *EasyRender::PushGui(bool v, void (*c)())
     g->callback = c;
     gui_stack.push_back(g);
     return g;
+}
+void EasyRender::PushEvent(std::string key, std::string type, void (*callback)(nlohmann::json))
+{
+    EasyRenderEvent *e = new EasyRenderEvent;
+    e->key = key;
+    e->type = type;
+    e->callback = callback;
+    event_stack.push_back(e);
 }
 void EasyRender::SetWindowTitle(std::string w)
 {
@@ -326,7 +399,7 @@ bool EasyRender::Init(int argc, char** argv)
     }
     glfwSetWindowUserPointer(this->Window, reinterpret_cast<void *>(this));
     glfwSetKeyCallback(this->Window, this->key_callback);
-    //glfwSetMouseButtonCallback(this->Window, Xrender_mouse_button_callback);
+    glfwSetMouseButtonCallback(this->Window, this->mouse_button_callback);
     //glfwSetScrollCallback(this->Window, Xrender_scroll_callback);
     //glfwSetWindowCloseCallback(this->Window, window_close_callback);
     //glfwSetCursorPosCallback(this->Window, Xrender_cursor_position_callback);
@@ -436,6 +509,11 @@ void EasyRender::Close()
     {
         delete this->gui_stack.at(x);
         this->gui_stack.erase(this->gui_stack.begin()+x);
+    }
+    for (int x = 0; x < event_stack.size(); x++)
+    {
+        delete this->event_stack.at(x);
+        this->event_stack.erase(this->event_stack.begin()+x);
     }
     ImGui_ImplOpenGL2_Shutdown();
     ImGui_ImplGlfw_Shutdown();
