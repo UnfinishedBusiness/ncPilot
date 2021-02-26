@@ -53,7 +53,9 @@ void mouse_callback(PrimativeContainer* p, nlohmann::json e)
 }
 void view_matrix(PrimativeContainer *p)
 {
-    p->properties->scale = zoom;
+    p->properties->scale = globals->zoom;
+    p->properties->offset[0] = globals->pan.x;
+    p->properties->offset[1] = globals->pan.y;
 }
 bool fps_timer()
 {
@@ -78,25 +80,46 @@ void test_dialog()
 void zoom_handle(nlohmann::json e)
 {
     LOG_F(INFO, "%s", e.dump().c_str());
+    double_point_t matrix_mouse = renderer->GetWindowMousePosition();
+    matrix_mouse.x = (matrix_mouse.x - globals->pan.x) / globals->zoom;
+    matrix_mouse.y = (matrix_mouse.y - globals->pan.y) / globals->zoom;
     if ((float)e["scroll"] > 0)
     {
-        zoom += zoom * 0.1;
+        double old_zoom = globals->zoom;
+        globals->zoom += globals->zoom * 0.125;
+        if (globals->zoom > 1000000)
+        {
+            globals->zoom = 1000000;
+        }
+        double scalechange = old_zoom - globals->zoom;
+        globals->pan.x += matrix_mouse.x * scalechange;
+        globals->pan.y += matrix_mouse.y * scalechange; 
     }
     else
     {
-        zoom -= zoom * 0.1;
+        double old_zoom = globals->zoom;
+        globals->zoom += globals->zoom * -0.125;
+        if (globals->zoom < 0.00001)
+        {
+            globals->zoom = 0.00001;
+        }
+        double scalechange = old_zoom - globals->zoom;
+        globals->pan.x += matrix_mouse.x * scalechange;
+        globals->pan.y += matrix_mouse.y * scalechange; 
     }
 }
 int main(int argc, char **argv)
 {
+    globals = new global_variables_t;
+    globals->zoom = 1;
+    globals->pan.x = 0;
+    globals->pan.y = 0;
+
     renderer = new EasyRender();
 
     renderer->Init(argc, argv);
 
-    Line *l = renderer->PushPrimative(new Line({0, 0}, {100, 100}));
-    l->properties->scale = 0.5;
-    l->properties->offset[0] = 50;
-    l->properties->offset[1] = -50;
+    Line *l = renderer->PushPrimative(new Line({60, 40}, {100, 100}));
     l->properties->mouse_callback = &mouse_callback;
     l->properties->matrix_callback = &view_matrix;
 
@@ -136,5 +159,6 @@ int main(int argc, char **argv)
 
     renderer->Close();
     delete renderer;
+    delete globals;
     return 0;
 }
