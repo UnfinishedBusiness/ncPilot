@@ -210,6 +210,35 @@ void EasyRender::scroll_callback(GLFWwindow* window, double xoffset, double yoff
         }
     }
 }
+void EasyRender::cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
+    if (self != NULL)
+    {
+        double_point_t m = self->GetWindowMousePosition();
+        for (int x = 0; x < self->event_stack.size(); x++)
+        {
+            if (self->event_stack.at(x)->type == "mouse_move")
+            {
+                self->event_stack.at(x)->callback({{"pos",{{"x", m.x},{"y", m.y}}}});
+            }
+        }
+    }
+}
+void EasyRender::window_size_callback(GLFWwindow* window, int width, int height)
+{
+    EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
+    if (self != NULL)
+    {
+        for (int x = 0; x < self->event_stack.size(); x++)
+        {
+            if (self->event_stack.at(x)->type == "window_resize")
+            {
+                self->event_stack.at(x)->callback({{"size",{{"width", width},{"height", height}}}});
+            }
+        }
+    }
+}
 /*
     Each primative type must have a method
 */
@@ -437,8 +466,8 @@ bool EasyRender::Init(int argc, char** argv)
     glfwSetMouseButtonCallback(this->Window, this->mouse_button_callback);
     glfwSetScrollCallback(this->Window, this->scroll_callback);
     //glfwSetWindowCloseCallback(this->Window, window_close_callback);
-    //glfwSetCursorPosCallback(this->Window, Xrender_cursor_position_callback);
-    //glfwSetWindowSizeCallback(this->Window, Xrender_window_size_callback);
+    glfwSetCursorPosCallback(this->Window, this->cursor_position_callback);
+    glfwSetWindowSizeCallback(this->Window, this->window_size_callback);
     glfwMakeContextCurrent(this->Window);
     glfwSwapInterval(1); // Enable vsync
     //Set calbacks here

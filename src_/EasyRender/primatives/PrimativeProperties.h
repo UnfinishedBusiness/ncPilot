@@ -12,6 +12,7 @@ class PrimativeProperties{
     public:
         bool visable;
         bool mouse_over;
+        float mouse_over_padding;
         int zindex;
         float color[4];
         float offset[3];
@@ -39,6 +40,7 @@ class PrimativeProperties{
             this->angle = 0;
             this->id = "";
             this->mouse_over = false;
+            this->mouse_over_padding = 10;
             this->data = NULL;
             this->mouse_callback = NULL;
             this->matrix_callback = NULL;
