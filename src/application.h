@@ -46,7 +46,7 @@ struct global_variables_t{
     double_point_t pan;
     double_point_t mouse_pos_in_screen_coordinates;
     double_point_t mouse_pos_in_matrix_coordinates;
-    //Xrender_core_t *Xcore;
+    EasyRender *renderer;
     preferences_data_t preferences;
     //Xrender_object_t *machine_plane;
     //Xrender_object_t *cuttable_plane;

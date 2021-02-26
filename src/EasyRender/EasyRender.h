@@ -56,6 +56,9 @@ class EasyRender{
         int WindowSize[2];
         bool ShowCursor;
         bool AutoMaximize;
+        bool ShowFPS;
+        Text *FPS_Label;
+        std::vector<float> FPS_Average;
         char* GuiIniFileName;
         char* GuiLogFileName;
         std::string MainLogFileName;
@@ -95,6 +98,8 @@ class EasyRender{
             this->SetMainLogFileName("EasyRender.log");
             this->SetGuiStyle("light");
             this->SetClearColor(21, 22, 34);
+            this->SetShowFPS(false);
+            this->FPS_Label = NULL;
         };
         /* Primative Creation */
         Line* PushPrimative(Line* l);
@@ -124,11 +129,13 @@ class EasyRender{
         void SetMainLogFileName(std::string l);
         void SetGuiStyle(std::string s);
         void SetClearColor(float r, float g, float b);
+        void SetShowFPS(bool show_fps);
         static unsigned long Millis();
         static void Delay(unsigned long ms);
         std::string GetEvironmentVariable(const std::string & var);
         std::string GetConfigDirectory();
         double_point_t GetWindowMousePosition();
+        double_point_t GetWindowSize();
         uint8_t GetFramesPerSecond();
         void SetColorByName(float *c, std::string color);
         bool Init(int argc, char** argv);

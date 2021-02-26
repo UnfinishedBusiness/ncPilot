@@ -10869,3 +10869,296 @@ date       time         ( uptime  ) [ thread name/id ]                   file:li
 2021-02-26 13:08:54.275 (  12.087s) [main thread     ]               main.cpp:82    INFO| {"scroll":-4.415069580078125}
 2021-02-26 13:08:54.293 (  12.105s) [main thread     ]               main.cpp:82    INFO| {"scroll":-5.8315582275390625}
 2021-02-26 13:08:55.296 (  13.107s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 13:20:01.545 (   0.018s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+Stack trace:
+6                  0x1 10  ???                                 0x0000000000000001 0x0 + 1
+5       0x7fff6bb4b015 start + 1
+4          0x10cd03c84 main + 5140
+3          0x10ca21845 EasyRender::Poll(bool) + 1621
+2          0x10cd02057 fps_timer() + 23
+1       0x7fff410dfa3b _DPSNextEvent + 2085
+0       0x7fff6be59f5a _sigtramp + 26
+2021-02-26 13:20:03.896 (   2.369s) [main thread     ]                       :0     FATL| Signal: SIGSEGV
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 13:21:58.539 (   0.033s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 13:22:01.518 (   3.012s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":38.8984375,"y":48.421875},"type":"mouse_in"}
+2021-02-26 13:22:01.551 (   3.045s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":40.04296875,"y":7.48828125},"type":"mouse_out"}
+2021-02-26 13:22:01.552 (   3.046s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:22:01.602 (   3.096s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.65771484375}
+2021-02-26 13:22:01.652 (   3.147s) [main thread     ]               main.cpp:81    INFO| {"scroll":-2.3407745361328125}
+2021-02-26 13:22:01.686 (   3.180s) [main thread     ]               main.cpp:81    INFO| {"scroll":-3.8153533935546875}
+2021-02-26 13:22:01.701 (   3.195s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-7.131545066833496,"y":-52.44845199584961},"type":"mouse_in"}
+2021-02-26 13:22:01.723 (   3.217s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-29.328964233398438,"y":-57.09984588623047},"type":"mouse_out"}
+2021-02-26 13:22:01.753 (   3.247s) [main thread     ]               main.cpp:81    INFO| {"scroll":-4.7149810791015625}
+2021-02-26 13:22:02.573 (   4.067s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:22:02.605 (   4.099s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.938385009765625}
+2021-02-26 13:22:02.634 (   4.128s) [main thread     ]               main.cpp:81    INFO| {"scroll":-3.63409423828125}
+2021-02-26 13:22:02.643 (   4.137s) [main thread     ]               main.cpp:81    INFO| {"scroll":-5.31842041015625}
+2021-02-26 13:22:02.676 (   4.170s) [main thread     ]               main.cpp:81    INFO| {"scroll":-6.0293731689453125}
+2021-02-26 13:22:02.709 (   4.203s) [main thread     ]               main.cpp:81    INFO| {"scroll":-6.6622467041015625}
+2021-02-26 13:22:02.736 (   4.230s) [main thread     ]               main.cpp:81    INFO| {"scroll":-7.1556854248046875}
+2021-02-26 13:22:03.544 (   5.038s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-219.2823028564453,"y":-86.55810546875},"type":"mouse_in"}
+2021-02-26 13:22:03.962 (   5.456s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-125.7846908569336,"y":-96.8562240600586},"type":"mouse_out"}
+2021-02-26 13:22:04.063 (   5.557s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-131.9131317138672,"y":-95.6150131225586},"type":"mouse_in"}
+2021-02-26 13:22:04.173 (   5.667s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-171.3407745361328,"y":-131.28025817871094},"type":"mouse_out"}
+2021-02-26 13:22:05.701 (   7.195s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-131.56405639648438,"y":-234.12570190429688},"type":"mouse_in"}
+2021-02-26 13:22:05.792 (   7.286s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-127.56892395019531,"y":-216.94277954101563},"type":"mouse_out"}
+2021-02-26 13:22:07.831 (   9.325s) [main thread     ]               main.cpp:81    INFO| {"scroll":0.100006103515625}
+2021-02-26 13:22:07.846 (   9.340s) [main thread     ]               main.cpp:81    INFO| {"scroll":1.0000152587890625}
+2021-02-26 13:22:07.865 (   9.359s) [main thread     ]               main.cpp:81    INFO| {"scroll":3.99407958984375}
+2021-02-26 13:22:07.879 (   9.374s) [main thread     ]               main.cpp:81    INFO| {"scroll":5.6378631591796875}
+2021-02-26 13:22:07.898 (   9.392s) [main thread     ]               main.cpp:81    INFO| {"scroll":6.5111541748046875}
+2021-02-26 13:22:07.908 (   9.402s) [main thread     ]               main.cpp:81    INFO| {"scroll":7.214263916015625}
+2021-02-26 13:22:07.919 (   9.413s) [main thread     ]               main.cpp:81    INFO| {"scroll":7.8264923095703125}
+2021-02-26 13:22:07.947 (   9.441s) [main thread     ]               main.cpp:81    INFO| {"scroll":8.311996459960938}
+2021-02-26 13:22:08.223 (   9.717s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-105.29088592529297,"y":-205.6727752685547},"type":"mouse_in"}
+2021-02-26 13:22:08.265 (   9.759s) [main thread     ]               main.cpp:81    INFO| {"scroll":0.100006103515625}
+2021-02-26 13:22:08.277 (   9.771s) [main thread     ]               main.cpp:81    INFO| {"scroll":0.9998931884765625}
+2021-02-26 13:22:08.292 (   9.787s) [main thread     ]               main.cpp:81    INFO| {"scroll":9.751876831054688}
+2021-02-26 13:22:08.315 (   9.809s) [main thread     ]               main.cpp:81    INFO| {"scroll":13.831878662109375}
+2021-02-26 13:22:08.347 (   9.841s) [main thread     ]               main.cpp:81    INFO| {"scroll":7.826385498046875}
+2021-02-26 13:22:08.967 (  10.461s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-77.6882095336914,"y":-218.99266052246094},"type":"mouse_out"}
+2021-02-26 13:22:09.483 (  10.977s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:22:09.496 (  10.990s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.940185546875}
+2021-02-26 13:22:09.517 (  11.011s) [main thread     ]               main.cpp:81    INFO| {"scroll":-3.63507080078125}
+2021-02-26 13:22:09.530 (  11.024s) [main thread     ]               main.cpp:81    INFO| {"scroll":-5.47119140625}
+2021-02-26 13:22:09.550 (  11.045s) [main thread     ]               main.cpp:81    INFO| {"scroll":-6.26763916015625}
+2021-02-26 13:22:09.565 (  11.059s) [main thread     ]               main.cpp:81    INFO| {"scroll":-6.966278076171875}
+2021-02-26 13:22:09.584 (  11.078s) [main thread     ]               main.cpp:81    INFO| {"scroll":-7.6119537353515625}
+2021-02-26 13:22:09.600 (  11.094s) [main thread     ]               main.cpp:81    INFO| {"scroll":-8.110305786132813}
+2021-02-26 13:22:09.833 (  11.328s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-158.47683715820313,"y":-300.99658203125},"type":"mouse_in"}
+2021-02-26 13:22:09.867 (  11.361s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-296.9675598144531,"y":-283.686767578125},"type":"mouse_out"}
+2021-02-26 13:22:11.955 (  13.449s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:22:11.989 (  13.483s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.8424530029296875}
+2021-02-26 13:22:12.004 (  13.498s) [main thread     ]               main.cpp:81    INFO| {"scroll":-3.4339447021484375}
+2021-02-26 13:22:12.038 (  13.532s) [main thread     ]               main.cpp:81    INFO| {"scroll":-5.134368896484375}
+2021-02-26 13:22:12.055 (  13.550s) [main thread     ]               main.cpp:81    INFO| {"scroll":-6.09320068359375}
+2021-02-26 13:22:12.070 (  13.565s) [main thread     ]               main.cpp:81    INFO| {"scroll":-6.7216796875}
+2021-02-26 13:22:12.089 (  13.583s) [main thread     ]               main.cpp:81    INFO| {"scroll":-7.381439208984375}
+2021-02-26 13:22:12.104 (  13.598s) [main thread     ]               main.cpp:81    INFO| {"scroll":-7.9649200439453125}
+2021-02-26 13:22:12.122 (  13.617s) [main thread     ]               main.cpp:81    INFO| {"scroll":-8.877792358398438}
+2021-02-26 13:22:12.923 (  14.418s) [main thread     ]               main.cpp:81    INFO| {"scroll":0.100006103515625}
+2021-02-26 13:22:12.940 (  14.434s) [main thread     ]               main.cpp:81    INFO| {"scroll":1.0001373291015625}
+2021-02-26 13:22:12.958 (  14.452s) [main thread     ]               main.cpp:81    INFO| {"scroll":4.2030487060546875}
+2021-02-26 13:22:12.973 (  14.467s) [main thread     ]               main.cpp:81    INFO| {"scroll":5.7342529296875}
+2021-02-26 13:22:12.973 (  14.468s) [main thread     ]               main.cpp:81    INFO| {"scroll":6.600982666015625}
+2021-02-26 13:22:12.991 (  14.485s) [main thread     ]               main.cpp:81    INFO| {"scroll":15.283157348632813}
+2021-02-26 13:22:13.024 (  14.519s) [main thread     ]               main.cpp:81    INFO| {"scroll":8.460479736328125}
+2021-02-26 13:22:13.041 (  14.535s) [main thread     ]               main.cpp:81    INFO| {"scroll":9.195449829101563}
+2021-02-26 13:22:13.308 (  14.802s) [main thread     ]               main.cpp:81    INFO| {"scroll":0.100006103515625}
+2021-02-26 13:22:13.308 (  14.803s) [main thread     ]               main.cpp:81    INFO| {"scroll":1.0817718505859375}
+2021-02-26 13:22:13.324 (  14.818s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-133.6087188720703,"y":-283.18603515625},"type":"mouse_in"}
+2021-02-26 13:22:13.325 (  14.819s) [main thread     ]               main.cpp:81    INFO| {"scroll":4.2040252685546875}
+2021-02-26 13:22:13.325 (  14.819s) [main thread     ]               main.cpp:81    INFO| {"scroll":5.8318939208984375}
+2021-02-26 13:22:13.341 (  14.835s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-139.31011962890625,"y":-261.58062744140625},"type":"mouse_out"}
+2021-02-26 13:22:13.341 (  14.836s) [main thread     ]               main.cpp:81    INFO| {"scroll":6.69171142578125}
+2021-02-26 13:22:13.357 (  14.852s) [main thread     ]               main.cpp:81    INFO| {"scroll":7.3619384765625}
+2021-02-26 13:22:13.624 (  15.119s) [main thread     ]               main.cpp:81    INFO| {"scroll":0.100006103515625}
+2021-02-26 13:22:13.625 (  15.119s) [main thread     ]               main.cpp:81    INFO| {"scroll":1.0817413330078125}
+2021-02-26 13:22:13.642 (  15.136s) [main thread     ]               main.cpp:81    INFO| {"scroll":4.2038421630859375}
+2021-02-26 13:22:13.658 (  15.153s) [main thread     ]               main.cpp:81    INFO| {"scroll":12.523941040039063}
+2021-02-26 13:22:13.676 (  15.170s) [main thread     ]               main.cpp:81    INFO| {"scroll":7.382965087890625}
+2021-02-26 13:22:13.692 (  15.187s) [main thread     ]               main.cpp:81    INFO| {"scroll":7.9847564697265625}
+2021-02-26 13:22:14.042 (  15.537s) [main thread     ]               main.cpp:81    INFO| {"scroll":1.1401214599609375}
+2021-02-26 13:22:14.059 (  15.554s) [main thread     ]               main.cpp:81    INFO| {"scroll":10.110336303710938}
+2021-02-26 13:22:14.076 (  15.570s) [main thread     ]               main.cpp:81    INFO| {"scroll":14.181442260742188}
+2021-02-26 13:22:14.094 (  15.588s) [main thread     ]               main.cpp:81    INFO| {"scroll":8.063720703125}
+2021-02-26 13:22:14.576 (  16.071s) [main thread     ]               main.cpp:81    INFO| {"scroll":1.20281982421875}
+2021-02-26 13:22:14.595 (  16.089s) [main thread     ]               main.cpp:81    INFO| {"scroll":10.112258911132813}
+2021-02-26 13:22:14.611 (  16.105s) [main thread     ]               main.cpp:81    INFO| {"scroll":6.7149505615234375}
+2021-02-26 13:22:14.628 (  16.123s) [main thread     ]               main.cpp:81    INFO| {"scroll":7.382904052734375}
+2021-02-26 13:22:14.644 (  16.138s) [main thread     ]               main.cpp:81    INFO| {"scroll":7.984771728515625}
+2021-02-26 13:22:14.662 (  16.157s) [main thread     ]               main.cpp:81    INFO| {"scroll":8.479324340820313}
+2021-02-26 13:22:15.044 (  16.539s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:22:15.063 (  16.557s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.919921875}
+2021-02-26 13:22:15.063 (  16.557s) [main thread     ]               main.cpp:81    INFO| {"scroll":-3.993255615234375}
+2021-02-26 13:22:15.097 (  16.592s) [main thread     ]               main.cpp:81    INFO| {"scroll":-5.6374053955078125}
+2021-02-26 13:22:15.098 (  16.592s) [main thread     ]               main.cpp:81    INFO| {"scroll":-6.5107269287109375}
+2021-02-26 13:22:15.098 (  16.592s) [main thread     ]               main.cpp:81    INFO| {"scroll":-7.2978668212890625}
+2021-02-26 13:22:15.111 (  16.605s) [main thread     ]               main.cpp:81    INFO| {"scroll":-7.984375}
+2021-02-26 13:22:15.111 (  16.606s) [main thread     ]               main.cpp:81    INFO| {"scroll":-8.558502197265625}
+2021-02-26 13:22:15.126 (  16.621s) [main thread     ]               main.cpp:81    INFO| {"scroll":-9.388015747070313}
+2021-02-26 13:22:27.031 (  28.526s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-135.6682891845703,"y":-130.0785369873047},"type":"mouse_in"}
+2021-02-26 13:22:27.098 (  28.593s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-128.18724060058594,"y":-121.5090560913086},"type":"mouse_out"}
+2021-02-26 13:22:27.333 (  28.827s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-130.06045532226563,"y":-122.04144287109375},"type":"mouse_in"}
+2021-02-26 13:22:27.767 (  29.262s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-127.9703369140625,"y":-121.28821563720703},"type":"mouse_out"}
+2021-02-26 13:22:28.068 (  29.563s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-34.63262939453125,"y":-28.624868392944336},"type":"mouse_in"}
+2021-02-26 13:22:28.368 (  29.863s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-23.866535186767578,"y":-21.6446533203125},"type":"mouse_out"}
+2021-02-26 13:22:28.503 (  29.997s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":77.18489837646484,"y":39.000404357910156},"type":"mouse_in"}
+2021-02-26 13:22:28.686 (  30.181s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":71.16297912597656,"y":41.31925582885742},"type":"mouse_in"}
+2021-02-26 13:22:29.054 (  30.548s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":59.2216911315918,"y":56.00925827026367},"type":"mouse_out"}
+2021-02-26 13:22:29.071 (  30.566s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":61.236881256103516,"y":60.40639877319336},"type":"mouse_out"}
+2021-02-26 13:22:29.105 (  30.599s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":62.554054260253906,"y":62.007511138916016},"type":"mouse_in"}
+2021-02-26 13:22:29.573 (  31.067s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":75.21702575683594,"y":55.72137451171875},"type":"mouse_in"}
+2021-02-26 13:22:29.607 (  31.102s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":38.860755920410156,"y":14.684016227722168},"type":"mouse_out"}
+2021-02-26 13:22:29.621 (  31.116s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":38.860755920410156,"y":14.684016227722168},"type":"mouse_out"}
+2021-02-26 13:22:29.922 (  31.417s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-19.50094223022461,"y":-35.092411041259766},"type":"mouse_in"}
+2021-02-26 13:22:30.157 (  31.652s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-30.19605255126953,"y":-42.02924728393555},"type":"mouse_out"}
+2021-02-26 13:22:30.358 (  31.852s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-132.63565063476563,"y":-128.18560791015625},"type":"mouse_in"}
+2021-02-26 13:22:30.391 (  31.886s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-138.90206909179688,"y":-134.08526611328125},"type":"mouse_out"}
+2021-02-26 13:22:30.608 (  32.103s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-130.79002380371094,"y":-133.41879272460938},"type":"mouse_in"}
+2021-02-26 13:22:31.177 (  32.671s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-131.07791137695313,"y":-135.26046752929688},"type":"mouse_out"}
+2021-02-26 13:22:31.542 (  33.036s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-230.9107666015625,"y":-292.73333740234375},"type":"mouse_in"}
+2021-02-26 13:22:31.575 (  33.069s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-232.87863159179688,"y":-305.31744384765625},"type":"mouse_out"}
+2021-02-26 13:22:32.292 (  33.786s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-210.69180297851563,"y":-304.3157653808594},"type":"mouse_in"}
+2021-02-26 13:22:32.347 (  33.841s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-210.69180297851563,"y":-292.9857177734375},"type":"mouse_out"}
+2021-02-26 13:22:32.714 (  34.209s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-84.69300079345703,"y":-2.7310292720794678},"type":"mouse_in"}
+2021-02-26 13:22:32.761 (  34.256s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-70.4052505493164,"y":15.98935604095459},"type":"mouse_out"}
+2021-02-26 13:22:33.016 (  34.510s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-55.71524429321289,"y":-7.676334381103516},"type":"mouse_in"}
+2021-02-26 13:22:33.349 (  34.844s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-42.902408599853516,"y":-5.274667263031006},"type":"mouse_out"}
+2021-02-26 13:22:33.651 (  35.146s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":20.708253860473633,"y":33.81059646606445},"type":"mouse_in"}
+2021-02-26 13:22:34.019 (  35.513s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":56.43354797363281,"y":57.31854248046875},"type":"mouse_out"}
+2021-02-26 13:22:34.083 (  35.577s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":66.58443450927734,"y":65.39114379882813},"type":"mouse_in"}
+2021-02-26 13:22:34.516 (  36.011s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":58.21212387084961,"y":56.09601593017578},"type":"mouse_out"}
+2021-02-26 13:22:34.554 (  36.049s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":54.83638000488281,"y":52.40478515625},"type":"mouse_in"}
+2021-02-26 13:22:34.831 (  36.326s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":33.836578369140625,"y":15.393869400024414},"type":"mouse_out"}
+2021-02-26 13:22:35.065 (  36.560s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-23.554988861083984,"y":-29.52401351928711},"type":"mouse_in"}
+2021-02-26 13:22:35.148 (  36.642s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-31.05970573425293,"y":-35.22649383544922},"type":"mouse_out"}
+2021-02-26 13:22:35.674 (  37.169s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-122.70954132080078,"y":-135.57595825195313},"type":"mouse_in"}
+2021-02-26 13:22:35.706 (  37.201s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-127.15400695800781,"y":-142.7257537841797},"type":"mouse_out"}
+2021-02-26 13:22:36.033 (  37.528s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-123.51404571533203,"y":-143.5972900390625},"type":"mouse_in"}
+2021-02-26 13:22:36.417 (  37.912s) [main thread     ]               main.cpp:43    INFO| {"pos":{"x":-128.22666931152344,"y":-120.59807586669922},"type":"mouse_out"}
+2021-02-26 13:22:37.657 (  39.152s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 13:25:35.617 (   0.032s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 13:25:48.949 (  13.365s) [main thread     ]           menu_bar.cpp:13    INFO| File->Open
+2021-02-26 13:25:50.887 (  15.302s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:25:51.304 (  15.720s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:25:51.340 (  15.756s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.6937255859375}
+2021-02-26 13:25:51.371 (  15.787s) [main thread     ]               main.cpp:81    INFO| {"scroll":-2.9941864013671875}
+2021-02-26 13:25:51.405 (  15.820s) [main thread     ]               main.cpp:81    INFO| {"scroll":-4.417572021484375}
+2021-02-26 13:25:51.470 (  15.886s) [main thread     ]               main.cpp:81    INFO| {"scroll":-4.9854736328125}
+2021-02-26 13:25:51.572 (  15.987s) [main thread     ]               main.cpp:81    INFO| {"scroll":0.7859039306640625}
+2021-02-26 13:25:51.620 (  16.036s) [main thread     ]               main.cpp:81    INFO| {"scroll":1.3354339599609375}
+2021-02-26 13:25:51.638 (  16.053s) [main thread     ]               main.cpp:81    INFO| {"scroll":4.4698486328125}
+2021-02-26 13:25:51.655 (  16.070s) [main thread     ]               main.cpp:81    INFO| {"scroll":5.7831573486328125}
+2021-02-26 13:25:51.688 (  16.103s) [main thread     ]               main.cpp:81    INFO| {"scroll":6.4668121337890625}
+2021-02-26 13:25:51.739 (  16.154s) [main thread     ]               main.cpp:81    INFO| {"scroll":6.763092041015625}
+2021-02-26 13:25:51.805 (  16.220s) [main thread     ]               main.cpp:81    INFO| {"scroll":7.02606201171875}
+2021-02-26 13:25:51.905 (  16.321s) [main thread     ]               main.cpp:81    INFO| {"scroll":6.7725677490234375}
+2021-02-26 13:25:52.088 (  16.504s) [main thread     ]               main.cpp:81    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:25:52.105 (  16.521s) [main thread     ]               main.cpp:81    INFO| {"scroll":-1.00006103515625}
+2021-02-26 13:25:52.138 (  16.554s) [main thread     ]               main.cpp:81    INFO| {"scroll":-3.8394775390625}
+2021-02-26 13:25:52.139 (  16.555s) [main thread     ]               main.cpp:81    INFO| {"scroll":-5.5655975341796875}
+2021-02-26 13:25:52.172 (  16.588s) [main thread     ]               main.cpp:81    INFO| {"scroll":-6.1802978515625}
+2021-02-26 13:25:52.322 (  16.738s) [main thread     ]               main.cpp:81    INFO| {"scroll":0.100006103515625}
+2021-02-26 13:25:52.339 (  16.755s) [main thread     ]               main.cpp:81    INFO| {"scroll":1.0407257080078125}
+2021-02-26 13:25:52.373 (  16.789s) [main thread     ]               main.cpp:81    INFO| {"scroll":3.8908843994140625}
+2021-02-26 13:25:52.390 (  16.805s) [main thread     ]               main.cpp:81    INFO| {"scroll":5.4947357177734375}
+2021-02-26 13:25:52.423 (  16.839s) [main thread     ]               main.cpp:81    INFO| {"scroll":6.05108642578125}
+2021-02-26 13:25:53.994 (  18.410s) [main thread     ]           menu_bar.cpp:13    INFO| File->Open
+2021-02-26 13:25:58.428 (  22.844s) [main thread     ]           menu_bar.cpp:13    INFO| File->Open
+2021-02-26 13:26:00.488 (  24.904s) [main thread     ]           menu_bar.cpp:35    INFO| Edit->Preferences
+2021-02-26 13:26:02.055 (  26.471s) [main thread     ]           menu_bar.cpp:41    INFO| Edit->Machine Parameters
+2021-02-26 13:26:03.627 (  28.043s) [main thread     ]           menu_bar.cpp:65    INFO| Workbench->Machine
+2021-02-26 13:26:05.064 (  29.480s) [main thread     ]           menu_bar.cpp:70    INFO| Workbench->Design
+2021-02-26 13:26:07.217 (  31.633s) [main thread     ]           menu_bar.cpp:83    INFO| Help->Documentation
+2021-02-26 13:26:08.414 (  32.830s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 13:35:56.186 (   0.014s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 13:36:06.687 (  10.516s) [main thread     ]           menu_bar.cpp:26    INFO| Edit->Close
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 13:41:46.558 (   0.017s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 13:41:53.895 (   7.355s) [main thread     ]           menu_bar.cpp:13    INFO| File->Open
+2021-02-26 13:41:54.964 (   8.423s) [main thread     ]           menu_bar.cpp:26    INFO| Edit->Close
+2021-02-26 13:41:59.100 (  12.560s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 13:50:17.915 (   0.034s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 13:50:21.191 (   3.310s) [main thread     ]               main.cpp:59    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:50:21.223 (   3.342s) [main thread     ]               main.cpp:59    INFO| {"scroll":-0.9201812744140625}
+2021-02-26 13:50:21.241 (   3.359s) [main thread     ]               main.cpp:59    INFO| {"scroll":-3.6350555419921875}
+2021-02-26 13:50:21.257 (   3.376s) [main thread     ]               main.cpp:59    INFO| {"scroll":-5.4706573486328125}
+2021-02-26 13:50:21.291 (   3.410s) [main thread     ]               main.cpp:59    INFO| {"scroll":-6.179779052734375}
+2021-02-26 13:50:21.323 (   3.442s) [main thread     ]               main.cpp:59    INFO| {"scroll":-6.662353515625}
+2021-02-26 13:50:21.424 (   3.543s) [main thread     ]               main.cpp:59    INFO| {"scroll":0.5018310546875}
+2021-02-26 13:50:21.458 (   3.577s) [main thread     ]               main.cpp:59    INFO| {"scroll":1.5498199462890625}
+2021-02-26 13:50:21.474 (   3.593s) [main thread     ]               main.cpp:59    INFO| {"scroll":4.6848602294921875}
+2021-02-26 13:50:21.509 (   3.627s) [main thread     ]               main.cpp:59    INFO| {"scroll":5.6855010986328125}
+2021-02-26 13:50:21.541 (   3.660s) [main thread     ]               main.cpp:59    INFO| {"scroll":6.3773956298828125}
+2021-02-26 13:50:21.575 (   3.693s) [main thread     ]               main.cpp:59    INFO| {"scroll":6.8231658935546875}
+2021-02-26 13:50:23.579 (   5.697s) [main thread     ]           menu_bar.cpp:26    INFO| Edit->Close
+2021-02-26 13:50:23.638 (   5.757s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 13:50:35.713 (   0.014s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 13:50:39.201 (   3.502s) [main thread     ]             loguru.cpp:524   INFO| atexit
+
+
+
+
+
+arguments: ./ncPilot
+Current dir: /Users/travis/Documents/Projects/ncPilot
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2021-02-26 13:50:49.239 (   0.006s) [main thread     ]             loguru.cpp:825   INFO| Logging to 'EasyRender.log', mode: 'a', verbosity: 9
+2021-02-26 13:50:59.563 (  10.331s) [main thread     ]               main.cpp:59    INFO| {"scroll":-0.100006103515625}
+2021-02-26 13:50:59.597 (  10.365s) [main thread     ]               main.cpp:59    INFO| {"scroll":-0.842498779296875}
+2021-02-26 13:50:59.597 (  10.365s) [main thread     ]               main.cpp:59    INFO| {"scroll":-3.636138916015625}
+2021-02-26 13:50:59.630 (  10.398s) [main thread     ]               main.cpp:59    INFO| {"scroll":-5.320037841796875}
+2021-02-26 13:50:59.646 (  10.414s) [main thread     ]               main.cpp:59    INFO| {"scroll":-6.180419921875}
+2021-02-26 13:50:59.680 (  10.448s) [main thread     ]               main.cpp:59    INFO| {"scroll":-6.742828369140625}
+2021-02-26 13:50:59.914 (  10.682s) [main thread     ]               main.cpp:59    INFO| {"scroll":0.100006103515625}
+2021-02-26 13:50:59.947 (  10.715s) [main thread     ]               main.cpp:59    INFO| {"scroll":4.914947509765625}
+2021-02-26 13:50:59.964 (  10.732s) [main thread     ]               main.cpp:59    INFO| {"scroll":5.6612548828125}
+2021-02-26 13:50:59.981 (  10.748s) [main thread     ]               main.cpp:59    INFO| {"scroll":6.4439697265625}
+2021-02-26 13:50:59.998 (  10.766s) [main thread     ]               main.cpp:59    INFO| {"scroll":7.1311798095703125}
+2021-02-26 13:51:00.014 (  10.782s) [main thread     ]               main.cpp:59    INFO| {"scroll":7.6698760986328125}
+2021-02-26 13:51:13.206 (  23.974s) [main thread     ]           menu_bar.cpp:26    INFO| Edit->Close
+2021-02-26 13:51:13.262 (  24.030s) [main thread     ]             loguru.cpp:524   INFO| atexit

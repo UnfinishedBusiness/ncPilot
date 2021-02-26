@@ -1,17 +1,14 @@
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "application.h"
 #include "EasyRender/EasyRender.h"
 #include "EasyRender/logging/loguru.h"
 #include "EasyRender/gui/imgui.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include "menu_bar/menu_bar.h"
 
-EasyRender *renderer;
 global_variables_t *globals;
 
-Text *fps;
-
-float zoom = 1;
 
 //Xrender_object_t *performance_label;
 //std::vector<int> performance_average;
@@ -44,11 +41,11 @@ void mouse_callback(PrimativeContainer* p, nlohmann::json e)
     LOG_F(INFO, "%s", e.dump().c_str());
     if (e["type"] == "mouse_in")
     {
-        renderer->SetColorByName(p->properties->color, "green");
+        globals->renderer->SetColorByName(p->properties->color, "green");
     }
     if (e["type"] == "mouse_out")
     {
-        renderer->SetColorByName(p->properties->color, "white");
+        globals->renderer->SetColorByName(p->properties->color, "white");
     }
 }
 void view_matrix(PrimativeContainer *p)
@@ -57,30 +54,10 @@ void view_matrix(PrimativeContainer *p)
     p->properties->offset[0] = globals->pan.x;
     p->properties->offset[1] = globals->pan.y;
 }
-bool fps_timer()
-{
-    fps->textval = std::to_string(renderer->GetFramesPerSecond());
-    return true;
-}
-EasyRender::EasyRenderGui *w;
-void test_dialog()
-{
-    ImGui::Begin("Question?", &w->visable, ImGuiWindowFlags_AlwaysAutoResize);
-    if (ImGui::Button("Yes"))
-    {
-        
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("No"))
-    {
-        
-    }
-    ImGui::End();
-}
 void zoom_handle(nlohmann::json e)
 {
     LOG_F(INFO, "%s", e.dump().c_str());
-    double_point_t matrix_mouse = renderer->GetWindowMousePosition();
+    double_point_t matrix_mouse = globals->renderer->GetWindowMousePosition();
     matrix_mouse.x = (matrix_mouse.x - globals->pan.x) / globals->zoom;
     matrix_mouse.y = (matrix_mouse.y - globals->pan.y) / globals->zoom;
     if ((float)e["scroll"] > 0)
@@ -111,54 +88,27 @@ void zoom_handle(nlohmann::json e)
 int main(int argc, char **argv)
 {
     globals = new global_variables_t;
+    globals->quit = false;
     globals->zoom = 1;
     globals->pan.x = 0;
     globals->pan.y = 0;
+    globals->renderer = new EasyRender();
+    globals->renderer->SetWindowTitle("ncPilot");
+    globals->renderer->SetShowFPS(true);
+    globals->renderer->Init(argc, argv);
 
-    renderer = new EasyRender();
 
-    renderer->Init(argc, argv);
+    globals->renderer->PushEvent("up", "scroll", &zoom_handle);
+    globals->renderer->PushEvent("down", "scroll", &zoom_handle);
 
-    Line *l = renderer->PushPrimative(new Line({60, 40}, {100, 100}));
-    l->properties->mouse_callback = &mouse_callback;
-    l->properties->matrix_callback = &view_matrix;
-
-    fps = renderer->PushPrimative(new Text({0, 0}, "0", 30));
-    fps->properties->mouse_callback = &mouse_callback;
-
-    std::vector<double_point_t> path;
-    path.push_back({20, 20});
-    path.push_back({40, 40});
-    path.push_back({80, 50});
-    Path *p = renderer->PushPrimative(new Path(path));
-    p->properties->mouse_callback = &mouse_callback;
-    p->properties->matrix_callback = &view_matrix;
-
-    Arc *a = renderer->PushPrimative(new Arc({-100, -100}, 100, 0, 90));
-    a->properties->mouse_callback = &mouse_callback;
-    a->properties->matrix_callback = &view_matrix;
-
-    Circle *c = renderer->PushPrimative(new Circle({-200, -200}, 100));
-    c->properties->mouse_callback = &mouse_callback;
-    c->properties->matrix_callback = &view_matrix;
-
-    Box *b = renderer->PushPrimative(new Box({100, -100}, 100, 100, 30));
-    b->properties->mouse_callback = &mouse_callback;
-
-    renderer->PushTimer(1000, &fps_timer);
-
-    w = renderer->PushGui(true, &test_dialog);
-
-    renderer->PushEvent("up", "scroll", &zoom_handle);
-    renderer->PushEvent("down", "scroll", &zoom_handle);
-
-    while(renderer->Poll(false))
+    menu_bar_init();
+    while(globals->renderer->Poll(globals->quit))
     {
-        //Do stuff
+        //Do Stuff
     }
 
-    renderer->Close();
-    delete renderer;
+    globals->renderer->Close();
+    delete globals->renderer;
     delete globals;
     return 0;
 }

@@ -349,6 +349,10 @@ void EasyRender::SetClearColor(float r, float g, float b)
     this->ClearColor[1] = g / 255;
     this->ClearColor[2] = b / 255;
 }
+void EasyRender::SetShowFPS(bool show_fps)
+{
+    this->ShowFPS = show_fps;
+}
 unsigned long EasyRender::Millis()
 {
     using std::chrono::duration_cast;
@@ -394,6 +398,10 @@ double_point_t EasyRender::GetWindowMousePosition()
     double mouseX, mouseY;
     glfwGetCursorPos(this->Window, &mouseX, &mouseY);
     return {mouseX - (this->WindowSize[0]/ 2.0f), (this->WindowSize[1] - mouseY) - (this->WindowSize[1] / 2.0f)};
+}
+double_point_t EasyRender::GetWindowSize()
+{
+    return {(double)this->WindowSize[0], (double)this->WindowSize[1]};
 }
 uint8_t EasyRender::GetFramesPerSecond()
 {
@@ -554,6 +562,32 @@ bool EasyRender::Poll(bool should_quit)
         }
     }
     this->RenderPerformance = (this->Millis() - begin_timestamp);
+    if (this->ShowFPS == true)
+    {
+        if (this->FPS_Label == NULL)
+        {
+            this->FPS_Label = this->PushPrimative(new Text({0, 0}, "0", 30));
+            this->FPS_Label->properties->visable = false;
+        } 
+        else
+        {
+            this->FPS_Average.push_back(this->GetFramesPerSecond());
+            if (this->FPS_Average.size() > 10)
+            {
+                float avg = 0;
+                for (int x = 0; x < this->FPS_Average.size(); x++)
+                {
+                    avg += this->FPS_Average.at(x);
+                }
+                avg = avg / this->FPS_Average.size();
+                this->FPS_Label->textval = std::to_string((int)avg);
+                this->FPS_Label->properties->visable = true;
+                this->FPS_Label->position[0] = -(this->WindowSize[0] / 2.0f) + 10;
+                this->FPS_Label->position[1] = -(this->WindowSize[1] / 2.0f) + 10;
+                this->FPS_Average.erase(this->FPS_Average.begin());
+            }
+        }
+    }
     if (should_quit == true) return false;
     return !glfwWindowShouldClose(this->Window);
 }
