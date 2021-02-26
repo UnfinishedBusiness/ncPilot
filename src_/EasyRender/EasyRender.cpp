@@ -50,10 +50,62 @@ void EasyRender::key_callback(GLFWwindow* window, int key, int scancode, int act
     EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
     if (self != NULL)
     {
-        LOG_F(INFO, "Keycallback!");
-        for (int x = 0; x < self->primative_stack.size(); x++)
+        std::string keyname;
+        if (glfwGetKeyName(key, scancode) != NULL)
         {
-            //LOG_F(INFO, "%d->%s", x, self->primative_stack.at(x)->type.c_str());
+            keyname = std::string(glfwGetKeyName(key, scancode));
+        }
+        else
+        {
+            LOG_F(INFO, "Unknown key: %d\n", key);
+            switch(key)
+            {
+                case 256: keyname = "Escape"; break;
+                case 32: keyname = "Space"; break;
+                case 258: keyname = "Tab"; break;
+                case 265: keyname = "Up"; break;
+                case 264: keyname = "Down"; break;
+                case 263: keyname = "Left"; break;
+                case 262: keyname = "Right"; break;
+                default: keyname = "None";
+            }
+        }
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        if (!io.WantCaptureKeyboard || !io.WantCaptureMouse)
+        {
+            for (int x = 0; x < self->event_stack.size(); x++)
+            {
+                if (self->event_stack.at(x)->type == "keyup" && action == 1)
+                {
+                    if (self->event_stack.at(x)->key == keyname)
+                    {
+                        if (self->event_stack.at(x)->callback != NULL)
+                        {
+                            self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
+                        }
+                    }
+                }
+                if (self->event_stack.at(x)->type == "keydown" && action == 0)
+                {
+                    if (self->event_stack.at(x)->key == keyname)
+                    {
+                        if (self->event_stack.at(x)->callback != NULL)
+                        {
+                            self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
+                        }
+                    }
+                }
+                if (self->event_stack.at(x)->type == "repeat" && action == 2)
+                {
+                    if (self->event_stack.at(x)->key == keyname)
+                    {
+                        if (self->event_stack.at(x)->callback != NULL)
+                        {
+                            self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
+                        }
+                    }
+                }
+            }
         }
     }
 }

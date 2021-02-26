@@ -71,7 +71,13 @@ class EasyRender{
             bool visable;
             void (*callback)();
         };
+        struct EasyRenderEvent{
+            std::string key;
+            std::string type; //keyup, keydown, scroll, mouse_click, mouse_move, window_resize
+            void (*callback)(nlohmann::json);
+        };
         std::vector<EasyRenderGui *> gui_stack;
+        std::vector<EasyRenderEvent *> event_stack;
 
         EasyRender()
         {
@@ -100,6 +106,9 @@ class EasyRender{
 
         /* Gui Creation */
         EasyRenderGui *PushGui(bool v, void (*c)());
+
+        /* Key Event Creation */
+        void PushEvent(std::string key, std::string type, void (*callback)());
 
 
         void SetWindowTitle(std::string w);
