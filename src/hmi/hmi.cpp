@@ -586,31 +586,28 @@ void hmi_resize(nlohmann::json e)
     hmi_backpane->bottom_left.x = (globals->renderer->GetWindowSize().x / 2) - hmi_backplane_width;
     hmi_backpane->bottom_left.y = -(globals->renderer->GetWindowSize().y / 2);
     hmi_backpane->width = hmi_backplane_width;
-    hmi_backpane->height = globals->renderer->GetWindowSize().y;
+    hmi_backpane->height = globals->renderer->GetWindowSize().y - 30;
 
     hmi_dro_backpane->bottom_left.x = hmi_backpane->bottom_left.x + 5;
-    hmi_dro_backpane->bottom_left.y = (globals->renderer->GetWindowSize().y / 2) - hmi_dro_backplane_height;
-    hmi_dro_backpane->width = hmi_backplane_width -5;
-    hmi_dro_backpane->height = hmi_dro_backplane_height;
-
+    hmi_dro_backpane->bottom_left.y = (globals->renderer->GetWindowSize().y / 2) - hmi_dro_backplane_height - 40;
+    hmi_dro_backpane->width = hmi_backplane_width - 10;
+    hmi_dro_backpane->height = hmi_dro_backplane_height - 5;
 
     float dro_group_x = (float)hmi_dro_backpane->bottom_left.x;
     float dro_group_y = (float)hmi_dro_backpane->bottom_left.y;
 
-    dro_group_y += 55;
+    dro_group_y += 10;
     dro.feed->position = {(float)dro_group_x + 5, (float)dro_group_y - dro.feed->height};
     dro.arc_readout->position = {(float)dro_group_x + 80, (float)dro_group_y - dro.arc_readout->height};
     dro.arc_set->position = {(float)dro_group_x + 150, (float)dro_group_y - dro.arc_set->height};
     dro.run_time->position = {(float)dro_group_x + 210, (float)dro_group_y - dro.run_time->height};
-
-    dro_group_y += 55;
+    dro_group_y += 30;
     dro.z.label->position = {(float)dro_group_x + 5, (float)dro_group_y - dro.z.label->height};
     dro.z.work_readout->position = {(float)dro_group_x + 5 + 50, (float)dro_group_y - dro.z.label->height};
     dro.z.absolute_readout->position = {(float)dro_group_x + 5 + 220, (float)dro_group_y - dro.z.label->height};
     dro.z.divider->bottom_left = {(float)dro_group_x + 5, (float)dro_group_y - 40};
     dro.z.divider->width = hmi_backplane_width - 10;
     dro.z.divider->height = 5;
-
     dro_group_y += 55;
     dro.y.label->position = {(float)dro_group_x + 5, (float)dro_group_y - dro.y.label->height};
     dro.y.work_readout->position = {(float)dro_group_x + 5 + 50, (float)dro_group_y - dro.y.label->height};
@@ -618,8 +615,7 @@ void hmi_resize(nlohmann::json e)
     dro.y.divider->bottom_left = {(float)dro_group_x + 5, (float)dro_group_y - 40};
     dro.y.divider->width = hmi_backplane_width - 10;
     dro.y.divider->height = 5;
-
-    dro_group_y += 15;
+    dro_group_y += 55;
     dro.x.label->position = {(float)dro_group_x + 5, (float)dro_group_y - dro.x.label->height};
     dro.x.work_readout->position = {(float)dro_group_x + 5 + 50, (float)dro_group_y - dro.x.label->height};
     dro.x.absolute_readout->position = {(float)dro_group_x + 5 + 220, (float)dro_group_y - dro.x.label->height};
@@ -627,26 +623,24 @@ void hmi_resize(nlohmann::json e)
     dro.x.divider->width = hmi_backplane_width - 10;
     dro.x.divider->height = 5;
     
-    
     hmi_button_backpane->bottom_left.x = hmi_backpane->bottom_left.x + 5;
     hmi_button_backpane->bottom_left.y = hmi_backpane->bottom_left.y + 5;
-    hmi_button_backpane->width = hmi_backplane_width - 5;
-    hmi_button_backpane->height = globals->renderer->GetWindowSize().y - ((globals->renderer->GetWindowSize().y / 2) - hmi_dro_backplane_height - 10);
-
+    hmi_button_backpane->width = hmi_backplane_width - 10;
+    hmi_button_backpane->height = globals->renderer->GetWindowSize().y - (hmi_dro_backplane_height + 50);
+    
     double button_group_x = hmi_button_backpane->bottom_left.x;
     double button_group_y = hmi_button_backpane->bottom_left.y + hmi_button_backpane->height;
     double button_height = hmi_button_backpane->height / (double)button_groups.size();
     double button_width =  hmi_button_backpane->width / 2;
     
-    //printf("button_group_x: %.4f, button_group_y: %.4f, button_width: %.4f, button_height: %.4f\n", button_group_x, button_group_y, button_width, button_height);
     double center_x;
     double center_y; 
     for (int x = 0; x < button_groups.size(); x++)
     {
         button_groups[x].button_one.object->bottom_left.x = button_group_x + 5;
         button_groups[x].button_one.object->bottom_left.y = (button_group_y - 2.5) - button_height;
-        button_groups[x].button_one.object->width = button_width;
-        button_groups[x].button_one.object->height = button_height;
+        button_groups[x].button_one.object->width = button_width - 10;
+        button_groups[x].button_one.object->height = button_height - 10;
         center_x = button_groups[x].button_one.object->bottom_left.x + (button_width / 2);
         center_y = button_groups[x].button_one.object->bottom_left.y + (button_height / 2);
         button_groups[x].button_one.label->position = {center_x - (button_groups[x].button_one.label->width / 2.0f) - 5, center_y - (button_groups[x].button_one.label->height / 2.0f) + 5};
@@ -654,10 +648,11 @@ void hmi_resize(nlohmann::json e)
         button_group_x += button_width;
         button_groups[x].button_two.object->bottom_left.x = button_group_x + 5;
         button_groups[x].button_two.object->bottom_left.y = (button_group_y - 2.5) - button_height;
-        button_groups[x].button_two.object->width = button_width;
-        button_groups[x].button_two.object->height = button_height;
+        button_groups[x].button_two.object->width = button_width - 10;
+        button_groups[x].button_two.object->height = button_height - 10;
         center_x = button_groups[x].button_two.object->bottom_left.x + (button_width / 2);
         center_y = button_groups[x].button_two.object->bottom_left.y + (button_height / 2);
+
         button_groups[x].button_two.label->position = {(float)center_x - (button_groups[x].button_two.label->width / 2.0f) - 5, (float)center_y - (button_groups[x].button_two.label->height / 2.0f) + 5};
         button_group_x -= button_width;
 
@@ -670,19 +665,21 @@ void hmi_push_button_group(std::string b1, std::string b2)
     hmi_button_group_t group;
     group.button_one.name = b1;
     group.button_one.object = globals->renderer->PushPrimative(new EasyPrimative::Box({-1000000, -1000000}, 1, 1, 5));
-    globals->renderer->SetColorByName(group.button_one.object->properties->color, "back");
+    globals->renderer->SetColorByName(group.button_one.object->properties->color, "blue");
     group.button_one.object->properties->zindex = 200;
     group.button_one.object->properties->id = b1;
     group.button_one.label = globals->renderer->PushPrimative(new EasyPrimative::Text({-1000000, -1000000}, group.button_one.name, 20));
     group.button_one.label->properties->zindex = 210;
+    globals->renderer->SetColorByName(group.button_one.label->properties->color, "white");
 
-    group.button_two.name = b1;
+    group.button_two.name = b2;
     group.button_two.object = globals->renderer->PushPrimative(new EasyPrimative::Box({-1000000, -1000000}, 1, 1, 5));
-    globals->renderer->SetColorByName(group.button_two.object->properties->color, "back");
+    globals->renderer->SetColorByName(group.button_two.object->properties->color, "blue");
     group.button_two.object->properties->zindex = 200;
-    group.button_two.object->properties->id = b1;
+    group.button_two.object->properties->id = b2;
     group.button_two.label = globals->renderer->PushPrimative(new EasyPrimative::Text({-1000000, -1000000}, group.button_two.name, 20));
     group.button_two.label->properties->zindex = 210;
+    globals->renderer->SetColorByName(group.button_two.label->properties->color, "white");
 
     button_groups.push_back(group);
 }
@@ -734,6 +731,7 @@ void hmi_init()
     hmi_dro_backpane->properties->color[2] = 48;
     hmi_dro_backpane->properties->zindex = 110;
 
+    hmi_button_backpane = globals->renderer->PushPrimative(new EasyPrimative::Box({-100000, -100000}, 1, 1, 0));
     hmi_button_backpane->properties->color[0] = 29;
     hmi_button_backpane->properties->color[1] = 32;
     hmi_button_backpane->properties->color[2] = 48;
@@ -830,7 +828,7 @@ void hmi_init()
     globals->torch_pointer->properties->matrix_callback = globals->view_matrix;
 
    
-    //Xrender_push_key_event({"Escape", "keyup", escape_key_up});
+    //globals->renderer->Poll(false); //Make sure primatives are built before pushing resise event
     globals->renderer->PushEvent("Tab", "keyup", tab_key_up);
     globals->renderer->PushEvent("none", "window_resize", hmi_resize);
     globals->renderer->PushTimer(100, hmi_update_timer);

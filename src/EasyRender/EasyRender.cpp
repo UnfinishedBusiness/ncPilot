@@ -307,6 +307,14 @@ void EasyRender::PushEvent(std::string key, std::string type, void (*callback)(n
     e->type = type;
     e->callback = callback;
     event_stack.push_back(e);
+    if (type == "window_resize" && this->Window != NULL)
+    {
+        double_point_t size = this->GetWindowSize();
+        this->WindowSize[0] = (int)size.x;
+        this->WindowSize[1] = (int)size.y;
+        this->Poll(false); //Make sure primative are built first
+        EasyRender::window_size_callback(this->Window, this->WindowSize[0], this->WindowSize[1]);
+    }
 }
 void EasyRender::SetWindowTitle(std::string w)
 {
@@ -475,6 +483,7 @@ double_point_t EasyRender::GetWindowMousePosition()
 }
 double_point_t EasyRender::GetWindowSize()
 {
+    glfwGetFramebufferSize(this->Window, &this->WindowSize[0], &this->WindowSize[1]);
     return {(double)this->WindowSize[0], (double)this->WindowSize[1]};
 }
 uint8_t EasyRender::GetFramesPerSecond()

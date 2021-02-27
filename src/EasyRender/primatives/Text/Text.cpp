@@ -134,11 +134,8 @@ void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
         glPopMatrix();
     glDisable(GL_TEXTURE_2D);
     glFlush();
-    if (this->width == 0 || this->height == 0)
-    {
-        this->width = width;
-        this->height = height;
-    }
+    this->width = width;
+    this->height = height;
 }
 void EasyPrimative::Text::render()
 {
