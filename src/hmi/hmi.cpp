@@ -9,7 +9,7 @@
 
 double hmi_backplane_width = 300;
 EasyPrimative::Box *hmi_backpane;
-double hmi_dro_backplane_height = 200;
+double hmi_dro_backplane_height = 220;
 EasyPrimative::Box *hmi_dro_backpane;
 EasyPrimative::Box *hmi_button_backpane;
 EasyPrimative::Path *arc_okay_highlight_path;
@@ -543,15 +543,15 @@ bool hmi_update_timer()
         dro.arc_readout->textval = "ARC: " + to_fixed_string(dro_data["ADC"], 0);
         dro.arc_set->textval = "SET: " + to_fixed_string(globals->machine_parameters.thc_set_value, 0);
         nlohmann::json runtime = motion_controller_get_run_time();
-        if (runtime != NULL) dro.run_time->textval = "RUN: " + std::to_string((float)runtime["hours"]) + ":" + std::to_string((float)runtime["minutes"]) + ":" + std::to_string((float)runtime["seconds"]);
+        if (runtime != NULL) dro.run_time->textval = "RUN: " + std::to_string((int)runtime["hours"]) + ":" + std::to_string((int)runtime["minutes"]) + ":" + std::to_string((int)runtime["seconds"]);
         globals->torch_pointer->center = {(double)dro_data["MCS"]["x"], (double)dro_data["MCS"]["y"]};
         if (motion_controller_is_torch_on())
         {
-            globals->renderer->SetColorByName(hmi_dro_backpane->properties->color, "red");
+            //globals->renderer->SetColorByName(hmi_dro_backpane->properties->color, "red");
         }
         else
         {
-            globals->renderer->SetColorByName(hmi_dro_backpane->properties->color, "grey");
+            //globals->renderer->SetColorByName(hmi_dro_backpane->properties->color, "grey");
         }
         if ((bool)dro_data["ARC_OK"] == false)
         {
@@ -575,7 +575,7 @@ bool hmi_update_timer()
         else
         {
             arc_okay_highlight_path = NULL;
-            globals->renderer->SetColorByName(hmi_dro_backpane->properties->color, "white");
+            //globals->renderer->SetColorByName(hmi_dro_backpane->properties->color, "grey");
         }
     }
     return true;
@@ -586,51 +586,51 @@ void hmi_resize(nlohmann::json e)
     hmi_backpane->bottom_left.x = (globals->renderer->GetWindowSize().x / 2) - hmi_backplane_width;
     hmi_backpane->bottom_left.y = -(globals->renderer->GetWindowSize().y / 2);
     hmi_backpane->width = hmi_backplane_width;
-    hmi_backpane->height = globals->renderer->GetWindowSize().y - 30;
+    hmi_backpane->height = globals->renderer->GetWindowSize().y - 15;
 
     hmi_dro_backpane->bottom_left.x = hmi_backpane->bottom_left.x + 5;
-    hmi_dro_backpane->bottom_left.y = (globals->renderer->GetWindowSize().y / 2) - hmi_dro_backplane_height - 40;
+    hmi_dro_backpane->bottom_left.y = (globals->renderer->GetWindowSize().y / 2) - hmi_dro_backplane_height;
     hmi_dro_backpane->width = hmi_backplane_width - 10;
-    hmi_dro_backpane->height = hmi_dro_backplane_height - 5;
+    hmi_dro_backpane->height = hmi_dro_backplane_height - 30;
 
     float dro_group_x = (float)hmi_dro_backpane->bottom_left.x;
     float dro_group_y = (float)hmi_dro_backpane->bottom_left.y;
 
     dro_group_y += 10;
-    dro.feed->position = {(float)dro_group_x + 5, (float)dro_group_y - dro.feed->height};
-    dro.arc_readout->position = {(float)dro_group_x + 80, (float)dro_group_y - dro.arc_readout->height};
-    dro.arc_set->position = {(float)dro_group_x + 150, (float)dro_group_y - dro.arc_set->height};
-    dro.run_time->position = {(float)dro_group_x + 210, (float)dro_group_y - dro.run_time->height};
-    dro_group_y += 30;
+    dro.feed->position = {(float)dro_group_x + 5, (float)dro_group_y - dro.feed->height + 5};
+    dro.arc_readout->position = {(float)dro_group_x + 80, (float)dro_group_y - dro.arc_readout->height + 5};
+    dro.arc_set->position = {(float)dro_group_x + 150, (float)dro_group_y - dro.arc_set->height + 5};
+    dro.run_time->position = {(float)dro_group_x + 210, (float)dro_group_y - dro.run_time->height + 5};
+    dro_group_y += 55;
     dro.z.label->position = {(float)dro_group_x + 5, (float)dro_group_y - dro.z.label->height};
     dro.z.work_readout->position = {(float)dro_group_x + 5 + 50, (float)dro_group_y - dro.z.label->height};
     dro.z.absolute_readout->position = {(float)dro_group_x + 5 + 220, (float)dro_group_y - dro.z.label->height};
-    dro.z.divider->bottom_left = {(float)dro_group_x + 5, (float)dro_group_y - 40};
-    dro.z.divider->width = hmi_backplane_width - 10;
+    dro.z.divider->bottom_left = {(float)dro_group_x + 5, (float)dro_group_y - 45};
+    dro.z.divider->width = hmi_backplane_width - 20;
     dro.z.divider->height = 5;
     dro_group_y += 55;
     dro.y.label->position = {(float)dro_group_x + 5, (float)dro_group_y - dro.y.label->height};
     dro.y.work_readout->position = {(float)dro_group_x + 5 + 50, (float)dro_group_y - dro.y.label->height};
     dro.y.absolute_readout->position = {(float)dro_group_x + 5 + 220, (float)dro_group_y - dro.y.label->height};
-    dro.y.divider->bottom_left = {(float)dro_group_x + 5, (float)dro_group_y - 40};
-    dro.y.divider->width = hmi_backplane_width - 10;
+    dro.y.divider->bottom_left = {(float)dro_group_x + 5, (float)dro_group_y - 45};
+    dro.y.divider->width = hmi_backplane_width - 20;
     dro.y.divider->height = 5;
     dro_group_y += 55;
     dro.x.label->position = {(float)dro_group_x + 5, (float)dro_group_y - dro.x.label->height};
     dro.x.work_readout->position = {(float)dro_group_x + 5 + 50, (float)dro_group_y - dro.x.label->height};
     dro.x.absolute_readout->position = {(float)dro_group_x + 5 + 220, (float)dro_group_y - dro.x.label->height};
-    dro.x.divider->bottom_left = {(float)dro_group_x + 5, (float)dro_group_y - 40};
-    dro.x.divider->width = hmi_backplane_width - 10;
+    dro.x.divider->bottom_left = {(float)dro_group_x + 5, (float)dro_group_y - 45};
+    dro.x.divider->width = hmi_backplane_width - 20;
     dro.x.divider->height = 5;
     
     hmi_button_backpane->bottom_left.x = hmi_backpane->bottom_left.x + 5;
-    hmi_button_backpane->bottom_left.y = hmi_backpane->bottom_left.y + 5;
+    hmi_button_backpane->bottom_left.y = hmi_backpane->bottom_left.y + 20;
     hmi_button_backpane->width = hmi_backplane_width - 10;
-    hmi_button_backpane->height = globals->renderer->GetWindowSize().y - (hmi_dro_backplane_height + 50);
+    hmi_button_backpane->height = globals->renderer->GetWindowSize().y - (hmi_dro_backplane_height + 30);
     
     double button_group_x = hmi_button_backpane->bottom_left.x;
     double button_group_y = hmi_button_backpane->bottom_left.y + hmi_button_backpane->height;
-    double button_height = hmi_button_backpane->height / (double)button_groups.size();
+    double button_height = (hmi_button_backpane->height - 10) / (double)button_groups.size();
     double button_width =  hmi_button_backpane->width / 2;
     
     double center_x;
@@ -665,7 +665,7 @@ void hmi_push_button_group(std::string b1, std::string b2)
     hmi_button_group_t group;
     group.button_one.name = b1;
     group.button_one.object = globals->renderer->PushPrimative(new EasyPrimative::Box({-1000000, -1000000}, 1, 1, 5));
-    globals->renderer->SetColorByName(group.button_one.object->properties->color, "blue");
+    globals->renderer->SetColorByName(group.button_one.object->properties->color, "black");
     group.button_one.object->properties->zindex = 200;
     group.button_one.object->properties->id = b1;
     group.button_one.label = globals->renderer->PushPrimative(new EasyPrimative::Text({-1000000, -1000000}, group.button_one.name, 20));
@@ -674,7 +674,7 @@ void hmi_push_button_group(std::string b1, std::string b2)
 
     group.button_two.name = b2;
     group.button_two.object = globals->renderer->PushPrimative(new EasyPrimative::Box({-1000000, -1000000}, 1, 1, 5));
-    globals->renderer->SetColorByName(group.button_two.object->properties->color, "blue");
+    globals->renderer->SetColorByName(group.button_two.object->properties->color, "black");
     group.button_two.object->properties->zindex = 200;
     group.button_two.object->properties->id = b2;
     group.button_two.label = globals->renderer->PushPrimative(new EasyPrimative::Text({-1000000, -1000000}, group.button_two.name, 20));
@@ -718,20 +718,20 @@ void hmi_init()
     globals->cuttable_plane->properties->color[2] = globals->preferences.cuttable_plane_color[2];
     globals->cuttable_plane->properties->matrix_callback = globals->view_matrix;
     
-    hmi_backpane = globals->renderer->PushPrimative(new EasyPrimative::Box({-100000, -100000}, 1, 1, 0));
+    hmi_backpane = globals->renderer->PushPrimative(new EasyPrimative::Box({-100000, -100000}, 1, 1, 5));
     hmi_backpane->properties->color[0] = 25;
     hmi_backpane->properties->color[1] = 44;
     hmi_backpane->properties->color[2] = 71;
     hmi_backpane->properties->zindex = 100;
 
   
-    hmi_dro_backpane = globals->renderer->PushPrimative(new EasyPrimative::Box({-100000, -100000}, 1, 1, 0));
+    hmi_dro_backpane = globals->renderer->PushPrimative(new EasyPrimative::Box({-100000, -100000}, 1, 1, 5));
     hmi_dro_backpane->properties->color[0] = 29;
     hmi_dro_backpane->properties->color[1] = 32;
     hmi_dro_backpane->properties->color[2] = 48;
     hmi_dro_backpane->properties->zindex = 110;
 
-    hmi_button_backpane = globals->renderer->PushPrimative(new EasyPrimative::Box({-100000, -100000}, 1, 1, 0));
+    hmi_button_backpane = globals->renderer->PushPrimative(new EasyPrimative::Box({-100000, -100000}, 1, 1, 5));
     hmi_button_backpane->properties->color[0] = 29;
     hmi_button_backpane->properties->color[1] = 32;
     hmi_button_backpane->properties->color[2] = 48;
@@ -815,7 +815,7 @@ void hmi_init()
     dro.arc_set->properties->color[1] = 104;
     dro.arc_set->properties->color[2] = 15;
 
-    dro.run_time = globals->renderer->PushPrimative(new EasyPrimative::Text({-100000, -100000}, "RUN: 00:00:00", 12));
+    dro.run_time = globals->renderer->PushPrimative(new EasyPrimative::Text({-100000, -100000}, "RUN: 0:0:0", 12));
     dro.run_time->properties->zindex = 210;
     dro.run_time->properties->color[0] = 247;
     dro.run_time->properties->color[1] = 104;

@@ -375,7 +375,7 @@ void EasyRender::SetColorByName(float *c, std::string color)
         c[0] = 0;
         c[1] = 0;
         c[2] = 0;
-        c[3] = 0;
+        c[3] = 255;
     }
     else if (color == "grey")
     {
