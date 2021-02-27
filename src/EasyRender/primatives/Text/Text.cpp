@@ -79,7 +79,6 @@ bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size
 {
     unsigned char temp_bitmap[512*512];
     unsigned char ttf_buffer[1<<20];
-    FILE *fp;
     if (std::string(filename) == "default")
     {
         for (int x = 0; x < (1<<20); x++)
@@ -89,13 +88,16 @@ bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size
     }
     else
     {
+        FILE *fp;
         fp = fopen(std::string(filename).c_str(), "rb");
         if (fp)
         {
             fread(ttf_buffer, 1, 1<<20, fp);
+            fclose(fp);
         }
         else
         {
+            LOG_F(WARNING, "Could not open font file: %s", filename);
             return false;
         }
     }
@@ -104,7 +106,6 @@ bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size
     glBindTexture(GL_TEXTURE_2D, this->texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, 512,512, 0, GL_ALPHA, GL_UNSIGNED_BYTE, temp_bitmap);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    fclose(fp);
     return true;
 }
 void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
@@ -153,6 +154,7 @@ void EasyPrimative::Text::render()
                     LOG_F(WARNING, "Could not init font: %s\n", this->font_file.c_str());
                     this->texture = -1;
                 }
+                this->render();
             }
             else
             {

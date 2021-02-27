@@ -828,11 +828,9 @@ void hmi_init()
     globals->torch_pointer->properties->matrix_callback = globals->view_matrix;
 
    
-    //globals->renderer->Poll(false); //Make sure primatives are built before pushing resise event
     globals->renderer->PushEvent("Tab", "keyup", tab_key_up);
     globals->renderer->PushEvent("none", "window_resize", hmi_resize);
     globals->renderer->PushTimer(100, hmi_update_timer);
     
-
     //hmi_handle_button("Fit");
 }

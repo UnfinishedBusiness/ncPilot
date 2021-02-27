@@ -312,7 +312,6 @@ void EasyRender::PushEvent(std::string key, std::string type, void (*callback)(n
         double_point_t size = this->GetWindowSize();
         this->WindowSize[0] = (int)size.x;
         this->WindowSize[1] = (int)size.y;
-        this->Poll(false); //Make sure primative are built first
         EasyRender::window_size_callback(this->Window, this->WindowSize[0], this->WindowSize[1]);
     }
 }

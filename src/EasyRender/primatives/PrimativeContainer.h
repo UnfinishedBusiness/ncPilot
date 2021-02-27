@@ -43,6 +43,7 @@ class PrimativeContainer{
             text = t;
             this->type = text->get_type_name();
             properties = text->properties;
+            this->text->render(); //Make sure height and width are calculated right away
         }
         PrimativeContainer(EasyPrimative::Image *i)
         {
