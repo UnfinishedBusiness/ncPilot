@@ -49,7 +49,7 @@ void hmi_handle_button(std::string id)
             if (id == "Wpos")
             {
                 LOG_F(INFO, "Clicked Wpos");
-                motion_controller_push_stack("G0 X10 Y10");
+                motion_controller_push_stack("G0 X0 Y0");
                 motion_controller_push_stack("M30");
                 motion_controller_run_stack();
             }
@@ -398,6 +398,7 @@ void hmi_reverse(PrimativeContainer* p)
 }
 void hmi_mouse_callback(PrimativeContainer* c, nlohmann::json e)
 {
+    //LOG_F(INFO, "%s", e.dump().c_str());
     if (c->type == "path" && c->properties->id == "gcode")
     {
         if (e["event"] == "mouse_in")
@@ -441,12 +442,12 @@ void hmi_mouse_callback(PrimativeContainer* c, nlohmann::json e)
         }
         if (e["event"] == "left_click_down")
         {
-            globals->renderer->SetColorByName(c->properties->color, "dark-green");
+            globals->renderer->SetColorByName(c->properties->color, "green");
         }
         if (e["event"] == "left_click_up")
         {
             globals->renderer->SetColorByName(c->properties->color, "light-green");
-            //hmi_handle_button(o->data["id"]);
+            hmi_handle_button(c->properties->id);
         }
     }
     else if (c->type == "box" && c->properties->id == "cuttable_plane")
@@ -490,6 +491,7 @@ void hmi_view_matrix(PrimativeContainer *p)
             p->properties->offset[0] = globals->pan.x;
             p->properties->offset[1] = globals->pan.y;
             p->properties->scale = globals->zoom;
+            p->circle->radius = 5.0f / globals->zoom;
         }
         else
         {
@@ -665,6 +667,7 @@ void hmi_push_button_group(std::string b1, std::string b2)
     hmi_button_group_t group;
     group.button_one.name = b1;
     group.button_one.object = globals->renderer->PushPrimative(new EasyPrimative::Box({-1000000, -1000000}, 1, 1, 5));
+    group.button_one.object->properties->mouse_callback = &hmi_mouse_callback;
     globals->renderer->SetColorByName(group.button_one.object->properties->color, "black");
     group.button_one.object->properties->zindex = 200;
     group.button_one.object->properties->id = b1;
@@ -674,6 +677,7 @@ void hmi_push_button_group(std::string b1, std::string b2)
 
     group.button_two.name = b2;
     group.button_two.object = globals->renderer->PushPrimative(new EasyPrimative::Box({-1000000, -1000000}, 1, 1, 5));
+    group.button_two.object->properties->mouse_callback = &hmi_mouse_callback;
     globals->renderer->SetColorByName(group.button_two.object->properties->color, "black");
     group.button_two.object->properties->zindex = 200;
     group.button_two.object->properties->id = b2;
@@ -832,5 +836,5 @@ void hmi_init()
     globals->renderer->PushEvent("none", "window_resize", hmi_resize);
     globals->renderer->PushTimer(100, hmi_update_timer);
     
-    //hmi_handle_button("Fit");
+    hmi_handle_button("Fit");
 }

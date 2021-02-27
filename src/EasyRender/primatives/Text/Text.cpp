@@ -50,7 +50,7 @@ void EasyPrimative::Text::process_mouse(float mpos_x, float mpos_y)
             if (this->properties->mouse_over == false)
             {
                 this->mouse_event = {
-                    {"type", "mouse_in"},
+                    {"event", "mouse_in"},
                     {"pos", {
                         {"x", mpos_x},
                         {"y", mpos_y}
@@ -64,7 +64,7 @@ void EasyPrimative::Text::process_mouse(float mpos_x, float mpos_y)
             if (this->properties->mouse_over == true)
             {
                 this->mouse_event = {
-                    {"type", "mouse_out"},
+                    {"event", "mouse_out"},
                     {"pos", {
                         {"x", mpos_x},
                         {"y", mpos_y}
