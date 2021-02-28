@@ -481,8 +481,8 @@ void hmi_view_matrix(PrimativeContainer *p)
     if (p->type == "line")
     {
         p->properties->scale = globals->zoom;
-        p->properties->offset[0] = globals->pan.x + globals->machine_parameters.work_offset[0];
-        p->properties->offset[1] = globals->pan.y + globals->machine_parameters.work_offset[1];
+        p->properties->offset[0] = globals->pan.x + (globals->machine_parameters.work_offset[0] * globals->zoom);
+        p->properties->offset[1] = globals->pan.y + (globals->machine_parameters.work_offset[1] * globals->zoom);
     }
     if (p->type == "arc" || p->type == "circle")
     {
@@ -511,14 +511,14 @@ void hmi_view_matrix(PrimativeContainer *p)
         if (p->properties->id == "gcode" || p->properties->id == "gcode_highlights")
         {
             p->properties->scale = globals->zoom;
-            p->properties->offset[0] = globals->pan.x;
-            p->properties->offset[1] = globals->pan.y;
+            p->properties->offset[0] = globals->pan.x + (globals->machine_parameters.work_offset[0] * globals->zoom);
+            p->properties->offset[1] = globals->pan.y + (globals->machine_parameters.work_offset[1] * globals->zoom);
         }
         if (p->properties->id == "gcode_arrows")
         {
             p->properties->scale = globals->zoom;
-            p->properties->offset[0] = globals->pan.x;
-            p->properties->offset[1] = globals->pan.y;
+            p->properties->offset[0] = globals->pan.x + (globals->machine_parameters.work_offset[0] * globals->zoom);
+            p->properties->offset[1] = globals->pan.y + (globals->machine_parameters.work_offset[1] * globals->zoom);
         }
     }
 }
@@ -549,24 +549,29 @@ bool hmi_update_timer()
         globals->torch_pointer->center = {(double)dro_data["MCS"]["x"], (double)dro_data["MCS"]["y"]};
         if (motion_controller_is_torch_on())
         {
-            //globals->renderer->SetColorByName(hmi_dro_backpane->properties->color, "red");
+            hmi_dro_backpane->properties->color[0] = 100;
+            hmi_dro_backpane->properties->color[1] = 32;
+            hmi_dro_backpane->properties->color[2] = 48;
         }
         else
         {
-            //globals->renderer->SetColorByName(hmi_dro_backpane->properties->color, "grey");
+            hmi_dro_backpane->properties->color[0] = 29;
+            hmi_dro_backpane->properties->color[1] = 32;
+            hmi_dro_backpane->properties->color[2] = 48;
         }
         if ((bool)dro_data["ARC_OK"] == false)
         {
-            globals->renderer->SetColorByName(dro.arc_readout->properties->color, "blue");
+            globals->renderer->SetColorByName(dro.arc_readout->properties->color, "red");
             //Keep adding points to current highlight path
             if (arc_okay_highlight_path == NULL)
             {
                 std::vector<double_point_t> path;
                 path.push_back({(double)dro_data["WCS"]["x"], (double)dro_data["WCS"]["y"]});
                 arc_okay_highlight_path = globals->renderer->PushPrimative(new EasyPrimative::Path(path));
+                arc_okay_highlight_path->properties->id = "gcode_highlights";
                 arc_okay_highlight_path->is_closed = false;
                 arc_okay_highlight_path->width = 3;
-                globals->renderer->SetColorByName(arc_okay_highlight_path->properties->color, "red");
+                globals->renderer->SetColorByName(arc_okay_highlight_path->properties->color, "green");
                 arc_okay_highlight_path->properties->matrix_callback = globals->view_matrix;
             }
             else
@@ -577,7 +582,9 @@ bool hmi_update_timer()
         else
         {
             arc_okay_highlight_path = NULL;
-            //globals->renderer->SetColorByName(hmi_dro_backpane->properties->color, "grey");
+            dro.arc_readout->properties->color[0] = 247;
+            dro.arc_readout->properties->color[1] = 104;
+            dro.arc_readout->properties->color[2] = 15;
         }
     }
     return true;
