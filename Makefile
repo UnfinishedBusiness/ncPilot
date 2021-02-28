@@ -37,7 +37,7 @@ endif
 ifeq ($(OS),Darwin)
 	ECHO_MESSAGE = "Building for Mac OS X"
 	LINK_FLAGS += -framework Cocoa -framework IOKit -framework OpenGL
-	LINK_FLAGS += -L/usr/local/lib -L/opt/local/lib
+	LINK_FLAGS += -L/usr/local/lib
 endif
 
 # Additional release-specific linker settings

@@ -478,6 +478,8 @@ double_point_t EasyRender::GetWindowMousePosition()
 {
     double mouseX, mouseY;
     glfwGetCursorPos(this->Window, &mouseX, &mouseY);
+    mouseX -= 2;
+    mouseY -= 4;
     return {mouseX - (this->WindowSize[0]/ 2.0f), (this->WindowSize[1] - mouseY) - (this->WindowSize[1] / 2.0f)};
 }
 double_point_t EasyRender::GetWindowSize()

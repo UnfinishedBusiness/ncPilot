@@ -430,7 +430,7 @@ void hmi_mouse_callback(PrimativeContainer* c, nlohmann::json e)
             //dialogs_ask_yes_no("Are you sure you want to start the program at this path?", &hmi_jumpin, NULL, o);
         }
     }
-    if (c->type == "box" && c->properties->id != "cuttable_plane")
+    if (c->type == "box" && c->properties->id != "cuttable_plane" && c->properties->id != "machine_plane")
     {
         if (e["event"] == "mouse_in")
         {
@@ -450,14 +450,14 @@ void hmi_mouse_callback(PrimativeContainer* c, nlohmann::json e)
             hmi_handle_button(c->properties->id);
         }
     }
-    else if (c->type == "box" && c->properties->id == "cuttable_plane")
+    else if (c->type == "box" && c->properties->id == "machine_plane")
     {
-        /*if (e["event"] == "left_click_up")
+        if (e["event"] == "left_click_up")
         {
             nlohmann::json dro_data = motion_controller_get_dro();
             try
             {
-                if (c->properties->id == "cuttable_plane" && dro_data["IN_MOTION"] == false)
+                if (c->properties->id == "machine_plane" && dro_data["IN_MOTION"] == false)
                 {
                     globals->way_point_position = globals->mouse_pos_in_matrix_coordinates;
                 }
@@ -466,15 +466,9 @@ void hmi_mouse_callback(PrimativeContainer* c, nlohmann::json e)
             {
                 LOG_F(ERROR, "Error parsing DRO Data!");
             }
-        }*/
+        }
     }
 }
-/*void view_matrix(PrimativeContainer *p)
-{
-    p->properties->scale = globals->zoom;
-    p->properties->offset[0] = globals->pan.x;
-    p->properties->offset[1] = globals->pan.y;
-}*/
 
 void hmi_view_matrix(PrimativeContainer *p)
 {
@@ -590,7 +584,7 @@ bool hmi_update_timer()
     return true;
 }
 
-void hmi_resize(nlohmann::json e)
+void hmi_resize_callback(nlohmann::json e)
 {
     hmi_backpane->bottom_left.x = (globals->renderer->GetWindowSize().x / 2) - hmi_backplane_width;
     hmi_backpane->bottom_left.y = -(globals->renderer->GetWindowSize().y / 2);
@@ -695,7 +689,7 @@ void hmi_push_button_group(std::string b1, std::string b2)
     button_groups.push_back(group);
 }
 
-void tab_key_up(nlohmann::json e)
+void hmi_tab_key_up_callback(nlohmann::json e)
 {
     if (globals->way_point_position.x != -1000 & globals->way_point_position.y != -1000)
     {
@@ -707,7 +701,83 @@ void tab_key_up(nlohmann::json e)
         globals->way_point_position.y = -1000;
     }
 }
-
+void hmi_escape_key_callback(nlohmann::json e)
+{
+    hmi_handle_button("Abort");
+    globals->way_point_position = {-1000, -1000};
+}
+void hmi_up_key_callback(nlohmann::json e)
+{
+    if ((int)e["action"] == 1)
+    {
+        //key down
+        LOG_F(INFO, "Jogging Y positive!");
+        motion_controller_push_stack("G53 G0 Y" + std::to_string(globals->machine_parameters.machine_extents[1]));
+        motion_controller_run_stack();
+    }
+    if ((int)e["action"] == 0)
+    {
+        //key up
+        LOG_F(INFO, "Cancelling Y positive jog!");
+        hmi_handle_button("Abort");
+    }
+}
+void hmi_down_key_callback(nlohmann::json e)
+{
+    if ((int)e["action"] == 1)
+    {
+        //key down
+        LOG_F(INFO, "Jogging Y negative!");
+        motion_controller_push_stack("G53 G0 Y0");
+        motion_controller_run_stack();
+    }
+    if ((int)e["action"] == 0)
+    {
+        //key up
+        LOG_F(INFO, "Cancelling Y negative jog!");
+        hmi_handle_button("Abort");
+    }
+}
+void hmi_right_key_callback(nlohmann::json e)
+{
+    if ((int)e["action"] == 1)
+    {
+        //key down
+        LOG_F(INFO, "Jogging X positive!");
+        motion_controller_push_stack("G53 G0 X" + std::to_string(globals->machine_parameters.machine_extents[0]));
+        motion_controller_run_stack();
+    }
+    if ((int)e["action"] == 0)
+    {
+        //key up
+        LOG_F(INFO, "Cancelling X positive jog!");
+        hmi_handle_button("Abort");
+    }
+}
+void hmi_left_key_callback(nlohmann::json e)
+{
+    if ((int)e["action"] == 1)
+    {
+        //key down
+        LOG_F(INFO, "Jogging X negative!");
+        motion_controller_push_stack("G53 G0 X0");
+        motion_controller_run_stack();
+    }
+    if ((int)e["action"] == 0)
+    {
+        //key up
+        LOG_F(INFO, "Cancelling X negative jog!");
+        hmi_handle_button("Abort");
+    }
+}
+void hmi_mouse_motion_callback(nlohmann::json e)
+{
+    globals->mouse_pos_in_screen_coordinates = {(double)e["pos"]["x"], (double)e["pos"]["y"]};
+    globals->mouse_pos_in_matrix_coordinates = {
+        ((double)e["pos"]["x"] / globals->zoom) - (globals->pan.x / globals->zoom),
+        ((double)e["pos"]["y"] / globals->zoom) - (globals->pan.y / globals->zoom)
+    };
+}
 void hmi_init()
 {
     globals->way_point_position = {-1000, -1000};
@@ -719,6 +789,7 @@ void hmi_init()
     globals->machine_plane->properties->color[1] = globals->preferences.machine_plane_color[1];
     globals->machine_plane->properties->color[2] = globals->preferences.machine_plane_color[2];
     globals->machine_plane->properties->matrix_callback = globals->view_matrix;
+    globals->machine_plane->properties->mouse_callback = &hmi_mouse_callback;
 
 
     globals->cuttable_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({globals->machine_parameters.cutting_extents[0], globals->machine_parameters.cutting_extents[1]}, (globals->machine_parameters.machine_extents[0] + globals->machine_parameters.cutting_extents[2]) - globals->machine_parameters.cutting_extents[0], (globals->machine_parameters.machine_extents[1] + globals->machine_parameters.cutting_extents[3]) - globals->machine_parameters.cutting_extents[1], 0));
@@ -839,8 +910,21 @@ void hmi_init()
     globals->torch_pointer->properties->matrix_callback = globals->view_matrix;
 
    
-    globals->renderer->PushEvent("Tab", "keyup", tab_key_up);
-    globals->renderer->PushEvent("none", "window_resize", hmi_resize);
+    globals->renderer->PushEvent("Tab", "keyup", hmi_tab_key_up_callback);
+    globals->renderer->PushEvent("none", "window_resize", hmi_resize_callback);
+    globals->renderer->PushEvent("Escape", "keyup", hmi_escape_key_callback);
+
+    globals->renderer->PushEvent("Up", "keydown", hmi_up_key_callback);
+    globals->renderer->PushEvent("Up", "keyup", hmi_up_key_callback);
+    globals->renderer->PushEvent("Down", "keydown", hmi_down_key_callback);
+    globals->renderer->PushEvent("Down", "keyup", hmi_down_key_callback);
+    globals->renderer->PushEvent("Left", "keydown", hmi_left_key_callback);
+    globals->renderer->PushEvent("Left", "keyup", hmi_left_key_callback);
+    globals->renderer->PushEvent("Right", "keydown", hmi_right_key_callback);
+    globals->renderer->PushEvent("Right", "keyup", hmi_right_key_callback);
+
+    globals->renderer->PushEvent("none", "mouse_move", hmi_mouse_motion_callback);
+
     globals->renderer->PushTimer(100, hmi_update_timer);
     
     hmi_handle_button("Fit");
