@@ -2,6 +2,7 @@
 #include <EasyRender/logging/loguru.h>
 #include <EasyRender/geometry/geometry.h>
 #include <dialogs/dialogs.h>
+#include <hmi/hmi.h>
 
 gcode_global_t gcode;
 gcode_path_t current_path;
@@ -41,7 +42,7 @@ bool gcode_open_file(std::string file)
     {
         globals->renderer->DeletePrimativesById("gcode");
         globals->renderer->DeletePrimativesById("gcode_arrows");
-        globals->renderer->DeletePrimativesById("gcode_highlight");
+        globals->renderer->DeletePrimativesById("gcode_highlights");
         gcode.line_count = count_lines(file);
         gcode.lines_consumed = 0;
         gcode.filename = file;
@@ -83,44 +84,49 @@ void gcode_push_current_path_to_viewer(int rapid_line)
         Geometry geo;
         try
         {
-            std::vector<double_point_t> simplified = geo.simplify(current_path.points, 0.010);
-            std::vector<double_point_t> path;
-            int point_count = 0;
-            for (int i = 0; i < simplified.size(); i++)
+            if (current_path.points.size() > 1)
             {
-                if ((i == 0 && i+1 < simplified.size()) || (point_count == 0 && i+1 < simplified.size()))
+                std::vector<double_point_t> simplified = geo.simplify(current_path.points, 0.010);
+                std::vector<double_point_t> path;
+                int point_count = 0;
+                for (int i = 0; i < simplified.size(); i++)
                 {
-                    std::vector<double_point_t> arrow_path;
-                    double_point_t midpoint = geo.midpoint(simplified[i+1], simplified[i]);
-                    arrow_path.push_back({midpoint.x, midpoint.y});
-                    double angle = geo.measure_polar_angle(simplified[i + 1], simplified[i]);
-                    double_point_t p1 = geo.create_polar_line(midpoint, angle +30, 0.020).end;
-                    double_point_t p2 = geo.create_polar_line(midpoint, angle -30, 0.020).end;
-                    arrow_path.push_back({p1.x, p1.y});
-                    arrow_path.push_back({p2.x, p2.y});
-                    EasyPrimative::Path *direction_indicator = globals->renderer->PushPrimative(new EasyPrimative::Path(arrow_path));
-                    globals->renderer->SetColorByName(direction_indicator->properties->color, "blue");
-                    direction_indicator->properties->id = "gcode_arrows";
-                    direction_indicator->properties->matrix_callback = globals->view_matrix;
+                    if ((i == 0 && i+1 < simplified.size()) || (point_count == 0 && i+1 < simplified.size()))
+                    {
+                        std::vector<double_point_t> arrow_path;
+                        double_point_t midpoint = geo.midpoint(simplified[i+1], simplified[i]);
+                        arrow_path.push_back({midpoint.x, midpoint.y});
+                        double angle = geo.measure_polar_angle(simplified[i + 1], simplified[i]);
+                        double_point_t p1 = geo.create_polar_line(midpoint, angle +30, 0.020).end;
+                        double_point_t p2 = geo.create_polar_line(midpoint, angle -30, 0.020).end;
+                        arrow_path.push_back({p1.x, p1.y});
+                        arrow_path.push_back({p2.x, p2.y});
+                        EasyPrimative::Path *direction_indicator = globals->renderer->PushPrimative(new EasyPrimative::Path(arrow_path));
+                        globals->renderer->SetColorByName(direction_indicator->properties->color, "blue");
+                        direction_indicator->properties->id = "gcode_arrows";
+                        direction_indicator->properties->matrix_callback = globals->view_matrix;
+                        direction_indicator->properties->visable = false;
+                    }
+                    path.push_back({simplified[i].x, simplified[i].y});
+                    point_count++;
+                    if (point_count > 2)
+                    {
+                        point_count = 0;
+                    }
                 }
-                path.push_back({simplified[i].x, simplified[i].y});
-                point_count++;
-                if (point_count > 2)
-                {
-                    point_count = 0;
-                }
+                EasyPrimative::Path *g = globals->renderer->PushPrimative(new EasyPrimative::Path(path));
+                g->is_closed = false;
+                g->properties->id = "gcode";
+                g->properties->data = {{"rapid_line", rapid_line}};
+                globals->renderer->SetColorByName(g->properties->color, "white");
+                g->properties->matrix_callback = globals->view_matrix;
+                g->properties->mouse_callback = &hmi_mouse_callback;
+                g->properties->visable = false;
             }
-            EasyPrimative::Path *g = globals->renderer->PushPrimative(new EasyPrimative::Path(path));
-            g->is_closed = false;
-            g->properties->id = "gcode";
-            g->properties->data = {{"rapid_line", rapid_line}};
-            globals->renderer->SetColorByName(g->properties->color, "white");
-            g->properties->matrix_callback = globals->view_matrix;
-            //g->properties->mouse_callback = &hmi_mouse_callback;
         }
         catch(const std::exception& e)
         {
-            LOG_F(ERROR, "%s", e.what());
+            LOG_F(ERROR, "Caught Exception: %s", e.what());
         }
     }
 }
@@ -154,6 +160,7 @@ bool gcode_parse_timer()
                         l->style = "dashed";
                         globals->renderer->SetColorByName(l->properties->color, "grey");
                         l->properties->matrix_callback = globals->view_matrix;
+                        l->properties->visable = false;
                     }
                 }
                 catch(...)
@@ -185,6 +192,14 @@ bool gcode_parse_timer()
             gcode.file.close();
             dialogs_set_progress_value(1.0f);
             dialogs_show_progress_window(false);
+            std::vector<PrimativeContainer *> *stack = globals->renderer->GetPrimativeStack();
+            for (size_t x = 0; x < stack->size(); x++)
+            {
+                if (stack->at(x)->properties->id == "gcode" || stack->at(x)->properties->id == "gcode_arrows" || stack->at(x)->properties->id == "gcode_highlights")
+                {
+                    stack->at(x)->properties->visable = true;
+                }
+            }
             return false;
         }
     }

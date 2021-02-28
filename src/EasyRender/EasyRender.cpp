@@ -73,10 +73,9 @@ void EasyRender::key_callback(GLFWwindow* window, int key, int scancode, int act
                 LOG_F(INFO, "(key_callback) Unknown key: %d", key);
             }
         }
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-        if (!io.WantCaptureKeyboard || !io.WantCaptureMouse)
+        if (!self->imgui_io->WantCaptureKeyboard || !self->imgui_io->WantCaptureMouse)
         {
-            for (int x = 0; x < self->event_stack.size(); x++)
+            for (size_t x = 0; x < self->event_stack.size(); x++)
             {
                 if (self->event_stack.at(x)->type == "keyup" && action == 1)
                 {
@@ -117,11 +116,10 @@ void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int actio
     EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
     if (self != NULL)
     {
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-        if (!io.WantCaptureKeyboard || !io.WantCaptureMouse)
+        if (!self->imgui_io->WantCaptureKeyboard || !self->imgui_io->WantCaptureMouse)
         {
             double_point_t m = self->GetWindowMousePosition();
-            for (int x = 0; x < self->primative_stack.size(); x++)
+            for (size_t x = 0; x < self->primative_stack.size(); x++)
             {
                 if (self->primative_stack.at(x)->properties->visable == true && self->primative_stack.at(x)->properties->mouse_over == true)
                 {
@@ -186,10 +184,9 @@ void EasyRender::scroll_callback(GLFWwindow* window, double xoffset, double yoff
     EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
     if (self != NULL)
     {
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-        if (!io.WantCaptureKeyboard || !io.WantCaptureMouse)
+        if (!self->imgui_io->WantCaptureKeyboard || !self->imgui_io->WantCaptureMouse)
         {
-            for (int x = 0; x < self->event_stack.size(); x++)
+            for (size_t x = 0; x < self->event_stack.size(); x++)
             {
                 if (yoffset > 0)
                 {
@@ -216,7 +213,7 @@ void EasyRender::cursor_position_callback(GLFWwindow* window, double xpos, doubl
     if (self != NULL)
     {
         double_point_t m = self->GetWindowMousePosition();
-        for (int x = 0; x < self->event_stack.size(); x++)
+        for (size_t x = 0; x < self->event_stack.size(); x++)
         {
             if (self->event_stack.at(x)->type == "mouse_move")
             {
@@ -230,7 +227,7 @@ void EasyRender::window_size_callback(GLFWwindow* window, int width, int height)
     EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
     if (self != NULL)
     {
-        for (int x = 0; x < self->event_stack.size(); x++)
+        for (size_t x = 0; x < self->event_stack.size(); x++)
         {
             if (self->event_stack.at(x)->type == "window_resize")
             {
@@ -497,14 +494,18 @@ std::vector<PrimativeContainer *> *EasyRender::GetPrimativeStack()
 }
 void EasyRender::DeletePrimativesById(std::string id)
 {
-    for (int x = 0; x < this->primative_stack.size(); x++)
+    std::vector<PrimativeContainer*>::iterator it;
+    for ( it = this->primative_stack.begin(); it != this->primative_stack.end(); )
     {
-        if (this->primative_stack.at(x)->properties->id == id)
+        if((*it)->properties->id == id)
         {
-            this->primative_stack.at(x)->destroy();
-            delete this->primative_stack.at(x);
-            this->primative_stack.erase (this->primative_stack.begin()+x);
-            x = 0;
+            (*it)->destroy();
+            delete * it;  
+            it = this->primative_stack.erase(it);
+        }
+        else 
+        {
+            ++it;
         }
     }
 }
@@ -544,10 +545,11 @@ bool EasyRender::Init(int argc, char** argv)
     //Set calbacks here
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.IniFilename = this->GuiIniFileName;
-    io.LogFilename = this->GuiLogFileName;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    ImGuiIO& io = ImGui::GetIO();
+    this->imgui_io = &io;
+    this->imgui_io->IniFilename = this->GuiIniFileName;
+    this->imgui_io->LogFilename = this->GuiLogFileName;
+    this->imgui_io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     if (this->GuiStyle == "light")
     {
         ImGui::StyleColorsLight();
@@ -577,7 +579,7 @@ bool EasyRender::Poll(bool should_quit)
     ImGui_ImplOpenGL2_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-    for (int x = 0; x < this->gui_stack.size(); x++)
+    for (size_t x = 0; x < this->gui_stack.size(); x++)
     {
         if (this->gui_stack[x]->visable == true)
         {
@@ -596,29 +598,31 @@ bool EasyRender::Poll(bool should_quit)
     sort(primative_stack.begin(), primative_stack.end(), [](auto* lhs, auto* rhs) {
         return lhs->properties->zindex < rhs->properties->zindex ;
     });
-    for (int x = 0; x < this->primative_stack.size(); x ++)
+    for (size_t x = 0; x < this->primative_stack.size(); x ++)
     {
-        primative_stack.at(x)->render();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-        if (!io.WantCaptureKeyboard || !io.WantCaptureMouse)
+        if (this->primative_stack[x]->properties->visable == true)
         {
-            primative_stack.at(x)->process_mouse(window_mouse_pos.x, window_mouse_pos.y);
+            primative_stack[x]->render();
+            if (!this->imgui_io->WantCaptureKeyboard || !this->imgui_io->WantCaptureMouse)
+            {
+                primative_stack[x]->process_mouse(window_mouse_pos.x, window_mouse_pos.y);
+            }
         }
     }
     ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
     glfwMakeContextCurrent(this->Window);
     glfwSwapBuffers(this->Window);
     glfwPollEvents();
-    for (int x = 0; x < this->timer_stack.size(); x++)
+    for (size_t x = 0; x < this->timer_stack.size(); x++)
     {
         if ((this->Millis() - this->timer_stack.at(x)->timestamp) > this->timer_stack.at(x)->intervol)
         {
-            this->timer_stack.at(x)->timestamp = this->Millis();
-            if (this->timer_stack.at(x)->callback != NULL)
+            this->timer_stack[x]->timestamp = this->Millis();
+            if (this->timer_stack[x]->callback != NULL)
             {
-                if (this->timer_stack.at(x)->callback() == false) //Don't repeat
+                if (this->timer_stack[x]->callback() == false) //Don't repeat
                 {
-                    delete this->timer_stack.at(x);
+                    delete this->timer_stack[x];
                     this->timer_stack.erase(this->timer_stack.begin()+x);
                 }
             }
@@ -638,9 +642,9 @@ bool EasyRender::Poll(bool should_quit)
             if (this->FPS_Average.size() > 10)
             {
                 float avg = 0;
-                for (int x = 0; x < this->FPS_Average.size(); x++)
+                for (size_t x = 0; x < this->FPS_Average.size(); x++)
                 {
-                    avg += this->FPS_Average.at(x);
+                    avg += this->FPS_Average[x];
                 }
                 avg = avg / this->FPS_Average.size();
                 this->FPS_Label->textval = std::to_string((int)avg);
@@ -656,22 +660,22 @@ bool EasyRender::Poll(bool should_quit)
 }
 void EasyRender::Close()
 {
-    for (int x = 0; x < this->primative_stack.size(); x++)
+    for (size_t x = 0; x < this->primative_stack.size(); x++)
     {
         this->primative_stack.at(x)->destroy();
         delete this->primative_stack.at(x);
     }
-    for (int x = 0; x < this->timer_stack.size(); x++)
+    for (size_t x = 0; x < this->timer_stack.size(); x++)
     {
         delete this->timer_stack.at(x);
         this->timer_stack.erase(this->timer_stack.begin()+x);
     }
-    for (int x = 0; x < this->gui_stack.size(); x++)
+    for (size_t x = 0; x < this->gui_stack.size(); x++)
     {
         delete this->gui_stack.at(x);
         this->gui_stack.erase(this->gui_stack.begin()+x);
     }
-    for (int x = 0; x < this->event_stack.size(); x++)
+    for (size_t x = 0; x < this->event_stack.size(); x++)
     {
         delete this->event_stack.at(x);
         this->event_stack.erase(this->event_stack.begin()+x);

@@ -7,6 +7,7 @@
 #include <sys/time.h>
 #include <ctime>
 #include <algorithm> 
+#include "gui/imgui.h"
 #include "geometry/geometry.h"
 #include "json/json.h"
 #include "primatives/PrimativeContainer.h"
@@ -63,6 +64,7 @@ class EasyRender{
         char* GuiLogFileName;
         std::string MainLogFileName;
         std::string GuiStyle;
+        ImGuiIO *imgui_io;
 
         std::vector<PrimativeContainer *> primative_stack;
         std::vector<EasyRenderTimer *> timer_stack;
@@ -100,6 +102,7 @@ class EasyRender{
             this->SetClearColor(21, 22, 34);
             this->SetShowFPS(false);
             this->FPS_Label = NULL;
+            this->imgui_io = NULL;
         };
         /* Primative Creation */
         EasyPrimative::Line* PushPrimative(EasyPrimative::Line* l);

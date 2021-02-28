@@ -37,40 +37,36 @@ std::string EasyPrimative::Image::get_type_name()
 }
 void EasyPrimative::Image::process_mouse(float mpos_x, float mpos_y)
 {
-    //printf("X%.4f, Y%.4f\n", mpos_x, mpos_y);
-    if (this->properties->visable == true)
+    mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
+    mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
+    if (mpos_x > this->position[0] && mpos_x < (this->position[0] + this->width) &&
+        mpos_y > this->position[1] && mpos_y < (this->position[1] + this->height)
+    )
     {
-        mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
-        mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
-        if (mpos_x > this->position[0] && mpos_x < (this->position[0] + this->width) &&
-            mpos_y > this->position[1] && mpos_y < (this->position[1] + this->height)
-        )
+        if (this->properties->mouse_over == false)
         {
-            if (this->properties->mouse_over == false)
-            {
-                this->mouse_event = {
-                    {"event", "mouse_in"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = true;
-            }    
-        }
-        else
+            this->mouse_event = {
+                {"event", "mouse_in"},
+                {"pos", {
+                    {"x", mpos_x},
+                    {"y", mpos_y}
+                }},
+            };
+            this->properties->mouse_over = true;
+        }    
+    }
+    else
+    {
+        if (this->properties->mouse_over == true)
         {
-            if (this->properties->mouse_over == true)
-            {
-                this->mouse_event = {
-                    {"event", "mouse_out"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = false;
-            }
+            this->mouse_event = {
+                {"event", "mouse_out"},
+                {"pos", {
+                    {"x", mpos_x},
+                    {"y", mpos_y}
+                }},
+            };
+            this->properties->mouse_over = false;
         }
     }
 }
@@ -105,57 +101,54 @@ bool EasyPrimative::Image::ImageToTextureFromFile(const char* filename, GLuint* 
 }
 void EasyPrimative::Image::render()
 {
-    if (this->properties->visable == true)
-    {
-        glPushMatrix();
-            glTranslatef(this->properties->offset[0], this->properties->offset[1], this->properties->offset[2]);
-            glScalef(this->properties->scale, this->properties->scale, this->properties->scale);
-            glColor4f(this->properties->color[3] / 255, this->properties->color[3] / 255, this->properties->color[3] / 255, this->properties->color[3] / 255);
-            if (this->texture == -1)
+    glPushMatrix();
+        glTranslatef(this->properties->offset[0], this->properties->offset[1], this->properties->offset[2]);
+        glScalef(this->properties->scale, this->properties->scale, this->properties->scale);
+        glColor4f(this->properties->color[3] / 255, this->properties->color[3] / 255, this->properties->color[3] / 255, this->properties->color[3] / 255);
+        if (this->texture == -1)
+        {
+            int my_image_width = 0;
+            int my_image_height = 0;
+            GLuint my_image_texture = 0;
+            bool ret = this->ImageToTextureFromFile(this->image_file.c_str(), &this->texture, &my_image_width, &my_image_height);
+            if (ret)
             {
-                int my_image_width = 0;
-                int my_image_height = 0;
-                GLuint my_image_texture = 0;
-                bool ret = this->ImageToTextureFromFile(this->image_file.c_str(), &this->texture, &my_image_width, &my_image_height);
-                if (ret)
+                //printf("Loaded image %s, width: %d, height: %d\n", this->image_file.c_str(), my_image_width, my_image_height);
+                this->image_size[0] = my_image_width;
+                this->image_size[1] = my_image_height;
+                if (this->width == 0 && this->height == 0)
                 {
-                    //printf("Loaded image %s, width: %d, height: %d\n", this->image_file.c_str(), my_image_width, my_image_height);
-                    this->image_size[0] = my_image_width;
-                    this->image_size[1] = my_image_height;
-                    if (this->width == 0 && this->height == 0)
-                    {
-                        this->width = my_image_width;
-                        this->height = my_image_height;
-                    }
-                }
-                else
-                {
-                    LOG_F(ERROR, "Error loading image!");
-                    this->texture = -1;
+                    this->width = my_image_width;
+                    this->height = my_image_height;
                 }
             }
             else
             {
-                glPushMatrix();
-                    glTranslatef(this->position[0], this->position[1], 0.0);
-                    glRotatef(this->properties->angle, 0.0, 0.0, 1.0);
-                    glScalef(1.0f, -1.0f, 1.0f);
-                    double imgWidth = this->width;
-                    double imgHeight = this->height;
-                    glBindTexture(GL_TEXTURE_2D, this->texture);
-                    glEnable(GL_TEXTURE_2D);
-                        glBegin(GL_QUADS);
-                            glTexCoord2f(0, 0); glVertex2f(-imgWidth, -imgHeight);
-                            glTexCoord2f(1, 0); glVertex2f(imgWidth, -imgHeight);
-                            glTexCoord2f(1,1);  glVertex2f(imgWidth, imgHeight);
-                            glTexCoord2f(0, 1); glVertex2f(-imgWidth, imgHeight);
-                        glEnd();
-                    glDisable(GL_TEXTURE_2D);
-                    glFlush();
-                glPopMatrix();
+                LOG_F(ERROR, "Error loading image!");
+                this->texture = -1;
             }
-        glPopMatrix();
-    }
+        }
+        else
+        {
+            glPushMatrix();
+                glTranslatef(this->position[0], this->position[1], 0.0);
+                glRotatef(this->properties->angle, 0.0, 0.0, 1.0);
+                glScalef(1.0f, -1.0f, 1.0f);
+                double imgWidth = this->width;
+                double imgHeight = this->height;
+                glBindTexture(GL_TEXTURE_2D, this->texture);
+                glEnable(GL_TEXTURE_2D);
+                    glBegin(GL_QUADS);
+                        glTexCoord2f(0, 0); glVertex2f(-imgWidth, -imgHeight);
+                        glTexCoord2f(1, 0); glVertex2f(imgWidth, -imgHeight);
+                        glTexCoord2f(1,1);  glVertex2f(imgWidth, imgHeight);
+                        glTexCoord2f(0, 1); glVertex2f(-imgWidth, imgHeight);
+                    glEnd();
+                glDisable(GL_TEXTURE_2D);
+                glFlush();
+            glPopMatrix();
+        }
+    glPopMatrix();
 }
 void EasyPrimative::Image::destroy()
 {

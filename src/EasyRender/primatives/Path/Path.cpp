@@ -83,36 +83,33 @@ void EasyPrimative::Path::process_mouse(float mpos_x, float mpos_y)
 }
 void EasyPrimative::Path::render()
 {
-    if (this->properties->visable == true)
-    {
-        glPushMatrix();
-            glTranslatef(this->properties->offset[0], this->properties->offset[1], this->properties->offset[2]);
-            glScalef(this->properties->scale, this->properties->scale, this->properties->scale);
-            glColor4f(this->properties->color[0] / 255, this->properties->color[1] / 255, this->properties->color[2] / 255, this->properties->color[3] / 255);
-            glLineWidth(this->width);
-            if (this->style == "dashed")
+    glPushMatrix();
+        glTranslatef(this->properties->offset[0], this->properties->offset[1], this->properties->offset[2]);
+        glScalef(this->properties->scale, this->properties->scale, this->properties->scale);
+        glColor4f(this->properties->color[0] / 255, this->properties->color[1] / 255, this->properties->color[2] / 255, this->properties->color[3] / 255);
+        glLineWidth(this->width);
+        if (this->style == "dashed")
+        {
+            glPushAttrib(GL_ENABLE_BIT);
+            glLineStipple(10, 0xAAAA);
+            glEnable(GL_LINE_STIPPLE);
+        }
+        if (this->is_closed == true)
+        {
+            glBegin(GL_LINE_LOOP);
+        }
+        else
+        {
+            glBegin(GL_LINE_STRIP);
+        }
+            for (int i = 0; i < this->points.size(); i++)
             {
-                glPushAttrib(GL_ENABLE_BIT);
-                glLineStipple(10, 0xAAAA);
-                glEnable(GL_LINE_STIPPLE);
+                glVertex3f(this->points[i].x, this->points[i].y, this->points[i].z);
             }
-            if (this->is_closed == true)
-            {
-                glBegin(GL_LINE_LOOP);
-            }
-            else
-            {
-                glBegin(GL_LINE_STRIP);
-            }
-                for (int i = 0; i < this->points.size(); i++)
-                {
-                    glVertex3f(this->points.at(i).x, this->points.at(i).y, this->points.at(i).z);
-                }
-            glEnd();
-            glLineWidth(1);
-            glDisable(GL_LINE_STIPPLE);
-        glPopMatrix();
-    }
+        glEnd();
+        glLineWidth(1);
+        glDisable(GL_LINE_STIPPLE);
+    glPopMatrix();
 }
 void EasyPrimative::Path::destroy()
 {

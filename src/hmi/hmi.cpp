@@ -206,10 +206,7 @@ void hmi_handle_button(std::string id)
         if (id == "Clean")
         {
             LOG_F(INFO, "Clicked Clean");
-            if (gcode_open_file(gcode_get_filename()))
-            {
-                globals->renderer->PushTimer(0, &gcode_parse_timer);
-            }
+            globals->renderer->DeletePrimativesById("gcode_highlights");
         }
         else if (id == "Fit")
         {
@@ -414,20 +411,20 @@ void hmi_mouse_callback(PrimativeContainer* c, nlohmann::json e)
         if (e["event"] == "right_click_up")
         {
             globals->renderer->SetColorByName(c->properties->color, "light-green");
-            //dialogs_ask_yes_no("This feature is new and experimental, Your gcode file could be destroyed!\nAre you sure you want to reverse this paths direction?", &hmi_reverse, NULL, o);
+            dialogs_ask_yes_no("This feature is new and experimental, Your gcode file could be destroyed!\nAre you sure you want to reverse this paths direction?", &hmi_reverse, NULL, c);
         }
         if (e["event"] == "right_click_down")
         {
-            globals->renderer->SetColorByName(c->properties->color, "dark-green");
+            globals->renderer->SetColorByName(c->properties->color, "green");
         }
         if (e["event"] == "left_click_down")
         {
-            globals->renderer->SetColorByName(c->properties->color, "dark-green");
+            globals->renderer->SetColorByName(c->properties->color, "green");
         }
         if (e["event"] == "left_click_up")
         {
-            globals->renderer->SetColorByName(c->properties->color, "white");
-            //dialogs_ask_yes_no("Are you sure you want to start the program at this path?", &hmi_jumpin, NULL, o);
+            globals->renderer->SetColorByName(c->properties->color, "light-green");
+            dialogs_ask_yes_no("Are you sure you want to start the program at this path?", &hmi_jumpin, NULL, c);
         }
     }
     if (c->type == "box" && c->properties->id != "cuttable_plane" && c->properties->id != "machine_plane")

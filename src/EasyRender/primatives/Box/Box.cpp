@@ -33,37 +33,34 @@ std::string EasyPrimative::Box::get_type_name()
 }
 void EasyPrimative::Box::process_mouse(float mpos_x, float mpos_y)
 {
-    if (this->properties->visable == true)
+    mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
+    mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
+    if (mpos_x > this->bottom_left.x && mpos_x < (this->bottom_left.x + this->width) && mpos_y < (this->bottom_left.y + this->height) && mpos_y > this->bottom_left.y)
     {
-        mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
-        mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
-        if (mpos_x > this->bottom_left.x && mpos_x < (this->bottom_left.x + this->width) && mpos_y < (this->bottom_left.y + this->height) && mpos_y > this->bottom_left.y)
+        if (this->properties->mouse_over == false)
         {
-            if (this->properties->mouse_over == false)
-            {
-                this->mouse_event = {
-                    {"event", "mouse_in"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = true;
-            }
+            this->mouse_event = {
+                {"event", "mouse_in"},
+                {"pos", {
+                    {"x", mpos_x},
+                    {"y", mpos_y}
+                }},
+            };
+            this->properties->mouse_over = true;
         }
-        else
+    }
+    else
+    {
+        if (this->properties->mouse_over == true)
         {
-            if (this->properties->mouse_over == true)
-            {
-                this->mouse_event = {
-                    {"event", "mouse_out"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = false;
-            }
+            this->mouse_event = {
+                {"event", "mouse_out"},
+                {"pos", {
+                    {"x", mpos_x},
+                    {"y", mpos_y}
+                }},
+            };
+            this->properties->mouse_over = false;
         }
     }
 }

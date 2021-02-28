@@ -33,40 +33,37 @@ std::string EasyPrimative::Arc::get_type_name()
 }
 void EasyPrimative::Arc::process_mouse(float mpos_x, float mpos_y)
 {
-    if (this->properties->visable == true)
+    mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
+    mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
+    Geometry g;
+    if (g.distance(this->center, {mpos_x, mpos_y}) > (this->radius - ((this->properties->mouse_over_padding / 2) * (1/this->properties->scale))) &&
+    g.distance(this->center, {mpos_x, mpos_y}) < (this->radius + ((this->properties->mouse_over_padding / 2) * (1/this->properties->scale))) &&
+    g.lines_intersect({g.create_polar_line(this->center, this->start_angle, this->radius).end, g.create_polar_line(this->center, this->end_angle, this->radius).end}, {this->center, {mpos_x, mpos_y}}))
     {
-        mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
-        mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
-        Geometry g;
-        if (g.distance(this->center, {mpos_x, mpos_y}) > (this->radius - ((this->properties->mouse_over_padding / 2) * (1/this->properties->scale))) &&
-        g.distance(this->center, {mpos_x, mpos_y}) < (this->radius + ((this->properties->mouse_over_padding / 2) * (1/this->properties->scale))) &&
-        g.lines_intersect({g.create_polar_line(this->center, this->start_angle, this->radius).end, g.create_polar_line(this->center, this->end_angle, this->radius).end}, {this->center, {mpos_x, mpos_y}}))
+        if (this->properties->mouse_over == false)
         {
-            if (this->properties->mouse_over == false)
-            {
-                this->mouse_event = {
-                    {"event", "mouse_in"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = true;
-            }
+            this->mouse_event = {
+                {"event", "mouse_in"},
+                {"pos", {
+                    {"x", mpos_x},
+                    {"y", mpos_y}
+                }},
+            };
+            this->properties->mouse_over = true;
         }
-        else
+    }
+    else
+    {
+        if (this->properties->mouse_over == true)
         {
-            if (this->properties->mouse_over == true)
-            {
-                this->mouse_event = {
-                    {"event", "mouse_out"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = false;
-            }
+            this->mouse_event = {
+                {"event", "mouse_out"},
+                {"pos", {
+                    {"x", mpos_x},
+                    {"y", mpos_y}
+                }},
+            };
+            this->properties->mouse_over = false;
         }
     }
 }
@@ -120,24 +117,21 @@ void EasyPrimative::Arc::render_arc(double cx, double cy, double radius, double 
 }
 void EasyPrimative::Arc::render()
 {
-    if (this->properties->visable == true)
-    {
-        glPushMatrix();
-            glTranslatef(this->properties->offset[0], this->properties->offset[1], this->properties->offset[2]);
-            glScalef(this->properties->scale, this->properties->scale, this->properties->scale);
-            glColor4f(this->properties->color[0] / 255, this->properties->color[1] / 255, this->properties->color[2] / 255, this->properties->color[3] / 255);
-            glLineWidth(this->width);
-            if (this->style == "dashed")
-            {
-                glPushAttrib(GL_ENABLE_BIT);
-                glLineStipple(10, 0xAAAA);
-                glEnable(GL_LINE_STIPPLE);
-            }
-            this->render_arc(this->center.x, this->center.y, this->radius, this->start_angle, this->end_angle);
-            glLineWidth(1);
-            glDisable(GL_LINE_STIPPLE);
-        glPopMatrix();
-    }
+    glPushMatrix();
+        glTranslatef(this->properties->offset[0], this->properties->offset[1], this->properties->offset[2]);
+        glScalef(this->properties->scale, this->properties->scale, this->properties->scale);
+        glColor4f(this->properties->color[0] / 255, this->properties->color[1] / 255, this->properties->color[2] / 255, this->properties->color[3] / 255);
+        glLineWidth(this->width);
+        if (this->style == "dashed")
+        {
+            glPushAttrib(GL_ENABLE_BIT);
+            glLineStipple(10, 0xAAAA);
+            glEnable(GL_LINE_STIPPLE);
+        }
+        this->render_arc(this->center.x, this->center.y, this->radius, this->start_angle, this->end_angle);
+        glLineWidth(1);
+        glDisable(GL_LINE_STIPPLE);
+    glPopMatrix();
 }
 void EasyPrimative::Arc::destroy()
 {

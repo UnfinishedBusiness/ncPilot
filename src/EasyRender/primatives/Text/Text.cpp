@@ -38,40 +38,36 @@ std::string EasyPrimative::Text::get_type_name()
 }
 void EasyPrimative::Text::process_mouse(float mpos_x, float mpos_y)
 {
-    //printf("X%.4f, Y%.4f\n", mpos_x, mpos_y);
-    if (this->properties->visable == true)
+    mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
+    mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
+    if (mpos_x > this->position.x && mpos_x < (this->position.x + this->width) &&
+        mpos_y > this->position.y && mpos_y < (this->position.y + this->height)
+    )
     {
-        mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
-        mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
-        if (mpos_x > this->position.x && mpos_x < (this->position.x + this->width) &&
-            mpos_y > this->position.y && mpos_y < (this->position.y + this->height)
-        )
+        if (this->properties->mouse_over == false)
         {
-            if (this->properties->mouse_over == false)
-            {
-                this->mouse_event = {
-                    {"event", "mouse_in"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = true;
-            }    
-        }
-        else
+            this->mouse_event = {
+                {"event", "mouse_in"},
+                {"pos", {
+                    {"x", mpos_x},
+                    {"y", mpos_y}
+                }},
+            };
+            this->properties->mouse_over = true;
+        }    
+    }
+    else
+    {
+        if (this->properties->mouse_over == true)
         {
-            if (this->properties->mouse_over == true)
-            {
-                this->mouse_event = {
-                    {"event", "mouse_out"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = false;
-            }
+            this->mouse_event = {
+                {"event", "mouse_out"},
+                {"pos", {
+                    {"x", mpos_x},
+                    {"y", mpos_y}
+                }},
+            };
+            this->properties->mouse_over = false;
         }
     }
 }
@@ -140,28 +136,25 @@ void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
 }
 void EasyPrimative::Text::render()
 {
-    if (this->properties->visable == true)
-    {
-        glPushMatrix();
-            glTranslatef(this->properties->offset[0], this->properties->offset[1], this->properties->offset[2]);
-            glScalef(this->properties->scale, this->properties->scale, this->properties->scale);
-            glColor4f(this->properties->color[0] / 255, this->properties->color[1] / 255, this->properties->color[2] / 255, this->properties->color[3] / 255);
-            if (this->texture == -1)
+    glPushMatrix();
+        glTranslatef(this->properties->offset[0], this->properties->offset[1], this->properties->offset[2]);
+        glScalef(this->properties->scale, this->properties->scale, this->properties->scale);
+        glColor4f(this->properties->color[0] / 255, this->properties->color[1] / 255, this->properties->color[2] / 255, this->properties->color[3] / 255);
+        if (this->texture == -1)
+        {
+            bool ret = this->InitFontFromFile(this->font_file.c_str(), this->font_size);
+            if (ret == false)
             {
-                bool ret = this->InitFontFromFile(this->font_file.c_str(), this->font_size);
-                if (ret == false)
-                {
-                    LOG_F(WARNING, "Could not init font: %s\n", this->font_file.c_str());
-                    this->texture = -1;
-                }
-                this->render();
+                LOG_F(WARNING, "Could not init font: %s\n", this->font_file.c_str());
+                this->texture = -1;
             }
-            else
-            {
-                this->RenderFont(this->position.x, -this->position.y, this->textval);
-            }
-        glPopMatrix();
-    }
+            this->render();
+        }
+        else
+        {
+            this->RenderFont(this->position.x, -this->position.y, this->textval);
+        }
+    glPopMatrix();
 }
 void EasyPrimative::Text::destroy()
 {
