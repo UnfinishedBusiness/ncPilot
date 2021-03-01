@@ -15,9 +15,9 @@ for:
       only:
         - image: Visual Studio 2019
     environment:
-      MSYSTEM: MINGW64
-      MSYS_BASH: C:\msys64\usr\bin\bash
-      CHERE_INVOKING: 1 # Tell msys2 to inherit the current directory when starting the shell
+      - MSYSTEM: MINGW64
+      - MSYS_BASH: C:\msys64\usr\bin\bash
+      - CHERE_INVOKING: 1 # Tell msys2 to inherit the current directory when starting the shell
     build_script:
     - set OLD_PATH=%PATH%
     - set OPT_PATH=C:\msys64\mingw32\bin;C:\msys64\mingw64\bin;
