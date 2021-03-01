@@ -1,28 +1,40 @@
 version: 1.0.{build}
 
 branches:
-
   only:
-
   - dev
 
-environment:
-    # Tell msys2 to add mingw64 to the path
-    MSYSTEM: MINGW64
-    # Tell msys2 to inherit the current directory when starting the shell
-    CHERE_INVOKING: 1
+image:
+  - Visual Studio 2019
+  - Ubuntu
+  - macOS
 
-    MSYS_BASH: C:\msys64\usr\bin\bash
-    
-
-build_script:
-- set OLD_PATH=%PATH%
-- set OPT_PATH=C:\msys64\mingw32\bin;C:\msys64\mingw64\bin;
-- set PATH=%OPT_PATH%%PATH%
-- set PKG_CONFIG_PATH=C:\msys64\mingw64\lib\pkgconfig;
-- '%MSYS_BASH% -lc "pacman --noconfirm -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
-- cd C:\projects\ncpilot
-- '%MSYS_BASH% -lc "mingw32-make.exe"'
-- 7z a ncPilot.zip C:\msys64\mingw64\bin\glfw3.dll
-- 7z a bin\release\ncPilot.exe
-- appveyor PushArtifact ncPilot.zip
+for:
+  -
+    matrix:
+      only:
+        - image: Visual Studio 2019
+      environment:
+        MSYSTEM: MINGW64
+        MSYS_BASH: C:\msys64\usr\bin\bash
+        CHERE_INVOKING: 1 # Tell msys2 to inherit the current directory when starting the shell
+      build_script:
+      - set OLD_PATH=%PATH%
+      - set OPT_PATH=C:\msys64\mingw32\bin;C:\msys64\mingw64\bin;
+      - set PATH=%OPT_PATH%%PATH%
+      - set PKG_CONFIG_PATH=C:\msys64\mingw64\lib\pkgconfig;
+      - '%MSYS_BASH% -lc "pacman --noconfirm -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
+      - cd C:\projects\ncpilot
+      - '%MSYS_BASH% -lc "mingw32-make.exe"'
+      - 7z a ncPilot.zip C:\msys64\mingw64\bin\glfw3.dll
+      - 7z a ncPilot.zip bin\release\ncPilot.exe
+      - appveyor PushArtifact ncPilot.zip
+  -
+    matrix:
+      only:
+        - image: Ubuntu
+      environment:
+        
+      build_script:
+      - apt-get --force-yes install glfw-dev
+      - make
