@@ -145,7 +145,7 @@ void EasyPrimative::Image::render()
                         glTexCoord2f(0, 1); glVertex2f(-imgWidth, imgHeight);
                     glEnd();
                 glDisable(GL_TEXTURE_2D);
-                glFlush();
+                //glFlush();
             glPopMatrix();
         }
     glPopMatrix();
