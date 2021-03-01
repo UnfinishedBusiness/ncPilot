@@ -120,10 +120,10 @@ bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size
             return false;
         }
     }
-    stbtt_BakeFontBitmap(ttf_buffer,0, font_size, temp_bitmap, this->bitmap_pixel_size, this->bitmap_pixel_size, 32,96, this->cdata); // no guarantee this fits!
+    stbtt_BakeFontBitmap(ttf_buffer,0, font_size, temp_bitmap, this->bitmap_pixel_size, this->bitmap_pixel_size, 32,96, this->cdata);
     glGenTextures(1, &this->texture);
     glBindTexture(GL_TEXTURE_2D, this->texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, this->bitmap_pixel_size ,this->bitmap_pixel_size, 0, GL_ALPHA, GL_UNSIGNED_BYTE, temp_bitmap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, this->bitmap_pixel_size, this->bitmap_pixel_size, 0, GL_ALPHA, GL_UNSIGNED_BYTE, temp_bitmap);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     return true;
 }
@@ -184,4 +184,16 @@ void EasyPrimative::Text::destroy()
 {
     glDeleteTextures(1, &this->texture);
     delete this->properties;
+}
+nlohmann::json EasyPrimative::Text::serialize()
+{
+    nlohmann::json j;
+    j["textval"] = this->textval;
+    j["font_file"] = this->font_file;
+    j["font_size"] = this->font_size;
+    j["position"]["x"] = this->position.x;
+    j["position"]["y"] = this->position.y;
+    j["width"] = this->width;
+    j["height"] = this->height;
+    return j;
 }

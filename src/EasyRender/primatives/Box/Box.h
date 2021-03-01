@@ -30,6 +30,7 @@ class EasyPrimative::Box{
         void render_rectangle_with_radius(float x, float y, float width, float height, float radius);
         void render();
         void destroy();
+        nlohmann::json serialize();
 };
 
 #endif //BOX_

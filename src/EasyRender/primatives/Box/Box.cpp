@@ -142,3 +142,13 @@ void EasyPrimative::Box::destroy()
 {
     delete this->properties;
 }
+nlohmann::json EasyPrimative::Box::serialize()
+{
+    nlohmann::json j;
+    j["bottom_left"]["x"] = this->bottom_left.x;
+    j["bottom_left"]["y"] = this->bottom_left.y;
+    j["width"] = this->width;
+    j["height"] = this->height;
+    j["corner_radius"] = this->corner_radius;
+    return j;
+}

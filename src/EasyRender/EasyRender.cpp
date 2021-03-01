@@ -495,6 +495,17 @@ std::vector<PrimativeContainer *> *EasyRender::GetPrimativeStack()
 {
     return &this->primative_stack;
 }
+nlohmann::json EasyRender::DumpPrimativeStack()
+{
+    nlohmann::json r;
+    std::vector<PrimativeContainer*>::iterator it;
+    for ( it = this->primative_stack.begin(); it != this->primative_stack.end(); )
+    {
+        r.push_back((*it)->serialize());
+        ++it;
+    }
+    return r;
+}
 void EasyRender::DeletePrimativesById(std::string id)
 {
     std::vector<PrimativeContainer*>::iterator it;

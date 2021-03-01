@@ -34,6 +34,7 @@ class EasyPrimative::Arc{
         void render_arc(double cx, double cy, double radius, double start_angle, double end_angle);
         void render();
         void destroy();
+        nlohmann::json serialize();
 };
 
 #endif //ARC_

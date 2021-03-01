@@ -75,9 +75,12 @@ void menu_bar_render()
         }
         if (ImGui::BeginMenu("Help"))
         {
-            if (ImGui::MenuItem("Remote Support", ""))
+            if (ImGui::MenuItem("Dump Stack", ""))
             {
-                LOG_F(INFO, "Help->Remote Support");
+                LOG_F(INFO, "Help->Dump Stack");
+                std::ofstream out("stack.json");
+                out << globals->renderer->DumpPrimativeStack().dump(4);
+                out.close();
             }
             ImGui::Separator();
             if (ImGui::MenuItem("Documentation", "")) 

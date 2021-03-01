@@ -125,3 +125,12 @@ void EasyPrimative::Circle::destroy()
 {
     delete this->properties;
 }
+nlohmann::json EasyPrimative::Circle::serialize()
+{
+    nlohmann::json j;
+    j["center"]["x"] = this->center.x;
+    j["center"]["y"] = this->center.y;
+    j["center"]["z"] = this->center.z;
+    j["radius"] = this->radius;
+    return j;
+}

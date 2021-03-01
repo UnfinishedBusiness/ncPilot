@@ -90,3 +90,16 @@ void EasyPrimative::Line::destroy()
 {
     delete this->properties;
 }
+nlohmann::json EasyPrimative::Line::serialize()
+{
+    nlohmann::json j;
+    j["start"]["x"] = this->start.x;
+    j["start"]["y"] = this->start.y;
+    j["start"]["z"] = this->start.z;
+    j["end"]["x"] = this->end.x;
+    j["end"]["y"] = this->end.y;
+    j["end"]["z"] = this->end.z;
+    j["width"] = this->width;
+    j["style"] = this->style;
+    return j;
+}

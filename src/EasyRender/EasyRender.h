@@ -147,6 +147,9 @@ class EasyRender{
         uint8_t GetFramesPerSecond();
         std::vector<PrimativeContainer *> *GetPrimativeStack();
 
+        /* Debugging */
+        nlohmann::json DumpPrimativeStack();
+
         /* Primative Manipulators */
         void DeletePrimativesById(std::string id);
 

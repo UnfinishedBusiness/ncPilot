@@ -64,6 +64,7 @@ class EasyPrimative::Text{
         bool InitFontFromFile(const char* filename, float font_size);
         void RenderFont(float pos_x, float pos_y, std::string text);
         void destroy();
+        nlohmann::json serialize();
 };
 
 #endif //TEXT_

@@ -137,3 +137,14 @@ void EasyPrimative::Arc::destroy()
 {
     delete this->properties;
 }
+nlohmann::json EasyPrimative::Arc::serialize()
+{
+    nlohmann::json j;
+    j["center"]["x"] = this->center.x;
+    j["center"]["y"] = this->center.y;
+    j["center"]["z"] = this->center.z;
+    j["radius"] = this->radius;
+    j["start_angle"] = this->start_angle;
+    j["end_angle"] = this->end_angle;
+    return j;
+}

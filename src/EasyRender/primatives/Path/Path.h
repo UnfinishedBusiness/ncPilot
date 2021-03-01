@@ -30,6 +30,7 @@ class EasyPrimative::Path{
         void process_mouse(float mpos_x, float mpos_y);
         void render();
         void destroy();
+        nlohmann::json serialize();
 };
 
 #endif //PATH_

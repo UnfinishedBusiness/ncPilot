@@ -154,3 +154,14 @@ void EasyPrimative::Image::destroy()
     glDeleteTextures(1, &this->texture);
     delete this->properties;
 }
+nlohmann::json EasyPrimative::Image::serialize()
+{
+    nlohmann::json j;
+    j["position"]["x"] = this->position[0];
+    j["position"]["y"] = this->position[1];
+    j["position"]["z"] = this->position[2];
+    j["width"] = this->width;
+    j["height"] = this->height;
+    j["image_file"] = this->image_file;
+    return j;
+}

@@ -115,3 +115,21 @@ void EasyPrimative::Path::destroy()
 {
     delete this->properties;
 }
+nlohmann::json EasyPrimative::Path::serialize()
+{
+    nlohmann::json p;
+    for (int i = 0; i < this->points.size(); i++)
+    {
+        p.push_back({
+            {"x", this->points[i].x},
+            {"y", this->points[i].y},
+            {"z", this->points[i].z}
+        });
+    }
+    nlohmann::json j;
+    j["points"] = p;
+    j["is_closed"] = this->is_closed;
+    j["width"] = this->width;
+    j["style"] = this->style;
+    return j;
+}

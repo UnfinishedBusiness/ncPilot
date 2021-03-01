@@ -161,3 +161,53 @@ void PrimativeContainer::destroy()
         delete this->box;
     }
 }
+nlohmann::json PrimativeContainer::serialize()
+{
+    nlohmann::json j;
+    if (this->type == "line")
+    {
+        j = this->line->serialize();
+    }
+    if (this->type == "text")
+    {
+        j = this->text->serialize();
+    }
+    if (this->type == "image")
+    {
+        j = this->image->serialize();
+    }
+    if (this->type == "path")
+    {
+        j = this->path->serialize();
+    }
+    if (this->type == "arc")
+    {
+        j = this->arc->serialize();
+    }
+    if (this->type == "circle")
+    {
+        j = this->circle->serialize();
+    }
+    if (this->type == "box")
+    {
+        j = this->box->serialize();
+    }
+    j["type"] = this->type;
+    nlohmann::json p;
+    p["visable"] = this->properties->visable;
+    p["zindex"] = this->properties->zindex;
+    p["color"]["r"] = this->properties->color[0];
+    p["color"]["g"] = this->properties->color[1];
+    p["color"]["b"] = this->properties->color[2];
+    p["color"]["a"] = this->properties->color[3];
+    p["scale"] = this->properties->scale;
+    p["offset"]["x"] = this->properties->offset[0];
+    p["offset"]["y"] = this->properties->offset[1];
+    p["offset"]["z"] = this->properties->offset[2];
+    p["angle"] = this->properties->angle;
+    p["id"] = this->properties->id;
+    p["mouse_over_padding"] = this->properties->mouse_over_padding;
+    p["data"] = this->properties->data;
+    j["properties"] = p;
+    return j;
+}

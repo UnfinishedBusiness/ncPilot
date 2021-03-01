@@ -29,6 +29,7 @@ class EasyPrimative::Line{
         void process_mouse(float mpos_x, float mpos_y);
         void render();
         void destroy();
+        nlohmann::json serialize();
 };
 
 #endif //LINE_
