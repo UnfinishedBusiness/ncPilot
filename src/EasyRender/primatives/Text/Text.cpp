@@ -148,7 +148,10 @@ void EasyPrimative::Text::render()
                 LOG_F(WARNING, "Could not init font: %s\n", this->font_file.c_str());
                 this->texture = -1;
             }
-            this->render();
+            else
+            {
+                this->render();
+            }
         }
         else
         {
