@@ -32,7 +32,7 @@ endif
 ifeq ($(findstring NT,$(OS)),NT)
 	ECHO_MESSAGE = "Building for NT"
 	COMPILE_FLAGS += -DFREEGLUT_STATIC
-	LINK_FLAGS += -lopengl32 -lfreeglut_static -lglu32 -lws2_32 -lole32 -loleaut32 -lcomdlg32 -lhid -lsetupapi -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
+	LINK_FLAGS += -lopengl32 -lfreeglut_static -lglfw3.dll -lglu32 -lws2_32 -lole32 -loleaut32 -lcomdlg32 -lhid -lsetupapi -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -Wl,-subsystem,windows
 endif
 
 ifeq ($(OS),Darwin)
@@ -73,8 +73,8 @@ INSTALL_DATA = $(INSTALL) -m 644
 
 # Append pkg-config specific libraries if need be
 ifneq ($(LIBS),)
-	COMPILE_FLAGS += $(shell pkg-config --cflags $(LIBS))
-	LINK_FLAGS += $(shell pkg-config --libs $(LIBS))
+	COMPILE_FLAGS += $(shell pkg-config --static --cflags $(LIBS))
+	LINK_FLAGS += $(shell pkg-config --static --libs $(LIBS))
 endif
 
 # Verbose option, to output compile and link commands

@@ -23,4 +23,6 @@ build_script:
 - '%MSYS_BASH% -lc "pacman --noconfirm -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
 - cd C:\projects\ncpilot
 - '%MSYS_BASH% -lc "mingw32-make.exe"'
-- appveyor PushArtifact bin\release\ncPilot.exe
+- 7z a ncPilot.zip C:\msys64\mingw64\bin\glfw3.dll
+- 7z a bin\release\ncPilot.exe
+- appveyor PushArtifact ncPilot.zip
