@@ -48,7 +48,7 @@ for:
 
     build_script:
     - sh: cd ~/projects/ncpilot
-    - sh: sudo apt-get -y install libglfw3-dev
+    - sh: sudo apt-get -y install libglfw3-dev mesa-common-dev libglu1-mesa-dev freeglut3-dev
     - sh: make
 
 
