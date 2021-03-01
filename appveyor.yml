@@ -47,7 +47,10 @@ for:
         - job_name: Linux build
 
     build_script:
-    - sh: echo This is Linux-specific build script
+    - sh: cd ~/projects/ncPilot
+    - sh: apt-get --force-yes install libglfw3-dev
+    - sh: make
+
 
   -
     matrix:
@@ -55,4 +58,6 @@ for:
         - job_name: OSX build
 
     build_script:
-    - sh: echo This is Linux-specific build script
+    - sh: cd ~/projects/ncPilot
+    - sh: brew install glfw
+    - sh: make
