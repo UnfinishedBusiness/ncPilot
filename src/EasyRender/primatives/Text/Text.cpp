@@ -74,12 +74,23 @@ void EasyPrimative::Text::process_mouse(float mpos_x, float mpos_y)
 bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size)
 {
     unsigned char temp_bitmap[512*512];
-    unsigned char ttf_buffer[1<<20];
+    size_t ttf_buffer_size = 0;
+    unsigned char *ttf_buffer = NULL;
     if (std::string(filename) == "default")
     {
-        for (int x = 0; x < (1<<20); x++)
+        ttf_buffer_size = sizeof(Sans_ttf);
+        ttf_buffer = (unsigned char*)malloc(ttf_buffer_size * sizeof(unsigned char));
+        if (ttf_buffer != NULL)
         {
-            ttf_buffer[x] = Sans_ttf[x];
+            for (int x = 0; x < sizeof(Sans_ttf); x++)
+            {
+                ttf_buffer[x] = Sans_ttf[x];
+            }
+        }
+        else
+        {
+            LOG_F(INFO, "Failed to allocate memory to copy Sans_ttf into!");
+            return false;
         }
     }
     else
@@ -88,7 +99,19 @@ bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size
         fp = fopen(std::string(filename).c_str(), "rb");
         if (fp)
         {
-            fread(ttf_buffer, 1, 1<<20, fp);
+            fseek(fp, 0L, SEEK_END);
+            ttf_buffer_size = ftell(fp);
+            fseek(fp, 0L, SEEK_SET);
+            ttf_buffer = (unsigned char*)malloc(ttf_buffer_size * sizeof(unsigned char));
+            if (ttf_buffer != NULL)
+            {
+                fread(ttf_buffer, 1, ttf_buffer_size, fp);
+            }
+            else
+            {
+                LOG_F(INFO, "Failed to allocate memory to copy Sans_ttf into!");
+                return false;
+            }
             fclose(fp);
         }
         else
@@ -110,12 +133,11 @@ void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
     glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, this->texture);
         glPushMatrix();
-            //glColor4f(this->properties->color[0], this->properties->color[2], this->properties->color[2], this->properties->color[3]);
             glRotatef(this->properties->angle, 0.0, 0.0, 1.0);
             glBegin(GL_QUADS);
             for (int x = 0; x < text.size(); x++)
             {
-                if (text[x] >=32 && text[x] < 128)
+                if ((int)text[x] >=32 && (int)text[x] < 128)
                 {
                     stbtt_aligned_quad q;
                     stbtt_GetBakedQuad(this->cdata, 512,512, text[x]-32, &pos_x,&pos_y,&q,1);
