@@ -1,44 +1,36 @@
-
-version: 1.0.{build}
-
-image:
-  - Visual Studio 2017
-  - Ubuntu
-configuration:
-  - Debug
-  - Release
 environment:
-  my_var1: value1
-  my_var2: value2
   matrix:
-    - my_var3: value3
-    - my_var4: value4
-test_script:
-  - ps: Write-Host "common test script"
+
+  - job_name: Windows build
+    appveyor_build_worker_image: Visual Studio 2019
+
+  - job_name: Linux build
+    appveyor_build_worker_image: Ubuntu
+
+  - job_name: OSX build
+    appveyor_build_worker_image: macOS
+
 matrix:
-  - fast_finish: true
+  fast_finish: true
+
+init:
+  - appveyor version
+
+# job-specific configurations
 for:
-  -
-    matrix:
-      only:
-        - configuration: Release
-          my_var3: value3
-    environment:
-      my_var1: overriden-value1
-    platform: Any CPU # this setting is ignored
-    test_script:
-      - ps: write-host "for-matrix override test script 1"
 
   -
     matrix:
       only:
-        - image: Ubuntu
-          my_var4: value4
-      pull_requests:
-        do_not_increment_build_number: true # this setting is ignored
-      allow_failures:
-        - platform: x64 # this setting is ignored
-    environment:
-      my_var2: overridden-value2
-    test_script:
-      - sh: echo for-matrix override build script
+        - job_name: Windows build
+
+    build_script:
+    - cmd: echo This is Windows-specific build script
+
+  -
+    matrix:
+      only:
+        - job_name: Linux build
+
+    build_script:
+    - sh: echo This is Linux-specific build script
