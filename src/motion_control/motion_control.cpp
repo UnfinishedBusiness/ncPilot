@@ -467,10 +467,10 @@ void line_handler(std::string line)
             {
                 send_parameters = false;
                 uint8_t dir_invert_mask = 0b00000000;
-                if (globals->machine_parameters.axis_invert[0]) dir_invert_mask |= (1 << 0);
-                if (globals->machine_parameters.axis_invert[1]) dir_invert_mask |= (1 << 1);
-                if (globals->machine_parameters.axis_invert[2]) dir_invert_mask |= (1 << 2);
-                if (globals->machine_parameters.axis_invert[3]) dir_invert_mask |= (1 << 3);
+                if (globals->machine_parameters.axis_invert[0]) dir_invert_mask |= 0b00000001;
+                if (globals->machine_parameters.axis_invert[1]) dir_invert_mask |= 0b00000010;
+                if (globals->machine_parameters.axis_invert[2]) dir_invert_mask |= 0b00000100;
+                if (globals->machine_parameters.axis_invert[3]) dir_invert_mask |= 0b00001000;
 
                 motion_controller_push_stack("$0=" + std::to_string(50));
                 motion_controller_push_stack("$3=" + std::to_string(dir_invert_mask));
