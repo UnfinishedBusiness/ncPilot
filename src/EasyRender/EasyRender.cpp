@@ -119,11 +119,13 @@ void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int actio
         if (!self->imgui_io->WantCaptureKeyboard || !self->imgui_io->WantCaptureMouse)
         {
             double_point_t m = self->GetWindowMousePosition();
-            for (size_t x = 0; x < self->primative_stack.size(); x++)
+            std::vector<PrimativeContainer*>::iterator it;
+            for ( it = self->primative_stack.end(); it != self->primative_stack.begin(); )
             {
-                if (self->primative_stack.at(x)->properties->visable == true && self->primative_stack.at(x)->properties->mouse_over == true)
+                --it;
+                if ((*it)->properties->visable == true && (*it)->properties->mouse_over == true)
                 {
-                    if (self->primative_stack.at(x)->properties->mouse_callback != NULL)
+                    if ((*it)->properties->mouse_callback != NULL)
                     {
                         std::string event;
                         if (button == 0) //Left click
@@ -160,9 +162,9 @@ void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int actio
                             }
                         }
                         double_point_t matrix_mouse = m;
-                        matrix_mouse.x = (matrix_mouse.x - self->primative_stack.at(x)->properties->offset[0]) / self->primative_stack.at(x)->properties->scale;
-                        matrix_mouse.y = (matrix_mouse.y - self->primative_stack.at(x)->properties->offset[1]) / self->primative_stack.at(x)->properties->scale;
-                        self->primative_stack.at(x)->properties->mouse_callback(self->primative_stack.at(x), {
+                        matrix_mouse.x = (matrix_mouse.x - (*it)->properties->offset[0]) / (*it)->properties->scale;
+                        matrix_mouse.y = (matrix_mouse.y - (*it)->properties->offset[1]) / (*it)->properties->scale;
+                        (*it)->properties->mouse_callback((*it), {
                             {"event", event},
                             {"mouse_pos", {
                                 {"x", m.x},
@@ -173,6 +175,7 @@ void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int actio
                                 {"y", matrix_mouse.y}
                             }}
                         });
+                        return;
                     }
                 }
             }
