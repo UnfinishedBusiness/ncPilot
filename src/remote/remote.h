@@ -1,23 +1,8 @@
 #ifndef REMOTE_
 #define REMOTE_
 
-#include <Xrender.h>
-#include <json/json.h>
 #include <application.h>
-#include <string>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <algorithm>
-#include <sys/types.h>
-#include <dirent.h>
-#include <ftw.h>
-#include "net_skeleton/net_skeleton.h"
+#include <net_skeleton/net_skeleton.h>
 
 
 
@@ -62,7 +47,7 @@ class commands{
             this->command_stack.push_back(command_t("rm", &this->rm));
 
             this->nc = nc_;
-            this->cwd = Xrender_get_config_dir("ncPilot");
+            this->cwd = globals->renderer->GetConfigDirectory();
             std::vector<std::string> args = this->split(cmd, ' ');
             for (int x = 0; x < command_stack.size(); x++)
             {

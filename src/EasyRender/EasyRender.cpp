@@ -598,12 +598,13 @@ bool EasyRender::Poll(bool should_quit)
     sort(primative_stack.begin(), primative_stack.end(), [](auto* lhs, auto* rhs) {
         return lhs->properties->zindex < rhs->properties->zindex ;
     });
+    bool ignore_next_mouse_events = false;
     for (size_t x = 0; x < this->primative_stack.size(); x ++)
     {
         if (this->primative_stack[x]->properties->visable == true)
         {
             primative_stack[x]->render();
-            if (!this->imgui_io->WantCaptureKeyboard || !this->imgui_io->WantCaptureMouse)
+            if ((!this->imgui_io->WantCaptureKeyboard || !this->imgui_io->WantCaptureMouse) && ignore_next_mouse_events == false)
             {
                 primative_stack[x]->process_mouse(window_mouse_pos.x, window_mouse_pos.y);
             }

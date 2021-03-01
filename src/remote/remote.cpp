@@ -1,20 +1,5 @@
-#include <application.h>
-#include <remote/remote.h>
-#include "net_skeleton/net_skeleton.h"
-#include "logging/loguru.h"
-#include <stdio.h>
-#include <stdarg.h>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <algorithm>
-#include <sys/types.h>
-#include <dirent.h>
-#include <ftw.h>
-#include <Xrender.h>
-#include <json/json.h>
+#include "remote.h"
+#include <EasyRender/logging/loguru.h>
 
 
 
@@ -51,7 +36,7 @@ int commands::dmesg(std::vector<std::string> args, void *this_pointer)
     unsigned long count = 0;
     try
     {
-        std::ifstream in(string(Xrender_get_config_dir("ncPilot") + "ncPilot.log"));
+        std::ifstream in(std::string(globals->renderer->GetConfigDirectory() + "ncPilot.log"));
         while(std::getline(in, line))
         {
             if (args.size() == 4)
@@ -84,12 +69,12 @@ int commands::ls(std::vector<std::string> args, void *this_pointer)
     commands *self = static_cast<commands*>(this_pointer);
     DIR *dp;
     struct dirent *ep;     
-    dp = opendir (Xrender_get_config_dir("ncPilot").c_str());
+    dp = opendir (globals->renderer->GetConfigDirectory().c_str());
     if (dp != NULL)
     {
         while ((ep = readdir (dp)) != NULL)
         {
-            if (string(ep->d_name) != "." && string(ep->d_name) != "..")
+            if (std::string(ep->d_name) != "." && std::string(ep->d_name) != "..")
             {
                 ns_printf(self->nc, "%s\n", ep->d_name);
             }
@@ -145,22 +130,22 @@ int commands::dump_stack(std::vector<std::string> args, void *this_pointer)
 {
     commands *self = static_cast<commands*>(this_pointer);
     LOG_F(INFO, "Dumping stack!");
-    std::vector<Xrender_object_t *> *stack = Xrender_get_object_stack();
+    std::vector<PrimativeContainer *> *stack = globals->renderer->GetPrimativeStack();
     for (int x = 0; x < stack->size(); x++)
     {
         if (args.size() == 4)
         {
             if (args[1] == "|" && args[2] == "grep")
             {
-                if (stack->at(x)->data.dump().find(args[3]) != std::string::npos)
+                if (stack->at(x)->properties->data.dump().find(args[3]) != std::string::npos)
                 {
-                    ns_printf(self->nc, "%d> %s\n", x, stack->at(x)->data.dump().c_str());
+                    ns_printf(self->nc, "%d> %s\n", x, stack->at(x)->properties->data.dump().c_str());
                 }
             }
         }
         else
         {
-            ns_printf(self->nc, "%d> %s\n", x, stack->at(x)->data.dump().c_str());
+            ns_printf(self->nc, "%d> %s\n", x, stack->at(x)->properties->data.dump().c_str());
         }
     }
     return 0;
@@ -177,7 +162,7 @@ int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW
 int commands::rm(std::vector<std::string> args, void *this_pointer)
 {
     commands *self = static_cast<commands*>(this_pointer);
-    int rv = remove(string(Xrender_get_config_dir("ncPilot") + args[1]).c_str());
+    int rv = remove(std::string(globals->renderer->GetConfigDirectory() + args[1]).c_str());
     if (rv)
     {
         self->printf("Could not remove file or directory!");
@@ -191,9 +176,9 @@ int commands::rm(std::vector<std::string> args, void *this_pointer)
 }
 std::vector<std::string> commands::split(std::string str, char delimiter)
 { 
-    vector<string> internal; 
-    stringstream ss(str); // Turn the string into a stream. 
-    string tok; 
+    std::vector<std::string> internal; 
+    std::stringstream ss(str); // Turn the string into a stream. 
+    std::string tok; 
     while(getline(ss, tok, delimiter))
     { 
         internal.push_back(tok); 
@@ -221,7 +206,7 @@ static void ev_handler(struct ns_connection *nc, int ev, void *ev_data)
         char src[60], dst[60];
         ns_sock_to_str(nc->sock, src, sizeof(src), 3);
         ns_sock_to_str(nc->sock, dst, sizeof(dst), 7);
-        std::string buffer = string(io->buf, io->len);
+        std::string buffer = std::string(io->buf, io->len);
         if (buffer.size() > 1)
         {
             buffer.erase(std::remove(buffer.begin(), buffer.end(), '\n'),buffer.end());
@@ -242,7 +227,7 @@ static void ev_handler(struct ns_connection *nc, int ev, void *ev_data)
         char src[60], dst[60];
         ns_sock_to_str(nc->sock, src, sizeof(src), 3);
         ns_sock_to_str(nc->sock, dst, sizeof(dst), 7);
-        std::string buffer = string(io->buf, io->len);
+        std::string buffer = std::string(io->buf, io->len);
         LOG_F(INFO, "Client Connected: src_ip=> %s dest_ip=> %s", src, dst);
         ns_printf(nc, "ncPilot> ");
     }
@@ -251,7 +236,7 @@ static void ev_handler(struct ns_connection *nc, int ev, void *ev_data)
         char src[60], dst[60];
         ns_sock_to_str(nc->sock, src, sizeof(src), 3);
         ns_sock_to_str(nc->sock, dst, sizeof(dst), 7);
-        std::string buffer = string(io->buf, io->len);
+        std::string buffer = std::string(io->buf, io->len);
         LOG_F(INFO, "Client Disconnected: src_ip=> %s dest_ip=> %s", src, dst);
     }
     else if (ev != 0)
