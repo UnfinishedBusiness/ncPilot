@@ -31,7 +31,7 @@ endif
 
 ifeq ($(findstring NT,$(OS)),NT)
 	ECHO_MESSAGE = "Building for NT"
-	COMPILE_FLAGS = -DFREEGLUT_STATIC -m32 -mwindows
+	COMPILE_FLAGS += -DFREEGLUT_STATIC -m32 -mwindows
 	LINK_FLAGS += -lopengl32 -lfreeglut_static -lglu32 -lws2_32 -lole32 -loleaut32 -lcomdlg32 -lhid -lsetupapi -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
 endif
 
