@@ -4,11 +4,11 @@ environment:
   - job_name: Linux build
     appveyor_build_worker_image: Ubuntu
 
-  - job_name: OSX build
-    appveyor_build_worker_image: macOS
-
   - job_name: Windows build
     appveyor_build_worker_image: Visual Studio 2019
+
+  - job_name: OSX build
+    appveyor_build_worker_image: macOS
 
 matrix:
   fast_finish: true
@@ -37,9 +37,9 @@ for:
     - '%MSYS_BASH% -lc "pacman --noconfirm -S mingw64/mingw-w64-x86_64-glfw mingw64/mingw-w64-x86_64-freeglut"'
     - cd C:\projects\ncpilot
     - '%MSYS_BASH% -lc "mingw32-make.exe"'
-    - 7z a ncPilot.zip C:\msys64\mingw64\bin\glfw3.dll
-    - 7z a ncPilot.zip bin\release\ncPilot.exe
-    - appveyor PushArtifact ncPilot.zip
+    - 7z a ncPilot-Windows.zip C:\msys64\mingw64\bin\glfw3.dll
+    - 7z a ncPilot-Windows.zip bin\release\ncPilot.exe
+    - appveyor PushArtifact ncPilot-Windows.zip
 
   -
     matrix:
@@ -50,6 +50,8 @@ for:
     - sh: cd ~/projects/ncpilot
     - sh: sudo apt-get -y install libglfw3-dev mesa-common-dev libglu1-mesa-dev freeglut3-dev
     - sh: make
+    - sh: 7z a ncPilot-Linux.zip bin/release/ncPilot
+    - sh: appveyor PushArtifact ncPilot-Linux.zip
 
 
   -
@@ -58,6 +60,6 @@ for:
         - job_name: OSX build
 
     build_script:
-    - sh: cd ~/projects/ncpilot
-    - sh: brew install glfw
-    - sh: make
+    #- sh: cd ~/projects/ncpilot
+    #- sh: brew install glfw
+    #- sh: make
