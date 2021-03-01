@@ -1,14 +1,14 @@
 environment:
   matrix:
 
-  - job_name: Windows build
-    appveyor_build_worker_image: Visual Studio 2019
-
   - job_name: Linux build
     appveyor_build_worker_image: Ubuntu
 
   - job_name: OSX build
     appveyor_build_worker_image: macOS
+
+  - job_name: Windows build
+    appveyor_build_worker_image: Visual Studio 2019
 
 matrix:
   fast_finish: true
@@ -48,7 +48,7 @@ for:
 
     build_script:
     - sh: cd ~/projects/ncpilot
-    - sh: apt-get --force-yes install libglfw3-dev
+    - sh: sudo apt-get --force-yes install libglfw3-dev
     - sh: make
 
 
