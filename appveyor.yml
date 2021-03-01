@@ -47,7 +47,7 @@ for:
         - job_name: Linux build
 
     build_script:
-    - sh: cd ~/projects/ncPilot
+    - sh: cd ~/projects/ncpilot
     - sh: apt-get --force-yes install libglfw3-dev
     - sh: make
 
@@ -58,6 +58,6 @@ for:
         - job_name: OSX build
 
     build_script:
-    - sh: cd ~/projects/ncPilot
+    - sh: cd ~/projects/ncpilot
     - sh: brew install glfw
     - sh: make
