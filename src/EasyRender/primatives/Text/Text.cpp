@@ -152,7 +152,6 @@ void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
             glEnd();
         glPopMatrix();
     glDisable(GL_TEXTURE_2D);
-    //glFlush();
     this->width = width;
     this->height = height;
 }
@@ -164,7 +163,6 @@ void EasyPrimative::Text::render()
         glColor4f(this->properties->color[0] / 255, this->properties->color[1] / 255, this->properties->color[2] / 255, this->properties->color[3] / 255);
         if (this->texture == -1)
         {
-            //LOG_F(INFO, "Baking font for EasyPrimative::Text with textval = %s", this->textval.c_str());
             bool ret = this->InitFontFromFile(this->font_file.c_str(), this->font_size);
             if (ret == false)
             {
