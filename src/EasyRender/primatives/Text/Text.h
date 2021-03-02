@@ -31,8 +31,6 @@
 
 
 class EasyPrimative::Text{
-    private:
-        const int bitmap_pixel_size = 512;
     public:
         nlohmann::json mouse_event;
         PrimativeProperties *properties;

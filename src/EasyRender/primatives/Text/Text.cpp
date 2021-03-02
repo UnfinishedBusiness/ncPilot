@@ -73,7 +73,7 @@ void EasyPrimative::Text::process_mouse(float mpos_x, float mpos_y)
 }
 bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size)
 {
-    unsigned char temp_bitmap[this->bitmap_pixel_size * this->bitmap_pixel_size];
+    unsigned char temp_bitmap[512 * 512];
     size_t ttf_buffer_size = 0;
     unsigned char *ttf_buffer = NULL;
     if (std::string(filename) == "default")
@@ -120,10 +120,10 @@ bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size
             return false;
         }
     }
-    stbtt_BakeFontBitmap(ttf_buffer,0, font_size, temp_bitmap, this->bitmap_pixel_size, this->bitmap_pixel_size, 32,96, this->cdata);
+    stbtt_BakeFontBitmap(ttf_buffer,0, font_size, temp_bitmap, 512, 512, 32,96, this->cdata);
     glGenTextures(1, &this->texture);
     glBindTexture(GL_TEXTURE_2D, this->texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, this->bitmap_pixel_size, this->bitmap_pixel_size, 0, GL_ALPHA, GL_UNSIGNED_BYTE, temp_bitmap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, 512, 512, 0, GL_ALPHA, GL_UNSIGNED_BYTE, temp_bitmap);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     return true;
 }
@@ -140,7 +140,7 @@ void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
                 if ((int)text[x] >=32 && (int)text[x] < 128)
                 {
                     stbtt_aligned_quad q;
-                    stbtt_GetBakedQuad(this->cdata, this->bitmap_pixel_size, this->bitmap_pixel_size, text[x]-32, &pos_x, &pos_y, &q, 1);
+                    stbtt_GetBakedQuad(this->cdata, 512, 512, text[x]-32, &pos_x, &pos_y, &q, 1);
                     glTexCoord2f(q.s0,q.t1); glVertex2f(q.x0,-q.y1);
                     glTexCoord2f(q.s1,q.t1); glVertex2f(q.x1,-q.y1);
                     glTexCoord2f(q.s1,q.t0); glVertex2f(q.x1,-q.y0);
