@@ -146,7 +146,10 @@ void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
                     glTexCoord2f(q.s1,q.t0); glVertex2f(q.x1,-q.y0);
                     glTexCoord2f(q.s0,q.t0); glVertex2f(q.x0,-q.y0);
                     w += MAX(q.x0, q.x1) - MIN(q.x0, q.x1);
-                    if ((MAX(q.y0, q.y1) - MIN(q.y0, q.y1)) > height) h = (MAX(q.y0, q.y1) - MIN(q.y0, q.y1));
+                    if ((MAX(q.y0, q.y1) - MIN(q.y0, q.y1)) > h)
+                    {
+                        h = (MAX(q.y0, q.y1) - MIN(q.y0, q.y1));
+                    }
                 }
             }
             glEnd();
