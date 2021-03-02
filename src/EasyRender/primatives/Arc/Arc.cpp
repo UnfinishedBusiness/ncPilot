@@ -36,8 +36,8 @@ void EasyPrimative::Arc::process_mouse(float mpos_x, float mpos_y)
     mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
     mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
     Geometry g;
-    if (g.distance(this->center, {mpos_x, mpos_y}) > (this->radius - ((this->properties->mouse_over_padding / 2) * (1/this->properties->scale))) &&
-    g.distance(this->center, {mpos_x, mpos_y}) < (this->radius + ((this->properties->mouse_over_padding / 2) * (1/this->properties->scale))) &&
+    if (g.distance(this->center, {mpos_x, mpos_y}) > (this->radius - (((this->properties->mouse_over_padding / this->properties->scale) / 2))) &&
+    g.distance(this->center, {mpos_x, mpos_y}) < (this->radius + (((this->properties->mouse_over_padding / this->properties->scale) / 2))) &&
     g.lines_intersect({g.create_polar_line(this->center, this->start_angle, this->radius).end, g.create_polar_line(this->center, this->end_angle, this->radius).end}, {this->center, {mpos_x, mpos_y}}))
     {
         if (this->properties->mouse_over == false)

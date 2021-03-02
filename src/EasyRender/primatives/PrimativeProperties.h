@@ -54,7 +54,7 @@ class PrimativeProperties{
             this->id = "";
             this->view = "main";
             this->mouse_over = false;
-            this->mouse_over_padding = 10;
+            this->mouse_over_padding = 5;
             this->data = NULL;
             this->mouse_callback = NULL;
             this->matrix_callback = NULL;

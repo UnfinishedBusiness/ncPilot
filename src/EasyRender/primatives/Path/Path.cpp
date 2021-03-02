@@ -38,7 +38,7 @@ void EasyPrimative::Path::process_mouse(float mpos_x, float mpos_y)
         bool mouse_is_over_path = false;
         for (int i = 1; i < this->points.size(); i++)
         {
-            if (g.line_intersects_with_circle({{this->points.at(i-1).x, this->points.at(i-1).y}, {this->points.at(i).x, this->points.at(i).y}}, {mpos_x, mpos_y}, this->properties->mouse_over_padding * (1/this->properties->scale)))
+            if (g.line_intersects_with_circle({{this->points.at(i-1).x, this->points.at(i-1).y}, {this->points.at(i).x, this->points.at(i).y}}, {mpos_x, mpos_y}, this->properties->mouse_over_padding / this->properties->scale))
             {
                 mouse_is_over_path = true;
                 break;
@@ -46,7 +46,7 @@ void EasyPrimative::Path::process_mouse(float mpos_x, float mpos_y)
         }
         if (this->is_closed == true)
         {
-            if (g.line_intersects_with_circle({{this->points.at(0).x, this->points.at(0).y}, {this->points.at(this->points.size() - 1).x, this->points.at(this->points.size() - 1).y}}, {mpos_x, mpos_y}, this->properties->mouse_over_padding * (1/this->properties->scale)))
+            if (g.line_intersects_with_circle({{this->points.at(0).x, this->points.at(0).y}, {this->points.at(this->points.size() - 1).x, this->points.at(this->points.size() - 1).y}}, {mpos_x, mpos_y}, this->properties->mouse_over_padding / this->properties->scale))
             {
                 mouse_is_over_path = true;
             }

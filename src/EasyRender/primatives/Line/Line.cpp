@@ -33,7 +33,7 @@ void EasyPrimative::Line::process_mouse(float mpos_x, float mpos_y)
     mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
     mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
     Geometry g;
-    if (g.line_intersects_with_circle({{this->start.x, this->start.y}, {this->end.x, this->end.y}}, {mpos_x, mpos_y}, this->properties->mouse_over_padding * (1/this->properties->scale)))
+    if (g.line_intersects_with_circle({{this->start.x, this->start.y}, {this->end.x, this->end.y}}, {mpos_x, mpos_y}, (this->properties->mouse_over_padding / this->properties->scale)))
     {
         if (this->properties->mouse_over == false)
         {
