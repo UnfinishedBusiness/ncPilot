@@ -87,6 +87,10 @@ void raise_to_cut_height_and_run_program()
     arc_retry_count = 0;
     //Remember that inserting at the top of list means its the next code to run, meaning
     //This list that we are inserting is ran from bottom to top or LIFO mode
+    if (globals->machine_parameters.smart_thc_on == false)
+    {
+        gcode_stack.insert(gcode_stack.begin(), "$T=" + std::to_string(globals->machine_parameters.thc_set_value));
+    }
     gcode_stack.insert(gcode_stack.begin(), "G90");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + std::to_string((double)callback_args["cut_height"] - (double)callback_args["pierce_height"]));
     gcode_stack.insert(gcode_stack.begin(), "G4P" + std::to_string((double)callback_args["pierce_delay"]));
@@ -144,6 +148,10 @@ void torch_off_and_retract()
     torch_on = false;
     //Remember that inserting at the top of list means its the next code to run, meaning
     //This list that we are inserting is ran from bottom to top or LIFO mode
+    if (globals->machine_parameters.smart_thc_on == false)
+    {
+        gcode_stack.insert(gcode_stack.begin(), "$T=0");
+    }
     gcode_stack.insert(gcode_stack.begin(), "G53 G0 Z0");
     gcode_stack.insert(gcode_stack.begin(), "M5");
     LOG_F(INFO, "Shutting torch off and retracting!");

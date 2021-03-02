@@ -385,7 +385,10 @@ void hmi_reverse(PrimativeContainer* p)
             out << std::endl;
         }
         out.close();
-        hmi_handle_button("Clean");
+        if (gcode_open_file(gcode_get_filename()))
+        {
+            globals->renderer->PushTimer(0, &gcode_parse_timer);
+        }
     }
     catch(...)
     {
