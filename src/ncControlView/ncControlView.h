@@ -27,6 +27,7 @@ class ncControlView{
             int thc_set_value = 0;
             bool smart_thc_on = false;
         };
+        static void zoom_event_handle(nlohmann::json e);
     public:
         preferences_data_t preferences;
         EasyPrimative::Box *machine_plane;

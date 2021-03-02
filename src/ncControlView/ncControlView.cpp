@@ -7,7 +7,7 @@
 #include "hmi/hmi.h"
 #include "motion_control/motion_control.h"
 
-void zoom_event_handle(nlohmann::json e)
+void ncControlView::zoom_event_handle(nlohmann::json e)
 {
     //LOG_F(INFO, "%s", e.dump().c_str());
     double_point_t matrix_mouse = globals->renderer->GetWindowMousePosition();
@@ -41,7 +41,6 @@ void zoom_event_handle(nlohmann::json e)
 
 void ncControlView::PreInit()
 {
-    globals->renderer->SetCurrentView("ncControlView");
     std::ifstream preferences_file(globals->renderer->GetConfigDirectory() + "preferences.json");
     if (preferences_file.is_open())
     {
@@ -159,8 +158,9 @@ void ncControlView::PreInit()
 }
 void ncControlView::Init()
 {
-    globals->renderer->PushEvent("up", "scroll", &zoom_event_handle);
-    globals->renderer->PushEvent("down", "scroll", &zoom_event_handle);
+    globals->renderer->SetCurrentView("ncControlView");
+    globals->renderer->PushEvent("up", "scroll", &this->zoom_event_handle);
+    globals->renderer->PushEvent("down", "scroll", &this->zoom_event_handle);
     menu_bar_init();
     dialogs_init();
     motion_control_init();
@@ -173,7 +173,7 @@ void ncControlView::Tick()
 void ncControlView::MakeActive()
 {
     globals->renderer->SetCurrentView("ncControlView");
-    globals->renderer->SetClearColor(globals->nc_control_view->preferences.background_color[0] * 255.0f, globals->nc_control_view->preferences.background_color[1] * 255.0f, globals->nc_control_view->preferences.background_color[2] * 255.0f);
+    globals->renderer->SetClearColor(this->preferences.background_color[0] * 255.0f, this->preferences.background_color[1] * 255.0f, this->preferences.background_color[2] * 255.0f);
 }
 void ncControlView::Close()
 {

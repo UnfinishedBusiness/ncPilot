@@ -62,14 +62,16 @@ void menu_bar_render()
         }
         if (ImGui::BeginMenu("Workbench"))
         {
-            if (ImGui::MenuItem("Machine", ""))
+            if (ImGui::MenuItem("Machine Control", ""))
             {
-                LOG_F(INFO, "Workbench->Machine");
+                LOG_F(INFO, "Workbench->Machine Control");
+                globals->nc_control_view->MakeActive();
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Design", ""))
+            if (ImGui::MenuItem("CAM Toolpaths", ""))
             {
-                LOG_F(INFO, "Workbench->Design");
+                LOG_F(INFO, "Workbench->CAM Toolpaths");
+                globals->jet_cam_view->MakeActive();
             }
             ImGui::EndMenu();
         }

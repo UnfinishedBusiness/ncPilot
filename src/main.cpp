@@ -50,8 +50,10 @@ int main(int argc, char **argv)
     globals->start_timestamp = EasyRender::Millis();
     globals->renderer = new EasyRender();
     globals->nc_control_view = new ncControlView();
+    globals->jet_cam_view = new jetCamView();
     globals->renderer->SetWindowTitle("ncPilot");
     globals->nc_control_view->PreInit();
+    globals->jet_cam_view->PreInit();
     globals->renderer->SetGuiIniFileName(globals->renderer->GetConfigDirectory() + "gui.ini");
     globals->renderer->SetGuiLogFileName(globals->renderer->GetConfigDirectory() + "gui.log");
     globals->renderer->SetMainLogFileName(globals->renderer->GetConfigDirectory() + "ncPilot.log");
@@ -59,9 +61,11 @@ int main(int argc, char **argv)
     globals->renderer->SetWindowSize(globals->nc_control_view->preferences.window_size[0], globals->nc_control_view->preferences.window_size[1]);
     globals->renderer->Init(argc, argv);
 
+    globals->jet_cam_view->Init();
     globals->nc_control_view->Init();
 
-    globals->nc_control_view->MakeActive();
+    //globals->nc_control_view->MakeActive();
+    globals->jet_cam_view->MakeActive();
 
     while(globals->renderer->Poll(globals->quit))
     {

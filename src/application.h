@@ -15,6 +15,7 @@
 #include <ftw.h>
 #include <EasyRender/EasyRender.h>
 #include "ncControlView/ncControlView.h"
+#include "jetCamView/jetCamView.h"
 
 
 
@@ -23,6 +24,7 @@
 */
 
 class ncControlView;
+class jetCamView;
 
 struct global_variables_t{
     bool quit;
@@ -34,6 +36,7 @@ struct global_variables_t{
     EasyRender *renderer;
     /*  Define view classes here */
     ncControlView *nc_control_view;
+    jetCamView *jet_cam_view;
 };
 extern global_variables_t *globals;
 
