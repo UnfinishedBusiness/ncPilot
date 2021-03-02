@@ -129,7 +129,7 @@ bool EasyPrimative::Text::InitFontFromFile(const char* filename, float font_size
 }
 void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
 {
-    double width, height = 0;
+    float w, h = 0;
     glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, this->texture);
         glPushMatrix();
@@ -145,15 +145,15 @@ void EasyPrimative::Text::RenderFont(float pos_x, float pos_y, std::string text)
                     glTexCoord2f(q.s1,q.t1); glVertex2f(q.x1,-q.y1);
                     glTexCoord2f(q.s1,q.t0); glVertex2f(q.x1,-q.y0);
                     glTexCoord2f(q.s0,q.t0); glVertex2f(q.x0,-q.y0);
-                    width += MAX(q.x0, q.x1) - MIN(q.x0, q.x1);
-                    if ((MAX(q.y0, q.y1) - MIN(q.y0, q.y1)) > height) height = (MAX(q.y0, q.y1) - MIN(q.y0, q.y1));
+                    w += MAX(q.x0, q.x1) - MIN(q.x0, q.x1);
+                    if ((MAX(q.y0, q.y1) - MIN(q.y0, q.y1)) > height) h = (MAX(q.y0, q.y1) - MIN(q.y0, q.y1));
                 }
             }
             glEnd();
         glPopMatrix();
     glDisable(GL_TEXTURE_2D);
-    this->width = width;
-    this->height = height;
+    this->width = w;
+    this->height = h;
 }
 void EasyPrimative::Text::render()
 {

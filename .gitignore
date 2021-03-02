@@ -33,5 +33,5 @@
 
 bin/*
 build/*
-./ncPilot
-./stack.json
+ncPilot
+*.json

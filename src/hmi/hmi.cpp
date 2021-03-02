@@ -643,7 +643,7 @@ void hmi_resize_callback(nlohmann::json e)
         button_groups[x].button_one.object->height = button_height - 10;
         center_x = button_groups[x].button_one.object->bottom_left.x + (button_width / 2);
         center_y = button_groups[x].button_one.object->bottom_left.y + (button_height / 2);
-        button_groups[x].button_one.label->position = {center_x - (button_groups[x].button_one.label->width / 2.0f) - 5, center_y - (button_groups[x].button_one.label->height / 2.0f) + 5};
+        button_groups[x].button_one.label->position = {center_x - (button_groups[x].button_one.label->width / 2.0f) - 5, center_y - (button_groups[x].button_one.label->height) + 5};
 
         button_group_x += button_width;
         button_groups[x].button_two.object->bottom_left.x = button_group_x + 5;
@@ -653,7 +653,7 @@ void hmi_resize_callback(nlohmann::json e)
         center_x = button_groups[x].button_two.object->bottom_left.x + (button_width / 2);
         center_y = button_groups[x].button_two.object->bottom_left.y + (button_height / 2);
 
-        button_groups[x].button_two.label->position = {(float)center_x - (button_groups[x].button_two.label->width / 2.0f) - 5, (float)center_y - (button_groups[x].button_two.label->height / 2.0f) + 5};
+        button_groups[x].button_two.label->position = {(float)center_x - (button_groups[x].button_two.label->width / 2.0f) - 5, (float)center_y - (button_groups[x].button_two.label->height) + 5};
         button_group_x -= button_width;
 
         button_group_y -= button_height;
