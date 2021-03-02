@@ -58,15 +58,15 @@ void dialogs_preferences()
     ImGui::Spacing();
     if (ImGui::Button("OK"))
     {
-        globals->renderer->SetClearColor(globals->nc_control_view->preferences.background_color[0], globals->nc_control_view->preferences.background_color[1], globals->nc_control_view->preferences.background_color[2]);
+        globals->renderer->SetClearColor(globals->nc_control_view->preferences.background_color[0] * 255.0f, globals->nc_control_view->preferences.background_color[1] * 255.0f, globals->nc_control_view->preferences.background_color[2] * 255.0f);
 
-        globals->nc_control_view->machine_plane->properties->color[0] = globals->nc_control_view->preferences.machine_plane_color[0];
-        globals->nc_control_view->machine_plane->properties->color[1] = globals->nc_control_view->preferences.machine_plane_color[1];
-        globals->nc_control_view->machine_plane->properties->color[2] = globals->nc_control_view->preferences.machine_plane_color[2];
+        globals->nc_control_view->machine_plane->properties->color[0] = globals->nc_control_view->preferences.machine_plane_color[0] * 255.0f;
+        globals->nc_control_view->machine_plane->properties->color[1] = globals->nc_control_view->preferences.machine_plane_color[1] * 255.0f;
+        globals->nc_control_view->machine_plane->properties->color[2] = globals->nc_control_view->preferences.machine_plane_color[2] * 255.0f;
 
-        globals->nc_control_view->cuttable_plane->properties->color[0] = globals->nc_control_view->preferences.cuttable_plane_color[0];
-        globals->nc_control_view->cuttable_plane->properties->color[1] = globals->nc_control_view->preferences.cuttable_plane_color[1];
-        globals->nc_control_view->cuttable_plane->properties->color[2] = globals->nc_control_view->preferences.cuttable_plane_color[2];
+        globals->nc_control_view->cuttable_plane->properties->color[0] = globals->nc_control_view->preferences.cuttable_plane_color[0] * 255.0f;
+        globals->nc_control_view->cuttable_plane->properties->color[1] = globals->nc_control_view->preferences.cuttable_plane_color[1] * 255.0f;
+        globals->nc_control_view->cuttable_plane->properties->color[2] = globals->nc_control_view->preferences.cuttable_plane_color[2] * 255.0f;
 
         //Write preferences to file
         nlohmann::json preferences;

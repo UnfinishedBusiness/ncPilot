@@ -8,37 +8,6 @@
 
 global_variables_t *globals;
 
-void zoom_event_handle(nlohmann::json e)
-{
-    //LOG_F(INFO, "%s", e.dump().c_str());
-    double_point_t matrix_mouse = globals->renderer->GetWindowMousePosition();
-    matrix_mouse.x = (matrix_mouse.x - globals->pan.x) / globals->zoom;
-    matrix_mouse.y = (matrix_mouse.y - globals->pan.y) / globals->zoom;
-    if ((float)e["scroll"] > 0)
-    {
-        double old_zoom = globals->zoom;
-        globals->zoom += globals->zoom * 0.125;
-        if (globals->zoom > 1000000)
-        {
-            globals->zoom = 1000000;
-        }
-        double scalechange = old_zoom - globals->zoom;
-        globals->pan.x += matrix_mouse.x * scalechange;
-        globals->pan.y += matrix_mouse.y * scalechange;
-    }
-    else
-    {
-        double old_zoom = globals->zoom;
-        globals->zoom += globals->zoom * -0.125;
-        if (globals->zoom < 0.00001)
-        {
-            globals->zoom = 0.00001;
-        }
-        double scalechange = old_zoom - globals->zoom;
-        globals->pan.x += matrix_mouse.x * scalechange;
-        globals->pan.y += matrix_mouse.y * scalechange; 
-    }
-}
 void log_uptime()
 {
     unsigned long m = (EasyRender::Millis() - globals->start_timestamp);
@@ -81,22 +50,19 @@ int main(int argc, char **argv)
     globals->start_timestamp = EasyRender::Millis();
     globals->renderer = new EasyRender();
     globals->nc_control_view = new ncControlView();
-    globals->renderer->SetCurrentView("control");
     globals->renderer->SetWindowTitle("ncPilot");
     globals->nc_control_view->PreInit();
     globals->renderer->SetGuiIniFileName(globals->renderer->GetConfigDirectory() + "gui.ini");
     globals->renderer->SetGuiLogFileName(globals->renderer->GetConfigDirectory() + "gui.log");
     globals->renderer->SetMainLogFileName(globals->renderer->GetConfigDirectory() + "ncPilot.log");
     globals->renderer->SetShowFPS(true);
-    
     globals->renderer->SetWindowSize(globals->nc_control_view->preferences.window_size[0], globals->nc_control_view->preferences.window_size[1]);
-    globals->renderer->SetClearColor(globals->nc_control_view->preferences.background_color[0], globals->nc_control_view->preferences.background_color[1], globals->nc_control_view->preferences.background_color[2]);
     globals->renderer->Init(argc, argv);
 
-    globals->renderer->PushEvent("up", "scroll", &zoom_event_handle);
-    globals->renderer->PushEvent("down", "scroll", &zoom_event_handle);
-
     globals->nc_control_view->Init();
+
+    globals->nc_control_view->MakeActive();
+
     while(globals->renderer->Poll(globals->quit))
     {
         if (globals->renderer->GetCurrentView() == "ncControlView")

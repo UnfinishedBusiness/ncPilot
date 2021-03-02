@@ -7,6 +7,38 @@
 #include "hmi/hmi.h"
 #include "motion_control/motion_control.h"
 
+void zoom_event_handle(nlohmann::json e)
+{
+    //LOG_F(INFO, "%s", e.dump().c_str());
+    double_point_t matrix_mouse = globals->renderer->GetWindowMousePosition();
+    matrix_mouse.x = (matrix_mouse.x - globals->pan.x) / globals->zoom;
+    matrix_mouse.y = (matrix_mouse.y - globals->pan.y) / globals->zoom;
+    if ((float)e["scroll"] > 0)
+    {
+        double old_zoom = globals->zoom;
+        globals->zoom += globals->zoom * 0.125;
+        if (globals->zoom > 1000000)
+        {
+            globals->zoom = 1000000;
+        }
+        double scalechange = old_zoom - globals->zoom;
+        globals->pan.x += matrix_mouse.x * scalechange;
+        globals->pan.y += matrix_mouse.y * scalechange;
+    }
+    else
+    {
+        double old_zoom = globals->zoom;
+        globals->zoom += globals->zoom * -0.125;
+        if (globals->zoom < 0.00001)
+        {
+            globals->zoom = 0.00001;
+        }
+        double scalechange = old_zoom - globals->zoom;
+        globals->pan.x += matrix_mouse.x * scalechange;
+        globals->pan.y += matrix_mouse.y * scalechange; 
+    }
+}
+
 void ncControlView::PreInit()
 {
     globals->renderer->SetCurrentView("ncControlView");
@@ -38,17 +70,17 @@ void ncControlView::PreInit()
     else
     {
         LOG_F(WARNING, "Preferences file does not exist, creating it!");
-        this->preferences.background_color[0] = 8.0f;
-        this->preferences.background_color[1] = 14.0f;
-        this->preferences.background_color[2] = 84.0f;
-        this->preferences.machine_plane_color[0] = 100.0f;
-        this->preferences.machine_plane_color[1] = 100.0f;
-        this->preferences.machine_plane_color[2] = 100.0f;
-        this->preferences.cuttable_plane_color[0] = 151.0f;
-        this->preferences.cuttable_plane_color[1] = 5.0f;
-        this->preferences.cuttable_plane_color[2] = 5.0f;
-        this->preferences.window_size[0] = 500;
-        this->preferences.window_size[1] = 400;
+        this->preferences.background_color[0] = 8.0f / 255.0f;
+        this->preferences.background_color[1] = 14.0f / 255.0f;
+        this->preferences.background_color[2] = 84.0f / 255.0f;
+        this->preferences.machine_plane_color[0] = 100.0f / 255.0f;
+        this->preferences.machine_plane_color[1] = 100.0f / 255.0f;
+        this->preferences.machine_plane_color[2] = 100.0f / 255.0f;
+        this->preferences.cuttable_plane_color[0] = 151.0f / 255.0f;
+        this->preferences.cuttable_plane_color[1] = 5.0f / 255.0f;
+        this->preferences.cuttable_plane_color[2] = 5.0f / 255.0f;
+        this->preferences.window_size[0] = 800;
+        this->preferences.window_size[1] = 600;
     }
 
     std::ifstream json_file(globals->renderer->GetConfigDirectory() + "machine_parameters.json");
@@ -127,6 +159,8 @@ void ncControlView::PreInit()
 }
 void ncControlView::Init()
 {
+    globals->renderer->PushEvent("up", "scroll", &zoom_event_handle);
+    globals->renderer->PushEvent("down", "scroll", &zoom_event_handle);
     menu_bar_init();
     dialogs_init();
     motion_control_init();
@@ -139,6 +173,7 @@ void ncControlView::Tick()
 void ncControlView::MakeActive()
 {
     globals->renderer->SetCurrentView("ncControlView");
+    globals->renderer->SetClearColor(globals->nc_control_view->preferences.background_color[0] * 255.0f, globals->nc_control_view->preferences.background_color[1] * 255.0f, globals->nc_control_view->preferences.background_color[2] * 255.0f);
 }
 void ncControlView::Close()
 {

@@ -586,6 +586,7 @@ bool hmi_update_timer()
 
 void hmi_resize_callback(nlohmann::json e)
 {
+    //LOG_F(INFO, "(hmi_resize_callback) %s", e.dump().c_str());
     hmi_backpane->bottom_left.x = (globals->renderer->GetWindowSize().x / 2) - hmi_backplane_width;
     hmi_backpane->bottom_left.y = -(globals->renderer->GetWindowSize().y / 2);
     hmi_backpane->width = hmi_backplane_width;
@@ -646,7 +647,7 @@ void hmi_resize_callback(nlohmann::json e)
         button_groups[x].button_one.object->height = button_height - 10;
         center_x = button_groups[x].button_one.object->bottom_left.x + (button_width / 2);
         center_y = button_groups[x].button_one.object->bottom_left.y + (button_height / 2);
-        button_groups[x].button_one.label->position = {center_x - (button_groups[x].button_one.label->width / 2.0f) - 5, center_y - (button_groups[x].button_one.label->height) + 5};
+        button_groups[x].button_one.label->position = {(float)center_x - (button_groups[x].button_one.label->width / 2.0f) - 5, (float)center_y - (button_groups[x].button_one.label->height) + 5};
 
         button_group_x += button_width;
         button_groups[x].button_two.object->bottom_left.x = button_group_x + 5;
@@ -785,9 +786,9 @@ void hmi_init()
     globals->nc_control_view->machine_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({0, 0}, globals->nc_control_view->machine_parameters.machine_extents[0], globals->nc_control_view->machine_parameters.machine_extents[1], 0));
     globals->nc_control_view->machine_plane->properties->id = "machine_plane";
     globals->nc_control_view->machine_plane->properties->zindex = -20;
-    globals->nc_control_view->machine_plane->properties->color[0] = globals->nc_control_view->preferences.machine_plane_color[0];
-    globals->nc_control_view->machine_plane->properties->color[1] = globals->nc_control_view->preferences.machine_plane_color[1];
-    globals->nc_control_view->machine_plane->properties->color[2] = globals->nc_control_view->preferences.machine_plane_color[2];
+    globals->nc_control_view->machine_plane->properties->color[0] = globals->nc_control_view->preferences.machine_plane_color[0] * 255.0f;
+    globals->nc_control_view->machine_plane->properties->color[1] = globals->nc_control_view->preferences.machine_plane_color[1] * 255.0f;
+    globals->nc_control_view->machine_plane->properties->color[2] = globals->nc_control_view->preferences.machine_plane_color[2] * 255.0f;
     globals->nc_control_view->machine_plane->properties->matrix_callback = globals->nc_control_view->view_matrix;
     globals->nc_control_view->machine_plane->properties->mouse_callback = &hmi_mouse_callback;
 
@@ -795,9 +796,9 @@ void hmi_init()
     globals->nc_control_view->cuttable_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({globals->nc_control_view->machine_parameters.cutting_extents[0], globals->nc_control_view->machine_parameters.cutting_extents[1]}, (globals->nc_control_view->machine_parameters.machine_extents[0] + globals->nc_control_view->machine_parameters.cutting_extents[2]) - globals->nc_control_view->machine_parameters.cutting_extents[0], (globals->nc_control_view->machine_parameters.machine_extents[1] + globals->nc_control_view->machine_parameters.cutting_extents[3]) - globals->nc_control_view->machine_parameters.cutting_extents[1], 0));
     globals->nc_control_view->cuttable_plane->properties->id = "cuttable_plane";
     globals->nc_control_view->cuttable_plane->properties->zindex = -10;
-    globals->nc_control_view->cuttable_plane->properties->color[0] = globals->nc_control_view->preferences.cuttable_plane_color[0];
-    globals->nc_control_view->cuttable_plane->properties->color[1] = globals->nc_control_view->preferences.cuttable_plane_color[1];
-    globals->nc_control_view->cuttable_plane->properties->color[2] = globals->nc_control_view->preferences.cuttable_plane_color[2];
+    globals->nc_control_view->cuttable_plane->properties->color[0] = globals->nc_control_view->preferences.cuttable_plane_color[0] * 255.0f;
+    globals->nc_control_view->cuttable_plane->properties->color[1] = globals->nc_control_view->preferences.cuttable_plane_color[1] * 255.0f;
+    globals->nc_control_view->cuttable_plane->properties->color[2] = globals->nc_control_view->preferences.cuttable_plane_color[2] * 255.0f;
     globals->nc_control_view->cuttable_plane->properties->matrix_callback = globals->nc_control_view->view_matrix;
     
     hmi_backpane = globals->renderer->PushPrimative(new EasyPrimative::Box({-100000, -100000}, 1, 1, 5));
@@ -908,7 +909,6 @@ void hmi_init()
     globals->nc_control_view->torch_pointer->properties->id = "torch_pointer";
     globals->renderer->SetColorByName(globals->nc_control_view->torch_pointer->properties->color, "green");
     globals->nc_control_view->torch_pointer->properties->matrix_callback = globals->nc_control_view->view_matrix;
-
    
     globals->renderer->PushEvent("Tab", "keyup", hmi_tab_key_up_callback);
     globals->renderer->PushEvent("none", "window_resize", hmi_resize_callback);
