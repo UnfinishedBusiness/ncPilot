@@ -46,6 +46,7 @@
 class EasyRender{
     private:
         struct EasyRenderTimer{
+            std::string view;
             unsigned long timestamp;
             unsigned long intervol;
             bool (*callback)();
@@ -65,6 +66,7 @@ class EasyRender{
         std::string MainLogFileName;
         std::string GuiStyle;
         ImGuiIO *imgui_io;
+        std::string CurrentView;
 
         std::vector<PrimativeContainer *> primative_stack;
         std::vector<EasyRenderTimer *> timer_stack;
@@ -77,10 +79,12 @@ class EasyRender{
 
     public:
         struct EasyRenderGui{
+            std::string view;
             bool visable;
             void (*callback)();
         };
         struct EasyRenderEvent{
+            std::string view;
             std::string key;
             std::string type; //keyup, keydown, scroll, mouse_click, mouse_move, window_resize
             void (*callback)(nlohmann::json);
@@ -101,6 +105,7 @@ class EasyRender{
             this->SetGuiStyle("light");
             this->SetClearColor(21, 22, 34);
             this->SetShowFPS(false);
+            this->SetCurrentView("main");
             this->FPS_Label = NULL;
             this->imgui_io = NULL;
         };
@@ -134,6 +139,7 @@ class EasyRender{
         void SetClearColor(float r, float g, float b);
         void SetShowFPS(bool show_fps);
         void SetColorByName(float *c, std::string color);
+        void SetCurrentView(std::string v);
 
         /* Time */
         static unsigned long Millis();
@@ -145,6 +151,7 @@ class EasyRender{
         double_point_t  GetWindowMousePosition();
         double_point_t  GetWindowSize();
         uint8_t GetFramesPerSecond();
+        std::string GetCurrentView();
         std::vector<PrimativeContainer *> *GetPrimativeStack();
 
         /* Debugging */

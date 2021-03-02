@@ -206,6 +206,7 @@ nlohmann::json PrimativeContainer::serialize()
     p["offset"]["z"] = this->properties->offset[2];
     p["angle"] = this->properties->angle;
     p["id"] = this->properties->id;
+    p["view"] = this->properties->view;
     p["mouse_over_padding"] = this->properties->mouse_over_padding;
     p["data"] = this->properties->data;
     j["properties"] = p;

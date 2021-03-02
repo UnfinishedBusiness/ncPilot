@@ -2,9 +2,9 @@
 #define MOTION_CONTROL_
 
 #include <application.h>
-#include <serial/serial.h>
-#include <easy_serial/easy_serial.h>
-#include <stk500/stk500.h>
+#include "../serial/serial.h"
+#include "../easy_serial/easy_serial.h"
+#include "../stk500/stk500.h"
 /*
     Callbacks that get called via okay_callback
 */

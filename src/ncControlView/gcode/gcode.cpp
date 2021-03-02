@@ -1,8 +1,8 @@
 #include "gcode.h"
 #include <EasyRender/logging/loguru.h>
 #include <EasyRender/geometry/geometry.h>
-#include <dialogs/dialogs.h>
-#include <hmi/hmi.h>
+#include "../dialogs/dialogs.h"
+#include "../hmi/hmi.h"
 
 gcode_global_t gcode;
 gcode_path_t current_path;
@@ -104,7 +104,7 @@ void gcode_push_current_path_to_viewer(int rapid_line)
                         EasyPrimative::Path *direction_indicator = globals->renderer->PushPrimative(new EasyPrimative::Path(arrow_path));
                         globals->renderer->SetColorByName(direction_indicator->properties->color, "blue");
                         direction_indicator->properties->id = "gcode_arrows";
-                        direction_indicator->properties->matrix_callback = globals->view_matrix;
+                        direction_indicator->properties->matrix_callback = globals->nc_control_view->view_matrix;
                         direction_indicator->properties->visable = false;
                     }
                     path.push_back({simplified[i].x, simplified[i].y});
@@ -119,7 +119,7 @@ void gcode_push_current_path_to_viewer(int rapid_line)
                 g->properties->id = "gcode";
                 g->properties->data = {{"rapid_line", rapid_line}};
                 globals->renderer->SetColorByName(g->properties->color, "white");
-                g->properties->matrix_callback = globals->view_matrix;
+                g->properties->matrix_callback = globals->nc_control_view->view_matrix;
                 g->properties->mouse_callback = &hmi_mouse_callback;
                 g->properties->visable = false;
             }
@@ -159,7 +159,7 @@ bool gcode_parse_timer()
                         l->properties->id = "gcode";
                         l->style = "dashed";
                         globals->renderer->SetColorByName(l->properties->color, "grey");
-                        l->properties->matrix_callback = globals->view_matrix;
+                        l->properties->matrix_callback = globals->nc_control_view->view_matrix;
                         l->properties->visable = false;
                     }
                 }

@@ -1,7 +1,7 @@
 #include "hmi.h"
-#include <motion_control/motion_control.h>
-#include <dialogs/dialogs.h>
-#include <gcode/gcode.h>
+#include "../motion_control/motion_control.h"
+#include "../dialogs/dialogs.h"
+#include "../gcode/gcode.h"
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
@@ -30,10 +30,10 @@ void hmi_get_bounding_box(double_point_t *bbox_min, double_point_t *bbox_max)
         {
             for (int i = 0; i < stack->at(x)->path->points.size(); i++)
             {
-                if ((double)stack->at(x)->path->points.at(i).x + globals->machine_parameters.work_offset[0] < bbox_min->x) bbox_min->x = stack->at(x)->path->points.at(i).x + globals->machine_parameters.work_offset[0];
-                if ((double)stack->at(x)->path->points.at(i).x + globals->machine_parameters.work_offset[0] > bbox_max->x) bbox_max->x = stack->at(x)->path->points.at(i).x + globals->machine_parameters.work_offset[0];
-                if ((double)stack->at(x)->path->points.at(i).y + globals->machine_parameters.work_offset[1] < bbox_min->y) bbox_min->y = stack->at(x)->path->points.at(i).y + globals->machine_parameters.work_offset[1];
-                if ((double)stack->at(x)->path->points.at(i).y + globals->machine_parameters.work_offset[1] > bbox_max->y) bbox_max->y = stack->at(x)->path->points.at(i).y + globals->machine_parameters.work_offset[1];
+                if ((double)stack->at(x)->path->points.at(i).x + globals->nc_control_view->machine_parameters.work_offset[0] < bbox_min->x) bbox_min->x = stack->at(x)->path->points.at(i).x + globals->nc_control_view->machine_parameters.work_offset[0];
+                if ((double)stack->at(x)->path->points.at(i).x + globals->nc_control_view->machine_parameters.work_offset[0] > bbox_max->x) bbox_max->x = stack->at(x)->path->points.at(i).x + globals->nc_control_view->machine_parameters.work_offset[0];
+                if ((double)stack->at(x)->path->points.at(i).y + globals->nc_control_view->machine_parameters.work_offset[1] < bbox_min->y) bbox_min->y = stack->at(x)->path->points.at(i).y + globals->nc_control_view->machine_parameters.work_offset[1];
+                if ((double)stack->at(x)->path->points.at(i).y + globals->nc_control_view->machine_parameters.work_offset[1] > bbox_max->y) bbox_max->y = stack->at(x)->path->points.at(i).y + globals->nc_control_view->machine_parameters.work_offset[1];
             }
         }
     }
@@ -66,8 +66,8 @@ void hmi_handle_button(std::string id)
                 LOG_F(INFO, "Clicked Zero X");
                 try
                 {
-                    globals->machine_parameters.work_offset[0] = (float)motion_controller_get_dro()["MCS"]["x"];
-                    motion_controller_push_stack("G10 L2 P0 X" + std::to_string(globals->machine_parameters.work_offset[0]));
+                    globals->nc_control_view->machine_parameters.work_offset[0] = (float)motion_controller_get_dro()["MCS"]["x"];
+                    motion_controller_push_stack("G10 L2 P0 X" + std::to_string(globals->nc_control_view->machine_parameters.work_offset[0]));
                     motion_controller_push_stack("M30");
                     motion_controller_run_stack();
                     motion_controller_save_machine_parameters();
@@ -82,8 +82,8 @@ void hmi_handle_button(std::string id)
                 LOG_F(INFO, "Clicked Zero Y");
                 try
                 {
-                    globals->machine_parameters.work_offset[1] = (float)motion_controller_get_dro()["MCS"]["y"];
-                    motion_controller_push_stack("G10 L2 P0 Y" + std::to_string(globals->machine_parameters.work_offset[1]));
+                    globals->nc_control_view->machine_parameters.work_offset[1] = (float)motion_controller_get_dro()["MCS"]["y"];
+                    motion_controller_push_stack("G10 L2 P0 Y" + std::to_string(globals->nc_control_view->machine_parameters.work_offset[1]));
                     motion_controller_push_stack("M30");
                     motion_controller_run_stack();
                     motion_controller_save_machine_parameters();
@@ -112,10 +112,10 @@ void hmi_handle_button(std::string id)
                 LOG_F(INFO, "Clicked Run");
                 double_point_t bbox_min, bbox_max;
                 hmi_get_bounding_box(&bbox_min, &bbox_max);
-                if (bbox_min.x > 0.0f + globals->machine_parameters.cutting_extents[0] &&
-                    bbox_min.y > 0.0f + globals->machine_parameters.cutting_extents[1] &&
-                    bbox_max.x < globals->machine_parameters.machine_extents[0] - globals->machine_parameters.cutting_extents[2] &&
-                    bbox_max.y < globals->machine_parameters.machine_extents[1] - globals->machine_parameters.cutting_extents[3])
+                if (bbox_min.x > 0.0f + globals->nc_control_view->machine_parameters.cutting_extents[0] &&
+                    bbox_min.y > 0.0f + globals->nc_control_view->machine_parameters.cutting_extents[1] &&
+                    bbox_max.x < globals->nc_control_view->machine_parameters.machine_extents[0] - globals->nc_control_view->machine_parameters.cutting_extents[2] &&
+                    bbox_max.y < globals->nc_control_view->machine_parameters.machine_extents[1] - globals->nc_control_view->machine_parameters.cutting_extents[3])
                 {
                     try
                     {
@@ -153,10 +153,10 @@ void hmi_handle_button(std::string id)
                 LOG_F(INFO, "Clicked Test Run");
                 double_point_t bbox_min, bbox_max;
                 hmi_get_bounding_box(&bbox_min, &bbox_max);
-                if (bbox_min.x > 0.0f + globals->machine_parameters.cutting_extents[0] &&
-                    bbox_min.y > 0.0f + globals->machine_parameters.cutting_extents[1] &&
-                    bbox_max.x < globals->machine_parameters.machine_extents[0] - globals->machine_parameters.cutting_extents[2] &&
-                    bbox_max.y < globals->machine_parameters.machine_extents[1] - globals->machine_parameters.cutting_extents[3])
+                if (bbox_min.x > 0.0f + globals->nc_control_view->machine_parameters.cutting_extents[0] &&
+                    bbox_min.y > 0.0f + globals->nc_control_view->machine_parameters.cutting_extents[1] &&
+                    bbox_max.x < globals->nc_control_view->machine_parameters.machine_extents[0] - globals->nc_control_view->machine_parameters.cutting_extents[2] &&
+                    bbox_max.y < globals->nc_control_view->machine_parameters.machine_extents[1] - globals->nc_control_view->machine_parameters.cutting_extents[3])
                 {
                     try
                     {
@@ -217,20 +217,20 @@ void hmi_handle_button(std::string id)
             {
                 LOG_F(INFO, "No paths, fitting to machine extents!");
                 globals->zoom = 1;
-                globals->pan.x = ((globals->machine_parameters.machine_extents[0]) / 2) - (hmi_backplane_width / 2);
-                globals->pan.y = (((globals->machine_parameters.machine_extents[1]) / 2) + 10) * -1; //10 is for the menu bar
-                if ((MAX((double)globals->renderer->GetWindowSize().y, (double)globals->machine_parameters.machine_extents[1]) - MIN((double)globals->renderer->GetWindowSize().y, (double)globals->machine_parameters.machine_extents[1])) < 
-                    MAX((double)globals->renderer->GetWindowSize().x - hmi_backplane_width, (double)globals->machine_parameters.machine_extents[0]) - MIN((double)globals->renderer->GetWindowSize().x, (double)globals->machine_parameters.machine_extents[0]))
+                globals->pan.x = ((globals->nc_control_view->machine_parameters.machine_extents[0]) / 2) - (hmi_backplane_width / 2);
+                globals->pan.y = (((globals->nc_control_view->machine_parameters.machine_extents[1]) / 2) + 10) * -1; //10 is for the menu bar
+                if ((MAX((double)globals->renderer->GetWindowSize().y, (double)globals->nc_control_view->machine_parameters.machine_extents[1]) - MIN((double)globals->renderer->GetWindowSize().y, (double)globals->nc_control_view->machine_parameters.machine_extents[1])) < 
+                    MAX((double)globals->renderer->GetWindowSize().x - hmi_backplane_width, (double)globals->nc_control_view->machine_parameters.machine_extents[0]) - MIN((double)globals->renderer->GetWindowSize().x, (double)globals->nc_control_view->machine_parameters.machine_extents[0]))
                 {
-                    globals->zoom = ((double)globals->renderer->GetWindowSize().y - 100) / ((double)globals->machine_parameters.machine_extents[1]);
-                    globals->pan.x += ((double)globals->machine_parameters.machine_extents[0] / 2) * (1 - globals->zoom);
-                    globals->pan.y += ((double)globals->machine_parameters.machine_extents[1] / 2) * (1 - globals->zoom);
+                    globals->zoom = ((double)globals->renderer->GetWindowSize().y - 100) / ((double)globals->nc_control_view->machine_parameters.machine_extents[1]);
+                    globals->pan.x += ((double)globals->nc_control_view->machine_parameters.machine_extents[0] / 2) * (1 - globals->zoom);
+                    globals->pan.y += ((double)globals->nc_control_view->machine_parameters.machine_extents[1] / 2) * (1 - globals->zoom);
                 }
                 else //Fit X
                 {
-                    globals->zoom = ((double)globals->renderer->GetWindowSize().x - (hmi_backplane_width / 2) - 200) / ((double)globals->machine_parameters.machine_extents[0]);
-                    globals->pan.x += ((double)globals->machine_parameters.machine_extents[0] / 2) * (1 - globals->zoom) - (hmi_backplane_width / 2) + 50;
-                    globals->pan.y += ((double)globals->machine_parameters.machine_extents[1] / 2) * (1 - globals->zoom);
+                    globals->zoom = ((double)globals->renderer->GetWindowSize().x - (hmi_backplane_width / 2) - 200) / ((double)globals->nc_control_view->machine_parameters.machine_extents[0]);
+                    globals->pan.x += ((double)globals->nc_control_view->machine_parameters.machine_extents[0] / 2) * (1 - globals->zoom) - (hmi_backplane_width / 2) + 50;
+                    globals->pan.y += ((double)globals->nc_control_view->machine_parameters.machine_extents[1] / 2) * (1 - globals->zoom);
                 }
             }
             else
@@ -246,8 +246,8 @@ void hmi_handle_button(std::string id)
                     globals->zoom = ((double)globals->renderer->GetWindowSize().y - 300) / (bbox_max.y - bbox_min.y);
                     globals->pan.x += (bbox_max.x - bbox_min.x) * (1 - globals->zoom) + (hmi_backplane_width / 2);
                     globals->pan.y += (bbox_max.y - bbox_min.y) * (1 - globals->zoom);
-                    globals->pan.x -= globals->machine_parameters.work_offset[0] * globals->zoom;
-                    globals->pan.y -= globals->machine_parameters.work_offset[1] * globals->zoom;
+                    globals->pan.x -= globals->nc_control_view->machine_parameters.work_offset[0] * globals->zoom;
+                    globals->pan.y -= globals->nc_control_view->machine_parameters.work_offset[1] * globals->zoom;
                 }
                 else //Fit X
                 {
@@ -255,8 +255,8 @@ void hmi_handle_button(std::string id)
                     globals->zoom = ((double)globals->renderer->GetWindowSize().x - (hmi_backplane_width / 2) - 200) / (bbox_max.x - bbox_min.x);
                     globals->pan.x += (bbox_max.x - bbox_min.x) * (1 - globals->zoom) + (hmi_backplane_width / 2);
                     globals->pan.y += (bbox_max.y - bbox_min.y) * (1 - globals->zoom);
-                    globals->pan.x -= globals->machine_parameters.work_offset[0] * globals->zoom;
-                    globals->pan.y -= globals->machine_parameters.work_offset[1] * globals->zoom;
+                    globals->pan.x -= globals->nc_control_view->machine_parameters.work_offset[0] * globals->zoom;
+                    globals->pan.y -= globals->nc_control_view->machine_parameters.work_offset[1] * globals->zoom;
                 }
             }
         }
@@ -276,10 +276,10 @@ void hmi_jumpin(PrimativeContainer* p)
 {
     double_point_t bbox_min, bbox_max;
     hmi_get_bounding_box(&bbox_min, &bbox_max);
-    if (bbox_min.x > 0.0f + globals->machine_parameters.cutting_extents[0] &&
-        bbox_min.y > 0.0f + globals->machine_parameters.cutting_extents[1] &&
-        bbox_max.x < globals->machine_parameters.machine_extents[0] - globals->machine_parameters.cutting_extents[2] &&
-        bbox_max.y < globals->machine_parameters.machine_extents[1] - globals->machine_parameters.cutting_extents[3])
+    if (bbox_min.x > 0.0f + globals->nc_control_view->machine_parameters.cutting_extents[0] &&
+        bbox_min.y > 0.0f + globals->nc_control_view->machine_parameters.cutting_extents[1] &&
+        bbox_max.x < globals->nc_control_view->machine_parameters.machine_extents[0] - globals->nc_control_view->machine_parameters.cutting_extents[2] &&
+        bbox_max.y < globals->nc_control_view->machine_parameters.machine_extents[1] - globals->nc_control_view->machine_parameters.cutting_extents[3])
     {
         try
         {
@@ -459,7 +459,7 @@ void hmi_mouse_callback(PrimativeContainer* c, nlohmann::json e)
             {
                 if (c->properties->id == "machine_plane" && dro_data["IN_MOTION"] == false)
                 {
-                    globals->way_point_position = globals->mouse_pos_in_matrix_coordinates;
+                    globals->nc_control_view->way_point_position = globals->mouse_pos_in_matrix_coordinates;
                 }
             }
             catch(...)
@@ -475,8 +475,8 @@ void hmi_view_matrix(PrimativeContainer *p)
     if (p->type == "line")
     {
         p->properties->scale = globals->zoom;
-        p->properties->offset[0] = globals->pan.x + (globals->machine_parameters.work_offset[0] * globals->zoom);
-        p->properties->offset[1] = globals->pan.y + (globals->machine_parameters.work_offset[1] * globals->zoom);
+        p->properties->offset[0] = globals->pan.x + (globals->nc_control_view->machine_parameters.work_offset[0] * globals->zoom);
+        p->properties->offset[1] = globals->pan.y + (globals->nc_control_view->machine_parameters.work_offset[1] * globals->zoom);
     }
     if (p->type == "arc" || p->type == "circle")
     {
@@ -505,14 +505,14 @@ void hmi_view_matrix(PrimativeContainer *p)
         if (p->properties->id == "gcode" || p->properties->id == "gcode_highlights")
         {
             p->properties->scale = globals->zoom;
-            p->properties->offset[0] = globals->pan.x + (globals->machine_parameters.work_offset[0] * globals->zoom);
-            p->properties->offset[1] = globals->pan.y + (globals->machine_parameters.work_offset[1] * globals->zoom);
+            p->properties->offset[0] = globals->pan.x + (globals->nc_control_view->machine_parameters.work_offset[0] * globals->zoom);
+            p->properties->offset[1] = globals->pan.y + (globals->nc_control_view->machine_parameters.work_offset[1] * globals->zoom);
         }
         if (p->properties->id == "gcode_arrows")
         {
             p->properties->scale = globals->zoom;
-            p->properties->offset[0] = globals->pan.x + (globals->machine_parameters.work_offset[0] * globals->zoom);
-            p->properties->offset[1] = globals->pan.y + (globals->machine_parameters.work_offset[1] * globals->zoom);
+            p->properties->offset[0] = globals->pan.x + (globals->nc_control_view->machine_parameters.work_offset[0] * globals->zoom);
+            p->properties->offset[1] = globals->pan.y + (globals->nc_control_view->machine_parameters.work_offset[1] * globals->zoom);
         }
     }
 }
@@ -537,10 +537,10 @@ bool hmi_update_timer()
         dro.z.absolute_readout->textval = to_fixed_string(dro_data["MCS"]["z"], 4);
         dro.feed->textval = "FEED: " + to_fixed_string(dro_data["FEED"], 1);
         dro.arc_readout->textval = "ARC: " + to_fixed_string(dro_data["ADC"], 0);
-        dro.arc_set->textval = "SET: " + to_fixed_string(globals->machine_parameters.thc_set_value, 0);
+        dro.arc_set->textval = "SET: " + to_fixed_string(globals->nc_control_view->machine_parameters.thc_set_value, 0);
         nlohmann::json runtime = motion_controller_get_run_time();
         if (runtime != NULL) dro.run_time->textval = "RUN: " + std::to_string((int)runtime["hours"]) + ":" + std::to_string((int)runtime["minutes"]) + ":" + std::to_string((int)runtime["seconds"]);
-        globals->torch_pointer->center = {(double)dro_data["MCS"]["x"], (double)dro_data["MCS"]["y"]};
+        globals->nc_control_view->torch_pointer->center = {(double)dro_data["MCS"]["x"], (double)dro_data["MCS"]["y"]};
         if (motion_controller_is_torch_on())
         {
             hmi_dro_backpane->properties->color[0] = 100;
@@ -566,7 +566,7 @@ bool hmi_update_timer()
                 arc_okay_highlight_path->is_closed = false;
                 arc_okay_highlight_path->width = 3;
                 globals->renderer->SetColorByName(arc_okay_highlight_path->properties->color, "green");
-                arc_okay_highlight_path->properties->matrix_callback = globals->view_matrix;
+                arc_okay_highlight_path->properties->matrix_callback = globals->nc_control_view->view_matrix;
             }
             else
             {
@@ -691,20 +691,20 @@ void hmi_push_button_group(std::string b1, std::string b2)
 
 void hmi_tab_key_up_callback(nlohmann::json e)
 {
-    if (globals->way_point_position.x != -1000 & globals->way_point_position.y != -1000)
+    if (globals->nc_control_view->way_point_position.x != -1000 & globals->nc_control_view->way_point_position.y != -1000)
     {
-        LOG_F(INFO, "Going to waypoint position: X%.4f Y%.4f", globals->way_point_position.x, globals->way_point_position.y);
-        motion_controller_push_stack("G53 G0 X" + std::to_string(globals->way_point_position.x) + " Y" + std::to_string(globals->way_point_position.y));
+        LOG_F(INFO, "Going to waypoint position: X%.4f Y%.4f", globals->nc_control_view->way_point_position.x, globals->nc_control_view->way_point_position.y);
+        motion_controller_push_stack("G53 G0 X" + std::to_string(globals->nc_control_view->way_point_position.x) + " Y" + std::to_string(globals->nc_control_view->way_point_position.y));
         motion_controller_push_stack("M30");
         motion_controller_run_stack();
-        globals->way_point_position.x = -1000;
-        globals->way_point_position.y = -1000;
+        globals->nc_control_view->way_point_position.x = -1000;
+        globals->nc_control_view->way_point_position.y = -1000;
     }
 }
 void hmi_escape_key_callback(nlohmann::json e)
 {
     hmi_handle_button("Abort");
-    globals->way_point_position = {-1000, -1000};
+    globals->nc_control_view->way_point_position = {-1000, -1000};
 }
 void hmi_up_key_callback(nlohmann::json e)
 {
@@ -712,7 +712,7 @@ void hmi_up_key_callback(nlohmann::json e)
     {
         //key down
         LOG_F(INFO, "Jogging Y positive!");
-        motion_controller_push_stack("G53 G0 Y" + std::to_string(globals->machine_parameters.machine_extents[1]));
+        motion_controller_push_stack("G53 G0 Y" + std::to_string(globals->nc_control_view->machine_parameters.machine_extents[1]));
         motion_controller_run_stack();
     }
     if ((int)e["action"] == 0)
@@ -744,7 +744,7 @@ void hmi_right_key_callback(nlohmann::json e)
     {
         //key down
         LOG_F(INFO, "Jogging X positive!");
-        motion_controller_push_stack("G53 G0 X" + std::to_string(globals->machine_parameters.machine_extents[0]));
+        motion_controller_push_stack("G53 G0 X" + std::to_string(globals->nc_control_view->machine_parameters.machine_extents[0]));
         motion_controller_run_stack();
     }
     if ((int)e["action"] == 0)
@@ -780,25 +780,25 @@ void hmi_mouse_motion_callback(nlohmann::json e)
 }
 void hmi_init()
 {
-    globals->way_point_position = {-1000, -1000};
+    globals->nc_control_view->way_point_position = {-1000, -1000};
     
-    globals->machine_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({0, 0}, globals->machine_parameters.machine_extents[0], globals->machine_parameters.machine_extents[1], 0));
-    globals->machine_plane->properties->id = "machine_plane";
-    globals->machine_plane->properties->zindex = -20;
-    globals->machine_plane->properties->color[0] = globals->preferences.machine_plane_color[0];
-    globals->machine_plane->properties->color[1] = globals->preferences.machine_plane_color[1];
-    globals->machine_plane->properties->color[2] = globals->preferences.machine_plane_color[2];
-    globals->machine_plane->properties->matrix_callback = globals->view_matrix;
-    globals->machine_plane->properties->mouse_callback = &hmi_mouse_callback;
+    globals->nc_control_view->machine_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({0, 0}, globals->nc_control_view->machine_parameters.machine_extents[0], globals->nc_control_view->machine_parameters.machine_extents[1], 0));
+    globals->nc_control_view->machine_plane->properties->id = "machine_plane";
+    globals->nc_control_view->machine_plane->properties->zindex = -20;
+    globals->nc_control_view->machine_plane->properties->color[0] = globals->nc_control_view->preferences.machine_plane_color[0];
+    globals->nc_control_view->machine_plane->properties->color[1] = globals->nc_control_view->preferences.machine_plane_color[1];
+    globals->nc_control_view->machine_plane->properties->color[2] = globals->nc_control_view->preferences.machine_plane_color[2];
+    globals->nc_control_view->machine_plane->properties->matrix_callback = globals->nc_control_view->view_matrix;
+    globals->nc_control_view->machine_plane->properties->mouse_callback = &hmi_mouse_callback;
 
 
-    globals->cuttable_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({globals->machine_parameters.cutting_extents[0], globals->machine_parameters.cutting_extents[1]}, (globals->machine_parameters.machine_extents[0] + globals->machine_parameters.cutting_extents[2]) - globals->machine_parameters.cutting_extents[0], (globals->machine_parameters.machine_extents[1] + globals->machine_parameters.cutting_extents[3]) - globals->machine_parameters.cutting_extents[1], 0));
-    globals->cuttable_plane->properties->id = "cuttable_plane";
-    globals->cuttable_plane->properties->zindex = -10;
-    globals->cuttable_plane->properties->color[0] = globals->preferences.cuttable_plane_color[0];
-    globals->cuttable_plane->properties->color[1] = globals->preferences.cuttable_plane_color[1];
-    globals->cuttable_plane->properties->color[2] = globals->preferences.cuttable_plane_color[2];
-    globals->cuttable_plane->properties->matrix_callback = globals->view_matrix;
+    globals->nc_control_view->cuttable_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({globals->nc_control_view->machine_parameters.cutting_extents[0], globals->nc_control_view->machine_parameters.cutting_extents[1]}, (globals->nc_control_view->machine_parameters.machine_extents[0] + globals->nc_control_view->machine_parameters.cutting_extents[2]) - globals->nc_control_view->machine_parameters.cutting_extents[0], (globals->nc_control_view->machine_parameters.machine_extents[1] + globals->nc_control_view->machine_parameters.cutting_extents[3]) - globals->nc_control_view->machine_parameters.cutting_extents[1], 0));
+    globals->nc_control_view->cuttable_plane->properties->id = "cuttable_plane";
+    globals->nc_control_view->cuttable_plane->properties->zindex = -10;
+    globals->nc_control_view->cuttable_plane->properties->color[0] = globals->nc_control_view->preferences.cuttable_plane_color[0];
+    globals->nc_control_view->cuttable_plane->properties->color[1] = globals->nc_control_view->preferences.cuttable_plane_color[1];
+    globals->nc_control_view->cuttable_plane->properties->color[2] = globals->nc_control_view->preferences.cuttable_plane_color[2];
+    globals->nc_control_view->cuttable_plane->properties->matrix_callback = globals->nc_control_view->view_matrix;
     
     hmi_backpane = globals->renderer->PushPrimative(new EasyPrimative::Box({-100000, -100000}, 1, 1, 5));
     hmi_backpane->properties->color[0] = 25;
@@ -903,11 +903,11 @@ void hmi_init()
     dro.run_time->properties->color[1] = 104;
     dro.run_time->properties->color[2] = 15;
 
-    globals->torch_pointer = globals->renderer->PushPrimative(new EasyPrimative::Circle({-100000, -100000}, 5));
-    globals->torch_pointer->properties->zindex = 500;
-    globals->torch_pointer->properties->id = "torch_pointer";
-    globals->renderer->SetColorByName(globals->torch_pointer->properties->color, "green");
-    globals->torch_pointer->properties->matrix_callback = globals->view_matrix;
+    globals->nc_control_view->torch_pointer = globals->renderer->PushPrimative(new EasyPrimative::Circle({-100000, -100000}, 5));
+    globals->nc_control_view->torch_pointer->properties->zindex = 500;
+    globals->nc_control_view->torch_pointer->properties->id = "torch_pointer";
+    globals->renderer->SetColorByName(globals->nc_control_view->torch_pointer->properties->color, "green");
+    globals->nc_control_view->torch_pointer->properties->matrix_callback = globals->nc_control_view->view_matrix;
 
    
     globals->renderer->PushEvent("Tab", "keyup", hmi_tab_key_up_callback);

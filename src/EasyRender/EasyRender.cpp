@@ -77,33 +77,36 @@ void EasyRender::key_callback(GLFWwindow* window, int key, int scancode, int act
         {
             for (size_t x = 0; x < self->event_stack.size(); x++)
             {
-                if (self->event_stack.at(x)->type == "keyup" && action == 1)
+                if (self->event_stack.at(x)->view == self->CurrentView)
                 {
-                    if (self->event_stack.at(x)->key == keyname)
+                    if (self->event_stack.at(x)->type == "keyup" && action == 1)
                     {
-                        if (self->event_stack.at(x)->callback != NULL)
+                        if (self->event_stack.at(x)->key == keyname)
                         {
-                            self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
+                            if (self->event_stack.at(x)->callback != NULL)
+                            {
+                                self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
+                            }
                         }
                     }
-                }
-                if (self->event_stack.at(x)->type == "keydown" && action == 0)
-                {
-                    if (self->event_stack.at(x)->key == keyname)
+                    if (self->event_stack.at(x)->type == "keydown" && action == 0)
                     {
-                        if (self->event_stack.at(x)->callback != NULL)
+                        if (self->event_stack.at(x)->key == keyname)
                         {
-                            self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
+                            if (self->event_stack.at(x)->callback != NULL)
+                            {
+                                self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
+                            }
                         }
                     }
-                }
-                if (self->event_stack.at(x)->type == "repeat" && action == 2)
-                {
-                    if (self->event_stack.at(x)->key == keyname)
+                    if (self->event_stack.at(x)->type == "repeat" && action == 2)
                     {
-                        if (self->event_stack.at(x)->callback != NULL)
+                        if (self->event_stack.at(x)->key == keyname)
                         {
-                            self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
+                            if (self->event_stack.at(x)->callback != NULL)
+                            {
+                                self->event_stack.at(x)->callback({{"type", self->event_stack.at(x)->type}, {"key", keyname}, {"action", action}});
+                            }
                         }
                     }
                 }
@@ -123,59 +126,62 @@ void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int actio
             for ( it = self->primative_stack.end(); it != self->primative_stack.begin(); )
             {
                 --it;
-                if ((*it)->properties->visable == true && (*it)->properties->mouse_over == true)
+                if ((*it)->properties->view == self->CurrentView)
                 {
-                    if ((*it)->properties->mouse_callback != NULL)
+                    if ((*it)->properties->visable == true && (*it)->properties->mouse_over == true)
                     {
-                        std::string event;
-                        if (button == 0) //Left click
+                        if ((*it)->properties->mouse_callback != NULL)
                         {
-                            if (action == 0) //Up
+                            std::string event;
+                            if (button == 0) //Left click
                             {
-                                event = "left_click_up";
+                                if (action == 0) //Up
+                                {
+                                    event = "left_click_up";
+                                }
+                                else if (action == 1) //Down
+                                {
+                                    event = "left_click_down";
+                                }
                             }
-                            else if (action == 1) //Down
+                            else if (button == 1) //Right Click
                             {
-                                event = "left_click_down";
+                                if (action == 0) //Up
+                                {
+                                    event = "right_click_up";
+                                }
+                                else if (action == 1) //Down
+                                {
+                                    event = "right_click_down";
+                                }
                             }
+                            else if (button == 2) //Middle Click
+                            {
+                                if (action == 0) //Up
+                                {
+                                    event = "middle_click_up";
+                                }
+                                else if (action == 1) //Down
+                                {
+                                    event = "middle_click_down";
+                                }
+                            }
+                            double_point_t matrix_mouse = m;
+                            matrix_mouse.x = (matrix_mouse.x - (*it)->properties->offset[0]) / (*it)->properties->scale;
+                            matrix_mouse.y = (matrix_mouse.y - (*it)->properties->offset[1]) / (*it)->properties->scale;
+                            (*it)->properties->mouse_callback((*it), {
+                                {"event", event},
+                                {"mouse_pos", {
+                                    {"x", m.x},
+                                    {"y", m.y}
+                                }},
+                                {"matrix_mouse_pos", {
+                                    {"x", matrix_mouse.x},
+                                    {"y", matrix_mouse.y}
+                                }}
+                            });
+                            return;
                         }
-                        else if (button == 1) //Right Click
-                        {
-                            if (action == 0) //Up
-                            {
-                                event = "right_click_up";
-                            }
-                            else if (action == 1) //Down
-                            {
-                                event = "right_click_down";
-                            }
-                        }
-                        else if (button == 2) //Middle Click
-                        {
-                            if (action == 0) //Up
-                            {
-                                event = "middle_click_up";
-                            }
-                            else if (action == 1) //Down
-                            {
-                                event = "middle_click_down";
-                            }
-                        }
-                        double_point_t matrix_mouse = m;
-                        matrix_mouse.x = (matrix_mouse.x - (*it)->properties->offset[0]) / (*it)->properties->scale;
-                        matrix_mouse.y = (matrix_mouse.y - (*it)->properties->offset[1]) / (*it)->properties->scale;
-                        (*it)->properties->mouse_callback((*it), {
-                            {"event", event},
-                            {"mouse_pos", {
-                                {"x", m.x},
-                                {"y", m.y}
-                            }},
-                            {"matrix_mouse_pos", {
-                                {"x", matrix_mouse.x},
-                                {"y", matrix_mouse.y}
-                            }}
-                        });
-                        return;
                     }
                 }
             }
@@ -191,21 +197,23 @@ void EasyRender::scroll_callback(GLFWwindow* window, double xoffset, double yoff
         {
             for (size_t x = 0; x < self->event_stack.size(); x++)
             {
-                if (yoffset > 0)
+                if (self->event_stack.at(x)->view == self->CurrentView)
                 {
-                    if (self->event_stack.at(x)->type == "scroll" && self->event_stack.at(x)->key == "up")
+                    if (yoffset > 0)
                     {
-                        self->event_stack.at(x)->callback({{"scroll", yoffset}});
+                        if (self->event_stack.at(x)->type == "scroll" && self->event_stack.at(x)->key == "up")
+                        {
+                            self->event_stack.at(x)->callback({{"scroll", yoffset}});
+                        }
+                    }
+                    else
+                    {
+                        if (self->event_stack.at(x)->type == "scroll" && self->event_stack.at(x)->key == "down")
+                        {
+                            self->event_stack.at(x)->callback({{"scroll", yoffset}});
+                        }
                     }
                 }
-                else
-                {
-                    if (self->event_stack.at(x)->type == "scroll" && self->event_stack.at(x)->key == "down")
-                    {
-                        self->event_stack.at(x)->callback({{"scroll", yoffset}});
-                    }
-                }
-                
             }
         }
     }
@@ -218,9 +226,12 @@ void EasyRender::cursor_position_callback(GLFWwindow* window, double xpos, doubl
         double_point_t m = self->GetWindowMousePosition();
         for (size_t x = 0; x < self->event_stack.size(); x++)
         {
-            if (self->event_stack.at(x)->type == "mouse_move")
+            if (self->event_stack.at(x)->view == self->CurrentView)
             {
-                self->event_stack.at(x)->callback({{"pos",{{"x", m.x},{"y", m.y}}}});
+                if (self->event_stack.at(x)->type == "mouse_move")
+                {
+                    self->event_stack.at(x)->callback({{"pos",{{"x", m.x},{"y", m.y}}}});
+                }
             }
         }
     }
@@ -232,9 +243,12 @@ void EasyRender::window_size_callback(GLFWwindow* window, int width, int height)
     {
         for (size_t x = 0; x < self->event_stack.size(); x++)
         {
-            if (self->event_stack.at(x)->type == "window_resize")
+            if (self->event_stack.at(x)->view == self->CurrentView)
             {
-                self->event_stack.at(x)->callback({{"size",{{"width", width},{"height", height}}}});
+                if (self->event_stack.at(x)->type == "window_resize")
+                {
+                    self->event_stack.at(x)->callback({{"size",{{"width", width},{"height", height}}}});
+                }
             }
         }
     }
@@ -245,42 +259,49 @@ void EasyRender::window_size_callback(GLFWwindow* window, int width, int height)
 EasyPrimative::Line* EasyRender::PushPrimative(EasyPrimative::Line* l)
 {  
     PrimativeContainer *c = new PrimativeContainer(l);
+    c->properties->view = this->CurrentView;
     primative_stack.push_back(c);
     return c->line;
 }
 EasyPrimative::Text* EasyRender::PushPrimative(EasyPrimative::Text* t)
 {  
     PrimativeContainer *c = new PrimativeContainer(t);
+    c->properties->view = this->CurrentView;
     primative_stack.push_back(c);
     return c->text;
 }
 EasyPrimative::Image* EasyRender::PushPrimative(EasyPrimative::Image* i)
 {  
     PrimativeContainer *c = new PrimativeContainer(i);
+    c->properties->view = this->CurrentView;
     primative_stack.push_back(c);
     return c->image;
 }
 EasyPrimative::Path* EasyRender::PushPrimative(EasyPrimative::Path* p)
 {  
     PrimativeContainer *c = new PrimativeContainer(p);
+    c->properties->view = this->CurrentView;
     primative_stack.push_back(c);
     return c->path;
 }
 EasyPrimative::Arc* EasyRender::PushPrimative(EasyPrimative::Arc* a)
 {  
     PrimativeContainer *c = new PrimativeContainer(a);
+    c->properties->view = this->CurrentView;
     primative_stack.push_back(c);
     return c->arc;
 }
 EasyPrimative::Circle* EasyRender::PushPrimative(EasyPrimative::Circle* ci)
 {  
     PrimativeContainer *c = new PrimativeContainer(ci);
+    c->properties->view = this->CurrentView;
     primative_stack.push_back(c);
     return c->circle;
 }
 EasyPrimative::Box* EasyRender::PushPrimative(EasyPrimative::Box* b)
 {  
     PrimativeContainer *c = new PrimativeContainer(b);
+    c->properties->view = this->CurrentView;
     primative_stack.push_back(c);
     return c->box;
 }
@@ -290,6 +311,7 @@ void EasyRender::PushTimer(unsigned long intervol, bool (*c)())
     t->intervol = intervol;
     t->timestamp = this->Millis();
     t->callback = c;
+    t->view = this->CurrentView;
     timer_stack.push_back(t);
 }
 EasyRender::EasyRenderGui *EasyRender::PushGui(bool v, void (*c)())
@@ -297,6 +319,7 @@ EasyRender::EasyRenderGui *EasyRender::PushGui(bool v, void (*c)())
     EasyRender::EasyRenderGui *g = new EasyRender::EasyRenderGui;
     g->visable = v;
     g->callback = c;
+    g->view = this->CurrentView;
     gui_stack.push_back(g);
     return g;
 }
@@ -306,6 +329,7 @@ void EasyRender::PushEvent(std::string key, std::string type, void (*callback)(n
     e->key = key;
     e->type = type;
     e->callback = callback;
+    e->view = this->CurrentView;
     event_stack.push_back(e);
     if (type == "window_resize" && this->Window != NULL)
     {
@@ -434,6 +458,10 @@ void EasyRender::SetColorByName(float *c, std::string color)
         c[3] = 255;
     }
 }
+void EasyRender::SetCurrentView(std::string v)
+{
+    this->CurrentView = v;
+}
 unsigned long EasyRender::Millis()
 {
     using std::chrono::duration_cast;
@@ -490,6 +518,10 @@ double_point_t EasyRender::GetWindowSize()
 uint8_t EasyRender::GetFramesPerSecond()
 {
     return (uint8_t)(1000.0f / (float)RenderPerformance);
+}
+std::string EasyRender::GetCurrentView()
+{
+    return this->CurrentView;
 }
 std::vector<PrimativeContainer *> *EasyRender::GetPrimativeStack()
 {
@@ -595,7 +627,7 @@ bool EasyRender::Poll(bool should_quit)
     ImGui::NewFrame();
     for (size_t x = 0; x < this->gui_stack.size(); x++)
     {
-        if (this->gui_stack[x]->visable == true)
+        if (this->gui_stack[x]->visable == true && this->gui_stack[x]->view == this->CurrentView)
         {
             this->gui_stack[x]->callback();
         }
@@ -610,12 +642,12 @@ bool EasyRender::Poll(bool should_quit)
     glViewport(0, 0, this->WindowSize[0], this->WindowSize[1]);
     glClear(GL_COLOR_BUFFER_BIT);
     sort(primative_stack.begin(), primative_stack.end(), [](auto* lhs, auto* rhs) {
-        return lhs->properties->zindex < rhs->properties->zindex ;
+        return lhs->properties->zindex < rhs->properties->zindex;
     });
     bool ignore_next_mouse_events = false;
     for (size_t x = 0; x < this->primative_stack.size(); x ++)
     {
-        if (this->primative_stack[x]->properties->visable == true)
+        if (this->primative_stack[x]->properties->visable == true && this->primative_stack[x]->properties->view == this->CurrentView)
         {
             primative_stack[x]->render();
             if ((!this->imgui_io->WantCaptureKeyboard || !this->imgui_io->WantCaptureMouse) && ignore_next_mouse_events == false)
@@ -630,15 +662,18 @@ bool EasyRender::Poll(bool should_quit)
     glfwPollEvents();
     for (size_t x = 0; x < this->timer_stack.size(); x++)
     {
-        if ((this->Millis() - this->timer_stack.at(x)->timestamp) > this->timer_stack.at(x)->intervol)
+        if (this->timer_stack.at(x)->view == this->CurrentView)
         {
-            this->timer_stack[x]->timestamp = this->Millis();
-            if (this->timer_stack[x]->callback != NULL)
+            if ((this->Millis() - this->timer_stack.at(x)->timestamp) > this->timer_stack.at(x)->intervol)
             {
-                if (this->timer_stack[x]->callback() == false) //Don't repeat
+                this->timer_stack[x]->timestamp = this->Millis();
+                if (this->timer_stack[x]->callback != NULL)
                 {
-                    delete this->timer_stack[x];
-                    this->timer_stack.erase(this->timer_stack.begin()+x);
+                    if (this->timer_stack[x]->callback() == false) //Don't repeat
+                    {
+                        delete this->timer_stack[x];
+                        this->timer_stack.erase(this->timer_stack.begin()+x);
+                    }
                 }
             }
         }

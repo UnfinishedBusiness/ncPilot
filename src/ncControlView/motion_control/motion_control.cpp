@@ -1,6 +1,6 @@
 
 #include "motion_control.h"
-#include <dialogs/dialogs.h>
+#include "../dialogs/dialogs.h"
 
 easy_serial motion_controller("arduino", byte_handler, line_handler);
 
@@ -87,9 +87,9 @@ void raise_to_cut_height_and_run_program()
     arc_retry_count = 0;
     //Remember that inserting at the top of list means its the next code to run, meaning
     //This list that we are inserting is ran from bottom to top or LIFO mode
-    if (globals->machine_parameters.smart_thc_on == false)
+    if (globals->nc_control_view->machine_parameters.smart_thc_on == false)
     {
-        gcode_stack.insert(gcode_stack.begin(), "$T=" + std::to_string(globals->machine_parameters.thc_set_value));
+        gcode_stack.insert(gcode_stack.begin(), "$T=" + std::to_string(globals->nc_control_view->machine_parameters.thc_set_value));
     }
     gcode_stack.insert(gcode_stack.begin(), "G90");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + std::to_string((double)callback_args["cut_height"] - (double)callback_args["pierce_height"]));
@@ -106,7 +106,7 @@ void raise_to_pierce_height_and_fire_torch()
     gcode_stack.insert(gcode_stack.begin(), "WAIT_FOR_ARC_OKAY");
     gcode_stack.insert(gcode_stack.begin(), "M3S1000");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + std::to_string((double)callback_args["pierce_height"]));
-    gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + std::to_string(globals->machine_parameters.floating_head_backlash));
+    gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + std::to_string(globals->nc_control_view->machine_parameters.floating_head_backlash));
     LOG_F(INFO, "Running callback => raise_to_pierce_height_and_fire_torch()");
     torch_on = true;
     torch_on_timer = EasyRender::Millis();
@@ -120,7 +120,7 @@ void touch_torch_and_pierce()
     //This list that we are inserting is ran from bottom to top or LIFO mode
     gcode_stack.insert(gcode_stack.begin(), "G90");
     gcode_stack.insert(gcode_stack.begin(), "G91G0Z0.5");
-    gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + std::to_string(globals->machine_parameters.floating_head_backlash));
+    gcode_stack.insert(gcode_stack.begin(), "G91G0Z" + std::to_string(globals->nc_control_view->machine_parameters.floating_head_backlash));
     LOG_F(INFO, "Touching off torch and dry running!");
     run_pop();
 }
@@ -148,7 +148,7 @@ void torch_off_and_retract()
     torch_on = false;
     //Remember that inserting at the top of list means its the next code to run, meaning
     //This list that we are inserting is ran from bottom to top or LIFO mode
-    if (globals->machine_parameters.smart_thc_on == false)
+    if (globals->nc_control_view->machine_parameters.smart_thc_on == false)
     {
         gcode_stack.insert(gcode_stack.begin(), "$T=0");
     }
@@ -192,7 +192,7 @@ void run_pop()
             {
                 okay_callback = NULL;
                 probe_callback = &raise_to_pierce_height_and_fire_torch;
-                motion_controller_send_crc32("G38.3Z" + std::to_string(globals->machine_parameters.machine_extents[2]) + "F" + std::to_string(globals->machine_parameters.z_probe_feedrate));
+                motion_controller_send_crc32("G38.3Z" + std::to_string(globals->nc_control_view->machine_parameters.machine_extents[2]) + "F" + std::to_string(globals->nc_control_view->machine_parameters.z_probe_feedrate));
             }
         }
         else if (line.find("touch_torch") != std::string::npos)
@@ -213,7 +213,7 @@ void run_pop()
             }
             okay_callback = NULL;
             probe_callback = &touch_torch_and_pierce;
-            motion_controller_send_crc32("G38.3Z" + std::to_string(globals->machine_parameters.machine_extents[2]) + "F" + std::to_string(globals->machine_parameters.z_probe_feedrate));
+            motion_controller_send_crc32("G38.3Z" + std::to_string(globals->nc_control_view->machine_parameters.machine_extents[2]) + "F" + std::to_string(globals->nc_control_view->machine_parameters.z_probe_feedrate));
         }
         else if(line.find("WAIT_FOR_ARC_OKAY") != std::string::npos)
         {
@@ -475,24 +475,24 @@ void line_handler(std::string line)
             {
                 send_parameters = false;
                 uint8_t dir_invert_mask = 0b00000000;
-                if (globals->machine_parameters.axis_invert[0]) dir_invert_mask |= 0b00000001;
-                if (globals->machine_parameters.axis_invert[1]) dir_invert_mask |= 0b00000010;
-                if (globals->machine_parameters.axis_invert[3]) dir_invert_mask |= 0b00000100;
-                if (globals->machine_parameters.axis_invert[2]) dir_invert_mask |= 0b00001000;
+                if (globals->nc_control_view->machine_parameters.axis_invert[0]) dir_invert_mask |= 0b00000001;
+                if (globals->nc_control_view->machine_parameters.axis_invert[1]) dir_invert_mask |= 0b00000010;
+                if (globals->nc_control_view->machine_parameters.axis_invert[3]) dir_invert_mask |= 0b00000100;
+                if (globals->nc_control_view->machine_parameters.axis_invert[2]) dir_invert_mask |= 0b00001000;
 
                 motion_controller_push_stack("$0=" + std::to_string(50));
                 motion_controller_push_stack("$3=" + std::to_string(dir_invert_mask));
-                motion_controller_push_stack("$11=" + std::to_string(globals->machine_parameters.junction_deviation));
-                motion_controller_push_stack("$100=" + std::to_string(globals->machine_parameters.axis_scale[0]));
-                motion_controller_push_stack("$101=" + std::to_string(globals->machine_parameters.axis_scale[1]));
-                motion_controller_push_stack("$102=" + std::to_string(globals->machine_parameters.axis_scale[2]));
-                motion_controller_push_stack("$110=" + std::to_string(globals->machine_parameters.max_vel[0]));
-                motion_controller_push_stack("$111=" + std::to_string(globals->machine_parameters.max_vel[1]));
-                motion_controller_push_stack("$112=" + std::to_string(globals->machine_parameters.max_vel[2]));
-                motion_controller_push_stack("$120=" + std::to_string(globals->machine_parameters.max_accel[0]));
-                motion_controller_push_stack("$121=" + std::to_string(globals->machine_parameters.max_accel[1]));
-                motion_controller_push_stack("$122=" + std::to_string(globals->machine_parameters.max_accel[2]));
-                motion_controller_push_stack("G10 L2 P0 X" + std::to_string(globals->machine_parameters.work_offset[0]) + " Y" + std::to_string(globals->machine_parameters.work_offset[1]) + " Z0");
+                motion_controller_push_stack("$11=" + std::to_string(globals->nc_control_view->machine_parameters.junction_deviation));
+                motion_controller_push_stack("$100=" + std::to_string(globals->nc_control_view->machine_parameters.axis_scale[0]));
+                motion_controller_push_stack("$101=" + std::to_string(globals->nc_control_view->machine_parameters.axis_scale[1]));
+                motion_controller_push_stack("$102=" + std::to_string(globals->nc_control_view->machine_parameters.axis_scale[2]));
+                motion_controller_push_stack("$110=" + std::to_string(globals->nc_control_view->machine_parameters.max_vel[0]));
+                motion_controller_push_stack("$111=" + std::to_string(globals->nc_control_view->machine_parameters.max_vel[1]));
+                motion_controller_push_stack("$112=" + std::to_string(globals->nc_control_view->machine_parameters.max_vel[2]));
+                motion_controller_push_stack("$120=" + std::to_string(globals->nc_control_view->machine_parameters.max_accel[0]));
+                motion_controller_push_stack("$121=" + std::to_string(globals->nc_control_view->machine_parameters.max_accel[1]));
+                motion_controller_push_stack("$122=" + std::to_string(globals->nc_control_view->machine_parameters.max_accel[2]));
+                motion_controller_push_stack("G10 L2 P0 X" + std::to_string(globals->nc_control_view->machine_parameters.work_offset[0]) + " Y" + std::to_string(globals->nc_control_view->machine_parameters.work_offset[1]) + " Z0");
                 motion_controller_push_stack("M30");
                 motion_controller_run_stack();
             }
@@ -502,41 +502,41 @@ void line_handler(std::string line)
 void motion_controller_save_machine_parameters()
 {
     nlohmann::json preferences;
-    preferences["work_offset"]["x"] = globals->machine_parameters.work_offset[0];
-    preferences["work_offset"]["y"] = globals->machine_parameters.work_offset[1];
-    preferences["work_offset"]["z"] = globals->machine_parameters.work_offset[2];
-    preferences["machine_extents"]["x"] = globals->machine_parameters.machine_extents[0];
-    preferences["machine_extents"]["y"] = globals->machine_parameters.machine_extents[1];
-    preferences["machine_extents"]["z"] = globals->machine_parameters.machine_extents[2];
-    preferences["cutting_extents"]["x1"] = globals->machine_parameters.cutting_extents[0];
-    preferences["cutting_extents"]["y1"] = globals->machine_parameters.cutting_extents[1];
-    preferences["cutting_extents"]["x2"] = globals->machine_parameters.cutting_extents[2];
-    preferences["cutting_extents"]["y2"] = globals->machine_parameters.cutting_extents[3];
-    preferences["axis_scale"]["x"] = globals->machine_parameters.axis_scale[0];
-    preferences["axis_scale"]["y"] = globals->machine_parameters.axis_scale[1];
-    preferences["axis_scale"]["z"] = globals->machine_parameters.axis_scale[2];
-    preferences["max_vel"]["x"] = globals->machine_parameters.max_vel[0];
-    preferences["max_vel"]["y"] = globals->machine_parameters.max_vel[1];
-    preferences["max_vel"]["z"] = globals->machine_parameters.max_vel[2];
-    preferences["max_accel"]["x"] = globals->machine_parameters.max_accel[0];
-    preferences["max_accel"]["y"] = globals->machine_parameters.max_accel[1];
-    preferences["max_accel"]["z"] = globals->machine_parameters.max_accel[2];
-    preferences["junction_deviation"] = globals->machine_parameters.junction_deviation;
-    preferences["arc_stablization_time"] = globals->machine_parameters.arc_stablization_time;
-    preferences["floating_head_backlash"] = globals->machine_parameters.floating_head_backlash;
-    preferences["z_probe_feedrate"] = globals->machine_parameters.z_probe_feedrate;
-    preferences["axis_invert"]["x"] = globals->machine_parameters.axis_invert[0];
-    preferences["axis_invert"]["y1"] = globals->machine_parameters.axis_invert[1];
-    preferences["axis_invert"]["y2"] = globals->machine_parameters.axis_invert[2];
-    preferences["axis_invert"]["z"] = globals->machine_parameters.axis_invert[3];
-    globals->machine_plane->bottom_left.x = 0;
-    globals->machine_plane->bottom_left.y = 0;
-    globals->machine_plane->width = globals->machine_parameters.machine_extents[0];
-    globals->machine_plane->height = globals->machine_parameters.machine_extents[1];
-    globals->cuttable_plane->bottom_left.x = globals->machine_parameters.cutting_extents[0];
-    globals->cuttable_plane->bottom_left.y = globals->machine_parameters.cutting_extents[1];
-    globals->cuttable_plane->width = (globals->machine_parameters.machine_extents[0] + globals->machine_parameters.cutting_extents[2]) - globals->machine_parameters.cutting_extents[0];
-    globals->cuttable_plane->height = (globals->machine_parameters.machine_extents[1] + globals->machine_parameters.cutting_extents[3]) - globals->machine_parameters.cutting_extents[1];
+    preferences["work_offset"]["x"] = globals->nc_control_view->machine_parameters.work_offset[0];
+    preferences["work_offset"]["y"] = globals->nc_control_view->machine_parameters.work_offset[1];
+    preferences["work_offset"]["z"] = globals->nc_control_view->machine_parameters.work_offset[2];
+    preferences["machine_extents"]["x"] = globals->nc_control_view->machine_parameters.machine_extents[0];
+    preferences["machine_extents"]["y"] = globals->nc_control_view->machine_parameters.machine_extents[1];
+    preferences["machine_extents"]["z"] = globals->nc_control_view->machine_parameters.machine_extents[2];
+    preferences["cutting_extents"]["x1"] = globals->nc_control_view->machine_parameters.cutting_extents[0];
+    preferences["cutting_extents"]["y1"] = globals->nc_control_view->machine_parameters.cutting_extents[1];
+    preferences["cutting_extents"]["x2"] = globals->nc_control_view->machine_parameters.cutting_extents[2];
+    preferences["cutting_extents"]["y2"] = globals->nc_control_view->machine_parameters.cutting_extents[3];
+    preferences["axis_scale"]["x"] = globals->nc_control_view->machine_parameters.axis_scale[0];
+    preferences["axis_scale"]["y"] = globals->nc_control_view->machine_parameters.axis_scale[1];
+    preferences["axis_scale"]["z"] = globals->nc_control_view->machine_parameters.axis_scale[2];
+    preferences["max_vel"]["x"] = globals->nc_control_view->machine_parameters.max_vel[0];
+    preferences["max_vel"]["y"] = globals->nc_control_view->machine_parameters.max_vel[1];
+    preferences["max_vel"]["z"] = globals->nc_control_view->machine_parameters.max_vel[2];
+    preferences["max_accel"]["x"] = globals->nc_control_view->machine_parameters.max_accel[0];
+    preferences["max_accel"]["y"] = globals->nc_control_view->machine_parameters.max_accel[1];
+    preferences["max_accel"]["z"] = globals->nc_control_view->machine_parameters.max_accel[2];
+    preferences["junction_deviation"] = globals->nc_control_view->machine_parameters.junction_deviation;
+    preferences["arc_stablization_time"] = globals->nc_control_view->machine_parameters.arc_stablization_time;
+    preferences["floating_head_backlash"] = globals->nc_control_view->machine_parameters.floating_head_backlash;
+    preferences["z_probe_feedrate"] = globals->nc_control_view->machine_parameters.z_probe_feedrate;
+    preferences["axis_invert"]["x"] = globals->nc_control_view->machine_parameters.axis_invert[0];
+    preferences["axis_invert"]["y1"] = globals->nc_control_view->machine_parameters.axis_invert[1];
+    preferences["axis_invert"]["y2"] = globals->nc_control_view->machine_parameters.axis_invert[2];
+    preferences["axis_invert"]["z"] = globals->nc_control_view->machine_parameters.axis_invert[3];
+    globals->nc_control_view->machine_plane->bottom_left.x = 0;
+    globals->nc_control_view->machine_plane->bottom_left.y = 0;
+    globals->nc_control_view->machine_plane->width = globals->nc_control_view->machine_parameters.machine_extents[0];
+    globals->nc_control_view->machine_plane->height = globals->nc_control_view->machine_parameters.machine_extents[1];
+    globals->nc_control_view->cuttable_plane->bottom_left.x = globals->nc_control_view->machine_parameters.cutting_extents[0];
+    globals->nc_control_view->cuttable_plane->bottom_left.y = globals->nc_control_view->machine_parameters.cutting_extents[1];
+    globals->nc_control_view->cuttable_plane->width = (globals->nc_control_view->machine_parameters.machine_extents[0] + globals->nc_control_view->machine_parameters.cutting_extents[2]) - globals->nc_control_view->machine_parameters.cutting_extents[0];
+    globals->nc_control_view->cuttable_plane->height = (globals->nc_control_view->machine_parameters.machine_extents[1] + globals->nc_control_view->machine_parameters.cutting_extents[3]) - globals->nc_control_view->machine_parameters.cutting_extents[1];
     try
     {
         std::ofstream out(globals->renderer->GetConfigDirectory() + "machine_parameters.json");
@@ -646,7 +646,7 @@ void motion_control_tick()
     }
     try
     {
-        if (torch_on == true && (EasyRender::Millis() - arc_okay_timer) > (globals->machine_parameters.arc_stablization_time + ((float)callback_args["pierce_delay"] * 1000)))
+        if (torch_on == true && (EasyRender::Millis() - arc_okay_timer) > (globals->nc_control_view->machine_parameters.arc_stablization_time + ((float)callback_args["pierce_delay"] * 1000)))
         {
             //LOG_F(INFO, "Arc is stabalized!");
             /*

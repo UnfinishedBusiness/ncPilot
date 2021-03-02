@@ -31,6 +31,7 @@ class PrimativeProperties{
         float scale;
         float angle;
         std::string id;
+        std::string view;
         nlohmann::json data;
 
         /* Event Callbacks */
@@ -51,6 +52,7 @@ class PrimativeProperties{
             this->offset[2] = 0;
             this->angle = 0;
             this->id = "";
+            this->view = "main";
             this->mouse_over = false;
             this->mouse_over_padding = 10;
             this->data = NULL;

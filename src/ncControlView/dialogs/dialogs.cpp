@@ -1,7 +1,7 @@
 #include "dialogs.h"
 #include <EasyRender/gui/ImGuiFileDialog.h>
-#include <motion_control/motion_control.h>
-#include <gcode/gcode.h>
+#include "../motion_control/motion_control.h"
+#include "../gcode/gcode.h"
 
 EasyRender::EasyRenderGui *thc_window_handle;
 EasyRender::EasyRenderGui *preferences_window_handle;
@@ -45,45 +45,45 @@ void dialogs_show_preferences(bool s)
 void dialogs_preferences()
 {
     ImGui::Begin("Preferences", &preferences_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::ColorEdit3("Background Color", globals->preferences.background_color);
-    ImGui::ColorEdit3("Machine Plane Color", globals->preferences.machine_plane_color);
-    ImGui::ColorEdit3("Cuttable Plane Color", globals->preferences.cuttable_plane_color);
-    ImGui::InputInt2("Default Window Size", globals->preferences.window_size);
+    ImGui::ColorEdit3("Background Color", globals->nc_control_view->preferences.background_color);
+    ImGui::ColorEdit3("Machine Plane Color", globals->nc_control_view->preferences.machine_plane_color);
+    ImGui::ColorEdit3("Cuttable Plane Color", globals->nc_control_view->preferences.cuttable_plane_color);
+    ImGui::InputInt2("Default Window Size", globals->nc_control_view->preferences.window_size);
     ImGui::SameLine();
     if (ImGui::Button("<= Current Size"))
     {
-        globals->preferences.window_size[0] = (int)globals->renderer->GetWindowSize().x;
-        globals->preferences.window_size[1] = (int)globals->renderer->GetWindowSize().y;
+        globals->nc_control_view->preferences.window_size[0] = (int)globals->renderer->GetWindowSize().x;
+        globals->nc_control_view->preferences.window_size[1] = (int)globals->renderer->GetWindowSize().y;
     }
     ImGui::Spacing();
     if (ImGui::Button("OK"))
     {
-        globals->renderer->SetClearColor(globals->preferences.background_color[0], globals->preferences.background_color[1], globals->preferences.background_color[2]);
+        globals->renderer->SetClearColor(globals->nc_control_view->preferences.background_color[0], globals->nc_control_view->preferences.background_color[1], globals->nc_control_view->preferences.background_color[2]);
 
-        globals->machine_plane->properties->color[0] = globals->preferences.machine_plane_color[0];
-        globals->machine_plane->properties->color[1] = globals->preferences.machine_plane_color[1];
-        globals->machine_plane->properties->color[2] = globals->preferences.machine_plane_color[2];
+        globals->nc_control_view->machine_plane->properties->color[0] = globals->nc_control_view->preferences.machine_plane_color[0];
+        globals->nc_control_view->machine_plane->properties->color[1] = globals->nc_control_view->preferences.machine_plane_color[1];
+        globals->nc_control_view->machine_plane->properties->color[2] = globals->nc_control_view->preferences.machine_plane_color[2];
 
-        globals->cuttable_plane->properties->color[0] = globals->preferences.cuttable_plane_color[0];
-        globals->cuttable_plane->properties->color[1] = globals->preferences.cuttable_plane_color[1];
-        globals->cuttable_plane->properties->color[2] = globals->preferences.cuttable_plane_color[2];
+        globals->nc_control_view->cuttable_plane->properties->color[0] = globals->nc_control_view->preferences.cuttable_plane_color[0];
+        globals->nc_control_view->cuttable_plane->properties->color[1] = globals->nc_control_view->preferences.cuttable_plane_color[1];
+        globals->nc_control_view->cuttable_plane->properties->color[2] = globals->nc_control_view->preferences.cuttable_plane_color[2];
 
         //Write preferences to file
         nlohmann::json preferences;
-        preferences["background_color"]["r"] = globals->preferences.background_color[0];
-        preferences["background_color"]["g"] = globals->preferences.background_color[1];
-        preferences["background_color"]["b"] = globals->preferences.background_color[2];
+        preferences["background_color"]["r"] = globals->nc_control_view->preferences.background_color[0];
+        preferences["background_color"]["g"] = globals->nc_control_view->preferences.background_color[1];
+        preferences["background_color"]["b"] = globals->nc_control_view->preferences.background_color[2];
 
-        preferences["machine_plane_color"]["r"] = globals->preferences.machine_plane_color[0];
-        preferences["machine_plane_color"]["g"] = globals->preferences.machine_plane_color[1];
-        preferences["machine_plane_color"]["b"] = globals->preferences.machine_plane_color[2];
+        preferences["machine_plane_color"]["r"] = globals->nc_control_view->preferences.machine_plane_color[0];
+        preferences["machine_plane_color"]["g"] = globals->nc_control_view->preferences.machine_plane_color[1];
+        preferences["machine_plane_color"]["b"] = globals->nc_control_view->preferences.machine_plane_color[2];
 
-        preferences["cuttable_plane_color"]["r"] = globals->preferences.cuttable_plane_color[0];
-        preferences["cuttable_plane_color"]["g"] = globals->preferences.cuttable_plane_color[1];
-        preferences["cuttable_plane_color"]["b"] = globals->preferences.cuttable_plane_color[2];
+        preferences["cuttable_plane_color"]["r"] = globals->nc_control_view->preferences.cuttable_plane_color[0];
+        preferences["cuttable_plane_color"]["g"] = globals->nc_control_view->preferences.cuttable_plane_color[1];
+        preferences["cuttable_plane_color"]["b"] = globals->nc_control_view->preferences.cuttable_plane_color[2];
 
-        preferences["window_width"] = globals->preferences.window_size[0];
-        preferences["window_height"] = globals->preferences.window_size[1];
+        preferences["window_width"] = globals->nc_control_view->preferences.window_size[0];
+        preferences["window_height"] = globals->nc_control_view->preferences.window_size[1];
 
         std::ofstream out(globals->renderer->GetConfigDirectory() + "preferences.json");
         out << preferences.dump();
@@ -106,36 +106,36 @@ void dialogs_machine_parameters()
 {
     ImGui::Begin("Machine Parameters", &machine_parameters_window_handle->visable, ImGuiWindowFlags_AlwaysAutoResize);
     ImGui::Text("Machine extents is the max distance each axis can travel freely. X0 is the X negative stop, Y0 is Y negative stop, and Z0 is Z positive stop!");
-    ImGui::InputFloat3("Machine Extents (X, Y, Z)", globals->machine_parameters.machine_extents);
+    ImGui::InputFloat3("Machine Extents (X, Y, Z)", globals->nc_control_view->machine_parameters.machine_extents);
     ImGui::Separator();
     ImGui::Text("Cutting extents are used to prevent accidentally cutting onto machine frames or generally any area outside of where cutting should happen.\nX1,Y1 is bottom left hand corner and X2, Y2 is top right hand corner, values are incremented off of machine extents (X2 and Y2 must be negative!)");
-    ImGui::InputFloat4("Cutting Extents (X1, Y1, X2, Y2)", globals->machine_parameters.cutting_extents);
+    ImGui::InputFloat4("Cutting Extents (X1, Y1, X2, Y2)", globals->nc_control_view->machine_parameters.cutting_extents);
     ImGui::Separator();
     ImGui::Text("Scale is in steps per your desired units. E.G. To use machine in\nInches, set scales to steps per inch");
-    ImGui::InputFloat3("Axis Scale (X, Y, Z)", globals->machine_parameters.axis_scale);
+    ImGui::InputFloat3("Axis Scale (X, Y, Z)", globals->nc_control_view->machine_parameters.axis_scale);
     ImGui::Separator();
-    ImGui::Checkbox("Invert X", &globals->machine_parameters.axis_invert[0]);
+    ImGui::Checkbox("Invert X", &globals->nc_control_view->machine_parameters.axis_invert[0]);
     ImGui::SameLine();
-    ImGui::Checkbox("Invert Y1", &globals->machine_parameters.axis_invert[1]);
+    ImGui::Checkbox("Invert Y1", &globals->nc_control_view->machine_parameters.axis_invert[1]);
     ImGui::SameLine();
-    ImGui::Checkbox("Invert Y2", &globals->machine_parameters.axis_invert[2]);
+    ImGui::Checkbox("Invert Y2", &globals->nc_control_view->machine_parameters.axis_invert[2]);
     ImGui::SameLine();
-    ImGui::Checkbox("Invert Z", &globals->machine_parameters.axis_invert[3]);
+    ImGui::Checkbox("Invert Z", &globals->nc_control_view->machine_parameters.axis_invert[3]);
     ImGui::Separator();
     ImGui::Text("Each axis maximum allowable velocity in units per minute. E.g. Inch/Min or MM/MIN");
-    ImGui::InputFloat3("Max Velocity (X, Y, Z)", globals->machine_parameters.max_vel);
+    ImGui::InputFloat3("Max Velocity (X, Y, Z)", globals->nc_control_view->machine_parameters.max_vel);
     ImGui::Separator();
     ImGui::Text("Each axis maximum allowable acceleration in units per seconds squared");
-    ImGui::InputFloat3("Max Acceleration (X, Y, Z)", globals->machine_parameters.max_accel);
+    ImGui::InputFloat3("Max Acceleration (X, Y, Z)", globals->nc_control_view->machine_parameters.max_accel);
     ImGui::Separator();
     ImGui::Text("The distance the floating head moves off of it's gravity stop to where it closes the probe switch. Ohmic sensing should have 0.0000 value");
-    ImGui::InputFloat("Floating Head Takup", &globals->machine_parameters.floating_head_backlash);
+    ImGui::InputFloat("Floating Head Takup", &globals->nc_control_view->machine_parameters.floating_head_backlash);
     ImGui::Separator();
     ImGui::Text("Velocity in units per minute when probing the torch");
-    ImGui::InputFloat("Z Probe Feed", &globals->machine_parameters.z_probe_feedrate);
+    ImGui::InputFloat("Z Probe Feed", &globals->nc_control_view->machine_parameters.z_probe_feedrate);
     ImGui::Separator();
     ImGui::Text("The amount of time after motion starts after a probing cycle to consider the arc stabalized. This will affect Smart THC accuracy!");
-    ImGui::InputFloat("Arc Stabalization Time (ms)", &globals->machine_parameters.arc_stablization_time);
+    ImGui::InputFloat("Arc Stabalization Time (ms)", &globals->nc_control_view->machine_parameters.arc_stablization_time);
     ImGui::Spacing();
     if (ImGui::Button("OK"))
     {
@@ -227,12 +227,12 @@ void dialogs_thc_window()
     ImGui::Text("Smart THC mode automatically sets the \"set voltage\" that is measured shortly\nafter the torch pierces and moves negative to cut height.\n By doing this, the THC should maintain approximately\nthe same cut height as is set in the cutting parameters.");
     ImGui::BulletText("Smart THC Should not be used on thin materials that warp when the torch touches off!");
     ImGui::Separator();
-    ImGui::Checkbox("Turn on Auto THC Setting Mode", &globals->machine_parameters.smart_thc_on);
+    ImGui::Checkbox("Turn on Auto THC Setting Mode", &globals->nc_control_view->machine_parameters.smart_thc_on);
     ImGui::Separator();
     ImGui::Text("When Smart THC is off (Not Checked) the THC set voltage set below will be used");
     ImGui::Text("0 = THC OFF, Max value is 1024. Press Tab to manually enter a value");
     ImGui::Separator();
-    ImGui::SliderInt("Set Voltage", &globals->machine_parameters.thc_set_value, 0, 1024);
+    ImGui::SliderInt("Set Voltage", &globals->nc_control_view->machine_parameters.thc_set_value, 0, 1024);
     if (ImGui::Button("Close"))
     {
         dialogs_show_thc_window(false);

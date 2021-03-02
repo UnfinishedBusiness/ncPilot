@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <serial/serial.h>
+#include "../serial/serial.h"
 #include <EasyRender/EasyRender.h>
 #include <EasyRender/json/json.h>
 #include <EasyRender/logging/loguru.h>

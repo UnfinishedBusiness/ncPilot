@@ -1,5 +1,5 @@
 /*!
- * \file serial/impl/windows.h
+ * \file serial/impl/unix.h
  * \author  William Woodall <wjwwood@gmail.com>
  * \author  John Harrison <ash@greaterthaninfinity.com>
  * \version 0.1
@@ -30,27 +30,38 @@
  *
  * \section DESCRIPTION
  *
- * This provides a windows implementation of the Serial class interface.
+ * This provides a unix based pimpl for the Serial class. This implementation is
+ * based off termios.h and uses select for multiplexing the IO ports.
  *
  */
 
-#if defined(_WIN32)
+#if !defined(_WIN32)
 
-#ifndef SERIAL_IMPL_WINDOWS_H
-#define SERIAL_IMPL_WINDOWS_H
+#ifndef SERIAL_IMPL_UNIX_H
+#define SERIAL_IMPL_UNIX_H
 
-#include "serial/serial.h"
+#include "../serial.h"
 
-#include "windows.h"
+#include <pthread.h>
 
 namespace serial {
 
+using std::size_t;
 using std::string;
-using std::wstring;
 using std::invalid_argument;
 
 using serial::SerialException;
 using serial::IOException;
+
+class MillisecondTimer {
+public:
+  MillisecondTimer(const uint32_t millis);         
+  int64_t remaining();
+
+private:
+  static timespec timespec_now();
+  timespec expiry;
+};
 
 class serial::Serial::SerialImpl {
 public:
@@ -74,7 +85,7 @@ public:
 
   size_t
   available ();
-  
+
   bool
   waitReadable (uint32_t timeout);
 
@@ -181,13 +192,16 @@ protected:
   void reconfigurePort ();
 
 private:
-  wstring port_;               // Path to the file descriptor
-  HANDLE fd_;
+  string port_;               // Path to the file descriptor
+  int fd_;                    // The current file descriptor
 
   bool is_open_;
+  bool xonxoff_;
+  bool rtscts_;
 
   Timeout timeout_;           // Timeout for read operations
   unsigned long baudrate_;    // Baudrate
+  uint32_t byte_time_ns_;     // Nanoseconds to transmit/receive a single byte
 
   parity_t parity_;           // Parity
   bytesize_t bytesize_;       // Size of the bytes
@@ -195,13 +209,13 @@ private:
   flowcontrol_t flowcontrol_; // Flow Control
 
   // Mutex used to lock the read functions
-  HANDLE read_mutex;
+  pthread_mutex_t read_mutex;
   // Mutex used to lock the write functions
-  HANDLE write_mutex;
+  pthread_mutex_t write_mutex;
 };
 
 }
 
-#endif // SERIAL_IMPL_WINDOWS_H
+#endif // SERIAL_IMPL_UNIX_H
 
-#endif // if defined(_WIN32)
+#endif // !defined(_WIN32)

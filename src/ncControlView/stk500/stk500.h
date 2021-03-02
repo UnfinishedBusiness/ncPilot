@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <EasyRender/EasyRender.h> //For EasyRender::Millis()
-#include <serial/serial.h>
+#include "../serial/serial.h"
 #include "hex/hex.h"
 
 /* STK500 constants list, from AVRDUDE */
