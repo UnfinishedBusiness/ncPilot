@@ -2,6 +2,8 @@
 #define JET_CAM_VIEW_
 
 #include <application.h>
+#include "DXFParseAdaptor/DXFParseAdaptor.h"
+#include <dxf/dxflib/dl_dxf.h>
 
 class jetCamView{
     private:
@@ -15,6 +17,8 @@ class jetCamView{
         static void RenderUI(void *p);
 
         FILE *dxf_fp;
+        DL_Dxf *dl_dxf;
+        DXFParseAdaptor *DXFcreationInterface;
         bool DxfFileOpen(std::string filename);
         static bool DxfFileParseTimer(void *p);
         

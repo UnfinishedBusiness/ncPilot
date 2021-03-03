@@ -1,9 +1,9 @@
 /*
- * @file DXFParse_Class.cpp
+ * @file DXFParseAdaptor.cpp
  */
 
 /*****************************************************************************
-**  $Id: DXFParse_Class.cpp 8865 2008-02-04 18:54:02Z andrew $
+**  $Id: DXFParseAdaptor.cpp 8865 2008-02-04 18:54:02Z andrew $
 **
 **  This is part of the dxflib library
 **  Copyright (C) 2001 Andrew Mustun
@@ -21,18 +21,29 @@
 **  along with this program; if not, write to the Free Software
 **  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ******************************************************************************/
-#include "DXFParse_Class.h"
+#include "DXFParseAdaptor.h"
 
 /**
  * Default constructor.
  */
-DXFParse_Class::DXFParse_Class() {}
+DXFParseAdaptor::DXFParseAdaptor(void *easy_render_instance, void (*v)(PrimativeContainer *), void (*m)(PrimativeContainer*, nlohmann::json)) 
+{
+    this->current_layer = "default";
+    this->filename = "";
+    this->easy_render_instance = reinterpret_cast<EasyRender *>(easy_render_instance);
+    this->view_callback = v;
+    this->mouse_callback = m;
+}
 
-std::string current_layer  = "default";
+void DXFParseAdaptor::SetFilename(std::string f)
+{
+    this->filename = f;
+}
+
 /**
  * Sample implementation of the method which handles layers.
  */
-void DXFParse_Class::addLayer(const DL_LayerData& data) {
+void DXFParseAdaptor::addLayer(const DL_LayerData& data) {
     current_layer = data.name;
     //printf("LAYER: %s flags: %d\n", data.name.c_str(), data.flags);
     //printAttributes();
@@ -41,7 +52,7 @@ void DXFParse_Class::addLayer(const DL_LayerData& data) {
 /**
  * Sample implementation of the method which handles point entities.
  */
-void DXFParse_Class::addPoint(const DL_PointData& data) {
+void DXFParseAdaptor::addPoint(const DL_PointData& data) {
     /*printf("POINT    (%6.3f, %6.3f, %6.3f)\n",
            data.x, data.y, data.z);
     printAttributes();*/
@@ -50,62 +61,42 @@ void DXFParse_Class::addPoint(const DL_PointData& data) {
 /**
  * Sample implementation of the method which handles line entities.
  */
-void DXFParse_Class::addLine(const DL_LineData& data) {
-    nlohmann::json line;
-    line["layer"] = current_layer;
-    line["type"] = "line";
-    line["start"]["x"] = (double)data.x1;
-    line["start"]["y"] = (double)data.y1;
-    line["start"]["z"] = (double)data.z1;
-    line["end"]["x"] = (double)data.x2;
-    line["end"]["y"] = (double)data.y2;
-    line["end"]["z"] = (double)data.z2;
-    dxfJSON.push_back(line);
-    //printf("LINE     (%6.3f, %6.3f, %6.3f) (%6.3f, %6.3f, %6.3f)\n", data.x1, data.y1, data.z1, data.x2, data.y2, data.z2);
-    //printAttributes();
+void DXFParseAdaptor::addLine(const DL_LineData& data)
+{
+    EasyPrimative::Line *l = this->easy_render_instance->PushPrimative(new EasyPrimative::Line({data.x1, data.y1, data.z1}, {data.x2, data.y2, data.z2}));
+    l->properties->data["layer"] = this->current_layer;
+    l->properties->data["filename"] = this->filename;
+    l->properties->mouse_callback = this->mouse_callback;
+    l->properties->matrix_callback = this->view_callback;
 }
-void DXFParse_Class::addXLine(const DL_XLineData& data)
+void DXFParseAdaptor::addXLine(const DL_XLineData& data)
 {
     //printf("Adding XLine!\n");
 }
 /**
  * Sample implementation of the method which handles arc entities.
  */
-void DXFParse_Class::addArc(const DL_ArcData& data) {
-    nlohmann::json j;
-    j["layer"] = current_layer;
-    j["type"] = "arc";
-    j["center"]["x"] = (double)data.cx;
-    j["center"]["y"] = (double)data.cy;
-    j["center"]["z"] = (double)data.cz;
-    j["start_angle"] = (double)data.angle1;
-    j["end_angle"] = (double)data.angle2;
-    j["radius"] = (double)data.radius;
-    dxfJSON.push_back(j);
-    /*printf("ARC      (%6.3f, %6.3f, %6.3f) %6.3f, %6.3f, %6.3f\n",
-           data.cx, data.cy, data.cz,
-           data.radius, data.angle1, data.angle2);
-    printAttributes();*/
+void DXFParseAdaptor::addArc(const DL_ArcData& data)
+{
+    EasyPrimative::Arc *a = this->easy_render_instance->PushPrimative(new EasyPrimative::Arc({data.cx, data.cy, data.cz}, (float)data.radius, (float)data.angle1, (float)data.angle2));
+    a->properties->data["layer"] = this->current_layer;
+    a->properties->data["filename"] = this->filename;
+    a->properties->mouse_callback = this->mouse_callback;
+    a->properties->matrix_callback = this->view_callback;
 }
 
 /**
  * Sample implementation of the method which handles circle entities.
  */
-void DXFParse_Class::addCircle(const DL_CircleData& data) {
-    /*printf("CIRCLE   (%6.3f, %6.3f, %6.3f) %6.3f\n",
-           data.cx, data.cy, data.cz,
-           data.radius);
-    printAttributes();*/
-    nlohmann::json j;
-    j["layer"] = current_layer;
-    j["type"] = "circle";
-    j["center"]["x"] = (double)data.cx;
-    j["center"]["y"] = (double)data.cy;
-    j["center"]["z"] = (double)data.cz;
-    j["radius"] = (double)data.radius;
-    dxfJSON.push_back(j);
+void DXFParseAdaptor::addCircle(const DL_CircleData& data)
+{
+   EasyPrimative::Circle *c = this->easy_render_instance->PushPrimative(new EasyPrimative::Circle({data.cx, data.cy, data.cz}, (float)data.radius));
+    c->properties->data["layer"] = this->current_layer;
+    c->properties->data["filename"] = this->filename;
+    c->properties->mouse_callback = this->mouse_callback;
+    c->properties->matrix_callback = this->view_callback;
 }
-void DXFParse_Class::addEllipse(const DL_EllipseData& data)
+void DXFParseAdaptor::addEllipse(const DL_EllipseData& data)
 {
     //printf("Add Ellipse!\n");
 }
@@ -113,7 +104,7 @@ void DXFParse_Class::addEllipse(const DL_EllipseData& data)
 /**
  * Sample implementation of the method which handles polyline entities.
  */
-void DXFParse_Class::addPolyline(const DL_PolylineData& data) {
+void DXFParseAdaptor::addPolyline(const DL_PolylineData& data) {
     //printf("POLYLINE \n");
     //printf("flags: %d\n", (int)data.flags);
     //printAttributes();
@@ -138,7 +129,7 @@ void DXFParse_Class::addPolyline(const DL_PolylineData& data) {
 /**
  * Sample implementation of the method which handles vertices.
  */
-void DXFParse_Class::addVertex(const DL_VertexData& data) {
+void DXFParseAdaptor::addVertex(const DL_VertexData& data) {
     //printf("\tVERTEX   (%6.3f, %6.3f, %6.3f) %6.3f\n", data.x, data.y, data.z, data.bulge);
     //printAttributes();
     polyline_vertex_t vertex;
@@ -147,7 +138,7 @@ void DXFParse_Class::addVertex(const DL_VertexData& data) {
     vertex.bulge = data.bulge;
     current_polyline.points.push_back(vertex);
 }
-void DXFParse_Class::addSpline(const DL_SplineData& data)
+void DXFParseAdaptor::addSpline(const DL_SplineData& data)
 {
     //printf("Spline - %d, flags: %d\n", splines.size(), data.flags);
     /*for (int i = 31; i >= 0; i--)
@@ -175,7 +166,7 @@ void DXFParse_Class::addSpline(const DL_SplineData& data)
         current_spline.points.clear();
     }
 }
-void DXFParse_Class::addControlPoint(const DL_ControlPointData& data)
+void DXFParseAdaptor::addControlPoint(const DL_ControlPointData& data)
 {
     //printf("\tAdd control point!\n");
     double_point_t p;
@@ -183,19 +174,19 @@ void DXFParse_Class::addControlPoint(const DL_ControlPointData& data)
     p.y = data.y;
     current_spline.points.push_back(p);
 }
-void DXFParse_Class::addFitPoint(const DL_FitPointData& data)
+void DXFParseAdaptor::addFitPoint(const DL_FitPointData& data)
 {
     //printf("\tAdd fit point!\n");
 }
-void DXFParse_Class::addKnot(const DL_KnotData& data)
+void DXFParseAdaptor::addKnot(const DL_KnotData& data)
 {
     //printf("\tAdd knot!\n");
 }
-void DXFParse_Class::addRay(const DL_RayData& data)
+void DXFParseAdaptor::addRay(const DL_RayData& data)
 {
     //printf("\tAdd Ray!\n");
 }
-void DXFParse_Class::printAttributes() {
+void DXFParseAdaptor::printAttributes() {
     /*printf("  Attributes: Layer: %s, ", attributes.getLayer().c_str());
     printf(" Color: ");
     if (attributes.getColor()==256)	{

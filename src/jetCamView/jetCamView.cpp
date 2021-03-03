@@ -3,6 +3,8 @@
 #include <EasyRender/logging/loguru.h>
 #include <EasyRender/gui/imgui.h>
 #include <EasyRender/gui/ImGuiFileDialog.h>
+#include <dxf/dxflib/dl_dxf.h>
+#include "DXFParseAdaptor/DXFParseAdaptor.h"
 
 void jetCamView::ZoomEventCallback(nlohmann::json e)
 {
@@ -256,7 +258,10 @@ bool jetCamView::DxfFileOpen(std::string filename)
     this->dxf_fp = fopen(filename.c_str(), "rt");
     if (this->dxf_fp)
     {
-        globals->renderer->PushTimer(0, this->DxfFileParseTimer, this);   
+        this->dl_dxf = new DL_Dxf();
+        this->DXFcreationInterface = new DXFParseAdaptor(globals->renderer, &this->ViewMatrixCallback, &this->MouseEventCallback);
+        globals->renderer->PushTimer(0, this->DxfFileParseTimer, this);
+        LOG_F(INFO, "Parsing DXF File: %s", filename.c_str());  
         return true;
     }
     return false;
@@ -266,22 +271,20 @@ bool jetCamView::DxfFileParseTimer(void *p)
     jetCamView *self = reinterpret_cast<jetCamView *>(p);
     if (self != NULL)
     {
-        /*if (readDxfGroups(self->dxf_fp, creationInterface))
+        for (int x = 0; x < 500; x++)
         {
-            return true;
+            if (!self->dl_dxf->readDxfGroups(self->dxf_fp, self->DXFcreationInterface))
+            {
+                LOG_F(INFO, "Reached end of DXF File!");
+                fclose(self->dxf_fp);
+                delete self->DXFcreationInterface;
+                delete self->dl_dxf;
+                return false;
+            }
         }
-        else
-        {
-            fclose(self->dxf_fp);
-            return false;
-        }*/
-        LOG_F(INFO, "Timer with self pointer ran!");
-        return false;
+        return true;
     }
-    else
-    {
-        return false;
-    }
+    return false;
 }
 void jetCamView::PreInit()
 {

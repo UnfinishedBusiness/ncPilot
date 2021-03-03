@@ -22,8 +22,8 @@
 **  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ******************************************************************************/
 
-#ifndef DXFParse_Class_H
-#define DXFParse_Class_H
+#ifndef DXFParseAdaptor_
+#define DXFParseAdaptor_
 
 #include <EasyRender/EasyRender.h>
 #include <dxf/dxflib/dl_creationadapter.h>
@@ -50,9 +50,9 @@ struct spline_t{
     bool isClosed;
 };
 
-class DXFParse_Class : public DL_CreationAdapter {
+class DXFParseAdaptor : public DL_CreationAdapter {
 public:
-    DXFParse_Class();
+    DXFParseAdaptor(void *easy_render_pointer, void (*v)(PrimativeContainer *), void (*m)(PrimativeContainer*, nlohmann::json));
 
     virtual void addLayer(const DL_LayerData& data);
     virtual void addPoint(const DL_PointData& data);
@@ -72,9 +72,15 @@ public:
     virtual void addFitPoint(const DL_FitPointData& data);
     virtual void addKnot(const DL_KnotData& data);
 
-    void printAttributes();
+    EasyRender *easy_render_instance;
+    void (*view_callback)(PrimativeContainer *);
+    void (*mouse_callback)(PrimativeContainer*, nlohmann::json);
 
-    nlohmann::json dxfJSON;
+    void printAttributes();
+    void SetFilename(std::string f);
+
+    std::string current_layer;
+    std::string filename;
 
     std::vector<polyline_t> polylines;
     polyline_t current_polyline;
