@@ -84,7 +84,7 @@ void jetCamView::ViewMatrixCallback(PrimativeContainer *p)
 }
 void jetCamView::MouseEventCallback(PrimativeContainer* c,nlohmann::json e)
 {
-    LOG_F(INFO, "%s", e.dump().c_str());
+    //LOG_F(INFO, "%s", e.dump().c_str());
 }
 int last_hovered_items[2] = {-1, -1};
 void jetCamView::RenderUI(void *self_pointer)
@@ -275,6 +275,7 @@ bool jetCamView::DxfFileParseTimer(void *p)
         {
             if (!self->dl_dxf->readDxfGroups(self->dxf_fp, self->DXFcreationInterface))
             {
+                self->DXFcreationInterface->Finish();
                 LOG_F(INFO, "Reached end of DXF File!");
                 fclose(self->dxf_fp);
                 delete self->DXFcreationInterface;

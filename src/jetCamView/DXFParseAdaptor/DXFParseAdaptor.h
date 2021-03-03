@@ -78,6 +78,7 @@ public:
 
     void printAttributes();
     void SetFilename(std::string f);
+    void Finish();
 
     std::string current_layer;
     std::string filename;

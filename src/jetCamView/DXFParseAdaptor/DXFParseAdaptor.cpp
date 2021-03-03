@@ -22,6 +22,7 @@
 **  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ******************************************************************************/
 #include "DXFParseAdaptor.h"
+#include <dxf/spline/Bezier.h>
 
 /**
  * Default constructor.
@@ -38,6 +39,147 @@ DXFParseAdaptor::DXFParseAdaptor(void *easy_render_instance, void (*v)(Primative
 void DXFParseAdaptor::SetFilename(std::string f)
 {
     this->filename = f;
+}
+
+void DXFParseAdaptor::Finish()
+{
+    Geometry g = Geometry();
+    if (this->current_polyline.points.size() > 0)
+    {
+        this->polylines.push_back(this->current_polyline); //Push last polyline
+        this->current_polyline.points.clear();
+    }
+    if (this->current_spline.points.size() > 0)
+    {
+        this->splines.push_back(this->current_spline); //Push last spline
+        this->current_spline.points.clear();
+    }
+    for (int x = 0; x < this->splines.size(); x++)
+    {
+        std::vector<Point> pointList;
+        std::vector<Point> out;
+        Curve* curve = new Bezier();
+	    curve->set_steps(100);
+        for (int y = 0; y < this->splines[x].points.size(); y++)
+        {
+            curve->add_way_point(Vector(this->splines[x].points[y].x, this->splines[x].points[y].y, 0));
+        }
+        for (int i = 0; i < curve->node_count(); i++)
+        {
+            pointList.push_back(Point(curve->node(i).x, curve->node(i).y));
+        }
+        g.RamerDouglasPeucker(pointList, 0.003, out);
+        for (int i = 1; i < out.size(); i++)
+        {
+            this->addLine(DL_LineData((double)out[i-1].first, (double)out[i-1].second, 0, (double)out[i].first, (double)out[i].second, 0));
+        }
+        if (this->splines[x].isClosed == true)
+        {
+            this->addLine(DL_LineData((double)out[0].first, (double)out[0].second, 0, (double)out[curve->node_count()-1].first, (double)out[curve->node_count()-1].second, 0));
+        }
+        delete curve;
+    }
+    for (int x = 0; x < this->polylines.size(); x++)
+    {
+        for (int y = 0; y < this->polylines[x].points.size()-1; y++)
+        {
+            if (this->polylines[x].points[y].bulge != 0)
+            {
+                double_point_t bulgeStart;
+                bulgeStart.x = this->polylines[x].points[y].point.x;
+                bulgeStart.y = this->polylines[x].points[y].point.y;
+				double_point_t bulgeEnd;
+                bulgeEnd.x = this->polylines[x].points[y + 1].point.x;
+                bulgeEnd.y = this->polylines[x].points[y + 1].point.y;
+				double_point_t midpoint = g.midpoint(bulgeStart, bulgeEnd);
+				double distance = g.distance(bulgeStart, midpoint);
+				double sagitta = this->polylines[x].points[y].bulge * distance;
+
+                double_line_t bulgeLine = g.create_polar_line(midpoint, g.measure_polar_angle(bulgeStart, bulgeEnd) + 270, sagitta);
+                double_point_t arc_center = g.three_point_circle_center(bulgeStart, bulgeLine.end, bulgeEnd);
+                double arc_endAngle, arc_startAngle = 0;
+                if (sagitta > 0)
+                {
+                    arc_endAngle = g.measure_polar_angle(arc_center, bulgeEnd);
+                    arc_startAngle = g.measure_polar_angle(arc_center, bulgeStart);
+                }
+                else
+                {
+                    arc_endAngle = g.measure_polar_angle(arc_center, bulgeStart);
+                    arc_startAngle = g.measure_polar_angle(arc_center, bulgeEnd);
+                }
+                this->addArc(DL_ArcData((double)arc_center.x, (double)arc_center.y, 0, g.distance(arc_center, bulgeStart), arc_startAngle, arc_endAngle));
+            }
+            else
+            {
+                this->addLine(DL_LineData((double)this->polylines[x].points[y].point.x, (double)this->polylines[x].points[y].point.y, 0, (double)this->polylines[x].points[y+1].point.x, (double)this->polylines[x].points[y+1].point.y, 0));
+            }
+            
+        }
+        int shared = 0; //Assume we are not shared
+        double_point_t our_endpoint = this->polylines[x].points.back().point;
+        double_point_t our_startpoint = this->polylines[x].points.front().point;
+        for (std::vector<PrimativeContainer*>::iterator it = this->easy_render_instance->GetPrimativeStack()->begin(); it != this->easy_render_instance->GetPrimativeStack()->end(); ++it)
+        {
+            if ((*it)->properties->view == this->easy_render_instance->GetCurrentView())
+            {
+                if ((*it)->type == "line")
+                {
+                    if ((*it)->line->start.x == our_endpoint.x && (*it)->line->start.y == our_endpoint.y)
+                    {
+                        shared++;
+                    }
+                    if ((*it)->line->end.x == our_endpoint.x && (*it)->line->end.x == our_endpoint.y)
+                    {
+                        shared++;
+                    }
+                    if ((*it)->line->start.x == our_startpoint.x && (*it)->line->start.y == our_startpoint.y)
+                    {
+                        shared++;
+                    }
+                    if ((*it)->line->end.x == our_startpoint.x && (*it)->line->end.y == our_startpoint.y)
+                    {
+                        shared++;
+                    }
+                }
+                else if ((*it)->type == "arc")
+                {
+                    double_point_t center;
+                    center.x = (*it)->arc->center.x;
+                    center.y = (*it)->arc->center.y;
+                    double_point_t start_point = g.create_polar_line(center, (*it)->arc->start_angle, (*it)->arc->radius).end;
+                    double_point_t end_point = g.create_polar_line(center, (*it)->arc->end_angle, (*it)->arc->radius).end;
+                    if (start_point.x == our_endpoint.x && start_point.y == our_endpoint.y)
+                    {
+                        shared++;
+                    }
+                    if (end_point.x == our_endpoint.x && end_point.y == our_endpoint.y)
+                    {
+                        shared++;
+                    }
+                    if (start_point.x == our_startpoint.x && start_point.y == our_startpoint.y)
+                    {
+                        shared++;
+                    }
+                    if (end_point.x == our_startpoint.x && end_point.y == our_startpoint.y)
+                    {
+                        shared++;
+                    }
+                }
+            }
+        }
+        if (shared == 2)
+        {
+            /*DL_LineData data = DL_LineData();
+            data.x1 = (double)this->polylines[x].points.front().point.x;
+            data.y1 = (double)this->polylines[x].points.front().point.y;
+            data.z1 = 0;
+            data.x2 = (double)this->polylines[x].points.back().point.x;
+            data.y2 = (double)this->polylines[x].points.back().point.y;
+            data.z2 = 0;
+            this->addLine(data);*/
+        }
+    }
 }
 
 /**
