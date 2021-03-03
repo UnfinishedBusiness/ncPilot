@@ -12,7 +12,7 @@ class jetCamView{
         static void ZoomEventCallback(nlohmann::json e);
         static void ViewMatrixCallback(PrimativeContainer *p);
         static void MouseEventCallback(PrimativeContainer* c,nlohmann::json e);
-        static void RenderUI();
+        static void RenderUI(void *p);
 
         FILE *dxf_fp;
         bool DxfFileOpen(std::string filename);

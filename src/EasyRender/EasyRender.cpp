@@ -345,6 +345,19 @@ EasyRender::EasyRenderGui *EasyRender::PushGui(bool v, void (*c)())
     g->visable = v;
     g->callback = c;
     g->view = this->CurrentView;
+    g->self_pointer = NULL;
+    g->callback_with_self = NULL;
+    gui_stack.push_back(g);
+    return g;
+}
+EasyRender::EasyRenderGui *EasyRender::PushGui(bool v, void (*c)(void *p), void *s)
+{
+    EasyRender::EasyRenderGui *g = new EasyRender::EasyRenderGui;
+    g->visable = v;
+    g->callback = NULL;
+    g->view = this->CurrentView;
+    g->self_pointer = s;
+    g->callback_with_self = c;
     gui_stack.push_back(g);
     return g;
 }
@@ -589,6 +602,32 @@ void EasyRender::DumpJsonToFile(std::string filename, nlohmann::json j)
         LOG_F(ERROR, "(EasyRender::DumpJsonToFile) %s", e.what());
     }
 }
+std::string EasyRender::FileToString(std::string filename)
+{
+    std::ifstream f(filename);
+    if (f.is_open())
+    {
+        std::string s((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+        return s;
+    }
+    else
+    {
+        return "";
+    }
+}
+void EasyRender::StringToFile(std::string filename, std::string s)
+{
+    try
+    {
+        std::ofstream out(filename);
+        out << s;
+        out.close();
+    }
+    catch(const std::exception& e)
+    {
+        LOG_F(ERROR, "(EasyRender::StringToFile) %s", e.what());
+    }
+}
 void EasyRender::DeletePrimativesById(std::string id)
 {
     std::vector<PrimativeContainer*>::iterator it;
@@ -680,7 +719,20 @@ bool EasyRender::Poll(bool should_quit)
     {
         if (this->gui_stack[x]->visable == true && this->gui_stack[x]->view == this->CurrentView)
         {
-            this->gui_stack[x]->callback();
+            if (this->gui_stack[x]->self_pointer == NULL)
+            {
+                if (this->gui_stack[x]->callback != NULL)
+                {
+                    this->gui_stack[x]->callback();
+                }
+            }
+            else
+            {
+                if (this->gui_stack[x]->callback_with_self != NULL)
+                {
+                    this->gui_stack[x]->callback_with_self(this->gui_stack[x]->self_pointer);
+                }
+            }
         }
     }
     ImGui::Render();

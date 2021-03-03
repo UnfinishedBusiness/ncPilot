@@ -84,6 +84,8 @@ class EasyRender{
             std::string view;
             bool visable;
             void (*callback)();
+            void (*callback_with_self)(void *self);
+            void *self_pointer;
         };
         struct EasyRenderEvent{
             std::string view;
@@ -126,6 +128,7 @@ class EasyRender{
 
         /* Gui Creation */
         EasyRenderGui *PushGui(bool v, void (*c)());
+        EasyRenderGui *PushGui(bool v, void (*c)(void *p), void *s);
 
         /* Key Event Creation */
         void PushEvent(std::string key, std::string type, void (*callback)(nlohmann::json));
@@ -163,6 +166,8 @@ class EasyRender{
         /* File I/O */
         nlohmann::json ParseJsonFromFile(std::string filename);
         void DumpJsonToFile(std::string filename, nlohmann::json j);
+        std::string FileToString(std::string filename);
+        void StringToFile(std::string filename, std::string s);
 
         /* Primative Manipulators */
         void DeletePrimativesById(std::string id);

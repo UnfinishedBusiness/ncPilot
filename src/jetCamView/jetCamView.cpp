@@ -85,170 +85,171 @@ void jetCamView::MouseEventCallback(PrimativeContainer* c,nlohmann::json e)
     LOG_F(INFO, "%s", e.dump().c_str());
 }
 int last_hovered_items[2] = {-1, -1};
-void jetCamView::RenderUI()
+void jetCamView::RenderUI(void *self_pointer)
 {
-    if (ImGuiFileDialog::Instance()->Display("ImportPartDialog", ImGuiWindowFlags_NoCollapse, ImVec2(600, 500)))
+    jetCamView *self = reinterpret_cast<jetCamView *>(self_pointer);
+    if (self != NULL)
     {
-        if (ImGuiFileDialog::Instance()->IsOk())
+        if (ImGuiFileDialog::Instance()->Display("ImportPartDialog", ImGuiWindowFlags_NoCollapse, ImVec2(600, 500)))
         {
-            std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-            std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
-            LOG_F(INFO, "File Path: %s, File Path Name: %s", filePath.c_str(), filePathName.c_str());
-            std::ofstream out(globals->renderer->GetConfigDirectory() + "last_dxf_open_path.conf");
-            out << filePath;
-            out << "/";
-            out.close();
-        }
-        ImGuiFileDialog::Instance()->Close();
-    }
-    if (ImGui::BeginMainMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-        {
-            if (ImGui::MenuItem("Import Part", ""))
+            if (ImGuiFileDialog::Instance()->IsOk())
             {
-                LOG_F(INFO, "File->Open");
-                std::string path = ".";
-                std::ifstream f(globals->renderer->GetConfigDirectory() + "last_dxf_open_path.conf");
-                if (f.is_open())
+                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                LOG_F(INFO, "File Path: %s, File Path Name: %s", filePath.c_str(), filePathName.c_str());
+                globals->renderer->StringToFile(globals->renderer->GetConfigDirectory() + "last_dxf_open_path.conf", filePath + "/");
+                self->DxfFileOpen(filePathName);
+            }
+            ImGuiFileDialog::Instance()->Close();
+        }
+        if (ImGui::BeginMainMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("Import Part", ""))
                 {
-                    std::string p((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
-                    path = p;
-                }
-                ImGuiFileDialog::Instance()->OpenDialog("ImportPartDialog", "Choose File", ".dxf", path.c_str());
-            }
-            ImGui::Separator();
-            if (ImGui::MenuItem("Close", ""))
-            {
-                LOG_F(INFO, "Edit->Close");
-                globals->quit = true;
-            }
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Edit"))
-        {
-            if (ImGui::MenuItem("Preferences", ""))
-            {
-                LOG_F(INFO, "Edit->Preferences");
-            }
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Workbench"))
-        {
-            if (ImGui::MenuItem("Machine Control", ""))
-            {
-                LOG_F(INFO, "Workbench->Machine Control");
-                globals->nc_control_view->MakeActive();
-            }
-            ImGui::Separator();
-            if (ImGui::MenuItem("CAM Toolpaths", ""))
-            {
-                LOG_F(INFO, "Workbench->CAM Toolpaths");
-                globals->jet_cam_view->MakeActive();
-            }
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Help"))
-        {
-            if (ImGui::MenuItem("Dump Stack", ""))
-            {
-                LOG_F(INFO, "Help->Dump Stack");
-                globals->renderer->DumpJsonToFile("stack.json", globals->renderer->DumpPrimativeStack());
-            }
-            ImGui::Separator();
-            if (ImGui::MenuItem("Documentation", "")) 
-            {
-                LOG_F(INFO, "Help->Documentation");
-            }
-            ImGui::Separator();
-            if (ImGui::MenuItem("About", "")) 
-            {
-                LOG_F(INFO, "Help->About");
-            }
-            ImGui::EndMenu();
-        }
-        ImGui::EndMainMenuBar();
-    }
-    //ImGui::ShowDemoWindow();
-
-    ImGui::SetNextWindowPos(ImVec2(0, 0));
-    ImGui::SetNextWindowSize(ImVec2(300, globals->renderer->GetWindowSize().y));
-    ImGui::Begin("LeftPane", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
-        int hovered_items[2] = {-1, -1};
-        if (ImGui::BeginTable("parts_view_table", 1, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable | ImGuiTableFlags_Borders))
-        {
-            ImGui::TableSetupColumn("Parts Viewer");
-            ImGui::TableHeadersRow();
-            for (int row = 0; row < 4; row++)
-            {
-                ImGui::TableNextRow();
-                ImGui::TableSetColumnIndex(0);
-                if (ImGui::TreeNode(std::string("default " + std::to_string(row) + ".dxf").c_str()))
-                {
-                    for (int dup = 0; dup < 3; dup++)
+                    LOG_F(INFO, "File->Open");
+                    std::string path = ".";
+                    std::string p = globals->renderer->FileToString(globals->renderer->GetConfigDirectory() + "last_dxf_open_path.conf");
+                    if (p != "")
                     {
-                        ImGui::Text("duplicate %d", dup);
-                        if (ImGui::IsItemHovered())
-                        {
-                            hovered_items[0] = row;
-                            hovered_items[1] = dup;
-                        }
+                        path = p;
                     }
-                    ImGui::TreePop();
-                }
-                if (ImGui::IsItemHovered())
-                {
-                    hovered_items[0] = row;
-                }
-            }
-            ImGui::EndTable();
-            //ImGui::Text("Hovered master part: %d, duplicate: %d", hovered_items[0], hovered_items[1]);
-            if (hovered_items[0] != -1 || hovered_items[1] != -1)
-            {
-                last_hovered_items[0] = hovered_items[0];
-                last_hovered_items[1] = hovered_items[1];
-            }
-        }
-        if (ImGui::BeginPopupContextWindow())
-        {
-            if (ImGui::MenuItem("New Part"))
-            {
-            }
-            if (last_hovered_items[0] != -1 && last_hovered_items[1] == -1) //We are hovered over a master part
-            {
-                if (ImGui::MenuItem("Scale Part"))
-                {
-
-                }
-                if (ImGui::MenuItem("New Duplicate"))
-                {
-
+                    ImGuiFileDialog::Instance()->OpenDialog("ImportPartDialog", "Choose File", ".dxf", path.c_str());
                 }
                 ImGui::Separator();
-                if (ImGui::MenuItem("Show Duplicate Parts"))
+                if (ImGui::MenuItem("Close", ""))
                 {
-
+                    LOG_F(INFO, "Edit->Close");
+                    globals->quit = true;
                 }
-                if (ImGui::MenuItem("Hide Duplicate Parts"))
-                {
-
-                }
-                if (ImGui::MenuItem("Delete Master Part"))
-                {
-
-                }
+                ImGui::EndMenu();
             }
-            if (last_hovered_items[0] != -1 && last_hovered_items[1] != -1) //We are hovered over a master part
+            if (ImGui::BeginMenu("Edit"))
             {
-                ImGui::Separator();
-                if (ImGui::MenuItem("Delete Duplicate Part"))
+                if (ImGui::MenuItem("Preferences", ""))
                 {
+                    LOG_F(INFO, "Edit->Preferences");
+                }
+                ImGui::EndMenu();
+            }
+            if (ImGui::BeginMenu("Workbench"))
+            {
+                if (ImGui::MenuItem("Machine Control", ""))
+                {
+                    LOG_F(INFO, "Workbench->Machine Control");
+                    globals->nc_control_view->MakeActive();
+                }
+                ImGui::Separator();
+                if (ImGui::MenuItem("CAM Toolpaths", ""))
+                {
+                    LOG_F(INFO, "Workbench->CAM Toolpaths");
+                    globals->jet_cam_view->MakeActive();
+                }
+                ImGui::EndMenu();
+            }
+            if (ImGui::BeginMenu("Help"))
+            {
+                if (ImGui::MenuItem("Dump Stack", ""))
+                {
+                    LOG_F(INFO, "Help->Dump Stack");
+                    globals->renderer->DumpJsonToFile("stack.json", globals->renderer->DumpPrimativeStack());
+                }
+                ImGui::Separator();
+                if (ImGui::MenuItem("Documentation", "")) 
+                {
+                    LOG_F(INFO, "Help->Documentation");
+                }
+                ImGui::Separator();
+                if (ImGui::MenuItem("About", "")) 
+                {
+                    LOG_F(INFO, "Help->About");
+                }
+                ImGui::EndMenu();
+            }
+            ImGui::EndMainMenuBar();
+        }
+        //ImGui::ShowDemoWindow();
 
+        ImGui::SetNextWindowPos(ImVec2(0, 0));
+        ImGui::SetNextWindowSize(ImVec2(300, globals->renderer->GetWindowSize().y));
+        ImGui::Begin("LeftPane", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
+            int hovered_items[2] = {-1, -1};
+            if (ImGui::BeginTable("parts_view_table", 1, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable | ImGuiTableFlags_Borders))
+            {
+                ImGui::TableSetupColumn("Parts Viewer");
+                ImGui::TableHeadersRow();
+                for (int row = 0; row < 4; row++)
+                {
+                    ImGui::TableNextRow();
+                    ImGui::TableSetColumnIndex(0);
+                    if (ImGui::TreeNode(std::string("default " + std::to_string(row) + ".dxf").c_str()))
+                    {
+                        for (int dup = 0; dup < 3; dup++)
+                        {
+                            ImGui::Text("duplicate %d", dup);
+                            if (ImGui::IsItemHovered())
+                            {
+                                hovered_items[0] = row;
+                                hovered_items[1] = dup;
+                            }
+                        }
+                        ImGui::TreePop();
+                    }
+                    if (ImGui::IsItemHovered())
+                    {
+                        hovered_items[0] = row;
+                    }
+                }
+                ImGui::EndTable();
+                //ImGui::Text("Hovered master part: %d, duplicate: %d", hovered_items[0], hovered_items[1]);
+                if (hovered_items[0] != -1 || hovered_items[1] != -1)
+                {
+                    last_hovered_items[0] = hovered_items[0];
+                    last_hovered_items[1] = hovered_items[1];
                 }
             }
-            ImGui::EndPopup();
-        }
-    ImGui::End();
+            if (ImGui::BeginPopupContextWindow())
+            {
+                if (ImGui::MenuItem("New Part"))
+                {
+                }
+                if (last_hovered_items[0] != -1 && last_hovered_items[1] == -1) //We are hovered over a master part
+                {
+                    if (ImGui::MenuItem("Scale Part"))
+                    {
+
+                    }
+                    if (ImGui::MenuItem("New Duplicate"))
+                    {
+
+                    }
+                    ImGui::Separator();
+                    if (ImGui::MenuItem("Show Duplicate Parts"))
+                    {
+
+                    }
+                    if (ImGui::MenuItem("Hide Duplicate Parts"))
+                    {
+
+                    }
+                    if (ImGui::MenuItem("Delete Master Part"))
+                    {
+
+                    }
+                }
+                if (last_hovered_items[0] != -1 && last_hovered_items[1] != -1) //We are hovered over a master part
+                {
+                    ImGui::Separator();
+                    if (ImGui::MenuItem("Delete Duplicate Part"))
+                    {
+
+                    }
+                }
+                ImGui::EndPopup();
+            }
+        ImGui::End();
+    }
 }
 bool jetCamView::DxfFileOpen(std::string filename)
 {
@@ -294,7 +295,7 @@ void jetCamView::Init()
 
     globals->renderer->PushEvent("up", "scroll", &this->ZoomEventCallback);
     globals->renderer->PushEvent("down", "scroll", &this->ZoomEventCallback);
-    this->menu_bar = globals->renderer->PushGui(true, &this->RenderUI);
+    this->menu_bar = globals->renderer->PushGui(true, &this->RenderUI, this);
 
     this->material_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({0, 0}, globals->nc_control_view->machine_parameters.machine_extents[0], globals->nc_control_view->machine_parameters.machine_extents[1], 0));
     this->material_plane->properties->id = "material_plane";
@@ -304,8 +305,6 @@ void jetCamView::Init()
     this->material_plane->properties->color[2] = 0;
     this->material_plane->properties->matrix_callback = &this->ViewMatrixCallback;
     this->material_plane->properties->mouse_callback = &this->MouseEventCallback;
-
-    this->DxfFileOpen("test/Made in USA.dxf");
 }
 void jetCamView::Tick()
 {

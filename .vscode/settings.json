@@ -83,6 +83,9 @@
         "ranges": "cpp",
         "shared_mutex": "cpp",
         "stop_token": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "__tree": "cpp",
+        "forward_list": "cpp",
+        "unordered_set": "cpp"
     }
 }
