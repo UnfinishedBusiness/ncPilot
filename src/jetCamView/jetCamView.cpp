@@ -98,10 +98,6 @@ void jetCamView::RenderUI()
             out << filePath;
             out << "/";
             out.close();
-            /*if (gcode_open_file(filePathName))
-            {
-                globals->renderer->PushTimer(0, &gcode_parse_timer);
-            }*/
         }
         ImGuiFileDialog::Instance()->Close();
     }
@@ -229,15 +225,15 @@ void jetCamView::RenderUI()
 
                 }
                 ImGui::Separator();
-                if (ImGui::MenuItem("Show All Parts"))
+                if (ImGui::MenuItem("Show Duplicate Parts"))
                 {
 
                 }
-                if (ImGui::MenuItem("Hide All Parts"))
+                if (ImGui::MenuItem("Hide Duplicate Parts"))
                 {
 
                 }
-                if (ImGui::MenuItem("Delete All Parts"))
+                if (ImGui::MenuItem("Delete Master Part"))
                 {
 
                 }
@@ -254,10 +250,42 @@ void jetCamView::RenderUI()
         }
     ImGui::End();
 }
+bool jetCamView::DxfFileOpen(std::string filename)
+{
+    this->dxf_fp = fopen(filename.c_str(), "rt");
+    if (this->dxf_fp)
+    {
+        globals->renderer->PushTimer(0, this->DxfFileParseTimer, this);   
+        return true;
+    }
+    return false;
+}
+bool jetCamView::DxfFileParseTimer(void *p)
+{
+    jetCamView *self = reinterpret_cast<jetCamView *>(p);
+    if (self != NULL)
+    {
+        /*if (readDxfGroups(self->dxf_fp, creationInterface))
+        {
+            return true;
+        }
+        else
+        {
+            fclose(self->dxf_fp);
+            return false;
+        }*/
+        LOG_F(INFO, "Timer with self pointer ran!");
+        return false;
+    }
+    else
+    {
+        return false;
+    }
+}
 void jetCamView::PreInit()
 {
     this->preferences.background_color[0] = 4 / 255.0f;
-    this->preferences.background_color[1] = 17 / 255.0f;
+    this->preferences.background_color[1] = 17 / 255.0;
     this->preferences.background_color[2] = 60 / 255.0f;
 }
 void jetCamView::Init()
@@ -276,6 +304,8 @@ void jetCamView::Init()
     this->material_plane->properties->color[2] = 0;
     this->material_plane->properties->matrix_callback = &this->ViewMatrixCallback;
     this->material_plane->properties->mouse_callback = &this->MouseEventCallback;
+
+    this->DxfFileOpen("test/Made in USA.dxf");
 }
 void jetCamView::Tick()
 {

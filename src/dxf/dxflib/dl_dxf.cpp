@@ -65,6 +65,9 @@ DL_Dxf::DL_Dxf() {
     leaderVertices = NULL;
     maxLeaderVertices = 0;
     leaderVertexIndex = 0;
+
+    currentObjectType = DL_UNKNOWN;
+    firstCall = true;
 }
 
 

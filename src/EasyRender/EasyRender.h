@@ -50,6 +50,8 @@ class EasyRender{
             unsigned long timestamp;
             unsigned long intervol;
             bool (*callback)();
+            bool (*callback_with_self)(void *self);
+            void *self_pointer;
         };
         GLFWwindow* Window;
         unsigned long RenderPerformance;
@@ -120,6 +122,7 @@ class EasyRender{
 
         /* Timer Creation */
         void PushTimer(unsigned long intervol, bool (*c)());
+        void PushTimer(unsigned long intervol, bool (*c)(void*), void *s);
 
         /* Gui Creation */
         EasyRenderGui *PushGui(bool v, void (*c)());

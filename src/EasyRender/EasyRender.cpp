@@ -324,6 +324,19 @@ void EasyRender::PushTimer(unsigned long intervol, bool (*c)())
     t->timestamp = this->Millis();
     t->callback = c;
     t->view = this->CurrentView;
+    t->self_pointer = NULL;
+    t->callback_with_self = NULL;
+    timer_stack.push_back(t);
+}
+void EasyRender::PushTimer(unsigned long intervol, bool (*c)(void*), void *s)
+{
+    EasyRenderTimer *t = new EasyRenderTimer;
+    t->intervol = intervol;
+    t->timestamp = this->Millis();
+    t->callback = NULL;
+    t->view = this->CurrentView;
+    t->self_pointer = s;
+    t->callback_with_self = c;
     timer_stack.push_back(t);
 }
 EasyRender::EasyRenderGui *EasyRender::PushGui(bool v, void (*c)())
@@ -705,12 +718,26 @@ bool EasyRender::Poll(bool should_quit)
             if ((this->Millis() - this->timer_stack.at(x)->timestamp) > this->timer_stack.at(x)->intervol)
             {
                 this->timer_stack[x]->timestamp = this->Millis();
-                if (this->timer_stack[x]->callback != NULL)
+                if (this->timer_stack[x]->self_pointer == NULL)
                 {
-                    if (this->timer_stack[x]->callback() == false) //Don't repeat
+                    if (this->timer_stack[x]->callback != NULL)
                     {
-                        delete this->timer_stack[x];
-                        this->timer_stack.erase(this->timer_stack.begin()+x);
+                        if (this->timer_stack[x]->callback() == false) //Don't repeat
+                        {
+                            delete this->timer_stack[x];
+                            this->timer_stack.erase(this->timer_stack.begin()+x);
+                        }
+                    }
+                }
+                else
+                {
+                    if (this->timer_stack[x]->callback_with_self != NULL)
+                    {
+                        if (this->timer_stack[x]->callback_with_self(this->timer_stack[x]->self_pointer) == false) //Don't repeat
+                        {
+                            delete this->timer_stack[x];
+                            this->timer_stack.erase(this->timer_stack.begin()+x);
+                        }
                     }
                 }
             }

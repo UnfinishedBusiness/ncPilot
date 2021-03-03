@@ -13,13 +13,17 @@ class jetCamView{
         static void ViewMatrixCallback(PrimativeContainer *p);
         static void MouseEventCallback(PrimativeContainer* c,nlohmann::json e);
         static void RenderUI();
+
+        FILE *dxf_fp;
+        bool DxfFileOpen(std::string filename);
+        static bool DxfFileParseTimer(void *p);
         
     public:
         preferences_data_t preferences;
         EasyPrimative::Box *material_plane;
 
         jetCamView(){
-
+            dxf_fp = NULL;
         };
         void PreInit();
         void Init();
