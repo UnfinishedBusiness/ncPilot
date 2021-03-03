@@ -79,9 +79,11 @@ public:
     void printAttributes();
     void SetFilename(std::string f);
     void Finish();
+    void ExplodeArcToLines(double cx, double cy, double r, double start_angle, double end_angle, double num_segments);
 
     std::string current_layer;
     std::string filename;
+    nlohmann::json geometry_stack;
 
     std::vector<polyline_t> polylines;
     polyline_t current_polyline;

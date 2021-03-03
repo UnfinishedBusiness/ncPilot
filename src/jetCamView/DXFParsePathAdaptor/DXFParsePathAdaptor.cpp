@@ -2,6 +2,9 @@
 #include <dxf/spline/Bezier.h>
 #include <EasyRender/logging/loguru.h>
 
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
+
 /**
  * Default constructor.
  */
@@ -191,6 +194,54 @@ void DXFParsePathAdaptor::Finish()
             }
         }
     }
+    nlohmann::json chains = g.chainify(this->geometry_stack);
+    for (int x = 0; x < chains.size(); x++)
+    {
+        std::vector<double_point_t> raw_chain;
+        for (int i = 0; i < chains[x].size(); i++)
+        {
+            raw_chain.push_back({chains[x][i]["x"], chains[x][i]["y"]});
+        }
+        std::vector<double_point_t> simplfied = g.simplify(raw_chain, 0.003);
+        EasyPrimative::Path *p = this->easy_render_instance->PushPrimative(new EasyPrimative::Path(simplfied));
+        p->properties->data["layer"] = this->current_layer;
+        p->properties->data["filename"] = this->filename;
+        p->properties->mouse_callback = this->mouse_callback;
+        p->properties->matrix_callback = this->view_callback;
+    }
+}
+void DXFParsePathAdaptor::ExplodeArcToLines(double cx, double cy, double r, double start_angle, double end_angle, double num_segments)
+{
+    Geometry g;
+    std::vector<Point> pointList;
+	std::vector<Point> pointListOut; //List after simplification
+    double_point_t start;
+    double_point_t sweeper;
+    double_point_t end;
+    start.x = cx + (r * cosf((start_angle) * 3.1415926f / 180.0f));
+	start.y = cy + (r * sinf((start_angle) * 3.1415926f / 180.0f));
+    end.x = cx + (r * cosf((end_angle) * 3.1415926f / 180.0f));
+	end.y = cy + (r * sinf((end_angle) * 3.1415926 / 180.0f));
+    pointList.push_back(Point(start.x, start.y));
+    double diff = MAX(start_angle, end_angle) - MIN(start_angle, end_angle);
+	if (diff > 180) diff = 360 - diff;
+	double angle_increment = diff / num_segments;
+	double angle_pointer = start_angle + angle_increment;
+    for (int i = 0; i < num_segments; i++)
+	{
+		sweeper.x = cx + (r * cosf((angle_pointer) * 3.1415926f / 180.0f));
+		sweeper.y = cy + (r * sinf((angle_pointer) * 3.1415926f / 180.0f));
+		angle_pointer += angle_increment;
+        pointList.push_back(Point(sweeper.x, sweeper.y));
+	}
+    pointList.push_back(Point(end.x, end.y));
+    g.RamerDouglasPeucker(pointList, 0.0005, pointListOut);
+    nlohmann::json geometry_stack;
+    nlohmann::json line;
+    for(size_t i=1; i< pointListOut.size(); i++)
+	{
+        this->addLine(DL_LineData((double)pointListOut[i-1].first, (double)pointListOut[i-1].second, 0, (double)pointListOut[i].first, (double)pointListOut[i].second, 0));
+	}
 }
 
 void DXFParsePathAdaptor::addLayer(const DL_LayerData& data)
@@ -205,11 +256,13 @@ void DXFParsePathAdaptor::addPoint(const DL_PointData& data)
 
 void DXFParsePathAdaptor::addLine(const DL_LineData& data)
 {
-    EasyPrimative::Line *l = this->easy_render_instance->PushPrimative(new EasyPrimative::Line({data.x1, data.y1, data.z1}, {data.x2, data.y2, data.z2}));
-    l->properties->data["layer"] = this->current_layer;
-    l->properties->data["filename"] = this->filename;
-    l->properties->mouse_callback = this->mouse_callback;
-    l->properties->matrix_callback = this->view_callback;
+    nlohmann::json g;
+    g["type"] = "line";
+    g["start"]["x"] = data.x1;
+    g["start"]["y"] = data.y1;
+    g["end"]["x"] = data.x2;
+    g["end"]["y"] = data.y2;
+    this->geometry_stack.push_back(g);
 }
 void DXFParsePathAdaptor::addXLine(const DL_XLineData& data)
 {
@@ -218,20 +271,13 @@ void DXFParsePathAdaptor::addXLine(const DL_XLineData& data)
 
 void DXFParsePathAdaptor::addArc(const DL_ArcData& data)
 {
-    EasyPrimative::Arc *a = this->easy_render_instance->PushPrimative(new EasyPrimative::Arc({data.cx, data.cy, data.cz}, (float)data.radius, (float)data.angle1, (float)data.angle2));
-    a->properties->data["layer"] = this->current_layer;
-    a->properties->data["filename"] = this->filename;
-    a->properties->mouse_callback = this->mouse_callback;
-    a->properties->matrix_callback = this->view_callback;
+    this->ExplodeArcToLines(data.cx, data.cy, data.radius, data.angle1, data.angle2, 100);
 }
 
 void DXFParsePathAdaptor::addCircle(const DL_CircleData& data)
 {
-   EasyPrimative::Circle *c = this->easy_render_instance->PushPrimative(new EasyPrimative::Circle({data.cx, data.cy, data.cz}, (float)data.radius));
-    c->properties->data["layer"] = this->current_layer;
-    c->properties->data["filename"] = this->filename;
-    c->properties->mouse_callback = this->mouse_callback;
-    c->properties->matrix_callback = this->view_callback;
+    this->ExplodeArcToLines(data.cx, data.cy, data.radius, 0, 180, 100);
+    this->ExplodeArcToLines(data.cx, data.cy, data.radius, 180, 360, 100);
 }
 void DXFParsePathAdaptor::addEllipse(const DL_EllipseData& data)
 {
