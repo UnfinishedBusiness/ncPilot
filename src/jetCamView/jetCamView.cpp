@@ -38,49 +38,9 @@ void jetCamView::ZoomEventCallback(nlohmann::json e)
 }
 void jetCamView::ViewMatrixCallback(PrimativeContainer *p)
 {
-    if (p->type == "line")
-    {
-        p->properties->scale = globals->zoom;
-        p->properties->offset[0] = globals->pan.x + (globals->nc_control_view->machine_parameters.work_offset[0] * globals->zoom);
-        p->properties->offset[1] = globals->pan.y + (globals->nc_control_view->machine_parameters.work_offset[1] * globals->zoom);
-    }
-    if (p->type == "arc" || p->type == "circle")
-    {
-        if (p->properties->id == "torch_pointer")
-        {
-            p->properties->offset[0] = globals->pan.x;
-            p->properties->offset[1] = globals->pan.y;
-            p->properties->scale = globals->zoom;
-            p->circle->radius = 5.0f / globals->zoom;
-        }
-        else
-        {
-            p->properties->offset[0] = globals->pan.x;
-            p->properties->offset[1] = globals->pan.y;
-            p->properties->scale = globals->zoom;
-        }
-    }
-    if (p->type == "box")
-    {
-        p->properties->scale = globals->zoom;
-        p->properties->offset[0] = globals->pan.x;
-        p->properties->offset[1] = globals->pan.y;
-    }
-    if (p->type == "path")
-    {
-        if (p->properties->id == "gcode" || p->properties->id == "gcode_highlights")
-        {
-            p->properties->scale = globals->zoom;
-            p->properties->offset[0] = globals->pan.x + (globals->nc_control_view->machine_parameters.work_offset[0] * globals->zoom);
-            p->properties->offset[1] = globals->pan.y + (globals->nc_control_view->machine_parameters.work_offset[1] * globals->zoom);
-        }
-        if (p->properties->id == "gcode_arrows")
-        {
-            p->properties->scale = globals->zoom;
-            p->properties->offset[0] = globals->pan.x + (globals->nc_control_view->machine_parameters.work_offset[0] * globals->zoom);
-            p->properties->offset[1] = globals->pan.y + (globals->nc_control_view->machine_parameters.work_offset[1] * globals->zoom);
-        }
-    }
+    p->properties->scale = globals->zoom;
+    p->properties->offset[0] = globals->pan.x;
+    p->properties->offset[1] = globals->pan.y;
 }
 void jetCamView::MouseEventCallback(PrimativeContainer* c,nlohmann::json e)
 {

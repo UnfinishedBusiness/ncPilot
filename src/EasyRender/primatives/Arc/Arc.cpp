@@ -69,51 +69,35 @@ void EasyPrimative::Arc::process_mouse(float mpos_x, float mpos_y)
 }
 void EasyPrimative::Arc::render_arc(double cx, double cy, double radius, double start_angle, double end_angle)
 {
-    if ( (((MAX(start_angle, end_angle) - MIN(start_angle, end_angle)) / 360.0f) * (2 * 3.1415926f * radius)) > 8)
+    double num_segments = 50;
+    double_point_t start;
+    double_point_t sweeper;
+    double_point_t end;
+    double_point_t last_point;
+    start.x = cx + (radius * cosf((start_angle) * 3.1415926f / 180.0f));
+    start.y = cy + (radius * sinf((start_angle) * 3.1415926f / 180.0f));
+    end.x = cx + (radius * cosf((end_angle) * 3.1415926f / 180.0f));
+    end.y = cy + (radius * sinf((end_angle) * 3.1415926 / 180.0f));
+    double diff = MAX(start_angle, end_angle) - MIN(start_angle, end_angle);
+    if (diff > 180) diff = 360 - diff;
+    double angle_increment = diff / num_segments;
+    double angle_pointer = start_angle + angle_increment;
+    last_point = start;
+    for (int i = 0; i < num_segments; i++)
     {
-        double num_segments = 50;
-        double_point_t start;
-        double_point_t sweeper;
-        double_point_t end;
-        double_point_t last_point;
-        start.x = cx + (radius * cosf((start_angle) * 3.1415926f / 180.0f));
-        start.y = cy + (radius * sinf((start_angle) * 3.1415926f / 180.0f));
-        end.x = cx + (radius * cosf((end_angle) * 3.1415926f / 180.0f));
-        end.y = cy + (radius * sinf((end_angle) * 3.1415926 / 180.0f));
-        double diff = MAX(start_angle, end_angle) - MIN(start_angle, end_angle);
-        if (diff > 180) diff = 360 - diff;
-        double angle_increment = diff / num_segments;
-        double angle_pointer = start_angle + angle_increment;
-        last_point = start;
-        for (int i = 0; i < num_segments; i++)
-        {
-            sweeper.x = cx + (radius * cosf((angle_pointer) * 3.1415926f / 180.0f));
-            sweeper.y = cy + (radius * sinf((angle_pointer) * 3.1415926f / 180.0f));
-            angle_pointer += angle_increment;
-            glBegin(GL_LINES);
-                glVertex3f(last_point.x, last_point.y, 0);
-                glVertex3f(sweeper.x, sweeper.y, 0);
-            glEnd();
-            last_point = sweeper;
-        }
+        sweeper.x = cx + (radius * cosf((angle_pointer) * 3.1415926f / 180.0f));
+        sweeper.y = cy + (radius * sinf((angle_pointer) * 3.1415926f / 180.0f));
+        angle_pointer += angle_increment;
         glBegin(GL_LINES);
             glVertex3f(last_point.x, last_point.y, 0);
-            glVertex3f(end.x, end.y, 0);
+            glVertex3f(sweeper.x, sweeper.y, 0);
         glEnd();
+        last_point = sweeper;
     }
-    else
-    {
-        double_point_t start;
-        double_point_t end;
-        start.x = cx + (radius * cosf((start_angle) * 3.1415926f / 180.0f));
-        start.y = cy + (radius * sinf((start_angle) * 3.1415926f / 180.0f));
-        end.x = cx + (radius * cosf((end_angle) * 3.1415926f / 180.0f));
-        end.y = cy + (radius * sinf((end_angle) * 3.1415926 / 180.0f));
-        glBegin(GL_LINES);
-            glVertex3f(start.x, start.y, 0);
-            glVertex3f(end.x, end.y, 0);
-        glEnd();
-    }
+    glBegin(GL_LINES);
+        glVertex3f(last_point.x, last_point.y, 0);
+        glVertex3f(end.x, end.y, 0);
+    glEnd();
 }
 void EasyPrimative::Arc::render()
 {
