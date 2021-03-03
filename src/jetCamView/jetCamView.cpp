@@ -58,9 +58,10 @@ void jetCamView::RenderUI(void *self_pointer)
             {
                 std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
                 std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
-                LOG_F(INFO, "File Path: %s, File Path Name: %s", filePath.c_str(), filePathName.c_str());
+                std::string fileName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                LOG_F(INFO, "File Path: %s, File Path Name: %s, File Name: %s", filePath.c_str(), filePathName.c_str(), fileName.c_str());
                 globals->renderer->StringToFile(globals->renderer->GetConfigDirectory() + "last_dxf_open_path.conf", filePath + "/");
-                self->DxfFileOpen(filePathName);
+                self->DxfFileOpen(filePathName, fileName);
             }
             ImGuiFileDialog::Instance()->Close();
         }
@@ -141,18 +142,20 @@ void jetCamView::RenderUI(void *self_pointer)
             {
                 ImGui::TableSetupColumn("Parts Viewer");
                 ImGui::TableHeadersRow();
-                for (int row = 0; row < 4; row++)
+                for (int i = 0; i < self->parts_stack.size(); i++)
                 {
                     ImGui::TableNextRow();
                     ImGui::TableSetColumnIndex(0);
-                    if (ImGui::TreeNode(std::string("default " + std::to_string(row) + ".dxf").c_str()))
+                    ImGui::Checkbox(std::string("##" + self->parts_stack[i]->filename).c_str(), &self->parts_stack[i]->visable);
+                    ImGui::SameLine();
+                    if (ImGui::TreeNode(self->parts_stack[i]->filename.c_str()))
                     {
                         for (int dup = 0; dup < 3; dup++)
                         {
                             ImGui::Text("duplicate %d", dup);
                             if (ImGui::IsItemHovered())
                             {
-                                hovered_items[0] = row;
+                                hovered_items[0] = i;
                                 hovered_items[1] = dup;
                             }
                         }
@@ -160,7 +163,7 @@ void jetCamView::RenderUI(void *self_pointer)
                     }
                     if (ImGui::IsItemHovered())
                     {
-                        hovered_items[0] = row;
+                        hovered_items[0] = i;
                     }
                 }
                 ImGui::EndTable();
@@ -213,13 +216,19 @@ void jetCamView::RenderUI(void *self_pointer)
         ImGui::End();
     }
 }
-bool jetCamView::DxfFileOpen(std::string filename)
+bool jetCamView::DxfFileOpen(std::string filename, std::string name)
 {
     this->dxf_fp = fopen(filename.c_str(), "rt");
     if (this->dxf_fp)
     {
+        jetCamView::part_viewer_t *part = new jetCamView::part_viewer_t;
+        part->visable = false;
+        part->last_visable = part->visable;
+        part->filename = name;
+        this->parts_stack.push_back(part);
         this->dl_dxf = new DL_Dxf();
         this->DXFcreationInterface = new DXFParseAdaptor(globals->renderer, &this->ViewMatrixCallback, &this->MouseEventCallback);
+        this->DXFcreationInterface->SetFilename(part->filename);
         globals->renderer->PushTimer(0, this->DxfFileParseTimer, this);
         LOG_F(INFO, "Parsing DXF File: %s", filename.c_str());  
         return true;
@@ -236,7 +245,13 @@ bool jetCamView::DxfFileParseTimer(void *p)
             if (!self->dl_dxf->readDxfGroups(self->dxf_fp, self->DXFcreationInterface))
             {
                 self->DXFcreationInterface->Finish();
-                LOG_F(INFO, "Reached end of DXF File!");
+                for (int i = 0; i < self->parts_stack.size(); i++)
+                {
+                    if (self->parts_stack.at(i)->filename == self->DXFcreationInterface->filename)
+                    {
+                        self->SetPartVisable(i, true);
+                    }
+                }
                 fclose(self->dxf_fp);
                 delete self->DXFcreationInterface;
                 delete self->dl_dxf;
@@ -246,6 +261,25 @@ bool jetCamView::DxfFileParseTimer(void *p)
         return true;
     }
     return false;
+}
+void jetCamView::SetPartVisable(int i, bool v)
+{
+    if (this->parts_stack.size()+1 > i)
+    {
+        //LOG_F(INFO, "Setting part: %d to %d", i, (int)v);
+        this->parts_stack.at(i)->visable = v;
+        this->parts_stack.at(i)->last_visable = this->parts_stack.at(i)->visable;
+        for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
+        {
+            if ((*it)->properties->view == globals->renderer->GetCurrentView())
+            {
+                if ((*it)->properties->data["filename"] == this->parts_stack[i]->filename)
+                {
+                    (*it)->properties->visable = v;
+                }
+            }
+        }
+    }
 }
 void jetCamView::PreInit()
 {
@@ -272,7 +306,13 @@ void jetCamView::Init()
 }
 void jetCamView::Tick()
 {
-    
+    for (int i = 0; i < this->parts_stack.size(); i++)
+    {
+        if (this->parts_stack.at(i)->last_visable != this->parts_stack.at(i)->visable)
+        {
+            this->SetPartVisable(i, this->parts_stack[i]->visable);
+        }
+    }
 }
 void jetCamView::MakeActive()
 {
@@ -281,5 +321,9 @@ void jetCamView::MakeActive()
 }
 void jetCamView::Close()
 {
-    
+    for (int i = 0; i < this->parts_stack.size(); i++)
+    {
+        delete this->parts_stack.at(i);
+        this->parts_stack.erase(this->parts_stack.begin()+i);
+    }
 }

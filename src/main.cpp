@@ -68,6 +68,10 @@ int main(int argc, char **argv)
         {
             globals->nc_control_view->Tick();
         }
+        if (globals->renderer->GetCurrentView() == "jetCamView")
+        {
+            globals->jet_cam_view->Tick();
+        }
     }
     log_uptime();
     globals->renderer->Close();
