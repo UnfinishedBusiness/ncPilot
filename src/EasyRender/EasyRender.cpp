@@ -131,8 +131,55 @@ void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int actio
     EasyRender *self = reinterpret_cast<EasyRender *>(glfwGetWindowUserPointer(window));
     if (self != NULL)
     {
+        std::string event;
+        if (button == 0) //Left click
+        {
+            if (action == 0) //Up
+            {
+                event = "left_click_up";
+            }
+            else if (action == 1) //Down
+            {
+                event = "left_click_down";
+            }
+        }
+        else if (button == 1) //Right Click
+        {
+            if (action == 0) //Up
+            {
+                event = "right_click_up";
+            }
+            else if (action == 1) //Down
+            {
+                event = "right_click_down";
+            }
+        }
+        else if (button == 2) //Middle Click
+        {
+            if (action == 0) //Up
+            {
+                event = "middle_click_up";
+            }
+            else if (action == 1) //Down
+            {
+                event = "middle_click_down";
+            }
+        }
         if (!self->imgui_io->WantCaptureKeyboard || !self->imgui_io->WantCaptureMouse)
         {
+            for (size_t x = 0; x < self->event_stack.size(); x++)
+            {
+                if (self->event_stack.at(x)->view == self->CurrentView)
+                {
+                    if (self->event_stack.at(x)->type == event)
+                    {
+                        if (self->event_stack.at(x)->callback != NULL)
+                        {
+                            self->event_stack.at(x)->callback({{"event", event}});
+                        }
+                    }
+                }
+            }
             double_point_t m = self->GetWindowMousePosition();
             std::vector<PrimativeContainer*>::iterator it;
             for ( it = self->primative_stack.end(); it != self->primative_stack.begin(); )
@@ -144,40 +191,6 @@ void EasyRender::mouse_button_callback(GLFWwindow* window, int button, int actio
                     {
                         if ((*it)->properties->mouse_callback != NULL)
                         {
-                            std::string event;
-                            if (button == 0) //Left click
-                            {
-                                if (action == 0) //Up
-                                {
-                                    event = "left_click_up";
-                                }
-                                else if (action == 1) //Down
-                                {
-                                    event = "left_click_down";
-                                }
-                            }
-                            else if (button == 1) //Right Click
-                            {
-                                if (action == 0) //Up
-                                {
-                                    event = "right_click_up";
-                                }
-                                else if (action == 1) //Down
-                                {
-                                    event = "right_click_down";
-                                }
-                            }
-                            else if (button == 2) //Middle Click
-                            {
-                                if (action == 0) //Up
-                                {
-                                    event = "middle_click_up";
-                                }
-                                else if (action == 1) //Down
-                                {
-                                    event = "middle_click_down";
-                                }
-                            }
                             double_point_t matrix_mouse = m;
                             matrix_mouse.x = (matrix_mouse.x - (*it)->properties->offset[0]) / (*it)->properties->scale;
                             matrix_mouse.y = (matrix_mouse.y - (*it)->properties->offset[1]) / (*it)->properties->scale;

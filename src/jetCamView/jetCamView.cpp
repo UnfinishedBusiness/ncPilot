@@ -4,7 +4,7 @@
 #include <EasyRender/gui/imgui.h>
 #include <EasyRender/gui/ImGuiFileDialog.h>
 #include <dxf/dxflib/dl_dxf.h>
-#include "DXFParseAdaptor/DXFParseAdaptor.h"
+#include "DXFParsePathAdaptor/DXFParsePathAdaptor.h"
 
 void jetCamView::ZoomEventCallback(nlohmann::json e)
 {
@@ -45,6 +45,20 @@ void jetCamView::ViewMatrixCallback(PrimativeContainer *p)
 void jetCamView::MouseEventCallback(PrimativeContainer* c,nlohmann::json e)
 {
     //LOG_F(INFO, "%s", e.dump().c_str());
+    if (globals->jet_cam_view->CurrentTool == JETCAM_TOOL_CONTOUR)
+    {
+        if (c->type == "path")
+        {
+            if (e["event"] == "mouse_in")
+            {
+                globals->renderer->SetColorByName(c->properties->color, "light-green");
+            }
+            if (e["event"] == "mouse_out")
+            {
+                globals->renderer->SetColorByName(c->properties->color, "white");
+            }
+        }
+    }
 }
 int last_hovered_items[2] = {-1, -1};
 void jetCamView::RenderUI(void *self_pointer)
@@ -69,7 +83,7 @@ void jetCamView::RenderUI(void *self_pointer)
         {
             if (ImGui::BeginMenu("File"))
             {
-                if (ImGui::MenuItem("Import Part", ""))
+                if (ImGui::MenuItem("New Part", ""))
                 {
                     LOG_F(INFO, "File->Open");
                     std::string path = ".";
@@ -130,6 +144,9 @@ void jetCamView::RenderUI(void *self_pointer)
                 }
                 ImGui::EndMenu();
             }
+            ImGui::RadioButton("Contour Tool", &self->CurrentTool, 0); ImGui::SameLine();
+            ImGui::RadioButton("Nesting Tool", &self->CurrentTool, 1); ImGui::SameLine();
+            ImGui::RadioButton("Point Tool", &self->CurrentTool, 2);
             ImGui::EndMainMenuBar();
         }
         //ImGui::ShowDemoWindow();
@@ -150,9 +167,9 @@ void jetCamView::RenderUI(void *self_pointer)
                     ImGui::SameLine();
                     if (ImGui::TreeNode(self->parts_stack[i]->filename.c_str()))
                     {
-                        for (int dup = 0; dup < 3; dup++)
+                        for (int dup = 0; dup < self->parts_stack[i]->duplicates.size(); dup++)
                         {
-                            ImGui::Text("duplicate %d", dup);
+                            ImGui::Text("Duplicate %d", dup);
                             if (ImGui::IsItemHovered())
                             {
                                 hovered_items[0] = i;
@@ -174,33 +191,36 @@ void jetCamView::RenderUI(void *self_pointer)
                     last_hovered_items[1] = hovered_items[1];
                 }
             }
-            if (ImGui::BeginPopupContextWindow())
+            if (ImGui::BeginPopupContextWindow("right_click_menu"))
             {
                 if (ImGui::MenuItem("New Part"))
                 {
+                    LOG_F(INFO, "Right Click->New Part");
+                    std::string path = ".";
+                    std::string p = globals->renderer->FileToString(globals->renderer->GetConfigDirectory() + "last_dxf_open_path.conf");
+                    if (p != "")
+                    {
+                        path = p;
+                    }
+                    ImGuiFileDialog::Instance()->OpenDialog("ImportPartDialog", "Choose File", ".dxf", path.c_str());
                 }
                 if (last_hovered_items[0] != -1 && last_hovered_items[1] == -1) //We are hovered over a master part
                 {
                     if (ImGui::MenuItem("Scale Part"))
                     {
-
                     }
                     if (ImGui::MenuItem("New Duplicate"))
                     {
-
                     }
                     ImGui::Separator();
                     if (ImGui::MenuItem("Show Duplicate Parts"))
                     {
-
                     }
                     if (ImGui::MenuItem("Hide Duplicate Parts"))
                     {
-
                     }
                     if (ImGui::MenuItem("Delete Master Part"))
                     {
-
                     }
                 }
                 if (last_hovered_items[0] != -1 && last_hovered_items[1] != -1) //We are hovered over a master part
@@ -208,13 +228,29 @@ void jetCamView::RenderUI(void *self_pointer)
                     ImGui::Separator();
                     if (ImGui::MenuItem("Delete Duplicate Part"))
                     {
-
                     }
                 }
                 ImGui::EndPopup();
             }
         ImGui::End();
     }
+}
+void jetCamView::RenderProgressWindow(void *p)
+{
+    jetCamView *self = reinterpret_cast<jetCamView *>(p);
+    if (self != NULL)
+    {
+        ImGui::Begin("Progress", &self->ProgressWindowHandle->visable, ImGuiWindowFlags_AlwaysAutoResize);
+            ImGui::ProgressBar(self->ProgressWindowProgress, ImVec2(0.0f, 0.0f));
+            ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+            ImGui::Text("Progress");
+        ImGui::End();
+    }
+}
+void jetCamView::ShowProgressWindow(bool v)
+{
+    this->ProgressWindowProgress = 0.0;
+    this->ProgressWindowHandle->visable = true;
 }
 bool jetCamView::DxfFileOpen(std::string filename, std::string name)
 {
@@ -227,7 +263,7 @@ bool jetCamView::DxfFileOpen(std::string filename, std::string name)
         part->filename = name;
         this->parts_stack.push_back(part);
         this->dl_dxf = new DL_Dxf();
-        this->DXFcreationInterface = new DXFParseAdaptor(globals->renderer, &this->ViewMatrixCallback, &this->MouseEventCallback);
+        this->DXFcreationInterface = new DXFParsePathAdaptor(globals->renderer, &this->ViewMatrixCallback, &this->MouseEventCallback);
         this->DXFcreationInterface->SetFilename(part->filename);
         globals->renderer->PushTimer(0, this->DxfFileParseTimer, this);
         LOG_F(INFO, "Parsing DXF File: %s", filename.c_str());  
@@ -286,6 +322,7 @@ void jetCamView::PreInit()
     this->preferences.background_color[0] = 4 / 255.0f;
     this->preferences.background_color[1] = 17 / 255.0;
     this->preferences.background_color[2] = 60 / 255.0f;
+    this->RightClickedOverViewer = false;
 }
 void jetCamView::Init()
 {
@@ -294,7 +331,7 @@ void jetCamView::Init()
     globals->renderer->PushEvent("up", "scroll", &this->ZoomEventCallback);
     globals->renderer->PushEvent("down", "scroll", &this->ZoomEventCallback);
     this->menu_bar = globals->renderer->PushGui(true, &this->RenderUI, this);
-
+    this->ProgressWindowHandle = globals->renderer->PushGui(false, &this->RenderProgressWindow, this);
     this->material_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({0, 0}, globals->nc_control_view->machine_parameters.machine_extents[0], globals->nc_control_view->machine_parameters.machine_extents[1], 0));
     this->material_plane->properties->id = "material_plane";
     this->material_plane->properties->zindex = -20;
