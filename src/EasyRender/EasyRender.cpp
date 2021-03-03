@@ -1,8 +1,20 @@
-#include <stdio.h>
 #include <string.h>
 #include <chrono>
 #include <sys/time.h>
 #include <ctime>
+#include <stdio.h>
+#include <stdarg.h>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <sys/types.h>
+#include <dirent.h>
+#include <ftw.h>
+
 #include "EasyRender.h"
 #include "logging/loguru.h"
 #include "gui/imgui.h"
@@ -537,6 +549,32 @@ nlohmann::json EasyRender::DumpPrimativeStack()
         ++it;
     }
     return r;
+}
+nlohmann::json EasyRender::ParseJsonFromFile(std::string filename)
+{
+    std::ifstream json_file(filename);
+    if (json_file.is_open())
+    {
+        std::string json_string((std::istreambuf_iterator<char>(json_file)), std::istreambuf_iterator<char>());
+        return nlohmann::json::parse(json_string.c_str());
+    }
+    else
+    {
+        return NULL;
+    }
+}
+void EasyRender::DumpJsonToFile(std::string filename, nlohmann::json j)
+{
+    try
+    {
+        std::ofstream out(filename);
+        out << j.dump(4);
+        out.close();
+    }
+    catch(const std::exception& e)
+    {
+        LOG_F(ERROR, "(EasyRender::DumpJsonToFile) %s", e.what());
+    }
 }
 void EasyRender::DeletePrimativesById(std::string id)
 {

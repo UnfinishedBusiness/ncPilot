@@ -157,6 +157,10 @@ class EasyRender{
         /* Debugging */
         nlohmann::json DumpPrimativeStack();
 
+        /* File I/O */
+        nlohmann::json ParseJsonFromFile(std::string filename);
+        void DumpJsonToFile(std::string filename, nlohmann::json j);
+
         /* Primative Manipulators */
         void DeletePrimativesById(std::string id);
 

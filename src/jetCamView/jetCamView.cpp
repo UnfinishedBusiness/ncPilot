@@ -157,9 +157,7 @@ void jetCamView::RenderUI()
             if (ImGui::MenuItem("Dump Stack", ""))
             {
                 LOG_F(INFO, "Help->Dump Stack");
-                std::ofstream out("stack.json");
-                out << globals->renderer->DumpPrimativeStack().dump(4);
-                out.close();
+                globals->renderer->DumpJsonToFile("stack.json", globals->renderer->DumpPrimativeStack());
             }
             ImGui::Separator();
             if (ImGui::MenuItem("Documentation", "")) 
@@ -183,7 +181,7 @@ void jetCamView::RenderUI()
         int hovered_items[2] = {-1, -1};
         if (ImGui::BeginTable("parts_view_table", 1, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable | ImGuiTableFlags_Borders))
         {
-            ImGui::TableSetupColumn("Parts View");
+            ImGui::TableSetupColumn("Parts Viewer");
             ImGui::TableHeadersRow();
             for (int row = 0; row < 4; row++)
             {

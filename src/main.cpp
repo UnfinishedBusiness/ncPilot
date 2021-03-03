@@ -15,11 +15,9 @@ void log_uptime()
     unsigned long minutes=(m/(1000*60))%60;
     unsigned long hours=(m/(1000*60*60))%24;
     LOG_F(INFO, "Shutting down, Adding Uptime: %luh %lum %lus to total", hours, minutes, seconds);
-    std::ifstream uptime_file(globals->renderer->GetConfigDirectory() + "uptime.json");
-    if (uptime_file.is_open())
+    nlohmann::json uptime_json = globals->renderer->ParseJsonFromFile(globals->renderer->GetConfigDirectory() + "uptime.json");
+    if (uptime_json != NULL)
     {
-        std::string uptime_json_string((std::istreambuf_iterator<char>(uptime_file)), std::istreambuf_iterator<char>());
-        nlohmann::json uptime_json = nlohmann::json::parse(uptime_json_string.c_str());
         try
         {
             hours += (unsigned long)uptime_json["hours"];
@@ -31,14 +29,11 @@ void log_uptime()
             LOG_F(WARNING, "Error parsing uptime file!");
         }
     }
-    uptime_file.close();
     nlohmann::json uptime;
     uptime["hours"] = hours;
     uptime["minutes"] = minutes;
     uptime["seconds"] = seconds;
-    std::ofstream out(globals->renderer->GetConfigDirectory() + "uptime.json");
-    out << uptime.dump();
-    out.close();
+    globals->renderer->DumpJsonToFile(globals->renderer->GetConfigDirectory() + "uptime.json", uptime);
 }
 int main(int argc, char **argv)
 {

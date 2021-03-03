@@ -41,11 +41,9 @@ void ncControlView::zoom_event_handle(nlohmann::json e)
 
 void ncControlView::PreInit()
 {
-    std::ifstream preferences_file(globals->renderer->GetConfigDirectory() + "preferences.json");
-    if (preferences_file.is_open())
+    nlohmann::json preferences = globals->renderer->ParseJsonFromFile(globals->renderer->GetConfigDirectory() + "preferences.json");
+    if (preferences != NULL)
     {
-        std::string preference_json_string((std::istreambuf_iterator<char>(preferences_file)), std::istreambuf_iterator<char>());
-        nlohmann::json preferences = nlohmann::json::parse(preference_json_string.c_str());
         try
         {
             LOG_F(INFO, "Found %s!", std::string(globals->renderer->GetConfigDirectory() + "preferences.json").c_str());
@@ -82,11 +80,9 @@ void ncControlView::PreInit()
         this->preferences.window_size[1] = 600;
     }
 
-    std::ifstream json_file(globals->renderer->GetConfigDirectory() + "machine_parameters.json");
-    if (json_file.is_open())
+    nlohmann::json parameters = globals->renderer->ParseJsonFromFile(globals->renderer->GetConfigDirectory() + "machine_parameters.json");
+    if (parameters != NULL)
     {
-        std::string json_string((std::istreambuf_iterator<char>(json_file)), std::istreambuf_iterator<char>());
-        nlohmann::json parameters = nlohmann::json::parse(json_string.c_str());
         try
         {
             LOG_F(INFO, "Found %s!", std::string(globals->renderer->GetConfigDirectory() + "machine_parameters.json").c_str());
