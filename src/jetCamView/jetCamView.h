@@ -12,6 +12,7 @@ class jetCamView{
         };
         struct part_viewer_t{
             std::string filename;
+            std::string filepath;
             bool visable;
             bool last_visable;
             double_point_t position;

@@ -35,6 +35,23 @@ void DXFParsePathAdaptor::SetChainTolorance(double chain_tolorance)
 {
     this->chain_tolorance = chain_tolorance;
 }
+void DXFParsePathAdaptor::GetBoundingBox(nlohmann::json path_stack, double_point_t *bbox_min, double_point_t *bbox_max)
+{
+    bbox_max->x = -1000000;
+    bbox_max->y = -1000000;
+    bbox_min->x = 1000000;
+    bbox_min->y = 1000000;
+    for (nlohmann::json::iterator it = path_stack.begin(); it != path_stack.end(); ++it)
+    {
+        for (nlohmann::json::iterator path = (*it).begin(); path != (*it).end(); ++path)
+        {
+            if ((double)(*path)["x"] < bbox_min->x) bbox_min->x = (double)(*path)["x"];
+            if ((double)(*path)["x"] > bbox_max->x) bbox_max->x = (double)(*path)["x"];
+            if ((double)(*path)["y"] < bbox_min->y) bbox_min->y = (double)(*path)["y"];
+            if ((double)(*path)["y"] > bbox_max->y) bbox_max->y = (double)(*path)["y"];
+        }
+    }
+}
 void DXFParsePathAdaptor::Finish()
 {
     Geometry g = Geometry();
@@ -124,8 +141,8 @@ void DXFParsePathAdaptor::Finish()
             
         }
         int shared = 0; //Assume we are not shared
-        double_point_t our_endpoint = this->polylines[x].points.back().point;
-        double_point_t our_startpoint = this->polylines[x].points.front().point;
+        double_point_t our_endpoint = {this->polylines[x].points.back().point.x * this->scale, this->polylines[x].points.back().point.y * this->scale};
+        double_point_t our_startpoint = {this->polylines[x].points.front().point.x * this->scale, this->polylines[x].points.front().point.y * this->scale};
         for (nlohmann::json::iterator it = this->geometry_stack.begin(); it != this->geometry_stack.end(); ++it)
         {
             if ((*it)["type"] == "line")
@@ -186,12 +203,16 @@ void DXFParsePathAdaptor::Finish()
         }
     }
     nlohmann::json chains = g.chainify(this->geometry_stack, this->chain_tolorance);
+    double_point_t bb_min;
+    double_point_t bb_max;
+    this->GetBoundingBox(chains, &bb_min, &bb_max);
+    //LOG_F(INFO, "BB_MIN = (%.4f, %.4f) BB_MAX = (%.4f, %.4f)", bb_min.x, bb_min.y, bb_max.x, bb_max.y);
     for (int x = 0; x < chains.size(); x++)
     {
         std::vector<double_point_t> raw_chain;
         for (int i = 0; i < chains[x].size(); i++)
         {
-            raw_chain.push_back({chains[x][i]["x"], chains[x][i]["y"]});
+            raw_chain.push_back({((double)chains[x][i]["x"] - bb_min.x) - ((bb_max.x - bb_min.x) / 2), ((double)chains[x][i]["y"] - bb_min.y) - ((bb_max.y - bb_min.y) / 2)});
         }
         std::vector<double_point_t> simplfied = g.simplify(raw_chain, this->smoothing);
         EasyPrimative::Path *p = this->easy_render_instance->PushPrimative(new EasyPrimative::Path(simplfied));

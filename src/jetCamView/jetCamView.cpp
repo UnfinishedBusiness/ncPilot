@@ -261,10 +261,12 @@ bool jetCamView::DxfFileOpen(std::string filename, std::string name)
         part->visable = false;
         part->last_visable = part->visable;
         part->filename = name;
+        part->filepath = filename;
         this->parts_stack.push_back(part);
         this->dl_dxf = new DL_Dxf();
         this->DXFcreationInterface = new DXFParsePathAdaptor(globals->renderer, &this->ViewMatrixCallback, &this->MouseEventCallback);
         this->DXFcreationInterface->SetFilename(part->filename);
+        this->DXFcreationInterface->SetScaleFactor(1);
         globals->renderer->PushTimer(0, this->DxfFileParseTimer, this);
         LOG_F(INFO, "Parsing DXF File: %s", filename.c_str());  
         return true;
