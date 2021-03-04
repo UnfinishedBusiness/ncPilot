@@ -82,6 +82,8 @@ public:
     void SetSmoothing(double smoothing);
     void SetChainTolorance(double chain_tolorance);
     void GetBoundingBox(nlohmann::json path_stack, double_point_t *bbox_min, double_point_t *bbox_max);
+    bool CheckIfPointIsInsidePath(std::vector<double_point_t> path, double_point_t point);
+    bool CheckIfPathIsInsidePath(std::vector<double_point_t> path1, std::vector<double_point_t> path2);
     void Finish();
     void ExplodeArcToLines(double cx, double cy, double r, double start_angle, double end_angle, double num_segments);
 

@@ -15,7 +15,7 @@ DXFParsePathAdaptor::DXFParsePathAdaptor(void *easy_render_instance, void (*v)(P
     this->easy_render_instance = reinterpret_cast<EasyRender *>(easy_render_instance);
     this->view_callback = v;
     this->mouse_callback = m;
-    this->smoothing = 0.0005;
+    this->smoothing = 0.003;
     this->scale = 1.0;
     this->chain_tolorance = 0.001;
 }
@@ -51,6 +51,34 @@ void DXFParsePathAdaptor::GetBoundingBox(nlohmann::json path_stack, double_point
             if ((double)(*path)["y"] > bbox_max->y) bbox_max->y = (double)(*path)["y"];
         }
     }
+}
+bool DXFParsePathAdaptor::CheckIfPointIsInsidePath(std::vector<double_point_t> path, double_point_t point)
+{
+    size_t polyCorners = path.size();
+    size_t j = polyCorners-1;
+    bool oddNodes=false;
+    for (size_t i = 0; i < polyCorners; i++)
+    {
+        if (((path[i].y < point.y && path[j].y >= point.y)
+        ||   (path[j].y < point.y && path[i].y >= point.y))
+        &&  (path[i].x <= point.x || path[j].x <= point.x))
+        {
+            oddNodes^=(path[i].x + (point.y - path[i].y) / (path[j].y - path[i].y) * (path[j].x - path[i].x) < point.x);
+        }
+        j=i;
+    }
+    return oddNodes;
+}
+bool DXFParsePathAdaptor::CheckIfPathIsInsidePath(std::vector<double_point_t> path1, std::vector<double_point_t> path2)
+{
+    for (std::vector<double_point_t>::iterator it = path1.begin(); it != path1.end(); ++it)
+    {
+        if (this->CheckIfPointIsInsidePath(path2, (*it)))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 void DXFParsePathAdaptor::Finish()
 {
@@ -206,11 +234,11 @@ void DXFParsePathAdaptor::Finish()
     double_point_t bb_min;
     double_point_t bb_max;
     this->GetBoundingBox(chains, &bb_min, &bb_max);
-    //LOG_F(INFO, "BB_MIN = (%.4f, %.4f) BB_MAX = (%.4f, %.4f)", bb_min.x, bb_min.y, bb_max.x, bb_max.y);
-    for (int x = 0; x < chains.size(); x++)
+    for (size_t x = 0; x < chains.size(); x++)
     {
+        bool is_inside_contour = false;
         std::vector<double_point_t> raw_chain;
-        for (int i = 0; i < chains[x].size(); i++)
+        for (size_t i = 0; i < chains[x].size(); i++)
         {
             raw_chain.push_back({((double)chains[x][i]["x"] - bb_min.x) - ((bb_max.x - bb_min.x) / 2), ((double)chains[x][i]["y"] - bb_min.y) - ((bb_max.y - bb_min.y) / 2)});
         }
@@ -221,6 +249,39 @@ void DXFParsePathAdaptor::Finish()
         p->properties->mouse_callback = this->mouse_callback;
         p->properties->matrix_callback = this->view_callback;
         p->is_closed = false;
+    }
+    for (std::vector<PrimativeContainer*>::iterator it = this->easy_render_instance->GetPrimativeStack()->begin(); it != this->easy_render_instance->GetPrimativeStack()->end(); ++it)
+    {
+        if ((*it)->properties->view == this->easy_render_instance->GetCurrentView())
+        {
+            if ((*it)->type == "path")
+            {
+                std::vector<double_point_t> this_path = (*it)->path->points;
+                for (std::vector<PrimativeContainer*>::iterator it2 = this->easy_render_instance->GetPrimativeStack()->begin(); it2 != this->easy_render_instance->GetPrimativeStack()->end(); ++it2)
+                {
+                    if ((*it) != (*it2))
+                    {
+                        if ((*it2)->properties->view == this->easy_render_instance->GetCurrentView())
+                        {
+                            if ((*it2)->type == "path")
+                            {
+                                if (this->CheckIfPathIsInsidePath(this_path, (*it2)->path->points))
+                                {
+                                    this->easy_render_instance->SetColorByName((*it)->properties->color, "grey");
+                                    (*it)->properties->data["is_inside_contour"] = true;
+                                    break;
+                                }
+                                else
+                                {
+                                    this->easy_render_instance->SetColorByName((*it)->properties->color, "white");
+                                    (*it)->properties->data["is_inside_contour"] = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 void DXFParsePathAdaptor::ExplodeArcToLines(double cx, double cy, double r, double start_angle, double end_angle, double num_segments)

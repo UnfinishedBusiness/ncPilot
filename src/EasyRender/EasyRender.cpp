@@ -503,6 +503,7 @@ void EasyRender::SetColorByName(float *c, std::string color)
     }
     else
     {
+        LOG_F(WARNING, "(EasyRender::SetColorByName) Color \"%s\" not found, defaulting to white", color.c_str());
         c[0] = 255;
         c[1] = 255;
         c[2] = 255;

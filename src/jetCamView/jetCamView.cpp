@@ -55,7 +55,14 @@ void jetCamView::MouseEventCallback(PrimativeContainer* c,nlohmann::json e)
             }
             if (e["event"] == "mouse_out")
             {
-                globals->renderer->SetColorByName(c->properties->color, "white");
+                if (c->properties->data["is_inside_contour"] == true)
+                {
+                    globals->renderer->SetColorByName(c->properties->color, "grey");
+                }
+                else
+                {
+                    globals->renderer->SetColorByName(c->properties->color, "white");
+                }
             }
         }
     }
