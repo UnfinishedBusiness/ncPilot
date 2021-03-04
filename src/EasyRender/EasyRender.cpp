@@ -309,6 +309,13 @@ EasyPrimative::Path* EasyRender::PushPrimative(EasyPrimative::Path* p)
     primative_stack.push_back(c);
     return c->path;
 }
+EasyPrimative::Part* EasyRender::PushPrimative(EasyPrimative::Part* p)
+{  
+    PrimativeContainer *c = new PrimativeContainer(p);
+    c->properties->view = this->CurrentView;
+    primative_stack.push_back(c);
+    return c->part;
+}
 EasyPrimative::Arc* EasyRender::PushPrimative(EasyPrimative::Arc* a)
 {  
     PrimativeContainer *c = new PrimativeContainer(a);

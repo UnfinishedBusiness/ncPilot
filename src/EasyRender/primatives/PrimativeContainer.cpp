@@ -51,6 +51,18 @@ void PrimativeContainer::process_mouse(float mpos_x, float mpos_y)
             this->path->mouse_event = NULL;
         }
     }
+    if (this->type == "part")
+    {
+        this->part->process_mouse(mpos_x, mpos_y);
+        if (this->part->mouse_event != NULL)
+        {
+            if (this->part->properties->mouse_callback != NULL)
+            {
+                this->part->properties->mouse_callback(this, this->part->mouse_event);
+            }
+            this->part->mouse_event = NULL;
+        }
+    }
     if (this->type == "arc")
     {
         this->arc->process_mouse(mpos_x, mpos_y);
@@ -110,6 +122,10 @@ void PrimativeContainer::render()
     {
         this->path->render();
     }
+    if (this->type == "part")
+    {
+        this->part->render();
+    }
     if (this->type == "arc")
     {
         this->arc->render();
@@ -145,6 +161,11 @@ void PrimativeContainer::destroy()
         this->path->destroy();
         delete this->path;
     }
+    if (this->type == "part")
+    {
+        this->part->destroy();
+        delete this->part;
+    }
     if (this->type == "arc")
     {
         this->arc->destroy();
@@ -179,6 +200,10 @@ nlohmann::json PrimativeContainer::serialize()
     if (this->type == "path")
     {
         j = this->path->serialize();
+    }
+    if (this->type == "part")
+    {
+        j = this->part->serialize();
     }
     if (this->type == "arc")
     {

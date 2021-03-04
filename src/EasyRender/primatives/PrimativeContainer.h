@@ -15,6 +15,7 @@
 #include "Arc/Arc.h"
 #include "Circle/Circle.h"
 #include "Box/Box.h"
+#include "Part/Part.h"
 
 class PrimativeContainer{
     public:
@@ -27,6 +28,7 @@ class PrimativeContainer{
         EasyPrimative::Arc *arc;
         EasyPrimative::Circle *circle;
         EasyPrimative::Box *box;
+        EasyPrimative::Part *part;
 
         void process_mouse(float mpos_x, float mpos_y);
         void render();
@@ -57,6 +59,12 @@ class PrimativeContainer{
             path = p;
             this->type = path->get_type_name();
             properties = path->properties;
+        }
+        PrimativeContainer(EasyPrimative::Part *p)
+        {
+            part = p;
+            this->type = part->get_type_name();
+            properties = part->properties;
         }
         PrimativeContainer(EasyPrimative::Arc *a)
         {

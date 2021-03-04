@@ -234,57 +234,39 @@ void DXFParsePathAdaptor::Finish()
     double_point_t bb_min;
     double_point_t bb_max;
     this->GetBoundingBox(chains, &bb_min, &bb_max);
+    std::vector<EasyPrimative::Part::path_t> paths;
     for (size_t x = 0; x < chains.size(); x++)
     {
-        bool is_inside_contour = false;
-        std::vector<double_point_t> raw_chain;
+        EasyPrimative::Part::path_t path;
+        path.is_inside_contour = false;
+        path.is_closed = true;
+        this->easy_render_instance->SetColorByName(path.color, "white");
         for (size_t i = 0; i < chains[x].size(); i++)
         {
-            raw_chain.push_back({((double)chains[x][i]["x"] - bb_min.x) - ((bb_max.x - bb_min.x) / 2), ((double)chains[x][i]["y"] - bb_min.y) - ((bb_max.y - bb_min.y) / 2)});
+            path.points.push_back({((double)chains[x][i]["x"] - bb_min.x) - ((bb_max.x - bb_min.x) / 2), ((double)chains[x][i]["y"] - bb_min.y) - ((bb_max.y - bb_min.y) / 2)});
         }
-        std::vector<double_point_t> simplfied = g.simplify(raw_chain, this->smoothing);
-        EasyPrimative::Path *p = this->easy_render_instance->PushPrimative(new EasyPrimative::Path(simplfied));
-        p->properties->data["layer"] = this->current_layer;
-        p->properties->data["filename"] = this->filename;
-        p->properties->data["offset"]["x"] = 0.0000;
-        p->properties->data["offset"]["y"] = 0.0000;
-        p->properties->mouse_callback = this->mouse_callback;
-        p->properties->matrix_callback = this->view_callback;
-        p->is_closed = false;
+        paths.push_back(path);
     }
-    for (std::vector<PrimativeContainer*>::iterator it = this->easy_render_instance->GetPrimativeStack()->begin(); it != this->easy_render_instance->GetPrimativeStack()->end(); ++it)
+    for (size_t x = 0; x < paths.size(); x++)
     {
-        if ((*it)->properties->view == this->easy_render_instance->GetCurrentView())
+        for (size_t i = 0; i < paths.size(); i++)
         {
-            if ((*it)->type == "path")
+            if (i != x)
             {
-                std::vector<double_point_t> this_path = (*it)->path->points;
-                for (std::vector<PrimativeContainer*>::iterator it2 = this->easy_render_instance->GetPrimativeStack()->begin(); it2 != this->easy_render_instance->GetPrimativeStack()->end(); ++it2)
+                if (this->CheckIfPathIsInsidePath(paths[x].points, paths[i].points))
                 {
-                    if ((*it) != (*it2))
-                    {
-                        if ((*it2)->properties->view == this->easy_render_instance->GetCurrentView())
-                        {
-                            if ((*it2)->type == "path")
-                            {
-                                if (this->CheckIfPathIsInsidePath(this_path, (*it2)->path->points))
-                                {
-                                    this->easy_render_instance->SetColorByName((*it)->properties->color, "grey");
-                                    (*it)->properties->data["is_inside_contour"] = true;
-                                    break;
-                                }
-                                else
-                                {
-                                    this->easy_render_instance->SetColorByName((*it)->properties->color, "white");
-                                    (*it)->properties->data["is_inside_contour"] = false;
-                                }
-                            }
-                        }
-                    }
+                    paths[x].is_inside_contour = true;
+                    this->easy_render_instance->SetColorByName(paths[x].color, "grey");
+                    break;
                 }
             }
         }
     }
+    EasyPrimative::Part *p = this->easy_render_instance->PushPrimative(new EasyPrimative::Part(this->filename, paths));
+    p->control.smoothing = this->smoothing;
+    p->control.scale = this->scale;
+    p->properties->mouse_callback = this->mouse_callback;
+    p->properties->matrix_callback = this->view_callback;
 }
 void DXFParsePathAdaptor::ExplodeArcToLines(double cx, double cy, double r, double start_angle, double end_angle, double num_segments)
 {

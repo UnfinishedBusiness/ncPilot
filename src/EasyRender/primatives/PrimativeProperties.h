@@ -14,6 +14,7 @@ namespace EasyPrimative
     class Image;
     class Line;
     class Path;
+    class Part;
     class Text;
 };
 

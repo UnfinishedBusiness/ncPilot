@@ -121,6 +121,7 @@ class EasyRender{
         EasyPrimative::Arc* PushPrimative(EasyPrimative::Arc* i);
         EasyPrimative::Circle* PushPrimative(EasyPrimative::Circle* ci);
         EasyPrimative::Box* PushPrimative(EasyPrimative::Box* b);
+        EasyPrimative::Part* PushPrimative(EasyPrimative::Part* p);
 
         /* Timer Creation */
         void PushTimer(unsigned long intervol, bool (*c)());
