@@ -322,7 +322,7 @@ void jetCamView::PreInit()
     this->preferences.background_color[0] = 4 / 255.0f;
     this->preferences.background_color[1] = 17 / 255.0;
     this->preferences.background_color[2] = 60 / 255.0f;
-    this->RightClickedOverViewer = false;
+    this->CurrentTool = JETCAM_TOOL_CONTOUR;
 }
 void jetCamView::Init()
 {

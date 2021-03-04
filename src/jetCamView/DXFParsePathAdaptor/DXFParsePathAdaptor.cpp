@@ -15,13 +15,26 @@ DXFParsePathAdaptor::DXFParsePathAdaptor(void *easy_render_instance, void (*v)(P
     this->easy_render_instance = reinterpret_cast<EasyRender *>(easy_render_instance);
     this->view_callback = v;
     this->mouse_callback = m;
+    this->smoothing = 0.0005;
+    this->scale = 1.0;
+    this->chain_tolorance = 0.001;
 }
-
+void DXFParsePathAdaptor::SetScaleFactor(double scale)
+{
+    this->scale = scale;
+}
+void DXFParsePathAdaptor::SetSmoothing(double smoothing)
+{
+    this->smoothing = smoothing;
+}
 void DXFParsePathAdaptor::SetFilename(std::string f)
 {
     this->filename = f;
 }
-
+void DXFParsePathAdaptor::SetChainTolorance(double chain_tolorance)
+{
+    this->chain_tolorance = chain_tolorance;
+}
 void DXFParsePathAdaptor::Finish()
 {
     Geometry g = Geometry();
@@ -113,49 +126,27 @@ void DXFParsePathAdaptor::Finish()
         int shared = 0; //Assume we are not shared
         double_point_t our_endpoint = this->polylines[x].points.back().point;
         double_point_t our_startpoint = this->polylines[x].points.front().point;
-        for (std::vector<PrimativeContainer*>::iterator it = this->easy_render_instance->GetPrimativeStack()->begin(); it != this->easy_render_instance->GetPrimativeStack()->end(); ++it)
+        for (nlohmann::json::iterator it = this->geometry_stack.begin(); it != this->geometry_stack.end(); ++it)
         {
-            if ((*it)->properties->view == this->easy_render_instance->GetCurrentView())
+            if ((*it)["type"] == "line")
             {
-                if ((*it)->type == "line")
+                double_point_t start_point = {(*it)["start"]["x"], (*it)["start"]["y"]};
+                double_point_t end_point = {(*it)["end"]["x"], (*it)["end"]["y"]};
+                if (g.distance(start_point, our_endpoint) < this->chain_tolorance)
                 {
-                    if (g.distance((*it)->line->start, our_endpoint) < 0.0005)
-                    {
-                        shared++;
-                    }
-                    if (g.distance((*it)->line->start, our_startpoint) < 0.0005)
-                    {
-                        shared++;
-                    }
-                    if (g.distance((*it)->line->end, our_startpoint) < 0.0005)
-                    {
-                        shared++;
-                    }
-                    if (g.distance((*it)->line->end, our_endpoint) < 0.0005)
-                    {
-                        shared++;
-                    }
+                    shared++;
                 }
-                else if ((*it)->type == "arc")
+                if (g.distance(start_point, our_startpoint) < this->chain_tolorance)
                 {
-                    double_point_t start_point = g.create_polar_line((*it)->arc->center, (*it)->arc->start_angle, (*it)->arc->radius).end;
-                    double_point_t end_point = g.create_polar_line((*it)->arc->center, (*it)->arc->end_angle, (*it)->arc->radius).end;
-                    if (g.distance(start_point, our_startpoint) < 0.0005)
-                    {
-                        shared++;
-                    }
-                    if (g.distance(start_point, our_endpoint) < 0.0005)
-                    {
-                        shared++;
-                    }
-                    if (g.distance(end_point, our_startpoint) < 0.0005)
-                    {
-                        shared++;
-                    }
-                    if (g.distance(end_point, our_endpoint) < 0.0005)
-                    {
-                        shared++;
-                    }
+                    shared++;
+                }
+                if (g.distance(end_point, our_startpoint) < this->chain_tolorance)
+                {
+                    shared++;
+                }
+                if (g.distance(end_point, our_endpoint) < this->chain_tolorance)
+                {
+                    shared++;
                 }
             }
         }
@@ -194,7 +185,7 @@ void DXFParsePathAdaptor::Finish()
             }
         }
     }
-    nlohmann::json chains = g.chainify(this->geometry_stack);
+    nlohmann::json chains = g.chainify(this->geometry_stack, this->chain_tolorance);
     for (int x = 0; x < chains.size(); x++)
     {
         std::vector<double_point_t> raw_chain;
@@ -202,12 +193,13 @@ void DXFParsePathAdaptor::Finish()
         {
             raw_chain.push_back({chains[x][i]["x"], chains[x][i]["y"]});
         }
-        std::vector<double_point_t> simplfied = g.simplify(raw_chain, 0.003);
+        std::vector<double_point_t> simplfied = g.simplify(raw_chain, this->smoothing);
         EasyPrimative::Path *p = this->easy_render_instance->PushPrimative(new EasyPrimative::Path(simplfied));
         p->properties->data["layer"] = this->current_layer;
         p->properties->data["filename"] = this->filename;
         p->properties->mouse_callback = this->mouse_callback;
         p->properties->matrix_callback = this->view_callback;
+        p->is_closed = false;
     }
 }
 void DXFParsePathAdaptor::ExplodeArcToLines(double cx, double cy, double r, double start_angle, double end_angle, double num_segments)
@@ -236,8 +228,6 @@ void DXFParsePathAdaptor::ExplodeArcToLines(double cx, double cy, double r, doub
 	}
     pointList.push_back(Point(end.x, end.y));
     g.RamerDouglasPeucker(pointList, 0.0005, pointListOut);
-    nlohmann::json geometry_stack;
-    nlohmann::json line;
     for(size_t i=1; i< pointListOut.size(); i++)
 	{
         this->addLine(DL_LineData((double)pointListOut[i-1].first, (double)pointListOut[i-1].second, 0, (double)pointListOut[i].first, (double)pointListOut[i].second, 0));
@@ -258,10 +248,10 @@ void DXFParsePathAdaptor::addLine(const DL_LineData& data)
 {
     nlohmann::json g;
     g["type"] = "line";
-    g["start"]["x"] = data.x1;
-    g["start"]["y"] = data.y1;
-    g["end"]["x"] = data.x2;
-    g["end"]["y"] = data.y2;
+    g["start"]["x"] = data.x1 * scale;
+    g["start"]["y"] = data.y1 * scale;
+    g["end"]["x"] = data.x2 * scale;
+    g["end"]["y"] = data.y2 * scale;
     this->geometry_stack.push_back(g);
 }
 void DXFParsePathAdaptor::addXLine(const DL_XLineData& data)

@@ -46,7 +46,6 @@ class jetCamView{
         void SetPartVisable(int i, bool v);
         
     public:
-        bool RightClickedOverViewer;
 
         preferences_data_t preferences;
         EasyPrimative::Box *material_plane;

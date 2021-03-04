@@ -83,7 +83,7 @@ class Geometry{
             Inputs a "normalized" (meaning only line segments) stack of entities and vectors them aka chaining
             Returns an array of contours
         */
-        nlohmann::json chainify(nlohmann::json geometry_stack);
+        nlohmann::json chainify(nlohmann::json geometry_stack, double tolorance);
 
         /*
             Offset contour

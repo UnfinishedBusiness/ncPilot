@@ -187,7 +187,7 @@ double_point_t Geometry::mirror_point(double_point_t point, double_line_t line)
     y = b * (p.x - p0.x) - a * (p.y - p0.y) + p0.y;
     return { x, y };
 }
-nlohmann::json Geometry::chainify(nlohmann::json geometry_stack)
+nlohmann::json Geometry::chainify(nlohmann::json geometry_stack, double tolorance)
 {
     nlohmann::json contours;
     std::vector<double_line_t> haystack;
@@ -228,7 +228,7 @@ nlohmann::json Geometry::chainify(nlohmann::json geometry_stack)
             {
                 p2.x = haystack[x].start.x;
                 p2.y = haystack[x].start.y;
-                if (this->points_match(p1, p2))
+                if (this->distance(p1, p2) < tolorance)
                 {
                     point["x"] = haystack[x].end.x;
                     point["y"] = haystack[x].end.y;
@@ -239,7 +239,7 @@ nlohmann::json Geometry::chainify(nlohmann::json geometry_stack)
                 }
                 p2.x = haystack[x].end.x;
                 p2.y = haystack[x].end.y;
-                if (this->points_match(p1, p2))
+                if (this->distance(p1, p2) < tolorance)
                 {
                     point["x"] = haystack[x].start.x;
                     point["y"] = haystack[x].start.y;
