@@ -246,6 +246,8 @@ void DXFParsePathAdaptor::Finish()
         EasyPrimative::Path *p = this->easy_render_instance->PushPrimative(new EasyPrimative::Path(simplfied));
         p->properties->data["layer"] = this->current_layer;
         p->properties->data["filename"] = this->filename;
+        p->properties->data["offset"]["x"] = 0.0000;
+        p->properties->data["offset"]["y"] = 0.0000;
         p->properties->mouse_callback = this->mouse_callback;
         p->properties->matrix_callback = this->view_callback;
         p->is_closed = false;

@@ -42,6 +42,55 @@ void jetCamView::ViewMatrixCallback(PrimativeContainer *p)
     p->properties->offset[0] = globals->pan.x;
     p->properties->offset[1] = globals->pan.y;
 }
+void jetCamView::MouseCallback(nlohmann::json e)
+{
+    //LOG_F(INFO, "%s", e.dump().c_str());
+    if (!globals->renderer->imgui_io->WantCaptureKeyboard || !globals->renderer->imgui_io->WantCaptureMouse)
+    {
+        if (e["event"] == "left_click_up")
+        {
+            globals->jet_cam_view->left_click_state = false;
+        }
+        if (e["event"] == "left_click_down")
+        {
+            globals->jet_cam_view->left_click_state = true;
+        }
+        if (e["event"] == "mouse_move")
+        {
+            float light_green[4];
+            globals->renderer->SetColorByName(light_green, "light-green");
+            double_point_t mouse_drag = { (double)e["pos"]["x"] - globals->jet_cam_view->last_mouse_click_position.x, (double)e["pos"]["y"] - globals->jet_cam_view->last_mouse_click_position.y };
+            if (globals->jet_cam_view->CurrentTool == JETCAM_TOOL_NESTING)
+            {
+                if (globals->jet_cam_view->left_click_state == true)
+                {
+                    //LOG_F(INFO, "Dragging mouse!");
+                    for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
+                    {
+                        if ((*it)->properties->view == globals->renderer->GetCurrentView())
+                        {
+                            
+                            if (light_green[0] == (*it)->properties->color[0] && light_green[1] == (*it)->properties->color[1] && light_green[2] == (*it)->properties->color[2])
+                            {
+                                //LOG_F(INFO, "Moving (%.4f, %.4f)", mouse_drag.x, mouse_drag.y);
+                                for (std::vector<double_point_t>::iterator p = (*it)->path->points.begin(); p != (*it)->path->points.end(); ++p)
+                                {
+                                    (*p).x += (mouse_drag.x / globals->zoom);
+                                    (*p).y += (mouse_drag.y / globals->zoom);
+                                }
+                            }
+                        }
+                    }
+                }   
+            }
+            globals->jet_cam_view->last_mouse_click_position = { (double)e["pos"]["x"], (double)e["pos"]["y"] };
+        }
+    }
+    else
+    {
+        globals->jet_cam_view->left_click_state = false;
+    }
+}
 void jetCamView::MouseEventCallback(PrimativeContainer* c,nlohmann::json e)
 {
     //LOG_F(INFO, "%s", e.dump().c_str());
@@ -62,6 +111,45 @@ void jetCamView::MouseEventCallback(PrimativeContainer* c,nlohmann::json e)
                 else
                 {
                     globals->renderer->SetColorByName(c->properties->color, "white");
+                }
+            }
+        }
+    }
+    if (globals->jet_cam_view->CurrentTool == JETCAM_TOOL_NESTING)
+    {
+        if (c->type == "path")
+        {
+            if (e["event"] == "mouse_in")
+            {
+                for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
+                {
+                    if ((*it)->properties->view == globals->renderer->GetCurrentView())
+                    {
+                        if ((*it)->properties->data["filename"] == c->properties->data["filename"])
+                        {
+                            globals->renderer->SetColorByName((*it)->properties->color, "light-green");
+                        }
+                    }
+                }
+            }
+            if (e["event"] == "mouse_out")
+            {
+                for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
+                {
+                    if ((*it)->properties->view == globals->renderer->GetCurrentView())
+                    {
+                        if ((*it)->properties->data["filename"] == c->properties->data["filename"])
+                        {
+                            if ((*it)->properties->data["is_inside_contour"] == true)
+                            {
+                                globals->renderer->SetColorByName((*it)->properties->color, "grey");
+                            }
+                            else
+                            {
+                                globals->renderer->SetColorByName((*it)->properties->color, "white");
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -332,13 +420,18 @@ void jetCamView::PreInit()
     this->preferences.background_color[1] = 17 / 255.0;
     this->preferences.background_color[2] = 60 / 255.0f;
     this->CurrentTool = JETCAM_TOOL_CONTOUR;
+    this->left_click_state = false;
 }
 void jetCamView::Init()
 {
     globals->renderer->SetCurrentView("jetCamView");
-
     globals->renderer->PushEvent("up", "scroll", &this->ZoomEventCallback);
     globals->renderer->PushEvent("down", "scroll", &this->ZoomEventCallback);
+    globals->renderer->PushEvent("none", "left_click_up", &this->MouseCallback);
+    globals->renderer->PushEvent("none", "left_click_down", &this->MouseCallback);
+    globals->renderer->PushEvent("none", "right_click_up", &this->MouseCallback);
+    globals->renderer->PushEvent("none", "right_click_down", &this->MouseCallback);
+    globals->renderer->PushEvent("none", "mouse_move", &this->MouseCallback);
     this->menu_bar = globals->renderer->PushGui(true, &this->RenderUI, this);
     this->ProgressWindowHandle = globals->renderer->PushGui(false, &this->RenderProgressWindow, this);
     this->material_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({0, 0}, globals->nc_control_view->machine_parameters.machine_extents[0], globals->nc_control_view->machine_parameters.machine_extents[1], 0));

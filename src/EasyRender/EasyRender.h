@@ -67,7 +67,6 @@ class EasyRender{
         char* GuiLogFileName;
         std::string MainLogFileName;
         std::string GuiStyle;
-        ImGuiIO *imgui_io;
         std::string CurrentView;
 
         std::vector<PrimativeContainer *> primative_stack;
@@ -80,6 +79,7 @@ class EasyRender{
         static void window_size_callback(GLFWwindow* window, int width, int height);
 
     public:
+        ImGuiIO *imgui_io;
         struct EasyRenderGui{
             std::string view;
             bool visable;

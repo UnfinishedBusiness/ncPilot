@@ -255,7 +255,7 @@ void EasyRender::cursor_position_callback(GLFWwindow* window, double xpos, doubl
             {
                 if (self->event_stack.at(x)->type == "mouse_move")
                 {
-                    self->event_stack.at(x)->callback({{"pos",{{"x", m.x},{"y", m.y}}}});
+                    self->event_stack.at(x)->callback({{"event", "mouse_move"}, {"pos",{{"x", m.x},{"y", m.y}}}});
                 }
             }
         }
