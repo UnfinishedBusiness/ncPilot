@@ -213,6 +213,7 @@ void EasyPrimative::Part::render()
 {
     if (!(this->last_control == this->control))
     {
+        Geometry g;
         for (std::vector<path_t>::iterator it = this->paths.begin(); it != this->paths.end(); ++it)
         {
             it->built_points.clear();
@@ -220,10 +221,11 @@ void EasyPrimative::Part::render()
             {
                 std::vector<double_point_t> simplified;
                 this->Simplify(it->points, simplified, this->control.smoothing);
-                for (int i = 0; i < simplified.size(); i++)
+                for (size_t i = 0; i < simplified.size(); i++)
                 {
-                    it->built_points.push_back({(simplified[i].x + this->control.offset.x) * this->control.scale, (simplified[i].y + this->control.offset.y) * this->control.scale, (simplified[i].z + this->control.offset.z) * this->control.scale});
-                }       
+                    double_point_t rotated = g.rotate_point({0, 0}, simplified[i], this->control.angle);
+                    it->built_points.push_back({(rotated.x + this->control.offset.x) * this->control.scale, (rotated.y + this->control.offset.y) * this->control.scale, (rotated.z + this->control.offset.z) * this->control.scale});
+                }
             }
             catch (std::exception& e)
             {
@@ -299,20 +301,20 @@ nlohmann::json EasyPrimative::Part::serialize()
     j["style"] = this->style;
     return j;
 }
-void EasyPrimative::Part::GetBoundingBox(nlohmann::json path_stack, double_point_t *bbox_min, double_point_t *bbox_max)
+void EasyPrimative::Part::GetBoundingBox(double_point_t *bbox_min, double_point_t *bbox_max)
 {
     bbox_max->x = -1000000;
     bbox_max->y = -1000000;
     bbox_min->x = 1000000;
     bbox_min->y = 1000000;
-    for (nlohmann::json::iterator it = path_stack.begin(); it != path_stack.end(); ++it)
+    for (std::vector<path_t>::iterator it = this->paths.begin(); it != this->paths.end(); ++it)
     {
-        for (nlohmann::json::iterator path = (*it).begin(); path != (*it).end(); ++path)
+        for (std::vector<double_point_t>::iterator p = it->built_points.begin(); p != it->built_points.end(); ++p)
         {
-            if ((double)(*path)["x"] < bbox_min->x) bbox_min->x = (double)(*path)["x"];
-            if ((double)(*path)["x"] > bbox_max->x) bbox_max->x = (double)(*path)["x"];
-            if ((double)(*path)["y"] < bbox_min->y) bbox_min->y = (double)(*path)["y"];
-            if ((double)(*path)["y"] > bbox_max->y) bbox_max->y = (double)(*path)["y"];
+            if ((double)(*p).x < bbox_min->x) bbox_min->x = (double)(*p).x;
+            if ((double)(*p).x > bbox_max->x) bbox_max->x = (double)(*p).x;
+            if ((double)(*p).y < bbox_min->y) bbox_min->y = (double)(*p).y;
+            if ((double)(*p).y > bbox_max->y) bbox_max->y = (double)(*p).y;
         }
     }
 }

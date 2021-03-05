@@ -78,6 +78,7 @@ void EasyRender::key_callback(GLFWwindow* window, int key, int scancode, int act
                 case 264: keyname = "Down"; break;
                 case 263: keyname = "Left"; break;
                 case 262: keyname = "Right"; break;
+                case 340: keyname = "LeftShift"; break;
                 default: keyname = "None";
             }
             if (keyname == "None")
@@ -821,8 +822,11 @@ bool EasyRender::Poll(bool should_quit)
     {
         if (this->FPS_Label == NULL)
         {
+            LOG_F(INFO, "Creating FPS label!");
             this->FPS_Label = this->PushPrimative(new EasyPrimative::Text({0, 0}, "0", 30));
             this->FPS_Label->properties->visable = false;
+            this->FPS_Label->properties->id = "FPS";
+            this->SetColorByName(this->FPS_Label->properties->color, "white");
         } 
         else
         {

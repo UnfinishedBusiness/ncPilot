@@ -265,6 +265,7 @@ void DXFParsePathAdaptor::Finish()
     EasyPrimative::Part *p = this->easy_render_instance->PushPrimative(new EasyPrimative::Part(this->filename, paths));
     p->control.smoothing = this->smoothing;
     p->control.scale = this->scale;
+    p->properties->id = this->filename;
     p->properties->mouse_callback = this->mouse_callback;
     p->properties->matrix_callback = this->view_callback;
 }

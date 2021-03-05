@@ -8,32 +8,58 @@
 
 void jetCamView::ZoomEventCallback(nlohmann::json e)
 {
-    double_point_t matrix_mouse = globals->renderer->GetWindowMousePosition();
-    matrix_mouse.x = (matrix_mouse.x - globals->pan.x) / globals->zoom;
-    matrix_mouse.y = (matrix_mouse.y - globals->pan.y) / globals->zoom;
-    if ((float)e["scroll"] > 0)
+    if (globals->jet_cam_view->tab_state == false)
     {
-        double old_zoom = globals->zoom;
-        globals->zoom += globals->zoom * 0.125;
-        if (globals->zoom > 1000000)
+        double_point_t matrix_mouse = globals->renderer->GetWindowMousePosition();
+        matrix_mouse.x = (matrix_mouse.x - globals->pan.x) / globals->zoom;
+        matrix_mouse.y = (matrix_mouse.y - globals->pan.y) / globals->zoom;
+        if ((float)e["scroll"] > 0)
         {
-            globals->zoom = 1000000;
+            double old_zoom = globals->zoom;
+            globals->zoom += globals->zoom * 0.125;
+            if (globals->zoom > 1000000)
+            {
+                globals->zoom = 1000000;
+            }
+            double scalechange = old_zoom - globals->zoom;
+            globals->pan.x += matrix_mouse.x * scalechange;
+            globals->pan.y += matrix_mouse.y * scalechange;
         }
-        double scalechange = old_zoom - globals->zoom;
-        globals->pan.x += matrix_mouse.x * scalechange;
-        globals->pan.y += matrix_mouse.y * scalechange;
+        else
+        {
+            double old_zoom = globals->zoom;
+            globals->zoom += globals->zoom * -0.125;
+            if (globals->zoom < 0.00001)
+            {
+                globals->zoom = 0.00001;
+            }
+            double scalechange = old_zoom - globals->zoom;
+            globals->pan.x += matrix_mouse.x * scalechange;
+            globals->pan.y += matrix_mouse.y * scalechange; 
+        }
     }
     else
     {
-        double old_zoom = globals->zoom;
-        globals->zoom += globals->zoom * -0.125;
-        if (globals->zoom < 0.00001)
+        for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
         {
-            globals->zoom = 0.00001;
+            if ((*it)->properties->view == globals->renderer->GetCurrentView())
+            {
+                if ((*it)->type == "part")
+                {
+                    if ((*it)->part->is_part_selected == true)
+                    {
+                        if ((float)e["scroll"] > 0)
+                        {
+                            (*it)->part->control.angle += 5;
+                        }
+                        else
+                        {
+                            (*it)->part->control.angle -= 5;
+                        }
+                    }
+                }
+            }
         }
-        double scalechange = old_zoom - globals->zoom;
-        globals->pan.x += matrix_mouse.x * scalechange;
-        globals->pan.y += matrix_mouse.y * scalechange; 
     }
 }
 void jetCamView::ViewMatrixCallback(PrimativeContainer *p)
@@ -148,6 +174,21 @@ void jetCamView::MouseEventCallback(PrimativeContainer* c,nlohmann::json e)
         }
     }
 }
+void jetCamView::KeyCallback(nlohmann::json e)
+{
+    //LOG_F(INFO, "%s", e.dump().c_str());
+    if (globals->jet_cam_view->CurrentTool == JETCAM_TOOL_NESTING)
+    {
+        if (e["action"] == 0)
+        {
+            globals->jet_cam_view->tab_state = false;
+        }
+        if (e["action"] == 1)
+        {
+            globals->jet_cam_view->tab_state = true;
+        }
+    }
+}
 int last_hovered_items[2] = {-1, -1};
 void jetCamView::RenderUI(void *self_pointer)
 {
@@ -241,8 +282,11 @@ void jetCamView::RenderUI(void *self_pointer)
 
         ImGui::SetNextWindowPos(ImVec2(0, 0));
         ImGui::SetNextWindowSize(ImVec2(300, globals->renderer->GetWindowSize().y));
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(1.0f, 1.0f, 1.0f, 0.8f)); // Set window background to red
         ImGui::Begin("LeftPane", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
+        ImGui::PopStyleColor();
             int hovered_items[2] = {-1, -1};
+            static std::string hovered_part = "";
             if (ImGui::BeginTable("parts_view_table", 1, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable | ImGuiTableFlags_Borders))
             {
                 ImGui::TableSetupColumn("Parts Viewer");
@@ -269,12 +313,13 @@ void jetCamView::RenderUI(void *self_pointer)
                             }*/
                             ImGui::TreePop();
                         }
+                        if (ImGui::IsItemHovered())
+                        {
+                            hovered_items[0] = count;
+                            hovered_part = (*it)->part->part_name.c_str();
+                        }
+                        count++;
                     }
-                    if (ImGui::IsItemHovered())
-                    {
-                        hovered_items[0] = count;
-                    }
-                    count++;
                 }
                 ImGui::EndTable();
                 //ImGui::Text("Hovered master part: %d, duplicate: %d", hovered_items[0], hovered_items[1]);
@@ -314,6 +359,11 @@ void jetCamView::RenderUI(void *self_pointer)
                     }
                     if (ImGui::MenuItem("Delete Master Part"))
                     {
+                        LOG_F(INFO, "Delete master part: %s", hovered_part.c_str());
+                        if (hovered_part != "")
+                        {
+                            globals->renderer->DeletePrimativesById(hovered_part);
+                        }
                     }
                 }
                 if (last_hovered_items[0] != -1 && last_hovered_items[1] != -1) //We are hovered over a master part
@@ -388,6 +438,7 @@ void jetCamView::PreInit()
     this->preferences.background_color[2] = 60 / 255.0f;
     this->CurrentTool = JETCAM_TOOL_CONTOUR;
     this->left_click_state = false;
+    this->tab_state = false;
 }
 void jetCamView::Init()
 {
@@ -399,6 +450,8 @@ void jetCamView::Init()
     globals->renderer->PushEvent("none", "right_click_up", &this->MouseCallback);
     globals->renderer->PushEvent("none", "right_click_down", &this->MouseCallback);
     globals->renderer->PushEvent("none", "mouse_move", &this->MouseCallback);
+    globals->renderer->PushEvent("Tab", "keydown", &this->KeyCallback);
+    globals->renderer->PushEvent("Tab", "keyup", &this->KeyCallback);
     this->menu_bar = globals->renderer->PushGui(true, &this->RenderUI, this);
     this->ProgressWindowHandle = globals->renderer->PushGui(false, &this->RenderProgressWindow, this);
     this->material_plane = globals->renderer->PushPrimative(new EasyPrimative::Box({0, 0}, globals->nc_control_view->machine_parameters.machine_extents[0], globals->nc_control_view->machine_parameters.machine_extents[1], 0));
@@ -409,6 +462,7 @@ void jetCamView::Init()
     this->material_plane->properties->color[2] = 0;
     this->material_plane->properties->matrix_callback = &this->ViewMatrixCallback;
     this->material_plane->properties->mouse_callback = &this->MouseEventCallback;
+    globals->renderer->SetShowFPS(true);
 }
 void jetCamView::Tick()
 {

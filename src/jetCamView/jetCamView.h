@@ -18,10 +18,12 @@ class jetCamView{
         static void ViewMatrixCallback(PrimativeContainer *p);
         static void MouseCallback(nlohmann::json e);
         static void MouseEventCallback(PrimativeContainer* c,nlohmann::json e);
+        static void KeyCallback(nlohmann::json e);
         static void RenderUI(void *p);
         
         double_point_t last_mouse_click_position;
         bool left_click_state;
+        bool tab_state;
         #define JETCAM_TOOL_CONTOUR 0
         #define JETCAM_TOOL_NESTING 1
         #define JETCAM_TOOL_POINT 2
