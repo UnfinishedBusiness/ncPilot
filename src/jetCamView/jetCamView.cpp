@@ -69,14 +69,13 @@ void jetCamView::MouseCallback(nlohmann::json e)
                     {
                         if ((*it)->properties->view == globals->renderer->GetCurrentView())
                         {
-                            
-                            if (light_green[0] == (*it)->properties->color[0] && light_green[1] == (*it)->properties->color[1] && light_green[2] == (*it)->properties->color[2])
+                            if ((*it)->type == "part")
                             {
-                                //LOG_F(INFO, "Moving (%.4f, %.4f)", mouse_drag.x, mouse_drag.y);
-                                for (std::vector<double_point_t>::iterator p = (*it)->path->points.begin(); p != (*it)->path->points.end(); ++p)
+                                if ((*it)->part->is_part_selected == true)
                                 {
-                                    (*p).x += (mouse_drag.x / globals->zoom);
-                                    (*p).y += (mouse_drag.y / globals->zoom);
+                                    //LOG_F(INFO, "Moving (%.4f, %.4f)", mouse_drag.x, mouse_drag.y);
+                                    (*it)->part->control.offset.x += (mouse_drag.x / globals->zoom);
+                                    (*it)->part->control.offset.y += (mouse_drag.y / globals->zoom);
                                 }
                             }
                         }
@@ -96,61 +95,55 @@ void jetCamView::MouseEventCallback(PrimativeContainer* c,nlohmann::json e)
     //LOG_F(INFO, "%s", e.dump().c_str());
     if (globals->jet_cam_view->CurrentTool == JETCAM_TOOL_CONTOUR)
     {
-        if (c->type == "path")
+        if (c->type == "part")
         {
             if (e["event"] == "mouse_in")
             {
-                globals->renderer->SetColorByName(c->properties->color, "light-green");
+                size_t x = (size_t)e["path_index"];
+                globals->renderer->SetColorByName(c->part->paths[x].color, "light-green");
             }
             if (e["event"] == "mouse_out")
             {
-                if (c->properties->data["is_inside_contour"] == true)
+                for (size_t x = 0; x < c->part->paths.size(); x++)
                 {
-                    globals->renderer->SetColorByName(c->properties->color, "grey");
-                }
-                else
-                {
-                    globals->renderer->SetColorByName(c->properties->color, "white");
+                    if (c->part->paths[x].is_inside_contour == true)
+                    {
+                        globals->renderer->SetColorByName(c->part->paths[x].color, "grey");
+                    }
+                    else
+                    {
+                        globals->renderer->SetColorByName(c->part->paths[x].color, "white");
+                    }
                 }
             }
         }
     }
     if (globals->jet_cam_view->CurrentTool == JETCAM_TOOL_NESTING)
     {
-        if (c->type == "path")
+        if (c->type == "part" && globals->jet_cam_view->left_click_state == false)
         {
             if (e["event"] == "mouse_in")
             {
-                for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
+                c->part->is_part_selected = true;
+                for (size_t x = 0; x < c->part->paths.size(); x++)
                 {
-                    if ((*it)->properties->view == globals->renderer->GetCurrentView())
-                    {
-                        if ((*it)->properties->data["filename"] == c->properties->data["filename"])
-                        {
-                            globals->renderer->SetColorByName((*it)->properties->color, "light-green");
-                        }
-                    }
+                    globals->renderer->SetColorByName(c->part->paths[x].color, "light-green");
                 }
             }
             if (e["event"] == "mouse_out")
             {
-                for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
+                for (size_t x = 0; x < c->part->paths.size(); x++)
                 {
-                    if ((*it)->properties->view == globals->renderer->GetCurrentView())
+                    if (c->part->paths[x].is_inside_contour == true)
                     {
-                        if ((*it)->properties->data["filename"] == c->properties->data["filename"])
-                        {
-                            if ((*it)->properties->data["is_inside_contour"] == true)
-                            {
-                                globals->renderer->SetColorByName((*it)->properties->color, "grey");
-                            }
-                            else
-                            {
-                                globals->renderer->SetColorByName((*it)->properties->color, "white");
-                            }
-                        }
+                        globals->renderer->SetColorByName(c->part->paths[x].color, "grey");
+                    }
+                    else
+                    {
+                        globals->renderer->SetColorByName(c->part->paths[x].color, "white");
                     }
                 }
+                c->part->is_part_selected = false;
             }
         }
     }
@@ -254,29 +247,34 @@ void jetCamView::RenderUI(void *self_pointer)
             {
                 ImGui::TableSetupColumn("Parts Viewer");
                 ImGui::TableHeadersRow();
-                for (int i = 0; i < self->parts_stack.size(); i++)
+                int count = 0;
+                for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
                 {
-                    ImGui::TableNextRow();
-                    ImGui::TableSetColumnIndex(0);
-                    ImGui::Checkbox(std::string("##" + self->parts_stack[i]->filename).c_str(), &self->parts_stack[i]->visable);
-                    ImGui::SameLine();
-                    if (ImGui::TreeNode(self->parts_stack[i]->filename.c_str()))
+                    if ((*it)->properties->view == globals->renderer->GetCurrentView() && (*it)->type == "part")
                     {
-                        for (int dup = 0; dup < self->parts_stack[i]->duplicates.size(); dup++)
+                        ImGui::TableNextRow();
+                        ImGui::TableSetColumnIndex(0);
+                        ImGui::Checkbox(std::string("##" + (*it)->part->part_name).c_str(), &(*it)->properties->visable);
+                        ImGui::SameLine();
+                        if (ImGui::TreeNode((*it)->part->part_name.c_str()))
                         {
-                            ImGui::Text("Duplicate %d", dup);
-                            if (ImGui::IsItemHovered())
+                            /*for (int dup = 0; dup < self->parts_stack[i]->duplicates.size(); dup++)
                             {
-                                hovered_items[0] = i;
-                                hovered_items[1] = dup;
-                            }
+                                ImGui::Text("Duplicate %d", dup);
+                                if (ImGui::IsItemHovered())
+                                {
+                                    hovered_items[0] = i;
+                                    hovered_items[1] = dup;
+                                }
+                            }*/
+                            ImGui::TreePop();
                         }
-                        ImGui::TreePop();
                     }
                     if (ImGui::IsItemHovered())
                     {
-                        hovered_items[0] = i;
+                        hovered_items[0] = count;
                     }
+                    count++;
                 }
                 ImGui::EndTable();
                 //ImGui::Text("Hovered master part: %d, duplicate: %d", hovered_items[0], hovered_items[1]);
@@ -352,16 +350,9 @@ bool jetCamView::DxfFileOpen(std::string filename, std::string name)
     this->dxf_fp = fopen(filename.c_str(), "rt");
     if (this->dxf_fp)
     {
-        jetCamView::part_viewer_t *part = new jetCamView::part_viewer_t;
-        part->visable = false;
-        part->last_visable = part->visable;
-        part->filename = name;
-        part->filepath = filename;
-        part->position = {0, 0};
-        this->parts_stack.push_back(part);
         this->dl_dxf = new DL_Dxf();
         this->DXFcreationInterface = new DXFParsePathAdaptor(globals->renderer, &this->ViewMatrixCallback, &this->MouseEventCallback);
-        this->DXFcreationInterface->SetFilename(part->filename);
+        this->DXFcreationInterface->SetFilename(name);
         this->DXFcreationInterface->SetScaleFactor(1);
         //this->DXFcreationInterface->SetSmoothing(0.030);
         globals->renderer->PushTimer(0, this->DxfFileParseTimer, this);
@@ -380,13 +371,6 @@ bool jetCamView::DxfFileParseTimer(void *p)
             if (!self->dl_dxf->readDxfGroups(self->dxf_fp, self->DXFcreationInterface))
             {
                 self->DXFcreationInterface->Finish();
-                for (int i = 0; i < self->parts_stack.size(); i++)
-                {
-                    if (self->parts_stack.at(i)->filename == self->DXFcreationInterface->filename)
-                    {
-                        self->SetPartVisable(i, true);
-                    }
-                }
                 fclose(self->dxf_fp);
                 delete self->DXFcreationInterface;
                 delete self->dl_dxf;
@@ -396,25 +380,6 @@ bool jetCamView::DxfFileParseTimer(void *p)
         return true;
     }
     return false;
-}
-void jetCamView::SetPartVisable(int i, bool v)
-{
-    if (this->parts_stack.size()+1 > i)
-    {
-        //LOG_F(INFO, "Setting part: %d to %d", i, (int)v);
-        this->parts_stack.at(i)->visable = v;
-        this->parts_stack.at(i)->last_visable = this->parts_stack.at(i)->visable;
-        for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
-        {
-            if ((*it)->properties->view == globals->renderer->GetCurrentView())
-            {
-                if ((*it)->properties->data["filename"] == this->parts_stack[i]->filename)
-                {
-                    (*it)->properties->visable = v;
-                }
-            }
-        }
-    }
 }
 void jetCamView::PreInit()
 {
@@ -447,11 +412,14 @@ void jetCamView::Init()
 }
 void jetCamView::Tick()
 {
-    for (int i = 0; i < this->parts_stack.size(); i++)
+    for (std::vector<PrimativeContainer*>::iterator it = globals->renderer->GetPrimativeStack()->begin(); it != globals->renderer->GetPrimativeStack()->end(); ++it)
     {
-        if (this->parts_stack.at(i)->last_visable != this->parts_stack.at(i)->visable)
+        if ((*it)->properties->view == globals->renderer->GetCurrentView())
         {
-            this->SetPartVisable(i, this->parts_stack[i]->visable);
+            if ((*it)->type == "part")
+            {
+                (*it)->part->control.mouse_mode = this->CurrentTool;
+            }
         }
     }
 }
@@ -462,9 +430,5 @@ void jetCamView::MakeActive()
 }
 void jetCamView::Close()
 {
-    for (int i = 0; i < this->parts_stack.size(); i++)
-    {
-        delete this->parts_stack.at(i);
-        this->parts_stack.erase(this->parts_stack.begin()+i);
-    }
+    
 }

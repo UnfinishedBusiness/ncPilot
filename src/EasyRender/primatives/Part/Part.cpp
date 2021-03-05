@@ -35,52 +35,105 @@ void EasyPrimative::Part::process_mouse(float mpos_x, float mpos_y)
         mpos_x = (mpos_x - this->properties->offset[0]) / this->properties->scale;
         mpos_y = (mpos_y - this->properties->offset[1]) / this->properties->scale;
         Geometry g;
-        bool mouse_is_over_path = false;
-        for (size_t x = 0; x < this->paths.size(); x++)
+        size_t path_index = -1;
+        if (this->control.mouse_mode == 0)
         {
-            for (size_t i = 1; i < this->paths[x].points.size(); i++)
+            bool mouse_is_over_path = false;
+            for (size_t x = 0; x < this->paths.size(); x++)
             {
-                if (g.line_intersects_with_circle({{this->paths[x].points.at(i-1).x, this->paths[x].points.at(i-1).y}, {this->paths[x].points.at(i).x, this->paths[x].points.at(i).y}}, {mpos_x, mpos_y}, this->properties->mouse_over_padding / this->properties->scale))
+                for (size_t i = 1; i < this->paths[x].built_points.size(); i++)
                 {
-                    mouse_is_over_path = true;
-                    break;
+                    if (g.line_intersects_with_circle({{this->paths[x].built_points.at(i-1).x, this->paths[x].built_points.at(i-1).y}, {this->paths[x].built_points.at(i).x, this->paths[x].built_points.at(i).y}}, {mpos_x, mpos_y}, this->properties->mouse_over_padding / this->properties->scale))
+                    {
+                        path_index = x;
+                        mouse_is_over_path = true;
+                        break;
+                    }
+                }
+                if (this->paths[x].is_closed == true)
+                {
+                    if (g.line_intersects_with_circle({{this->paths[x].built_points.at(0).x, this->paths[x].built_points.at(0).y}, {this->paths[x].built_points.at(this->paths[x].built_points.size() - 1).x, this->paths[x].built_points.at(this->paths[x].built_points.size() - 1).y}}, {mpos_x, mpos_y}, this->properties->mouse_over_padding / this->properties->scale))
+                    {
+                        path_index = x;
+                        mouse_is_over_path = true;
+                    }
                 }
             }
-            if (this->paths[x].is_closed == true)
+            if (mouse_is_over_path == true)
             {
-                if (g.line_intersects_with_circle({{this->paths[x].points.at(0).x, this->paths[x].points.at(0).y}, {this->paths[x].points.at(this->paths[x].points.size() - 1).x, this->paths[x].points.at(this->paths[x].points.size() - 1).y}}, {mpos_x, mpos_y}, this->properties->mouse_over_padding / this->properties->scale))
+                if (this->properties->mouse_over == false)
                 {
-                    mouse_is_over_path = true;
+                    this->mouse_event = {
+                        {"event", "mouse_in"},
+                        {"path_index", path_index},
+                        {"pos", {
+                            {"x", mpos_x},
+                            {"y", mpos_y}
+                        }},
+                    };
+                    this->properties->mouse_over = true;
+                }       
+            }
+            else
+            {
+                if (this->properties->mouse_over == true)
+                {
+                    this->mouse_event = {
+                        {"event", "mouse_out"},
+                        {"path_index", path_index},
+                        {"pos", {
+                            {"x", mpos_x},
+                            {"y", mpos_y}
+                        }},
+                    };
+                    this->properties->mouse_over = false;
                 }
             }
         }
-        
-        if (mouse_is_over_path == true)
+        else if (this->control.mouse_mode == 1)
         {
-            if (this->properties->mouse_over == false)
+            bool mouse_is_inside_perimeter = false;
+            for (size_t x = 0; x < this->paths.size(); x++)
             {
-                this->mouse_event = {
-                    {"event", "mouse_in"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = true;
-            }       
-        }
-        else
-        {
-            if (this->properties->mouse_over == true)
+                if (this->paths[x].is_inside_contour == false)
+                {
+                    if (this->CheckIfPointIsInsidePath(this->paths[x].built_points, {mpos_x, mpos_y}))
+                    {
+                        path_index = x;
+                        mouse_is_inside_perimeter = true;
+                        break;
+                    }
+                }
+            }
+            if (mouse_is_inside_perimeter == true)
             {
-                this->mouse_event = {
-                    {"event", "mouse_out"},
-                    {"pos", {
-                        {"x", mpos_x},
-                        {"y", mpos_y}
-                    }},
-                };
-                this->properties->mouse_over = false;
+                if (this->properties->mouse_over == false)
+                {
+                    this->mouse_event = {
+                        {"event", "mouse_in"},
+                        {"path_index", path_index},
+                        {"pos", {
+                            {"x", mpos_x},
+                            {"y", mpos_y}
+                        }},
+                    };
+                    this->properties->mouse_over = true;
+                }       
+            }
+            else
+            {
+                if (this->properties->mouse_over == true)
+                {
+                    this->mouse_event = {
+                        {"event", "mouse_out"},
+                        {"path_index", path_index},
+                        {"pos", {
+                            {"x", mpos_x},
+                            {"y", mpos_y}
+                        }},
+                    };
+                    this->properties->mouse_over = false;
+                }
             }
         }
     }
@@ -158,6 +211,28 @@ void EasyPrimative::Part::Simplify(const std::vector<double_point_t> &pointList,
 }
 void EasyPrimative::Part::render()
 {
+    if (!(this->last_control == this->control))
+    {
+        for (std::vector<path_t>::iterator it = this->paths.begin(); it != this->paths.end(); ++it)
+        {
+            it->built_points.clear();
+            try
+            {
+                std::vector<double_point_t> simplified;
+                this->Simplify(it->points, simplified, this->control.smoothing);
+                for (int i = 0; i < simplified.size(); i++)
+                {
+                    it->built_points.push_back({(simplified[i].x + this->control.offset.x) * this->control.scale, (simplified[i].y + this->control.offset.y) * this->control.scale, (simplified[i].z + this->control.offset.z) * this->control.scale});
+                }       
+            }
+            catch (std::exception& e)
+            {
+                LOG_F(ERROR, "(EasyPrimative::Part::render) Exception: %s, setting visability to false to avoid further exceptions!", e.what());
+                this->properties->visable = false;
+            }
+        }
+    }
+    this->last_control = this->control;
     glPushMatrix();
         glTranslatef(this->properties->offset[0], this->properties->offset[1], this->properties->offset[2]);
         glScalef(this->properties->scale, this->properties->scale, this->properties->scale);
@@ -181,11 +256,9 @@ void EasyPrimative::Part::render()
             }
             try
             {
-                std::vector<double_point_t> simplified;
-                this->Simplify(it->points, simplified, this->control.smoothing);
-                for (int i = 0; i < simplified.size(); i++)
+                for (int i = 0; i < it->built_points.size(); i++)
                 {
-                    glVertex3f((simplified[i].x + this->control.offset.x) * this->control.scale, (simplified[i].y + this->control.offset.y) * this->control.scale, (simplified[i].z + this->control.offset.z) * this->control.scale);
+                    glVertex3f(it->built_points[i].x, it->built_points[i].y, it->built_points[i].z);
                 }       
             }
             catch (std::exception& e)
@@ -225,4 +298,49 @@ nlohmann::json EasyPrimative::Part::serialize()
     j["width"] = this->width;
     j["style"] = this->style;
     return j;
+}
+void EasyPrimative::Part::GetBoundingBox(nlohmann::json path_stack, double_point_t *bbox_min, double_point_t *bbox_max)
+{
+    bbox_max->x = -1000000;
+    bbox_max->y = -1000000;
+    bbox_min->x = 1000000;
+    bbox_min->y = 1000000;
+    for (nlohmann::json::iterator it = path_stack.begin(); it != path_stack.end(); ++it)
+    {
+        for (nlohmann::json::iterator path = (*it).begin(); path != (*it).end(); ++path)
+        {
+            if ((double)(*path)["x"] < bbox_min->x) bbox_min->x = (double)(*path)["x"];
+            if ((double)(*path)["x"] > bbox_max->x) bbox_max->x = (double)(*path)["x"];
+            if ((double)(*path)["y"] < bbox_min->y) bbox_min->y = (double)(*path)["y"];
+            if ((double)(*path)["y"] > bbox_max->y) bbox_max->y = (double)(*path)["y"];
+        }
+    }
+}
+bool EasyPrimative::Part::CheckIfPointIsInsidePath(std::vector<double_point_t> path, double_point_t point)
+{
+    size_t polyCorners = path.size();
+    size_t j = polyCorners-1;
+    bool oddNodes=false;
+    for (size_t i = 0; i < polyCorners; i++)
+    {
+        if (((path[i].y < point.y && path[j].y >= point.y)
+        ||   (path[j].y < point.y && path[i].y >= point.y))
+        &&  (path[i].x <= point.x || path[j].x <= point.x))
+        {
+            oddNodes^=(path[i].x + (point.y - path[i].y) / (path[j].y - path[i].y) * (path[j].x - path[i].x) < point.x);
+        }
+        j=i;
+    }
+    return oddNodes;
+}
+bool EasyPrimative::Part::CheckIfPathIsInsidePath(std::vector<double_point_t> path1, std::vector<double_point_t> path2)
+{
+    for (std::vector<double_point_t>::iterator it = path1.begin(); it != path1.end(); ++it)
+    {
+        if (this->CheckIfPointIsInsidePath(path2, (*it)))
+        {
+            return true;
+        }
+    }
+    return false;
 }

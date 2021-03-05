@@ -10,19 +10,9 @@ class jetCamView{
         struct duplicate_part_t{
             bool visable;
         };
-        struct part_viewer_t{
-            std::string filename;
-            std::string filepath;
-            bool visable;
-            bool last_visable;
-            double_point_t position;
-            double angle;
-            std::vector<duplicate_part_t *> duplicates;
-        };
         struct preferences_data_t{
             float background_color[3] = { 0.0f, 0.0f, 0.0f };
         };
-        std::vector<part_viewer_t *> parts_stack;
         EasyRender::EasyRenderGui *menu_bar;
         static void ZoomEventCallback(nlohmann::json e);
         static void ViewMatrixCallback(PrimativeContainer *p);
@@ -46,8 +36,6 @@ class jetCamView{
         EasyRender::EasyRenderGui *ProgressWindowHandle;
         void ShowProgressWindow(bool v);
         static void RenderProgressWindow(void *p);
-
-        void SetPartVisable(int i, bool v);
         
     public:
 
